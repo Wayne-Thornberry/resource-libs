@@ -24,6 +24,18 @@ namespace Proline.Engine.Client
         private string _name;
         private int _status;
 
+        internal bool HasAPI(string apiName)
+        {
+            return _apiActions.ContainsKey(apiName);
+        }
+
+        internal void CallAPI(string apiName, object[] inputParameters)
+        { 
+            if (_status != 2) throw new Exception("Component not started");
+            if (!_apiActions.ContainsKey(apiName)) return;
+            _apiActions[apiName].Invoke(_simpleComponent, inputParameters);
+        }
+
         private ComponentDetails _details;
         private ComponentController _controller;
         private ComponentHandler _handler;
@@ -111,7 +123,7 @@ namespace Proline.Engine.Client
                     if(item.Status == 1)
                     { 
                         item.Update();
-                        if(_ticks % 1000 == 0)
+                        if(_ticks % 100 == 0)
                         {
                             item.FixedUpdate();
                         }

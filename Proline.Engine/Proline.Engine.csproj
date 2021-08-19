@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APICaller.cs" />
     <Compile Include="CitizenAccess.cs" />
     <Compile Include="ComponentAccess.cs" />
     <Compile Include="ComponentControl.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="ExtensionManager.cs" />
     <Compile Include="F8Console.cs" />
     <Compile Include="GameScript.cs" />
+    <Compile Include="InputParameters.cs" />
     <Compile Include="IScriptSource.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="LogEntry.cs" />

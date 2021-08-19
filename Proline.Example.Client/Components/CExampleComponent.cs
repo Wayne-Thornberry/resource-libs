@@ -50,5 +50,13 @@ namespace Proline.Example.Client.Components
         {
             return 1;
         }
+
+
+        [ComponentAPI]
+        public void UnlockNeareastVehicle(int x, out int y)
+        {
+            Debugger.LogDebug("It seems to have worked");
+            y = 100;
+        }
     }
 }

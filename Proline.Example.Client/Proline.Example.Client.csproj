@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\CExampleComponent.cs" />
+    <Compile Include="ExampleAPI.cs" />
     <Compile Include="Extensions\ExampleExtension.cs" />
     <Compile Include="LevelScripts\ExampleMain.cs" />
     <Compile Include="LevelScripts\ExampleOptional.cs" />

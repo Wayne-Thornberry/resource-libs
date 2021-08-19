@@ -1,4 +1,5 @@
 ﻿using Proline.Engine.Client;
+using Proline.Example.Client;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,6 +25,7 @@ namespace Proline.Engine.ConsoleApp
             var program = new Program();
            var service =  new EngineService(program);
             service.Initialize();
+            service.StartAllComponents();
             var thread = new Thread(e=> {
                 while (true)
                 {
@@ -36,6 +38,11 @@ namespace Proline.Engine.ConsoleApp
             });
             thread.Start();
             Console.ReadKey();
+        }
+
+        private static void X(string v, params object[] args)
+        {
+            throw new NotImplementedException();
         }
 
         public void AddTick(Func<Task> task)
