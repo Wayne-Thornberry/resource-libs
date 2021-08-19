@@ -1,13 +1,14 @@
-﻿using Proline.Engine.Networking;
+﻿using Newtonsoft.Json;
+using Proline.Engine.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Engine.Networking
+namespace Proline.Engine
 {
-    internal class NetworkManager
+    public class NetworkManager
     {
         private static NetworkManager _instance;
         public const string NetworkRequestListenerHandle = "networkRequestListener";
@@ -28,7 +29,13 @@ namespace Proline.Engine.Networking
             return _instance;
         }
 
-        public NetworkResponse CreateAndInsertResponse(string guid, object value, bool isException = false)
+
+        public string CreateAndInsertResponse(string guid, object value, bool isException = false)
+        { 
+            return JsonConvert.SerializeObject(CreateAndInsertResponseI(guid, value, isException));
+        }
+
+        internal NetworkResponse CreateAndInsertResponseI(string guid, object value, bool isException = false)
         {
             NetworkResponse response = CreateResponse(guid, value, isException);
             InsertResponse(guid, response);
@@ -76,7 +83,12 @@ namespace Proline.Engine.Networking
             return response;
         }
 
-        public NetworkRequest CreateAndInsertRequest(string guid, string componentName, string methodName, params object[] args)
+        internal string CreateAndInsertRequest(string guid, string componentName, string methodName, params object[] args)
+        { 
+            return JsonConvert.SerializeObject(CreateAndInsertRequestI(guid,componentName,methodName, args));
+        }
+
+        internal NetworkRequest CreateAndInsertRequestI(string guid, string componentName, string methodName, params object[] args)
         {
             NetworkRequest request = CreateRequest(guid, componentName, methodName, args);
             InsertRequest(guid, request);
@@ -115,7 +127,7 @@ namespace Proline.Engine.Networking
             return _responses.Count > 0;
         }
 
-        public NetworkResponse GetResponse(string guid)
+        internal NetworkResponse GetResponse(string guid)
         {
             return _responses[guid];
         }

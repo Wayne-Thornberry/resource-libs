@@ -1,4 +1,4 @@
-﻿using Proline.Engine.Framework;
+﻿using Proline.Framework;
 
 namespace Proline.Engine
 {

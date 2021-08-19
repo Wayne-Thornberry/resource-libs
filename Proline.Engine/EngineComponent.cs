@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 using Proline.Engine.Data;
-using Proline.Engine.Framework;
+using Proline.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,22 +19,12 @@ namespace Proline.Engine
         STOPPED,
     }
 
-    public class EngineComponent
+    internal class EngineComponent
     { 
         private string _name;
         private int _status;
 
-        internal bool HasAPI(string apiName)
-        {
-            return _apiActions.ContainsKey(apiName);
-        }
-
-        internal object CallAPI(string apiName, object[] inputParameters)
-        { 
-            if (_status != 2) throw new Exception("Component not started");
-            if (!_apiActions.ContainsKey(apiName)) return null;
-           return _apiActions[apiName].Invoke(_simpleComponent, inputParameters);
-        }
+       
 
         private ComponentDetails _details;
         private ComponentController _controller;
@@ -174,6 +164,7 @@ namespace Proline.Engine
             if (_status != 0) throw new Exception("Component has already loaded");
             var assembly = Assembly.Load(_details.Assembly); 
             _name = _details.ComponentName;
+            var am = APIManager.GetInstance();
 
             if (!string.IsNullOrEmpty(_details.SimpleComponentClass))
             {
@@ -202,6 +193,7 @@ namespace Proline.Engine
                 {
                     Debugger.LogDebug(item.Name);
                     _apiActions.Add(item.Name, item);
+                    am.RegisterAPI(_simpleComponent, item, item.Name);
                 }
             }
             else
@@ -213,7 +205,16 @@ namespace Proline.Engine
                     if (api != null)
                     {
                         _api = CreateComponentObject<ComponentAPI>(api);
-                    }
+                        var methods3 = api.GetMethods()
+                          .Where(m => m.GetCustomAttributes(typeof(ComponentAPIAttribute), false).Length > 0)
+                          .ToArray();
+                        foreach (var item in methods3)
+                        {
+                            Debugger.LogDebug(item.Name);
+                            _apiActions.Add(item.Name, item);
+                            am.RegisterAPI(_api, item, item.Name);
+                        }
+                    } 
                 }
 
                 if (!string.IsNullOrEmpty(_details.CommandClass))
@@ -271,7 +272,6 @@ namespace Proline.Engine
                     }
                 }
             }
-
 
 
             _status = 1; // Ready Not Started

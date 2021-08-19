@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Proline.Engine.Framework
+namespace Proline.Framework
 {
     /// <summary>
     /// an engine component is a class that is the first thing that is created and called before everything else. Provides

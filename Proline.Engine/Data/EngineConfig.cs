@@ -1,12 +1,12 @@
 ﻿namespace Proline.Engine.Data
 {
-    public class ExtensionDetails
+    internal class ExtensionDetails
     {
         public string Assembly { get; set; }
         public string[] ExtensionClasses { get; set; }
     }
 
-    public class ComponentDetails
+    internal class ComponentDetails
     {
         public string Assembly { get; set; }
         public string ComponentName { get; set; }
@@ -19,15 +19,15 @@
         public bool DebugOnly { get; set; }
     }
 
-    public class LevelScriptAssembly
+    internal class LevelScriptAssembly
     {
         public string Assembly { get; set; }
         public string StartupScript { get; set; }
         public bool DebugOnly { get; set; }
         public string[] ScriptClasses { get; set; }
-    } 
+    }
 
-    public class EngineConfig
+    internal class EngineConfig
     {
         public string GameName { get; set; }
         public bool ConsoleLaunch { get; set; }

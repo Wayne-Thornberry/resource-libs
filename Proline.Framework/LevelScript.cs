@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Proline.Engine.Framework
+namespace Proline.Framework
 {
     internal enum ScriptExitCode : int
     {

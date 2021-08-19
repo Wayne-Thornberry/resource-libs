@@ -28,6 +28,21 @@ namespace Proline.Engine.NUnit
             _ticks.Add(task);
         }
 
+        public object CallFunction<T>(ulong hash, object[] inputParameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CallFunction(ulong hash, object[] inputParameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CallNativeAPI(string apiName, params object[] inputParameters)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task Delay(int ms)
         {
             await Task.Delay(ms);
@@ -38,6 +53,11 @@ namespace Proline.Engine.NUnit
             return "Proline.Engine.Client";
         }
 
+        public object GetGlobal(string key)
+        {
+            throw new NotImplementedException();
+        }
+
         public string LoadResourceFile(string resourceName, string filePath)
         {
             return File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath));
@@ -46,6 +66,11 @@ namespace Proline.Engine.NUnit
         public void RemoveTick(Func<Task> task)
         {
             _ticks.Remove(task);
+        }
+
+        public void SetGlobal(string key, object data, bool replicated)
+        {
+            throw new NotImplementedException();
         }
 
         public void TriggerClientEvent(string eventName, params object[] args)

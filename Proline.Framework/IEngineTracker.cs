@@ -1,4 +1,4 @@
-﻿namespace Proline.Engine.Framework
+﻿namespace Proline.Framework
 {
     public interface IEngineTracker
     {

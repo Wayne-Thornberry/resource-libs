@@ -1,7 +1,7 @@
 ﻿
 
 using Newtonsoft.Json;
-using Proline.Engine.Framework;
+using Proline.Framework;
 using Proline.Engine.Networking;
 using System;
 using System.Collections.Generic;
@@ -25,7 +25,7 @@ namespace Proline.Engine
         {
             var nm = NetworkManager.GetInstance();
             var guid = Guid.NewGuid().ToString();
-            var request = nm.CreateAndInsertRequest(guid, componentName, methodName, args);
+            var request = nm.CreateAndInsertRequestI(guid, componentName, methodName, args);
             request.Header.DateSent = DateTime.UtcNow;
 
             var log = new Log();
@@ -39,7 +39,7 @@ namespace Proline.Engine
             };
             var data = JsonConvert.SerializeObject(requestParams);
             Debugger.LogDebug(data);
-            CitizenAccess.GetInstance().TriggerServerEvent(NetworkManager.NetworkRequestListenerHandle, data);
+            CitizenAccess.GetInstance().TriggerServerEvent(NetworkManager.NetworkRequestListenerHandle, guid, componentName, methodName, JsonConvert.SerializeObject(args));
             NetworkResponse response = await MakeRequest(guid, request);
 
             return response;
@@ -49,7 +49,7 @@ namespace Proline.Engine
         {
             var nm = NetworkManager.GetInstance();
             var guid = Guid.NewGuid().ToString();
-            var request = nm.CreateAndInsertRequest(guid, componentName, methodName, args);
+            var request = nm.CreateAndInsertRequestI(guid, componentName, methodName, args);
             request.Header.DateSent = DateTime.UtcNow;
              
             var jsonArgs = JsonConvert.SerializeObject(args);
@@ -63,7 +63,7 @@ namespace Proline.Engine
             };
             var data = JsonConvert.SerializeObject(requestParams);
             Debugger.LogDebug(data);
-            CitizenAccess.GetInstance().TriggerEvent(NetworkManager.NetworkRequestListenerHandle, data);
+            CitizenAccess.GetInstance().TriggerEvent(NetworkManager.NetworkRequestListenerHandle, guid, componentName, methodName, JsonConvert.SerializeObject(args));
 
             NetworkResponse response = await MakeRequest(guid, request);
 

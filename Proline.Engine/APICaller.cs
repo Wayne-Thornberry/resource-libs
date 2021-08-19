@@ -11,15 +11,18 @@ namespace Proline.Engine
     {
         public static object CallAPI(string apiName, params object[] inputParameters)
         {
-            var cm = ComponentManager.GetInstance();
-            foreach (EngineComponent component in cm.GetComponents().Where(e => e.Status == ComponentStatus.STARTED))
-            {
-                if (component.HasAPI(apiName))
-                {
-                    return component.CallAPI(apiName, inputParameters); 
-                }
-            }
-            return null;
-        } 
+            var cm = APIManager.GetInstance();
+            var api = cm.GetAPI(apiName); 
+            return api.Invoke(inputParameters);
+        }
+
+        public static object CallNativeAPI<T>(ulong hash, params object[] inputParameters)
+        { 
+            return CitizenAccess.GetInstance().CallFunction<T>(hash, inputParameters);
+        }
+        public static void CallNativeAPI(ulong hash, params object[] inputParameters)
+        { 
+             CitizenAccess.GetInstance().CallFunction(hash, inputParameters);
+        }
     }
 }

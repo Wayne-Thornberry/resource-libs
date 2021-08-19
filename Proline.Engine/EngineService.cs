@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-using Proline.Engine.Framework;
+using Proline.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,10 +34,18 @@ namespace Proline.Engine
 
         public void StartStartupScripts()
         {
-            var sm = ScriptManager.GetScriptAssemblies();
-            foreach (var item in sm)
+            try
+            { 
+                var sm = ScriptManager.GetScriptAssemblies();
+                foreach (var item in sm)
+                {
+                    EngineAccess.StartNewScript(item.StartupScript, null);
+                }
+            }
+            catch (Exception e)
             {
-                EngineAccess.StartNewScript(item.StartupScript, null); 
+                Debugger.LogDebug(e.ToString());
+                
             }
         }
 

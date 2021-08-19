@@ -18,7 +18,6 @@ namespace Proline.Engine
         {
             // Returns the data contained 
 
-
             fileNames = null;
             return;
         }
