@@ -1,6 +1,6 @@
 ﻿namespace Proline.Engine.Networking
 {
-    public class MethodResult
+    internal class MethodResult
     {
         public object ResultValue { get; set; }
     }

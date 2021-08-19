@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proline.Engine.Networking
 {
-    public class EventRequestParams
+    internal class EventRequestParams
     {
         public string GUID { get; set; }
         public string ComponentName { get; set; }

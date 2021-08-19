@@ -1,4 +1,4 @@
-﻿using Proline.Engine.Client;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +12,11 @@ namespace Proline.Engine
         public static object CallAPI(string apiName, params object[] inputParameters)
         {
             var cm = ComponentManager.GetInstance();
-            foreach (EngineComponent component in cm.GetComponents())
+            foreach (EngineComponent component in cm.GetComponents().Where(e => e.Status == ComponentStatus.STARTED))
             {
                 if (component.HasAPI(apiName))
                 {
-                    component.CallAPI(apiName, inputParameters);
-                    return null;
+                    return component.CallAPI(apiName, inputParameters); 
                 }
             }
             return null;

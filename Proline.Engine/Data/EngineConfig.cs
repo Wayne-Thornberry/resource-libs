@@ -1,4 +1,4 @@
-﻿namespace Proline.Engine.Client.Data
+﻿namespace Proline.Engine.Data
 {
     public class ExtensionDetails
     {

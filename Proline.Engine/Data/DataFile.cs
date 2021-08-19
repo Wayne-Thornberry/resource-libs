@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Proline.Engine.Client
+namespace Proline.Engine
 {
     internal class DataFile
     {

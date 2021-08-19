@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Proline.Engine.Client.Data;
+
 using Proline.Engine.Framework;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Proline.Engine.Client
+namespace Proline.Engine
 {
     public class EngineService
     { 
@@ -16,7 +16,6 @@ namespace Proline.Engine.Client
         public EngineService(IScriptSource tickSubscriber)
         {
             CitizenAccess.SetScriptSource(tickSubscriber);  
-            ScriptManager.InsertScriptAssemblies(EngineConfiguration.GetScripts()); 
         }
 
         public void Initialize(string executingResource = "")
@@ -31,6 +30,15 @@ namespace Proline.Engine.Client
             ScriptManager.Initialize();
 
             EngineStatus.IsEngineInitialized = true;
+        }
+
+        public void StartStartupScripts()
+        {
+            var sm = ScriptManager.GetScriptAssemblies();
+            foreach (var item in sm)
+            {
+                EngineAccess.StartNewScript(item.StartupScript, null); 
+            }
         }
 
         private void PreLoadAssemblies()

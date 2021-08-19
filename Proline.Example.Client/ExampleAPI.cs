@@ -9,11 +9,12 @@ namespace Proline.Example.Client
 {
     public static class ExampleAPI
     {
-        public static void UnlockNeareastVehicle(int x, out int y)
+        public static bool UnlockNeareastVehicle(int x, out int y)
         {
             var args = new object[] { x, null };
-            APICaller.CallAPI("UnlockNeareastVehicle", args);
+            var result = (bool) APICaller.CallAPI("UnlockNeareastVehicle", args);
             y = (int)args[1];
+            return result;
         }
     }
 }

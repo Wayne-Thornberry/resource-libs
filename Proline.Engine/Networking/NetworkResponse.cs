@@ -2,7 +2,7 @@
 
 namespace Proline.Engine.Networking
 {
-    public class NetworkResponse
+    internal class NetworkResponse
     {
         public NetworkHeader Header { get; set; }
         public MethodResult Result { get; set; }

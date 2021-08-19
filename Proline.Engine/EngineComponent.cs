@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using Proline.Engine.Client.Data;
 
+using Proline.Engine.Data;
 using Proline.Engine.Framework;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Engine.Client
+namespace Proline.Engine
 {
     public enum ComponentStatus
     {
@@ -29,11 +29,11 @@ namespace Proline.Engine.Client
             return _apiActions.ContainsKey(apiName);
         }
 
-        internal void CallAPI(string apiName, object[] inputParameters)
+        internal object CallAPI(string apiName, object[] inputParameters)
         { 
             if (_status != 2) throw new Exception("Component not started");
-            if (!_apiActions.ContainsKey(apiName)) return;
-            _apiActions[apiName].Invoke(_simpleComponent, inputParameters);
+            if (!_apiActions.ContainsKey(apiName)) return null;
+           return _apiActions[apiName].Invoke(_simpleComponent, inputParameters);
         }
 
         private ComponentDetails _details;

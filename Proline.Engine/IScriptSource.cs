@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace Proline.Engine.Client
+namespace Proline.Engine
 {
     public interface IScriptSource
     {

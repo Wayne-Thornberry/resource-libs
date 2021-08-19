@@ -1,9 +1,9 @@
 ﻿
 using Newtonsoft.Json;
-using Proline.Engine.Client.Data;
+using Proline.Engine.Data;
 using System;
 
-namespace Proline.Engine.Client
+namespace Proline.Engine
 {
     internal static class EngineConfiguration
     {

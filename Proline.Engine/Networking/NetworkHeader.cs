@@ -2,7 +2,7 @@
 
 namespace Proline.Engine.Networking
 {
-    public class NetworkHeader
+    internal class NetworkHeader
     {
         public string Guid { get; set; }
         public DateTime DateCreated { get; set; }

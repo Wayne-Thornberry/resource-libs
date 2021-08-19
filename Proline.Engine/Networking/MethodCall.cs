@@ -1,6 +1,6 @@
 ﻿namespace Proline.Engine.Networking
 {
-    public class MethodCall
+    internal class MethodCall
     {
         public string ComponentName { get; set; }
         public string MethodName { get; set; }

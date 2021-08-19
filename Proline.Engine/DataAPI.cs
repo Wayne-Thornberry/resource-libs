@@ -1,6 +1,6 @@
 ﻿
 
-namespace Proline.Engine.Client
+namespace Proline.Engine
 {
     public static class DataAPI
     { //// Provides methods to interact with the data files on the client, loading, reading, formatting, 

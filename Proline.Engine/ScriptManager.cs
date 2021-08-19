@@ -1,8 +1,6 @@
 ﻿
 using Newtonsoft.Json;
-using Proline.Engine.Client;
-using Proline.Engine.Client.Data;
-
+using Proline.Engine.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +35,7 @@ namespace Proline.Engine
         internal static void Initialize()
         {
             if (EngineStatus.IsScriptsInitialized) return;
+            InsertScriptAssemblies(EngineConfiguration.GetScripts());
             var sm = GetInstance();
              
             ScriptCache sc = ScriptCache.GetInstance();
@@ -53,7 +52,6 @@ namespace Proline.Engine
                     var type = assembly.GetType(t);
                     sc.CacheScriptType(type);
                 }
-                EngineAccess.StartNewScript(item.StartupScript, null);
             }
             EngineStatus.IsScriptsInitialized = true;
         }

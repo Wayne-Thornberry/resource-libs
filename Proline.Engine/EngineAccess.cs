@@ -10,18 +10,18 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Engine.Client
+namespace Proline.Engine
 {
     public static class EngineAccess
     {
         private static int _timeout = 1000;
 
-        public static async Task<NetworkResponse> ExecuteComponentAPI(SimpleComponent component, string methodName, params object[] args)
+        internal static async Task<NetworkResponse> ExecuteComponentAPI(SimpleComponent component, string methodName, params object[] args)
         { 
             return await ExecuteServerMethod(component.Name, methodName, args);
         }
 
-        public static async Task<NetworkResponse> ExecuteServerMethod(string componentName, string methodName, params object[] args)
+        internal static async Task<NetworkResponse> ExecuteServerMethod(string componentName, string methodName, params object[] args)
         {
             var nm = NetworkManager.GetInstance();
             var guid = Guid.NewGuid().ToString();
@@ -45,7 +45,7 @@ namespace Proline.Engine.Client
             return response;
         }
 
-        public static async Task<NetworkResponse> ExecuteMethod(string componentName, string methodName, params object[] args)
+        internal static async Task<NetworkResponse> ExecuteMethod(string componentName, string methodName, params object[] args)
         {
             var nm = NetworkManager.GetInstance();
             var guid = Guid.NewGuid().ToString();

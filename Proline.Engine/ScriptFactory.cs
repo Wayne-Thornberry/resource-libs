@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Engine.Client
+namespace Proline.Engine
 {
     internal static class ScriptFactory
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace Proline.Engine.Client
+namespace Proline.Engine
 {
     public class Log
     {

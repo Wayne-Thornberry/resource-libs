@@ -1,4 +1,5 @@
-﻿using Proline.Engine.Client;
+﻿
+using Proline.Engine;
 using Proline.Engine.Framework;
 using System;
 using System.Collections.Generic;
@@ -53,10 +54,11 @@ namespace Proline.Example.Client.Components
 
 
         [ComponentAPI]
-        public void UnlockNeareastVehicle(int x, out int y)
+        public bool UnlockNeareastVehicle(int x, out int y)
         {
             Debugger.LogDebug("It seems to have worked");
             y = 100;
+            return true;
         }
     }
 }

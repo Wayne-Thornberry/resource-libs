@@ -1,7 +1,6 @@
-﻿using Proline.Engine.Client; 
-using Proline.Engine.Framework;
+﻿using Proline.Engine.Framework;
 
-namespace Proline.Engine.Core
+namespace Proline.Engine
 {
     public abstract class GameScript : LevelScript
     {

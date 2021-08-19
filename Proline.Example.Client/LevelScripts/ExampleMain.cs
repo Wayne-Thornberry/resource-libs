@@ -1,4 +1,5 @@
-﻿using Proline.Engine.Client;
+﻿
+using Proline.Engine;
 using Proline.Engine.Framework;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,8 @@ namespace Proline.Example.Client.LevelScripts
             Debugger.LogDebug(this, " Script executed");
 
 
-            ExampleAPI.UnlockNeareastVehicle(3, out var x);
+            var result = ExampleAPI.UnlockNeareastVehicle(3, out var x);
+            Debugger.LogDebug(result);
             Debugger.LogDebug(x);
         }
     }

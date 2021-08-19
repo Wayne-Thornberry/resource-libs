@@ -3,7 +3,7 @@ using System;
 
 namespace Proline.Engine.Networking
 {
-    public class NetworkRequest
+    internal class NetworkRequest
     {  
         public NetworkHeader Header { get; set; }
         public MethodCall Call { get; set; }

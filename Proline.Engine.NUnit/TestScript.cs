@@ -1,6 +1,4 @@
-﻿
-using Proline.Example.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,37 +7,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Proline.Engine.ConsoleApp
+namespace Proline.Engine.NUnit
 {
-    class Program : IScriptSource
+    internal class TestScript : IScriptSource
     {
         private static List<Func<Task>> _ticks;
 
-        public Program()
+        public TestScript()
         {
             _ticks = new List<Func<Task>>(); 
-        }
-
-        static void Main(string[] args)
-        {
-            var program = new Program();
-           var service =  new EngineService(program);
-            service.Initialize();
-            service.StartAllComponents();
-            service.StartStartupScripts();
-            var thread = new Thread(e=> {
-                while (true)
-                {
-                    if (_ticks != null) continue;
-                    foreach (var item in _ticks)
-                    {
-                        item.Invoke();
-                    }
-                }
-            });
-            thread.Start();
-            Console.ReadKey();
-        }
+        } 
 
         private static void X(string v, params object[] args)
         {

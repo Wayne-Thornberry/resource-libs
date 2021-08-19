@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Proline.Engine.Networking
 {
-    public class NetworkManager
+    internal class NetworkManager
     {
         private static NetworkManager _instance;
         public const string NetworkRequestListenerHandle = "networkRequestListener";
