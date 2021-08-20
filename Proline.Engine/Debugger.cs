@@ -9,32 +9,39 @@ namespace Proline.Engine
 {
     public static class Debugger
     {
-        public static void LogError(object data)
+        public static void LogError(object data, bool replicate = false)
         {
             if (!EngineConfiguration.IsDebugEnabled()) return;
             var log = new Log();
-            log.LogError(data);
+            var entry = log.LogError(data);
+            F8Console.WriteLine(entry);
+            if (replicate && EngineConfiguration.EnvType == 0 && EngineStatus.IsEngineInitialized)
+                EngineAccess.ExecuteEngineMethodServer("LogError", "[Client] " + data.ToString());
         }
 
-        public static void LogWarn(object data)
+        public static void LogWarn(object data, bool replicate = false)
         {
             if (!EngineConfiguration.IsDebugEnabled()) return;
             var log = new Log();
-            log.LogWarn(data);
+            var entry = log.LogWarn(data);
+            F8Console.WriteLine(entry);
+            if (replicate && EngineConfiguration.EnvType == 0 && EngineStatus.IsEngineInitialized)
+                EngineAccess.ExecuteEngineMethodServer("LogWarn", "[Client] " + data.ToString());
         }
 
         public static void LogDebug(IEngineTracker trackedObject, object data)
         {
-            if (!EngineConfiguration.IsDebugEnabled()) return;
-            var log = new Log();
-            log.LogDebug($"[{trackedObject.Type}:{trackedObject.Name}] " + data);
+            LogDebug($"[{trackedObject.Type}:{trackedObject.Name}] " + data);
         }
 
-        public static void LogDebug(object data)
+        public static void LogDebug(object data, bool replicate = false)
         { 
             if (!EngineConfiguration.IsDebugEnabled()) return;
             var log = new Log();
-            log.LogDebug(data);
+            var entry = log.LogDebug(data);
+            F8Console.WriteLine(entry);
+            if (replicate && EngineConfiguration.EnvType == 0 && EngineStatus.IsEngineInitialized)
+                EngineAccess.ExecuteEngineMethodServer("LogDebug", "[Client] " + data.ToString());
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿
 using Newtonsoft.Json;
 using Proline.Engine.Data;
+using Proline.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,14 @@ namespace Proline.Engine
 {
     internal class ScriptManager
     {
-        private static LevelScriptAssembly[] _scriptAssemblies;
         private static ScriptManager _instance;
+        private LevelScriptAssembly[] _scriptAssemblies;
+        private List<LevelScript> _scripts;
+
+        ScriptManager()
+        {
+            _scripts = new List<LevelScript>();
+        }
 
         internal static ScriptManager GetInstance()
         { 
@@ -24,12 +31,22 @@ namespace Proline.Engine
 
        internal static void InsertScriptAssemblies(LevelScriptAssembly[] levelScriptAssemblies)
         {
-            _scriptAssemblies = levelScriptAssemblies;
+            GetInstance()._scriptAssemblies = levelScriptAssemblies;
         }
 
         internal static LevelScriptAssembly[] GetScriptAssemblies()
         {
-            return _scriptAssemblies;
+            return GetInstance()._scriptAssemblies;
+        }
+
+        internal static IEnumerable<LevelScript> GetScripts()
+        {
+            return GetInstance()._scripts;
+        }
+
+        internal static IEnumerable<LevelScript> GetScripts(string name)
+        {
+            return GetInstance()._scripts.Where(e => e.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
 
         internal static void Initialize()
@@ -54,6 +71,16 @@ namespace Proline.Engine
                 }
             }
             EngineStatus.IsScriptsInitialized = true;
+        }
+
+        internal static void UnregisterScript(LevelScript script)
+        {
+            GetInstance()._scripts.Remove(script);
+        }
+
+        internal static void RegisterScript(LevelScript script)
+        {
+            GetInstance()._scripts.Add(script);
         }
     }
 }

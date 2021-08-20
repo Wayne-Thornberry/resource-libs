@@ -25,6 +25,16 @@ namespace Proline.Engine
 
             _executingResource = new CitizenResource(executingResource);
 
+            // If the engine is in client mode
+            if(EngineConfiguration.EnvType == 0)
+            {
+
+            }
+            else
+            {
+
+            }
+
             ExtensionManager.Initialize();
             ComponentManager.Initialize();
             ScriptManager.Initialize();
@@ -80,6 +90,33 @@ namespace Proline.Engine
             var cm = ComponentManager.GetInstance();
             var component = cm.GetComponent(componentName);
             return component.GetAPI();
+        }
+
+        public static object ExecuteEngineMethod(string methodName, params object[] args)
+        {
+            Debugger.LogDebug("Called Engine event " + methodName);
+            switch (methodName)
+            {
+                case "LogDebug": 
+                    Debugger.LogDebug(args[0]);
+                    return null;
+                    break;
+                case "LogError":
+                    Debugger.LogError(args[0]);
+                    return null;
+                    break;
+                case "LogWarn":
+                    Debugger.LogWarn(args[0]);
+                    return null;
+                    break;
+                case "ExecuteComponentControl":
+                    var componentNAme = args[0].ToString();
+                    var apiName = args[1].ToString();
+                    var list = JsonConvert.DeserializeObject<object[]>(args[2].ToString());
+                    return APICaller.CallAPI(apiName, list.ToArray()); 
+                default:
+                    return null;
+            }
         }
 
         public static object ExecuteComponentControl(string componentName, string control, object[] args)

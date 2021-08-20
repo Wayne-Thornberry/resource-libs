@@ -21,6 +21,50 @@ namespace Proline.Engine
             return await ExecuteServerMethod(component.Name, methodName, args);
         }
 
+        public static async Task<T> ExecuteEngineMethodServer<T>(string methodName, params object[] args)
+        {
+            var response = await ExecuteEngineMethodServerI("ExecuteComponentControl", "", methodName, args);
+            if (response.Result.ResultValue == null) return default;
+            return (T)Convert.ChangeType(response.Result.ResultValue, typeof(T));
+        }
+
+        public static async Task ExecuteEngineMethodServer(string methodName, params object[] args)
+        {
+            var response = await ExecuteEngineMethodServerI(methodName, args);
+        }
+
+        public static async Task<T> ExecuteServerMethod<T>(string methodName, params object[] args)
+        {
+            return await ExecuteEngineMethodServer<T>("ExecuteComponentControl", "", methodName, args);
+        }
+
+        public static async Task<T> ExecuteServerMethod<T>(string componentName, string methodName, params object[] args)
+        {
+            return await ExecuteEngineMethodServer<T>("ExecuteComponentControl", componentName, methodName, args);
+        }
+        internal static async Task<NetworkResponse> ExecuteEngineMethodServerI(string methodName, params object[] args)
+        {
+            var nm = NetworkManager.GetInstance();
+            var guid = Guid.NewGuid().ToString();
+            var request = nm.CreateAndInsertRequestI(guid, methodName, args);
+            request.Header.DateSent = DateTime.UtcNow;
+
+            var log = new Log();
+            var jsonArgs = JsonConvert.SerializeObject(args);
+            var requestParams = new EventRequestParams()
+            {
+                GUID = guid,
+                MethodName = methodName,
+                MethodArgs = jsonArgs,
+            };
+            var data = JsonConvert.SerializeObject(requestParams);
+            Debugger.LogDebug(data);
+            CitizenAccess.GetInstance().TriggerServerEvent(NetworkManager.NetworkRequestListenerHandle, guid, methodName, JsonConvert.SerializeObject(args));
+            NetworkResponse response = await MakeRequest(guid, request);
+
+            return response;
+        }
+
         internal static async Task<NetworkResponse> ExecuteServerMethod(string componentName, string methodName, params object[] args)
         {
             var nm = NetworkManager.GetInstance();
@@ -88,16 +132,10 @@ namespace Proline.Engine
                 request.Ticks++;
                 await CitizenAccess.GetInstance().Delay(0);
             }
-
-            Debugger.LogDebug("1");
-
             if (response == null)
             {
                 nm.CreateAndInsertResponse(guid, null);
             }
-
-
-            Debugger.LogDebug("1");
             nm.CompleteRequest(guid);
             return response;
         }
@@ -111,6 +149,17 @@ namespace Proline.Engine
                 extension.OnEngineAPICall("StartNewScript", scriptName, args);
             }
             ScriptFactory.CreateNewScript(scriptName, args);
+        }
+
+        public static void RequestScriptStop(string scriptName)
+        {
+            var em = ExtensionManager.GetInstance();
+            var extensions = em.GetExtensions();
+            foreach (var extension in extensions)
+            {
+                extension.OnEngineAPICall("StartNewScript", scriptName);
+            }
+            ScriptControl.StopExistingScript(scriptName);
         }
     }
 }

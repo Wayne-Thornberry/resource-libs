@@ -25,6 +25,7 @@
         public string StartupScript { get; set; }
         public bool DebugOnly { get; set; }
         public string[] ScriptClasses { get; set; }
+        public ScriptDetails[] Scripts { get; set; }
     }
 
     internal class EngineConfig
@@ -39,5 +40,6 @@
         public bool EnableDebug { get; set; }
         public string Args { get; set; }
         public string[] Assemblies { get; set; }
+        public int EnvType { get; set; }
     }
 }

@@ -9,6 +9,8 @@ namespace Proline.Engine
     {
         private static EngineConfig _config;
 
+        public static int EnvType { get; internal set; }
+
         public static ComponentDetails[] GetComponents()
         {
             LoadConfig();
@@ -23,6 +25,7 @@ namespace Proline.Engine
                 _config = JsonConvert.DeserializeObject<EngineConfig>(configJson);
                 if (_config.Extensions == null)
                     _config.Extensions = new ExtensionDetails[0];
+                EnvType = _config.EnvType;
             }
         }
 

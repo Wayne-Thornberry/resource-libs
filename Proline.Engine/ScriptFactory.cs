@@ -36,6 +36,7 @@ namespace Proline.Engine
                         var task = new Task(async () => {
                             try
                             {
+                                ScriptManager.RegisterScript(script);
                                 if (EngineConfiguration.IsEngineConsoleApp()) return;
                                 var em = ExtensionManager.GetInstance();
                                 var extensions = em.GetExtensions();
@@ -44,6 +45,7 @@ namespace Proline.Engine
                                     extension.OnScriptInitialized(script.Name);
                                 }
                                 await script.Execute(args);
+                                ScriptManager.UnregisterScript(script);
                             }
                             catch (Exception)
                             {
@@ -66,5 +68,6 @@ namespace Proline.Engine
             }
             return;
         }
+
     }
 }

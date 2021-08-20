@@ -21,7 +21,9 @@ namespace Proline.Engine
 
         internal APIKeyPair GetAPI(string apiName)
         {
-            return _apis[apiName];
+            if (_apis.ContainsKey(apiName))
+                return _apis[apiName];
+            return null;
         }
 
         internal static APIManager GetInstance()
@@ -29,6 +31,11 @@ namespace Proline.Engine
             if (_instance == null)
                 _instance = new APIManager();
             return _instance;
+        }
+
+        internal void RegisterAPI(string apiName)
+        {
+            _apis.Add(apiName, null);
         }
 
         internal void RegisterAPI(object source, MethodInfo item, string apiName)

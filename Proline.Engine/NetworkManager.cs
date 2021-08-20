@@ -88,6 +88,13 @@ namespace Proline.Engine
             return JsonConvert.SerializeObject(CreateAndInsertRequestI(guid,componentName,methodName, args));
         }
 
+        internal NetworkRequest CreateAndInsertRequestI(string guid, string methodName, params object[] args)
+        {
+            NetworkRequest request = CreateRequest(guid, methodName, args);
+            InsertRequest(guid, request);
+            return request;
+        }
+
         internal NetworkRequest CreateAndInsertRequestI(string guid, string componentName, string methodName, params object[] args)
         {
             NetworkRequest request = CreateRequest(guid, componentName, methodName, args);
@@ -99,6 +106,26 @@ namespace Proline.Engine
         {
             if (_requests.ContainsKey(guid)) throw new Exception();
             _requests.Add(guid, request);
+        }
+
+        private static NetworkRequest CreateRequest(string guid, string methodName, object[] args)
+        {
+            var header = new NetworkHeader()
+            {
+                Guid = guid,
+                DateCreated = DateTime.UtcNow,
+            };
+            var request = new NetworkRequest()
+            {
+                Header = header,
+                Call = new MethodCall
+                {
+                    MethodName = methodName,
+                    MethodArgs = args,
+                },
+                Exception = null,
+            };
+            return request;
         }
 
         private static NetworkRequest CreateRequest(string guid, string componentName, string methodName, object[] args)

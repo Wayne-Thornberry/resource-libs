@@ -55,6 +55,7 @@
     <Compile Include="DataAPI.cs" />
     <Compile Include="Data\DataFile.cs" />
     <Compile Include="Data\DataFileEntry.cs" />
+    <Compile Include="Data\ScriptDetails.cs" />
     <Compile Include="Debugger.cs" />
     <Compile Include="EngineAccess.cs" />
     <Compile Include="EngineComponent.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="ResourceCache.cs" />
     <Compile Include="ResourceFile.cs" />
     <Compile Include="ScriptCache.cs" />
+    <Compile Include="ScriptControl.cs" />
     <Compile Include="ScriptFactory.cs" />
     <Compile Include="ScriptManager.cs" />
   </ItemGroup>
