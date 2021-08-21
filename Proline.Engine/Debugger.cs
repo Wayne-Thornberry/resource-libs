@@ -11,7 +11,7 @@ namespace Proline.Engine
     {
         public static void LogError(object data, bool replicate = false)
         {
-            if (!EngineConfiguration.IsDebugEnabled()) return;
+            if (!EngineConfiguration.IsDebugEnabled) return;
             var log = new Log();
             var entry = log.LogError(data);
             F8Console.WriteLine(entry);
@@ -21,7 +21,7 @@ namespace Proline.Engine
 
         public static void LogWarn(object data, bool replicate = false)
         {
-            if (!EngineConfiguration.IsDebugEnabled()) return;
+            if (!EngineConfiguration.IsDebugEnabled) return;
             var log = new Log();
             var entry = log.LogWarn(data);
             F8Console.WriteLine(entry);
@@ -36,7 +36,7 @@ namespace Proline.Engine
 
         public static void LogDebug(object data, bool replicate = false)
         { 
-            if (!EngineConfiguration.IsDebugEnabled()) return;
+            if (!EngineConfiguration.IsDebugEnabled) return;
             var log = new Log();
             var entry = log.LogDebug(data);
             F8Console.WriteLine(entry);

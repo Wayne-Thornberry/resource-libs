@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-
+using Proline.Engine.Data;
 using Proline.Framework;
 using System;
 using System.Collections.Generic;
@@ -18,15 +18,39 @@ namespace Proline.Engine
             CitizenAccess.SetScriptSource(tickSubscriber);  
         }
 
-        public void Initialize(string executingResource = "")
+        public void Initialize(params string[] args)
         {
-            if (EngineStatus.IsEngineInitialized) throw new Exception("Cannot Initialize engine, engine already initilized");
-            PreLoadAssemblies();
+            try
+            { 
+                if (EngineStatus.IsEngineInitialized) throw new Exception("Cannot Initialize engine, engine already initilized");
 
-            _executingResource = new CitizenResource(executingResource);
+                var resourceName = args[0];
+                var envType = int.Parse(args[1]);
+                var isDebug = bool.Parse(args[2]);
 
-            // If the engine is in client mode
-            if(EngineConfiguration.EnvType == 0)
+                LoadConfig(isDebug);
+                LoadAssemblies();
+
+                InitializeExtensions();
+                InitializeComponents();
+                InitializeScripts();
+
+                SetupResource(resourceName);
+                RunEnvSpecificFunctions(envType);
+
+
+                EngineStatus.IsEngineInitialized = true;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+
+        private void RunEnvSpecificFunctions(int envType)
+        { 
+            if (envType == 0)
             {
 
             }
@@ -34,35 +58,98 @@ namespace Proline.Engine
             {
 
             }
+        }
 
-            ExtensionManager.Initialize();
-            ComponentManager.Initialize();
-            ScriptManager.Initialize();
+        private void LoadConfig(bool isDebugEnabled)
+        {
+            EngineConfiguration.LoadConfig();
+            EngineConfiguration.IsDebugEnabled = isDebugEnabled;
+        }
 
-            EngineStatus.IsEngineInitialized = true;
+        private void SetupResource(string executingResource)
+        {
+            _executingResource = new CitizenResource(executingResource);
+        }
+
+        private static void InitializeComponents()
+        {
+            if (EngineStatus.IsComponentsInitialized) return;
+            var _componentDetails = new List<ComponentDetails>(EngineConfiguration.Components);
+
+            if (_componentDetails != null)
+            {
+                var cm = ComponentManager.GetInstance();
+                foreach (var componentPath in _componentDetails)
+                {
+                    try
+                    {
+                        cm.InitializeComponent(componentPath);
+                    }
+                    catch (Exception e)
+                    {
+                        Debugger.LogDebug(e);
+                    }
+                }
+            }
+            EngineStatus.IsComponentsInitialized = true;
+        }
+
+
+        private static void InitializeExtensions()
+        {
+            if (EngineStatus.IsExtensionsInitialized) return;
+            var _extensionDetails = new List<ExtensionDetails>(EngineConfiguration.Extensions);
+            var em = ExtensionManager.GetInstance();
+            if (_extensionDetails != null)
+            {
+                foreach (var extensionPath in _extensionDetails)
+                {
+                    try
+                    {
+                        em.InitializeExtension(extensionPath);
+                    }
+                    catch (Exception e)
+                    {
+                        Debugger.LogDebug(e);
+                    }
+                }
+
+            }
+            EngineStatus.IsExtensionsInitialized = true;
+        }
+
+        private static void InitializeScripts()
+        {
+            if (EngineStatus.IsScriptsInitialized) return;
+            //InsertScriptAssemblies();
+
+            var spm = ScriptPackageManager.GetInstance();
+            var sm = ScriptManager.GetInstance();
+            foreach (var item in EngineConfiguration.ScriptPackages)
+            {
+                try
+                { 
+                    var sp = ScriptPackage.Load(item); 
+                    spm.RegisterScriptPackage(sp);
+                }
+                catch (Exception e)
+                {
+                    Debugger.LogError(e.ToString(), true);
+                    throw;
+                }
+            }
+            Debugger.LogDebug(sm.GetRegisteredScriptCount() + " Scripts Registered");
+            EngineStatus.IsScriptsInitialized = true;
         }
 
         public void StartStartupScripts()
         {
-            try
-            { 
-                var sm = ScriptManager.GetScriptAssemblies();
-                foreach (var item in sm)
-                {
-                    EngineAccess.StartNewScript(item.StartupScript, null);
-                }
-            }
-            catch (Exception e)
-            {
-                Debugger.LogDebug(e.ToString());
-                
-            }
+            ScriptAccess.StartStartupScripts();
         }
 
-        private void PreLoadAssemblies()
-        {
-            var _assemblies = EngineConfiguration.GetAssemblies().ToArray();
-            foreach (var item in _assemblies)
+        private void LoadAssemblies()
+        { 
+            foreach (var item in EngineConfiguration.Assemblies)
             {
                 try
                 { 

@@ -17,13 +17,25 @@
       "SimpleComponentClass": "Proline.Example.Client.Components.CExampleComponent"
     }
   ],
-  "Scripts": [
+  "ScriptPackages": [
     {
       "Assembly": "Proline.Example.Client",
-      "StartupScript": "ExampleMain", 
+      "StartScripts": [
+
+        "ExampleMain"
+      ],
+      "ScriptConfigs": [
+        {
+          "ScriptName": "ExampleMain",
+          "DebugOnly": true,
+          "AddionalArgs": [
+            "Test"
+          ]
+        }
+      ],
       "ScriptClasses": [
         "Proline.Example.Client.LevelScripts.ExampleMain",
-        "Proline.Example.Client.LevelScripts.ExampleOptional",
+        "Proline.Example.Client.LevelScripts.ExampleOptional"
       ]
     }
   ],

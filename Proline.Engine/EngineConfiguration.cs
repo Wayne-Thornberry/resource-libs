@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Proline.Engine.Data;
 using System;
+using System.Collections.Generic;
 
 namespace Proline.Engine
 {
@@ -9,52 +10,19 @@ namespace Proline.Engine
     {
         private static EngineConfig _config;
 
-        public static int EnvType { get; internal set; }
+        public static bool IsDebugEnabled { get; internal set; }
+        public static ScriptPackageConfig[] ScriptPackages => _config.ScriptPackages;
+        public static int EnvType => _config.EnvType;
+        public static string[] Assemblies => _config.Assemblies;
+        public static ComponentDetails[] Components => _config.Components;
+        public static ExtensionDetails[] Extensions => _config.Extensions;
+        public static bool IsIsolated => _config.ConsoleLaunch;
+         
 
-        public static ComponentDetails[] GetComponents()
+        internal static void LoadConfig()
         {
-            LoadConfig();
-            return _config.Components;
-        }
-
-        private static void LoadConfig()
-        {
-            if(_config == null)
-            { 
-                var configJson = CitizenAccess.GetInstance().LoadResourceFile(CitizenAccess.GetInstance().GetCurrentResourceName(), "Proline.Engine.Script.json");
-                _config = JsonConvert.DeserializeObject<EngineConfig>(configJson);
-                if (_config.Extensions == null)
-                    _config.Extensions = new ExtensionDetails[0];
-                EnvType = _config.EnvType;
-            }
-        }
-
-        internal static LevelScriptAssembly[] GetScripts()
-        {
-            LoadConfig();
-            return _config.Scripts;
-        }
-
-        internal static ExtensionDetails[] GetExtensions()
-        { 
-            LoadConfig();
-            return _config.Extensions;
-        }
-
-        internal static string[] GetAssemblies()
-        {
-            LoadConfig();
-            return _config.Assemblies;
-        }
-
-        internal static bool IsDebugEnabled()
-        {
-            return _config.EnableDebug;
-        }
-
-        internal static bool IsEngineConsoleApp()
-        {
-            return _config.ConsoleLaunch;
-        }
+            var configJson = CitizenAccess.GetInstance().LoadResourceFile(CitizenAccess.GetInstance().GetCurrentResourceName(), "Proline.Engine.Script.json");
+            _config = JsonConvert.DeserializeObject<EngineConfig>(configJson);
+        }   
     }
 }

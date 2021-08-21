@@ -144,22 +144,18 @@ namespace Proline.Engine
         {
             var em = ExtensionManager.GetInstance();
             var extensions = em.GetExtensions();
-            foreach (var extension in extensions)
-            {
-                extension.OnEngineAPICall("StartNewScript", scriptName, args);
-            }
-            ScriptFactory.CreateNewScript(scriptName, args);
+            var sm = ScriptManager.GetInstance();
+            var wrapper = sm.GetScriptWrapper(scriptName);
+            wrapper.StartNew(args); 
         }
 
         public static void RequestScriptStop(string scriptName)
         {
             var em = ExtensionManager.GetInstance();
             var extensions = em.GetExtensions();
-            foreach (var extension in extensions)
-            {
-                extension.OnEngineAPICall("StartNewScript", scriptName);
-            }
-            ScriptControl.StopExistingScript(scriptName);
+            var sm = ScriptManager.GetInstance();
+            var wrapper = sm.GetScriptWrapper(scriptName);
+            wrapper.KillAllInstances();
         }
     }
 }

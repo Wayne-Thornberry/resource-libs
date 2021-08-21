@@ -28,28 +28,6 @@ namespace Proline.Engine
             return _instance;
         }
 
-        internal static void Initialize()
-        {
-            if (EngineStatus.IsExtensionsInitialized) return;
-            var _extensionDetails = new List<ExtensionDetails>(EngineConfiguration.GetExtensions());
-            var em = GetInstance();
-            if (_extensionDetails != null)
-            {
-                foreach (var extensionPath in _extensionDetails)
-                {
-                    try
-                    {
-                        em.InitializeExtension(extensionPath);
-                    }
-                    catch (Exception e)
-                    {
-                        Debugger.LogDebug(e);
-                    }
-                }
-
-            }
-            EngineStatus.IsExtensionsInitialized = true;
-        }
 
         internal void InitializeExtension(ExtensionDetails extensionPath)
         {

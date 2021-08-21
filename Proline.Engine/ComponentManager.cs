@@ -26,7 +26,7 @@ namespace Proline.Engine
 
         internal void InitializeComponent(ComponentDetails componentDetails)
         {
-            if (!EngineConfiguration.IsDebugEnabled() && componentDetails.DebugOnly) throw new Exception("Component cannot be started, debug not enabled");
+            if (!EngineConfiguration.IsDebugEnabled && componentDetails.DebugOnly) throw new Exception("Component cannot be started, debug not enabled");
             if (componentDetails == null) throw new Exception("Component path null or empty");
             if (_components.ContainsKey(componentDetails.ComponentName)) throw new Exception("Component by that path already exists");
             var component = new EngineComponent(componentDetails);
@@ -49,29 +49,6 @@ namespace Proline.Engine
         internal IEnumerable<EngineComponent> GetComponents()
         {
             return _components.Values;
-        }
-
-        internal static void Initialize()
-        {
-            if (EngineStatus.IsComponentsInitialized) return;
-           var  _componentDetails = new List<ComponentDetails>(EngineConfiguration.GetComponents());
-
-            if (_componentDetails != null)
-            {
-                var cm = ComponentManager.GetInstance();
-                foreach (var componentPath in _componentDetails)
-                {
-                    try
-                    {
-                        cm.InitializeComponent(componentPath);
-                    }
-                    catch (Exception e)
-                    {
-                        Debugger.LogDebug(e);
-                    }
-                }
-            }
-            EngineStatus.IsComponentsInitialized = true;
         }
        
 

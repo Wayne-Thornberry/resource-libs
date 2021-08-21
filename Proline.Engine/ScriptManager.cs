@@ -13,13 +13,14 @@ namespace Proline.Engine
 {
     internal class ScriptManager
     {
-        private static ScriptManager _instance;
-        private LevelScriptAssembly[] _scriptAssemblies;
-        private List<LevelScript> _scripts;
+        private static ScriptManager _instance; 
+        private Dictionary<string, ScriptPackage> _scriptPackages;
+        private Dictionary<string, ScriptWrapper> _scriptWrappers;
 
-        ScriptManager()
+        private ScriptManager()
         {
-            _scripts = new List<LevelScript>();
+            _scriptWrappers = new Dictionary<string, ScriptWrapper>();
+            _scriptPackages = new Dictionary<string, ScriptPackage>();  
         }
 
         internal static ScriptManager GetInstance()
@@ -27,60 +28,52 @@ namespace Proline.Engine
             if (_instance == null)
                 _instance = new ScriptManager();
             return _instance;
-        }
-
-       internal static void InsertScriptAssemblies(LevelScriptAssembly[] levelScriptAssemblies)
+        } 
+         
+        internal void RegisterScript(string scriptName, ScriptPackage sp)
         {
-            GetInstance()._scriptAssemblies = levelScriptAssemblies;
-        }
 
-        internal static LevelScriptAssembly[] GetScriptAssemblies()
-        {
-            return GetInstance()._scriptAssemblies;
-        }
-
-        internal static IEnumerable<LevelScript> GetScripts()
-        {
-            return GetInstance()._scripts;
-        }
-
-        internal static IEnumerable<LevelScript> GetScripts(string name)
-        {
-            return GetInstance()._scripts.Where(e => e.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-        }
-
-        internal static void Initialize()
-        {
-            if (EngineStatus.IsScriptsInitialized) return;
-            InsertScriptAssemblies(EngineConfiguration.GetScripts());
-            var sm = GetInstance();
-             
-            ScriptCache sc = ScriptCache.GetInstance();
-
-            var s = ScriptManager.GetScriptAssemblies();
-            Debugger.LogDebug("Loaded Script Libraries File");
-            Debugger.LogDebug("Library count: " + s.Length);
-            foreach (var item in s)
+            try
             {
-                Debugger.LogDebug(item.StartupScript);
-                var assembly = Assembly.Load(item.Assembly);
-                foreach (var t in item.ScriptClasses)
-                {
-                    var type = assembly.GetType(t);
-                    sc.CacheScriptType(type);
-                }
+                _scriptPackages.Add(scriptName, sp);
+                _scriptWrappers.Add(scriptName, sp.GetScriptWrapper(scriptName));
             }
-            EngineStatus.IsScriptsInitialized = true;
+            catch (ArgumentException e)
+            {
+
+            }
+            catch (Exception e)
+            {
+                throw;
+            } 
         }
 
-        internal static void UnregisterScript(LevelScript script)
+        internal int GetRegisteredScriptCount()
         {
-            GetInstance()._scripts.Remove(script);
+            return _scriptPackages.Count;
         }
 
-        internal static void RegisterScript(LevelScript script)
+        internal void UnRegisterScript(string scriptName)
         {
-            GetInstance()._scripts.Add(script);
+
+            try
+            {
+                _scriptPackages.Remove(scriptName);
+                _scriptWrappers.Remove(scriptName);
+            }
+            catch (ArgumentException e)
+            {
+
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        internal ScriptWrapper GetScriptWrapper(string scriptName)
+        {
+            return _scriptWrappers[scriptName];
         }
     }
 }

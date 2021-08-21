@@ -99,7 +99,7 @@ namespace Proline.Engine
 
         public async Task Tick()
         {
-            if (EngineConfiguration.IsEngineConsoleApp()) return;
+            if (EngineConfiguration.IsIsolated) return;
             if (_status == 2)
             {
                     foreach (var item in _scripts)
@@ -134,12 +134,12 @@ namespace Proline.Engine
                 throw new Exception("Component cannot be started, component not ready or stopped");
             if (_handler != null)
             {
-                if (!EngineConfiguration.IsEngineConsoleApp())
+                if (!EngineConfiguration.IsIsolated)
                     _handler.OnComponentStart();
             }
             if (_simpleComponent != null)
             {
-                if(!EngineConfiguration.IsEngineConsoleApp())
+                if(!EngineConfiguration.IsIsolated)
                     _simpleComponent.OnComponentStart();
             }
             _status = 2; // Started;

@@ -3,7 +3,7 @@
 
 namespace Proline.Engine
 {
-    public class Log
+    internal class Log
     {
 
         public string LogError(object data)

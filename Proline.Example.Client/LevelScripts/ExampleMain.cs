@@ -13,7 +13,7 @@ namespace Proline.Example.Client.LevelScripts
     {
         public override async Task Execute(params object[] args)
         {
-            Debugger.LogDebug(this, " Script executed");
+            Debugger.LogDebug(this, " Script executed" + args[0]);
 
 
             var result = ExampleAPI.UnlockNeareastVehicle(3, out var x);

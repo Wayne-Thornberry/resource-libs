@@ -52,10 +52,8 @@
     <Compile Include="ComponentAccess.cs" />
     <Compile Include="ComponentControl.cs" />
     <Compile Include="ComponentManager.cs" />
-    <Compile Include="DataAPI.cs" />
     <Compile Include="Data\DataFile.cs" />
     <Compile Include="Data\DataFileEntry.cs" />
-    <Compile Include="Data\ScriptDetails.cs" />
     <Compile Include="Debugger.cs" />
     <Compile Include="EngineAccess.cs" />
     <Compile Include="EngineComponent.cs" />
@@ -66,7 +64,6 @@
     <Compile Include="ExtensionManager.cs" />
     <Compile Include="F8Console.cs" />
     <Compile Include="GameScript.cs" />
-    <Compile Include="InputParameters.cs" />
     <Compile Include="IScriptSource.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="LogEntry.cs" />
@@ -83,10 +80,12 @@
     <Compile Include="CitizenResource.cs" />
     <Compile Include="ResourceCache.cs" />
     <Compile Include="ResourceFile.cs" />
-    <Compile Include="ScriptCache.cs" />
-    <Compile Include="ScriptControl.cs" />
-    <Compile Include="ScriptFactory.cs" />
     <Compile Include="ScriptManager.cs" />
+    <Compile Include="ScriptTaskManager.cs" />
+    <Compile Include="ScriptPackage.cs" />
+    <Compile Include="ScriptWrapper.cs" />
+    <Compile Include="ScriptAccess.cs" />
+    <Compile Include="ScriptPackageManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Proline.Framework\Proline.Framework.csproj">

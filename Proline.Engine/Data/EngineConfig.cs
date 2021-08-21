@@ -19,13 +19,20 @@
         public bool DebugOnly { get; set; }
     }
 
-    internal class LevelScriptAssembly
+    internal class ScriptConfig
+    {
+        public string ScriptName { get; set; }
+        public bool DebugOnly { get; set; } 
+        public object[] AddionalArgs { get; set; }
+    }
+
+    internal class ScriptPackageConfig
     {
         public string Assembly { get; set; }
-        public string StartupScript { get; set; }
+        public string[] StartScripts { get; set; }
         public bool DebugOnly { get; set; }
         public string[] ScriptClasses { get; set; }
-        public ScriptDetails[] Scripts { get; set; }
+        public ScriptConfig[] ScriptConfigs { get; set; }
     }
 
     internal class EngineConfig
@@ -34,7 +41,7 @@
         public bool ConsoleLaunch { get; set; }
         public ExtensionDetails[] Extensions { get; set; }
         public ComponentDetails[] Components { get; set; }
-        public LevelScriptAssembly[] Scripts { get; set; }
+        public ScriptPackageConfig[] ScriptPackages { get; set; }
         public string CentralEndpoint { get; set; }
         public long MasterKey { get; set; }
         public bool EnableDebug { get; set; }
