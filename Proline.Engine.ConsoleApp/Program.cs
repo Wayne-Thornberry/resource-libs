@@ -27,7 +27,7 @@ namespace Proline.Engine.ConsoleApp
            var service =  new EngineService(program);
             service.Initialize("ConsoleApp", "0", "true");
             service.StartAllComponents();
-            service.StartStartupScripts();
+            //service.StartStartupScripts();
             var thread = new Thread(e=> {
                 while (true)
                 {

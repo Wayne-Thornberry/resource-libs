@@ -12,10 +12,12 @@ namespace Proline.Engine
     {
         private static APIManager _instance;
         private Dictionary<string, APIKeyPair> _apis;
+        private Dictionary<string, EngineComponent> _apisAndComponents;
 
         public APIManager()
         {
             _apis = new Dictionary<string, APIKeyPair>();
+            _apisAndComponents = new Dictionary<string, EngineComponent>();
         }
 
 
@@ -41,6 +43,13 @@ namespace Proline.Engine
         internal void RegisterAPI(object source, MethodInfo item, string apiName)
         { 
             _apis.Add(apiName, new APIKeyPair(source, item));
+        }
+
+        internal void RegisterAPI(string apiName, EngineComponent component)
+        {
+            Debugger.LogDebug("Component " + component.Name + " Loaded API" + apiName);
+            //_apisAndComponents.Add(apiName, component);
+            _apis.Add(apiName, component.GetAPI(apiName));
         }
     }
 }

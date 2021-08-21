@@ -13,14 +13,12 @@ namespace Proline.Engine
 {
     internal class ScriptManager
     {
-        private static ScriptManager _instance; 
-        private Dictionary<string, ScriptPackage> _scriptPackages;
+        private static ScriptManager _instance;  
         private Dictionary<string, ScriptWrapper> _scriptWrappers;
 
         private ScriptManager()
         {
-            _scriptWrappers = new Dictionary<string, ScriptWrapper>();
-            _scriptPackages = new Dictionary<string, ScriptPackage>();  
+            _scriptWrappers = new Dictionary<string, ScriptWrapper>(); 
         }
 
         internal static ScriptManager GetInstance()
@@ -28,38 +26,24 @@ namespace Proline.Engine
             if (_instance == null)
                 _instance = new ScriptManager();
             return _instance;
-        } 
-         
-        internal void RegisterScript(string scriptName, ScriptPackage sp)
+        }  
+
+        internal void RegisterScript(ScriptWrapper scriptName)
+        {
+            _scriptWrappers.Add(scriptName.Name, scriptName);
+        }
+
+        internal int GetScriptCount()
+        {
+            return _scriptWrappers.Count;
+        }
+
+        internal void UnregisterScript(ScriptWrapper scriptName)
         {
 
             try
-            {
-                _scriptPackages.Add(scriptName, sp);
-                _scriptWrappers.Add(scriptName, sp.GetScriptWrapper(scriptName));
-            }
-            catch (ArgumentException e)
-            {
-
-            }
-            catch (Exception e)
-            {
-                throw;
-            } 
-        }
-
-        internal int GetRegisteredScriptCount()
-        {
-            return _scriptPackages.Count;
-        }
-
-        internal void UnRegisterScript(string scriptName)
-        {
-
-            try
-            {
-                _scriptPackages.Remove(scriptName);
-                _scriptWrappers.Remove(scriptName);
+            { 
+                _scriptWrappers.Remove(scriptName.Name);
             }
             catch (ArgumentException e)
             {

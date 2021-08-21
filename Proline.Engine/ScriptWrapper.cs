@@ -21,16 +21,24 @@ namespace Proline.Engine
         private string _name;
         private object[] _addionalArgs;
         private int _status;
-        private bool _isDebug; 
+        private bool _isDebug;
 
-        internal ScriptWrapper(string assembly, string classType, ScriptConfig details)
+        public string Name => _name;
+
+        private ScriptWrapper(string name, string assembly, string classType, ScriptConfig details)
         {
             //_name = details.Name;
             _assembly = assembly;
             _class = classType;
 
+            _name = name;
             _addionalArgs = details.AddionalArgs;
             _isDebug = details.DebugOnly;
+        }
+
+        internal static ScriptWrapper CreateNewWrapper(string name, Assembly assembly, Type type, ScriptConfig details)
+        { 
+            return new ScriptWrapper(name, assembly.FullName, type.FullName, details); 
         }
 
         internal LevelScript InitializeNewInstance(object[] args)

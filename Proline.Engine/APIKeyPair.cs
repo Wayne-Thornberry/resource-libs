@@ -1,21 +1,27 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace Proline.Engine
 {
     internal class APIKeyPair
     {
-        private object engineComponent;
-        private MethodInfo item;
+        private object _source;
+        private MethodInfo _item;
+        private bool _debugOnly;
 
-        public APIKeyPair(object engineComponent, MethodInfo item)
+        public APIKeyPair(object source, MethodInfo item, bool debugOnly = false)
         {
-            this.engineComponent = engineComponent;
-            this.item = item;
+            _source = source;
+            _item = item;
+            _debugOnly = debugOnly;
         }
+
+        public string Name => _item.Name;
 
         internal object Invoke(params object[] args)
         {
-           return item.Invoke(engineComponent, args);
+            if (_debugOnly && !EngineConfiguration.IsDebugEnabled) throw new Exception("Debug mode not enabled on debug only API");
+           return _item.Invoke(_source, args);
         }
     }
 }

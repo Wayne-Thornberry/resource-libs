@@ -93,15 +93,11 @@ namespace Proline.Engine
             foreach (var classPath in _scriptClasses)
             {
                 var type = assembly.GetType(classPath);
-                if (type != null)
-                {
-                    // if type has custom attributes like name, take that instead
-                    var scriptName = type.Name;
-                    var scriptConfig = HasCustomConfig(scriptName) ? GetCustomConfig(scriptName) : new ScriptConfig();
-                    var wrapper = new ScriptWrapper(_assembly, classPath, scriptConfig);
-                    _scripts.Add(scriptName, wrapper);
-                    _loadedScriptCount++;
-                }
+                var scriptName = type.Name;
+                var scriptConfig = HasCustomConfig(scriptName) ? GetCustomConfig(scriptName) : new ScriptConfig();
+                var wrapper = ScriptWrapper.CreateNewWrapper(scriptName, assembly, type, scriptConfig);
+                _scripts.Add(wrapper.Name, wrapper);
+                _loadedScriptCount++; 
             }
             Debugger.LogDebug("Loaded " + _loadedScriptCount + " Scripts");
         }

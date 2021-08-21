@@ -22,18 +22,23 @@ namespace Proline.Engine
     internal class EngineComponent
     { 
         private string _name;
+        private string[] _scriptClasses;
+        private string _simpleComponentClass;
         private int _status;
+        private bool _isDebug;
+        private string _assembly;
+        private string _apiClass;
+        private string _handlerClass;
+        private string _controllerClass;
+        private string _commandClass;
 
-       
-
-        private ComponentDetails _details;
         private ComponentController _controller;
         private ComponentHandler _handler;
         private ComponentAPI _api;
         private ComponentCommands _commands;
         private List<ComponentScript> _scripts;
 
-        private Dictionary<string, MethodInfo> _apiActions;
+        private List<APIKeyPair> _apis;
         private Dictionary<string, MethodInfo> _controlActions;
         private Dictionary<string, MethodInfo> _commandActions;
         private long _ticks; 
@@ -42,14 +47,34 @@ namespace Proline.Engine
         public string Name => _name;
         public ComponentStatus Status => (ComponentStatus)_status;
 
-        public EngineComponent(ComponentDetails componentName)
+        public EngineComponent(ComponentDetails details)
         {
-            _details = componentName;
+            _isDebug = details.DebugOnly;
+            _assembly = details.Assembly;
+            _apiClass = details.APIClass;
+            _handlerClass = details.HandlerClass; 
+            _controllerClass = details.ControllerClass; 
+            _commandClass = details.CommandClass;
+            _name = details.ComponentName;
+            _scriptClasses = details.ScriptClasses;
+            _simpleComponentClass = details.SimpleComponentClass;
+
             _controlActions = new Dictionary<string, MethodInfo>();
             _commandActions = new Dictionary<string, MethodInfo>();
-            _apiActions = new Dictionary<string, MethodInfo>();
+            _apis = new List<APIKeyPair>();
             _scripts = new List<ComponentScript>();
             _status = 0; // Created not started
+        } 
+         
+
+        internal APIKeyPair GetAPI(string apiName)
+        {
+            foreach (var item in _apis)
+            {
+                if (item.Name.Equals(apiName))
+                    return item;
+            }
+            return null;
         }
 
         public void ExecuteCommand(string command, object[] args)
@@ -162,20 +187,19 @@ namespace Proline.Engine
         public void Load()
         {
             if (_status != 0) throw new Exception("Component has already loaded");
-            var assembly = Assembly.Load(_details.Assembly); 
-            _name = _details.ComponentName;
+            var assembly = Assembly.Load(_assembly); 
             var am = APIManager.GetInstance();
 
-            if (!string.IsNullOrEmpty(_details.SimpleComponentClass))
+            if (!string.IsNullOrEmpty(_simpleComponentClass))
             {
-                var controllerType = assembly.GetType(_details.SimpleComponentClass);
+                var controllerType = assembly.GetType(_simpleComponentClass);
                 _simpleComponent = CreateComponentObject<SimpleComponent>(controllerType);
                 var methods = controllerType.GetMethods()
                   .Where(m => m.GetCustomAttributes(typeof(ControllerControlAttribute), false).Length > 0)
                   .ToArray();
                 foreach (var item in methods)
                 {
-                    Debugger.LogDebug(item.Name);
+                   // Debugger.LogDebug(item.Name);
                     _controlActions.Add(item.Name, item);
                 }
                 var methods2 = controllerType.GetMethods()
@@ -183,7 +207,7 @@ namespace Proline.Engine
                   .ToArray();
                 foreach (var item in methods2)
                 {
-                    Debugger.LogDebug(item.Name);
+                   // Debugger.LogDebug(item.Name);
                     _commandActions.Add(item.Name, item);
                 }
                 var methods3 = controllerType.GetMethods()
@@ -191,17 +215,17 @@ namespace Proline.Engine
                   .ToArray();
                 foreach (var item in methods3)
                 {
-                    Debugger.LogDebug(item.Name);
-                    _apiActions.Add(item.Name, item);
-                    am.RegisterAPI(_simpleComponent, item, item.Name);
+                    //Debugger.LogDebug(item.Name);
+                    _apis.Add(new APIKeyPair(_simpleComponent, item));
+                    //am.RegisterAPI(_simpleComponent, item, item.Name);
                 }
             }
             else
             {
 
-                if (!string.IsNullOrEmpty(_details.APIClass))
+                if (!string.IsNullOrEmpty(_apiClass))
                 {
-                    var api = assembly.GetType(_details.APIClass);
+                    var api = assembly.GetType(_apiClass);
                     if (api != null)
                     {
                         _api = CreateComponentObject<ComponentAPI>(api);
@@ -211,15 +235,15 @@ namespace Proline.Engine
                         foreach (var item in methods3)
                         {
                             Debugger.LogDebug(item.Name);
-                            _apiActions.Add(item.Name, item);
-                            am.RegisterAPI(_api, item, item.Name);
+                            _apis.Add(new APIKeyPair(_api, item)); 
+                            //am.RegisterAPI(_api, item, item.Name);
                         }
                     } 
                 }
 
-                if (!string.IsNullOrEmpty(_details.CommandClass))
+                if (!string.IsNullOrEmpty(_commandClass))
                 {
-                    var commandType = assembly.GetType(_details.CommandClass);
+                    var commandType = assembly.GetType(_commandClass);
                     if (commandType != null)
                     {
                         _commands = CreateComponentObject<ComponentCommands>(commandType);
@@ -229,15 +253,15 @@ namespace Proline.Engine
                           .ToArray();
                         foreach (var item in methods)
                         {
-                            Debugger.LogDebug(item);
+                            //Debugger.LogDebug(item);
                             _commandActions.Add(item.Name, item);
                         }
                     }
                 }
 
-                if (!string.IsNullOrEmpty(_details.HandlerClass))
+                if (!string.IsNullOrEmpty(_handlerClass))
                 {
-                    var handlerType = assembly.GetType(_details.HandlerClass);
+                    var handlerType = assembly.GetType(_handlerClass);
                     if (handlerType != null)
                     {
                         _handler = CreateComponentObject<ComponentHandler>(handlerType);
@@ -245,9 +269,9 @@ namespace Proline.Engine
                     }
                 }
 
-                if (!string.IsNullOrEmpty(_details.ControllerClass))
+                if (!string.IsNullOrEmpty(_controllerClass))
                 {
-                    var controllerType = assembly.GetType(_details.ControllerClass);
+                    var controllerType = assembly.GetType(_controllerClass);
                     if (controllerType != null)
                     {
                         _controller = CreateComponentObject<ComponentController>(controllerType);
@@ -256,15 +280,15 @@ namespace Proline.Engine
                           .ToArray();
                         foreach (var item in methods)
                         {
-                            Debugger.LogDebug(item);
+                            //Debugger.LogDebug(item);
                             _controlActions.Add(item.Name, item);
                         }
                     }
                 }
 
-                if (_details.ScriptClasses != null)
+                if (_scriptClasses != null)
                 {
-                    foreach (var item in _details.ScriptClasses)
+                    foreach (var item in _scriptClasses)
                     {
                         var controllerType = assembly.GetType(item);
                         var script = (ComponentScript)CreateComponentObject<ComponentScript>(controllerType);
@@ -275,6 +299,11 @@ namespace Proline.Engine
 
 
             _status = 1; // Ready Not Started
+        }
+
+        internal IEnumerable<string> GetAPIs()
+        {
+            return _apis.Select(e=>e.Name);
         }
 
         private T CreateComponentObject<T>(Type commandType)

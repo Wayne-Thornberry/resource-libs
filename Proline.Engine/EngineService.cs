@@ -33,6 +33,12 @@ namespace Proline.Engine
 
                 InitializeExtensions();
                 InitializeComponents();
+
+                // Create the components
+                // Register all apis from components
+                // Initialize all components
+
+
                 InitializeScripts();
 
                 SetupResource(resourceName);
@@ -79,11 +85,18 @@ namespace Proline.Engine
             if (_componentDetails != null)
             {
                 var cm = ComponentManager.GetInstance();
-                foreach (var componentPath in _componentDetails)
+                foreach (var componentDetails in _componentDetails)
                 {
+                    if (!EngineConfiguration.IsDebugEnabled && componentDetails.DebugOnly) throw new Exception("Component cannot be started, debug not enabled");
+                    if (componentDetails == null) throw new Exception("Component path null");
                     try
                     {
-                        cm.InitializeComponent(componentPath);
+                        if (cm.IsComponentRegistered(componentDetails.ComponentName)) throw new Exception("Component by that path already exists");
+                        var component = new EngineComponent(componentDetails);
+                        var em = ExtensionManager.GetInstance();
+                        var extensions = em.GetExtensions();
+                        component.Load();
+                        cm.RegisterComponent(component);
                     }
                     catch (Exception e)
                     {
@@ -138,7 +151,6 @@ namespace Proline.Engine
                     throw;
                 }
             }
-            Debugger.LogDebug(sm.GetRegisteredScriptCount() + " Scripts Registered");
             EngineStatus.IsScriptsInitialized = true;
         }
 

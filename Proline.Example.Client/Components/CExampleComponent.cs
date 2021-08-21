@@ -23,6 +23,7 @@ namespace Proline.Example.Client.Components
 
         public override void OnComponentStart()
         {
+            Debugger.LogDebug("Component started");
             //EngineAccess.ExecuteComponentAPI(this, "ExampleControl", new object[] { "X", "Y", "X" });
             base.OnComponentStart();
         }

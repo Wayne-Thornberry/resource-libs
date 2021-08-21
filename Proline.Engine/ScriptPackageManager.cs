@@ -36,11 +36,11 @@ namespace Proline.Engine
         internal void RegisterScriptPackage(ScriptPackage sp)
         {
             var sm = ScriptManager.GetInstance();
-            foreach (var scriptName in sp.GetScriptNames())
+            foreach (var wrapper in sp.GetScriptWrappers())
             {
                 try
                 {
-                    sm.RegisterScript(scriptName, sp);
+                    sm.RegisterScript(wrapper);
                 }
                 catch (ArgumentException e)
                 {
@@ -51,17 +51,18 @@ namespace Proline.Engine
                     throw;
                 }
             }
+            Debugger.LogDebug(sm.GetScriptCount() + " Scripts Registered");
             _packages.Add(sp);
         }
 
-        internal void UnRegisterScriptPackage(ScriptPackage sp)
+        internal void UnregisterScriptPackage(ScriptPackage sp)
         {
             var sm = ScriptManager.GetInstance();
-            foreach (var scriptName in sp.GetScriptNames())
+            foreach (var scriptName in sp.GetScriptWrappers())
             {
                 try
                 {
-                    sm.UnRegisterScript(scriptName);
+                    sm.UnregisterScript(scriptName);
                 }
                 catch (ArgumentException e)
                 {

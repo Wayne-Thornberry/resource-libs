@@ -56,5 +56,24 @@ namespace Proline.Engine
         {
             return _components[componentName];
         }
+
+        internal bool IsComponentRegistered(string componentName)
+        {
+            return _components.ContainsKey(componentName);
+        }
+
+        internal void RegisterComponent(EngineComponent component)
+        {
+            if (IsComponentRegistered(component.Name)) return; 
+            var apiManager = APIManager.GetInstance();
+            // Register its commands
+            // Register its handles
+
+            foreach (string apiName in component.GetAPIs())
+            {
+                apiManager.RegisterAPI(apiName, component);
+            }
+            _components.Add(component.Name, component);
+        }
     }
 }
