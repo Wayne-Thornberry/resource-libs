@@ -50,8 +50,7 @@ namespace Proline.Engine
                 {
                     throw;
                 }
-            }
-            Debugger.LogDebug(sm.GetScriptCount() + " Scripts Registered");
+            } 
             _packages.Add(sp);
         }
 

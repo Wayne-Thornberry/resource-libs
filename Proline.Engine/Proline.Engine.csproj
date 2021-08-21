@@ -46,10 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APICaller.cs" />
-    <Compile Include="APIKeyPair.cs" />
+    <Compile Include="ComponentAPI.cs" />
     <Compile Include="CitizenAccess.cs" />
     <Compile Include="APIManager.cs" />
-    <Compile Include="ComponentAccess.cs" />
+    <Compile Include="CommandManager.cs" />
+    <Compile Include="ComponentCommand.cs" />
     <Compile Include="ComponentControl.cs" />
     <Compile Include="ComponentManager.cs" />
     <Compile Include="Data\DataFile.cs" />
@@ -67,14 +68,14 @@
     <Compile Include="IScriptSource.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="LogEntry.cs" />
-    <Compile Include="Networking\EventRequestParams.cs" />
-    <Compile Include="Networking\EventResponseParams.cs" />
-    <Compile Include="Networking\MethodCall.cs" />
-    <Compile Include="Networking\MethodResult.cs" />
-    <Compile Include="Networking\NetworkHeader.cs" />
+    <Compile Include="Data\EventRequestParams.cs" />
+    <Compile Include="Data\EventResponseParams.cs" />
+    <Compile Include="Data\MethodCall.cs" />
+    <Compile Include="Data\MethodResult.cs" />
+    <Compile Include="Data\NetworkHeader.cs" />
     <Compile Include="NetworkManager.cs" />
-    <Compile Include="Networking\NetworkRequest.cs" />
-    <Compile Include="Networking\NetworkResponse.cs" />
+    <Compile Include="Data\NetworkRequest.cs" />
+    <Compile Include="Data\NetworkResponse.cs" />
     <Compile Include="Persistence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CitizenResource.cs" />
@@ -83,7 +84,7 @@
     <Compile Include="ScriptManager.cs" />
     <Compile Include="ScriptTaskManager.cs" />
     <Compile Include="ScriptPackage.cs" />
-    <Compile Include="ScriptWrapper.cs" />
+    <Compile Include="EngineScript.cs" />
     <Compile Include="ScriptAccess.cs" />
     <Compile Include="ScriptPackageManager.cs" />
   </ItemGroup>

@@ -23,11 +23,11 @@ namespace Proline.Engine.ConsoleApp
         static void Main(string[] args)
         {
             var program = new Program();
-            program.Test();
+            //program.Test();
            var service =  new EngineService(program);
             service.Initialize("ConsoleApp", "0", "true");
             service.StartAllComponents();
-            //service.StartStartupScripts();
+            service.StartStartupScripts();
             var thread = new Thread(e=> {
                 while (true)
                 {
@@ -41,31 +41,16 @@ namespace Proline.Engine.ConsoleApp
             thread.Start();
 
 
+            var task = Task.Run(async ()  =>  {
+                while (true)
+                {
+                    await service.Tick();
+                }
+            });
+
+
 
             Console.ReadKey();
-        }
-
-        private void Test()
-        {
-            var x = DateTime.Now;
-            doX(2, 2);
-            var y = DateTime.Now;
-            Console.WriteLine((y - x).ToString("ss'.'ffffff"));
-            var method = this.GetType().GetMethod("doX");
-            var x2 = DateTime.Now;
-            method.Invoke(this, new object[] { 2, 2 });
-            var y2 = DateTime.Now;
-            Console.WriteLine((y2 - x2).ToString("ss'.'ffffff"));
-        }
-
-        public int doX(int x, int y)
-        {
-            return x + y;
-        }
-
-        private static void X(string v, params object[] args)
-        {
-            throw new NotImplementedException();
         }
 
         public void AddTick(Func<Task> task)

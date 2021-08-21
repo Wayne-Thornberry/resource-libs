@@ -16,7 +16,7 @@ namespace Proline.Engine
     {
         private static int _timeout = 1000;
 
-        internal static async Task<NetworkResponse> ExecuteComponentAPI(SimpleComponent component, string methodName, params object[] args)
+        internal static async Task<NetworkResponse> ExecuteComponentAPI(AbstractComponent component, string methodName, params object[] args)
         { 
             return await ExecuteServerMethod(component.Name, methodName, args);
         }

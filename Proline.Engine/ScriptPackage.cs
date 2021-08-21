@@ -20,7 +20,7 @@ namespace Proline.Engine
         private string[] _startupScripts;
         private string _name;
 
-        private Dictionary<string, ScriptWrapper> _scripts; 
+        private Dictionary<string, EngineScript> _scripts; 
 
         private ScriptPackage(ScriptPackageConfig config)
         {
@@ -30,7 +30,7 @@ namespace Proline.Engine
             _scriptClasses = config.ScriptClasses != null ? config.ScriptClasses : new string[0];
             _startupScripts = config.StartScripts != null ? config.StartScripts : new string[0];
 
-            _scripts = new Dictionary<string, ScriptWrapper>();
+            _scripts = new Dictionary<string, EngineScript>();
         }
 
         internal void StartStartupScripts()
@@ -55,7 +55,7 @@ namespace Proline.Engine
             }
         }
 
-        internal ScriptWrapper GetScriptWrapper(string scriptName)
+        internal EngineScript GetScriptWrapper(string scriptName)
         {
             return _scripts[scriptName];
         }
@@ -78,7 +78,6 @@ namespace Proline.Engine
                 var assembly = Assembly.Load(config.Assembly);
                 var package = new ScriptPackage(config);
                 package.Load();
-                Debugger.LogDebug("Successfully loaded script package");
                 return package;
             }
             catch (Exception)
@@ -95,11 +94,10 @@ namespace Proline.Engine
                 var type = assembly.GetType(classPath);
                 var scriptName = type.Name;
                 var scriptConfig = HasCustomConfig(scriptName) ? GetCustomConfig(scriptName) : new ScriptConfig();
-                var wrapper = ScriptWrapper.CreateNewWrapper(scriptName, assembly, type, scriptConfig);
+                var wrapper = EngineScript.CreateNewScript(scriptName, assembly, type, scriptConfig);
                 _scripts.Add(wrapper.Name, wrapper);
                 _loadedScriptCount++; 
             }
-            Debugger.LogDebug("Loaded " + _loadedScriptCount + " Scripts");
         }
 
         internal IEnumerable<string> GetScriptNames()
@@ -107,7 +105,7 @@ namespace Proline.Engine
             return _scripts.Keys;
         }
 
-        internal IEnumerable<ScriptWrapper> GetScriptWrappers()
+        internal IEnumerable<EngineScript> GetScriptWrappers()
         {
             return _scripts.Values;
         }

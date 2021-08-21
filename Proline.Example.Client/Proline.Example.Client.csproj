@@ -41,7 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\CExampleComponent.cs" />
+    <Compile Include="Components\CExample\ExampleComponent.cs" />
+    <Compile Include="Components\CExample\ExampleComponentScript.cs" />
     <Compile Include="ExampleAPI.cs" />
     <Compile Include="Extensions\ExampleExtension.cs" />
     <Compile Include="LevelScripts\ExampleMain.cs" />

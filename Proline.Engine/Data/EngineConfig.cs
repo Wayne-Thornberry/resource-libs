@@ -9,12 +9,8 @@
     internal class ComponentDetails
     {
         public string Assembly { get; set; }
-        public string ComponentName { get; set; }
-        public string HandlerClass { get; set; }
-        public string CommandClass { get; set; }
-        public string ControllerClass { get; set; }
-        public string APIClass { get; set; }
-        public string SimpleComponentClass { get; set; }
+        public string ComponentName { get; set; } 
+        public string ComponentClass { get; set; }
         public string[] ScriptClasses { get; set; }
         public bool DebugOnly { get; set; }
     }

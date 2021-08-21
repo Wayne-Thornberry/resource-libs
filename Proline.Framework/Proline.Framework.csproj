@@ -43,18 +43,13 @@
   <ItemGroup>
     <Compile Include="ComponentAPIAttribute.cs" />
     <Compile Include="ComponentCommandAttribute.cs" />
-    <Compile Include="ComponentAPI.cs" />
-    <Compile Include="ComponentCommands.cs" />
-    <Compile Include="ComponentController.cs" />
     <Compile Include="ComponentScript.cs" />
     <Compile Include="ConfigurationManager.cs" />
-    <Compile Include="ControllerControlAttribute.cs" />
-    <Compile Include="ComponentHandler.cs" />
     <Compile Include="EngineExtension.cs" />
     <Compile Include="IEngineTracker.cs" />
     <Compile Include="LevelScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleComponent.cs" />
+    <Compile Include="AbstractComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proline.Engine
 {
-    public static class F8Console
+    internal static class F8Console
     {
         public static void Write(object obj)
         {

@@ -16,9 +16,8 @@ namespace Proline.Engine
             //return engine.DoesEntityExist(Header, handle, out exists);
         }
         public void LogDebug(object data)
-        {
-           
-            Debugger.LogDebug(data);
+        { 
+            Debugger.LogDebug(this, data);
             //var engine = (Engine)AppEnviroment.GetEnviorment();
             //return engine._Debugger.LogDebug(Header, data);
         }

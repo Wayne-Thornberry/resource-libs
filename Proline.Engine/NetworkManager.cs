@@ -22,7 +22,7 @@ namespace Proline.Engine
             _responses = new Dictionary<string, NetworkResponse>();
         }
 
-        public static NetworkManager GetInstance()
+        internal static NetworkManager GetInstance()
         {
             if (_instance == null)
                 _instance = new NetworkManager();

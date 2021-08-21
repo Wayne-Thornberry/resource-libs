@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Example.Client.Components
+namespace Proline.Example.Client.Components.CExample
 {
-    public class CExampleComponent : SimpleComponent
+    public class ExampleComponent : AbstractComponent
     {
         public override void OnComponentInitialized()
         {
@@ -23,8 +23,6 @@ namespace Proline.Example.Client.Components
 
         public override void OnComponentStart()
         {
-            Debugger.LogDebug("Component started");
-            //EngineAccess.ExecuteComponentAPI(this, "ExampleControl", new object[] { "X", "Y", "X" });
             base.OnComponentStart();
         }
 
@@ -39,14 +37,6 @@ namespace Proline.Example.Client.Components
 
         }
 
-        [ControllerControl]
-        public void ExampleControl(string x, string y, string z)
-        {
-            Debugger.LogDebug(x);
-            Debugger.LogDebug(y);
-            Debugger.LogDebug(z);
-        }
-
         [ComponentAPI]
         public int ExampleAPI()
         {
@@ -57,7 +47,7 @@ namespace Proline.Example.Client.Components
         [ComponentAPI]
         public bool UnlockNeareastVehicle(int x, out int y)
         {
-            Debugger.LogDebug("It seems to have worked");
+            Debugger.LogDebug(this, "It seems to have worked");
             y = 100;
             return true;
         }

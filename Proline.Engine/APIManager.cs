@@ -11,17 +11,17 @@ namespace Proline.Engine
     internal class APIManager
     {
         private static APIManager _instance;
-        private Dictionary<string, APIKeyPair> _apis;
+        private Dictionary<string, ComponentAPI> _apis;
         private Dictionary<string, EngineComponent> _apisAndComponents;
 
         public APIManager()
         {
-            _apis = new Dictionary<string, APIKeyPair>();
+            _apis = new Dictionary<string, ComponentAPI>();
             _apisAndComponents = new Dictionary<string, EngineComponent>();
         }
 
 
-        internal APIKeyPair GetAPI(string apiName)
+        internal ComponentAPI GetAPI(string apiName)
         {
             if (_apis.ContainsKey(apiName))
                 return _apis[apiName];
@@ -42,14 +42,24 @@ namespace Proline.Engine
 
         internal void RegisterAPI(object source, MethodInfo item, string apiName)
         { 
-            _apis.Add(apiName, new APIKeyPair(source, item));
+            _apis.Add(apiName, new ComponentAPI(source, item));
         }
 
-        internal void RegisterAPI(string apiName, EngineComponent component)
+        internal void RegisterAPI(ComponentAPI componentAP)
         {
-            Debugger.LogDebug("Component " + component.Name + " Loaded API" + apiName);
+            Debugger.LogDebug("Registered " + componentAP.Type + " " + componentAP.Name);
             //_apisAndComponents.Add(apiName, component);
-            _apis.Add(apiName, component.GetAPI(apiName));
+            _apis.Add(componentAP.Name, componentAP);
+        }
+
+        internal void UnregisterAPI(ComponentAPI apiName)
+        {
+            _apis.Remove(apiName.Name);
+        }
+
+        internal IEnumerable<ComponentAPI> GetAPIs()
+        {
+            return _apis.Values;
         }
     }
 }

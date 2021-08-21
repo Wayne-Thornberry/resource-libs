@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Proline.Example.Client.LevelScripts
 {
-    public class ExampleMain : LevelScript
+    public class ExampleMain : GameScript
     {
         public override async Task Execute(params object[] args)
         {
-            Debugger.LogDebug(this, " Script executed" + args[0]);
+            LogDebug(" Script executed" + args[0]);
 
 
             var result = ExampleAPI.UnlockNeareastVehicle(3, out var x);

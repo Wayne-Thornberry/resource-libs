@@ -1,4 +1,5 @@
 ﻿ using Proline.Engine.Data;
+using Proline.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Proline.Engine
 {
-    public class ComponentManager
+    internal class ComponentManager
     {
         private static ComponentManager _instance;
         private Dictionary<string, EngineComponent> _components; 
@@ -22,29 +23,7 @@ namespace Proline.Engine
             if (_instance == null)
                 _instance = new ComponentManager();
             return _instance;
-        }
-
-        internal void InitializeComponent(ComponentDetails componentDetails)
-        {
-            if (!EngineConfiguration.IsDebugEnabled && componentDetails.DebugOnly) throw new Exception("Component cannot be started, debug not enabled");
-            if (componentDetails == null) throw new Exception("Component path null or empty");
-            if (_components.ContainsKey(componentDetails.ComponentName)) throw new Exception("Component by that path already exists");
-            var component = new EngineComponent(componentDetails);
-            var em = ExtensionManager.GetInstance();
-            var extensions = em.GetExtensions();
-            foreach (var item in extensions)
-            {
-                item.OnComponentLoading(componentDetails.ComponentName);
-            }
-            component.Load();
-            CitizenAccess.GetInstance().AddTick(component.Tick);
-            Debugger.LogDebug(componentDetails.ComponentName);
-            _components.Add(componentDetails.ComponentName, component);
-            foreach (var item in extensions)
-            {
-                item.OnComponentInitialized(componentDetails.ComponentName);
-            }
-        }
+        } 
 
         internal IEnumerable<EngineComponent> GetComponents()
         {
@@ -66,14 +45,35 @@ namespace Proline.Engine
         {
             if (IsComponentRegistered(component.Name)) return; 
             var apiManager = APIManager.GetInstance();
-            // Register its commands
-            // Register its handles
-
-            foreach (string apiName in component.GetAPIs())
+            var comManager = CommandManager.GetInstance();
+            foreach (ComponentCommand command in component.GetCommands())
             {
-                apiManager.RegisterAPI(apiName, component);
+                comManager.RegisterCommand(command);
+            } 
+
+            foreach (ComponentAPI apiName in component.GetAPIs())
+            {
+                apiManager.RegisterAPI(apiName);
             }
+            Debugger.LogDebug("Registered " + component.Type + " " + component.Name);
             _components.Add(component.Name, component);
+        }
+
+        internal void UnregisterComponent(EngineComponent component)
+        {
+            if (!IsComponentRegistered(component.Name)) return;
+            var apiManager = APIManager.GetInstance();
+            var comManager = CommandManager.GetInstance();
+            foreach (ComponentCommand command in component.GetCommands())
+            {
+                comManager.UnregisterCommand(command);
+            }
+
+            foreach (ComponentAPI apiName in component.GetAPIs())
+            {
+                apiManager.UnregisterAPI(apiName);
+            }
+            _components.Remove(component.Name);
         }
     }
 }

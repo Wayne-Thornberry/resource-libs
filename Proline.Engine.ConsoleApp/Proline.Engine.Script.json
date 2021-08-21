@@ -14,7 +14,8 @@
     {
       "ComponentName": "CExampleComponent",
       "Assembly": "Proline.Example.Client",
-      "SimpleComponentClass": "Proline.Example.Client.Components.CExampleComponent"
+      "ComponentClass": "Proline.Example.Client.Components.CExample.ExampleComponent",
+      "ScriptClasses": [ "Proline.Example.Client.Components.CExample.ExampleComponentScript" ]
     }
   ],
   "ScriptPackages": [

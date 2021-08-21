@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Proline.Engine
 {
-    public class CitizenAccess
+    internal class CitizenAccess
     {
         private static IScriptSource _scriptSource;
 
@@ -16,7 +16,7 @@ namespace Proline.Engine
 
         }
 
-        public static void SetScriptSource(IScriptSource source)
+        internal static void SetScriptSource(IScriptSource source)
         {
             _scriptSource = source;
         }

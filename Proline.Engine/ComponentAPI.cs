@@ -3,20 +3,23 @@ using System.Reflection;
 
 namespace Proline.Engine
 {
-    internal class APIKeyPair
+    internal class ComponentAPI
     {
         private object _source;
         private MethodInfo _item;
         private bool _debugOnly;
 
-        public APIKeyPair(object source, MethodInfo item, bool debugOnly = false)
+        public ComponentAPI(object source, MethodInfo item, bool debugOnly = false)
         {
             _source = source;
             _item = item;
             _debugOnly = debugOnly;
+            Type = "API";
         }
 
         public string Name => _item.Name;
+
+        public string Type { get; private set; }
 
         internal object Invoke(params object[] args)
         {

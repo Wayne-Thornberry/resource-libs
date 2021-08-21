@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Proline.Framework
 {
-    public abstract class SimpleComponent : IEngineTracker
+    public abstract class AbstractComponent : IEngineTracker
     {
         public string Name { get; }
         public string Type { get; }
 
-        protected SimpleComponent()
+        protected AbstractComponent()
         {
             Name = this.GetType().Name;
             Type = "Component";

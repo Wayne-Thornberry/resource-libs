@@ -14,11 +14,11 @@ namespace Proline.Engine
     internal class ScriptManager
     {
         private static ScriptManager _instance;  
-        private Dictionary<string, ScriptWrapper> _scriptWrappers;
+        private Dictionary<string, EngineScript> _scriptWrappers;
 
         private ScriptManager()
         {
-            _scriptWrappers = new Dictionary<string, ScriptWrapper>(); 
+            _scriptWrappers = new Dictionary<string, EngineScript>(); 
         }
 
         internal static ScriptManager GetInstance()
@@ -28,8 +28,9 @@ namespace Proline.Engine
             return _instance;
         }  
 
-        internal void RegisterScript(ScriptWrapper scriptName)
+        internal void RegisterScript(EngineScript scriptName)
         {
+            Debugger.LogDebug("Registered " + scriptName.Type + " " + scriptName.Name);
             _scriptWrappers.Add(scriptName.Name, scriptName);
         }
 
@@ -38,24 +39,12 @@ namespace Proline.Engine
             return _scriptWrappers.Count;
         }
 
-        internal void UnregisterScript(ScriptWrapper scriptName)
+        internal void UnregisterScript(EngineScript scriptName)
         {
-
-            try
-            { 
-                _scriptWrappers.Remove(scriptName.Name);
-            }
-            catch (ArgumentException e)
-            {
-
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+            _scriptWrappers.Remove(scriptName.Name); 
         }
 
-        internal ScriptWrapper GetScriptWrapper(string scriptName)
+        internal EngineScript GetScriptWrapper(string scriptName)
         {
             return _scriptWrappers[scriptName];
         }

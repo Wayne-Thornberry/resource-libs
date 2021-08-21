@@ -12,6 +12,7 @@ namespace Proline.Engine
     public class EngineService
     { 
         private CitizenResource _executingResource;
+        private long _lastCheck;
 
         public EngineService(IScriptSource tickSubscriber)
         {
@@ -54,6 +55,27 @@ namespace Proline.Engine
             }
         }
 
+        public async Task Tick()
+        {
+            var cm = ComponentManager.GetInstance();
+            var components = cm.GetComponents();
+            foreach (var item in components)
+            {
+                item.Update();
+            } 
+
+
+            if (DateTime.UtcNow.Ticks - _lastCheck > 1000000)
+            {
+                foreach (var item in components)
+                {
+                    item.FixedUpdate();
+                }
+                _lastCheck = DateTime.UtcNow.Ticks;
+            }
+
+        }
+
         private void RunEnvSpecificFunctions(int envType)
         { 
             if (envType == 0)
@@ -81,10 +103,11 @@ namespace Proline.Engine
         {
             if (EngineStatus.IsComponentsInitialized) return;
             var _componentDetails = new List<ComponentDetails>(EngineConfiguration.Components);
-
+            var am = APIManager.GetInstance();
+            var com = CommandManager.GetInstance();
+            var cm = ComponentManager.GetInstance();
             if (_componentDetails != null)
             {
-                var cm = ComponentManager.GetInstance();
                 foreach (var componentDetails in _componentDetails)
                 {
                     if (!EngineConfiguration.IsDebugEnabled && componentDetails.DebugOnly) throw new Exception("Component cannot be started, debug not enabled");
@@ -97,6 +120,7 @@ namespace Proline.Engine
                         var extensions = em.GetExtensions();
                         component.Load();
                         cm.RegisterComponent(component);
+                        Debugger.LogDebug(string.Format("{0} Component loaded sucessfully, {1} APIs loaded, {2} Commands Loaded", component.Name, component.GetAPIs().Count(), component.GetCommands().Count()));
                     }
                     catch (Exception e)
                     {
@@ -104,6 +128,7 @@ namespace Proline.Engine
                     }
                 }
             }
+            Debugger.LogDebug(string.Format("Components initialized sucessfully, {0} Components loaded, {1} APIs loaded, {2} Commands Loaded", cm.GetComponents().Count(), am.GetAPIs().Count(), com.GetCommands().Count()));
             EngineStatus.IsComponentsInitialized = true;
         }
 
@@ -142,8 +167,10 @@ namespace Proline.Engine
             {
                 try
                 { 
-                    var sp = ScriptPackage.Load(item); 
+                    var sp = ScriptPackage.Load(item);
+                    if (sp == null) continue;
                     spm.RegisterScriptPackage(sp);
+                    //Debugger.LogDebug("Successfully loaded script package");
                 }
                 catch (Exception e)
                 {
@@ -151,6 +178,7 @@ namespace Proline.Engine
                     throw;
                 }
             }
+            Debugger.LogDebug(string.Format("Scripts initialized sucessfully, {0} Scripts loaded", sm.GetScriptCount()));
             EngineStatus.IsScriptsInitialized = true;
         }
 
@@ -184,12 +212,12 @@ namespace Proline.Engine
             ComponentControl.StopAllComponents();
         }
 
-        public static ComponentAPI GetComponentAPI(string componentName)
-        {
-            var cm = ComponentManager.GetInstance();
-            var component = cm.GetComponent(componentName);
-            return component.GetAPI();
-        }
+        //public static ComponentAPI GetComponentAPI(string componentName)
+        //{
+        //    var cm = ComponentManager.GetInstance();
+        //    var component = cm.GetComponent(componentName);
+        //    return component.GetAPI();
+        //}
 
         public static object ExecuteEngineMethod(string methodName, params object[] args)
         {
@@ -218,14 +246,14 @@ namespace Proline.Engine
             }
         }
 
-        public static object ExecuteComponentControl(string componentName, string control, object[] args)
-        {
-           return ComponentAccess.ExecuteComponentControl(componentName, control, args);
-        }
+        //public static object ExecuteComponentControl(string componentName, string control, object[] args)
+        //{
+        //   return ComponentAccess.ExecuteComponentControl(componentName, control, args);
+        //}
 
-        public static void ExecuteComponentCommand(string componentName, string command, object[] args)
-        {
-            ComponentAccess.ExecuteComponentCommand(componentName, command, args);
-        } 
+        //public static void ExecuteComponentCommand(string componentName, string command, object[] args)
+        //{
+        //    ComponentAccess.ExecuteComponentCommand(componentName, command, args);
+        //} 
     }
 }

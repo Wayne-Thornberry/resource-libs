@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Proline.Engine
 {
-    internal class ScriptWrapper
+    internal class EngineScript
     {
         private Task _task;
         private LevelScript _script;
@@ -23,9 +23,11 @@ namespace Proline.Engine
         private int _status;
         private bool _isDebug;
 
+        public string Type { get; }
+
         public string Name => _name;
 
-        private ScriptWrapper(string name, string assembly, string classType, ScriptConfig details)
+        private EngineScript(string name, string assembly, string classType, ScriptConfig details)
         {
             //_name = details.Name;
             _assembly = assembly;
@@ -34,11 +36,12 @@ namespace Proline.Engine
             _name = name;
             _addionalArgs = details.AddionalArgs;
             _isDebug = details.DebugOnly;
+            Type = "EngineScript";
         }
 
-        internal static ScriptWrapper CreateNewWrapper(string name, Assembly assembly, Type type, ScriptConfig details)
+        internal static EngineScript CreateNewScript(string name, Assembly assembly, Type type, ScriptConfig details)
         { 
-            return new ScriptWrapper(name, assembly.FullName, type.FullName, details); 
+            return new EngineScript(name, assembly.FullName, type.FullName, details); 
         }
 
         internal LevelScript InitializeNewInstance(object[] args)
