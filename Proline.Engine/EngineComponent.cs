@@ -52,14 +52,12 @@ namespace Proline.Engine
         {
             _isDebug = details.DebugOnly;
             _assembly = details.Assembly; 
-            _name = details.ComponentName;
-            _scriptClasses = details.ScriptClasses;
-            _componentClass = details.ComponentClass;
-            _componentClass = "d";
+            _name = details.ComponentName; 
 
             _apiClass = details.APIClass;
             _commanderClass = details.CommanderClass;
             _handlerClass = details.HandlerClass;
+            _scriptClasses = details.ScriptClasses;
 
             _commandActions = new List<ComponentCommand>();
             _apis = new List<APIInvoker>();
@@ -196,16 +194,21 @@ namespace Proline.Engine
             try
             {
                 if (_status != 0) throw new Exception("Component has already loaded");
-                Debugger.LogDebug("Attempting to load " + _assembly);
+                Debugger.LogDebug("Attempting to load " + _name + " From assembly " + _assembly);
                 var assembly = Assembly.Load(_assembly);
                 var am = APIManager.GetInstance();
                
                 var lookFor = EngineConfiguration.IsClient ? typeof(ClientAttribute) : typeof(ServerAttribute);
 
-                var controllerType = assembly.GetType(_componentClass);
-                var handler = assembly.GetType(_handlerClass);
-                var commander = assembly.GetType(_commanderClass);
-                var api = assembly.GetType(_apiClass);
+                Type handler = null;
+                Type commander = null;
+                Type api =null;
+                if (!string.IsNullOrEmpty(_handlerClass))
+                    handler = assembly.GetType(_handlerClass);
+                if (!string.IsNullOrEmpty(_commanderClass))
+                    commander = assembly.GetType(_commanderClass);
+                if (!string.IsNullOrEmpty(_apiClass))
+                    api = assembly.GetType(_apiClass);
                
 
                 if (handler != null)
@@ -214,33 +217,11 @@ namespace Proline.Engine
                     _commander = CreateComponentObject<ComponentCommander>(commander);
                 if (api != null)
                     _api = CreateComponentObject<ComponentAPI>(api);
-                if (controllerType != null)
-                    _component = CreateComponentObject<AbstractComponent>(controllerType);
-
-               
-                if (_component != null)
-                {
-                    var methods = controllerType.GetMethods().Where(m => m.GetCustomAttributes(lookFor, false).Length > 0);
-                    var filer = methods.Where(m => m.GetCustomAttributes(typeof(ComponentCommandAttribute), false).Length > 0)
-                     .ToArray();
-                    foreach (var item in filer)
-                    {
-                        _commandActions.Add(new ComponentCommand(_component, item));
-                    }
-
-
-                    filer = methods.Where(m => m.GetCustomAttributes(typeof(ComponentAPIAttribute), false).Length > 0)
-                     .ToArray();
-                    foreach (var item in filer)
-                    {
-                        _apis.Add(new APIInvoker(_component, item));
-                    }
-                }
-
 
                
                 if (_handler != null)
                 {
+                    Debugger.LogDebug($"[{_name}] Attempting to load the handler");
                     _handler.OnComponentInitialized();
                 }
 
@@ -248,6 +229,7 @@ namespace Proline.Engine
 
                 if (_api != null)
                 {
+                    Debugger.LogDebug($"[{_name}] Attempting to load the API");
                     var methods = api.GetMethods();//.Where(m => m.GetCustomAttributes(lookFor, false).Length > 0); 
                     var filer = methods.Where(m => m.GetCustomAttributes(typeof(ComponentAPIAttribute), false).Length > 0)
                      .ToArray();
@@ -264,6 +246,7 @@ namespace Proline.Engine
 
                 if (_scriptClasses != null)
                 {
+                    Debugger.LogDebug($"[{_name}] Attempting to load the Scripts");
                     foreach (var item in _scriptClasses)
                     {
                         var scriptType = assembly.GetType(item);
