@@ -6,18 +6,8 @@ using System.Threading.Tasks;
 
 namespace Proline.Framework
 {
-    public abstract class AbstractComponent : IEngineTracker
+    public class ComponentHandler
     {
-        public string Name { get; }
-        public string Type { get; }
-        public string Env { get; set; }
-
-        protected AbstractComponent()
-        {
-            Name = this.GetType().Name;
-            Type = "Component";
-        }
-
         public virtual void OnComponentInitialized()
         {
 
@@ -37,6 +27,5 @@ namespace Proline.Framework
         {
 
         }
-         
     }
 }

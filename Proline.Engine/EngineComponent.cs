@@ -24,15 +24,24 @@ namespace Proline.Engine
         private string _name;
         private string[] _scriptClasses;
         private string _componentClass;
+        private string _apiClass;
+        private string _commanderClass;
+        private string _handlerClass;
         private int _status;
         private bool _isDebug;
         private string _assembly; 
         private long _ticks;
 
         private List<ComponentScript> _scripts;
-        private List<ComponentAPI> _apis; 
+        private List<APIInvoker> _apis; 
         private List<ComponentCommand> _commandActions;
         private AbstractComponent _component;
+
+
+
+        private ComponentAPI _api;
+        private ComponentHandler _handler;
+        private ComponentCommander _commander;
 
         public string Name => _name;
         public ComponentStatus Status => (ComponentStatus)_status;
@@ -46,9 +55,14 @@ namespace Proline.Engine
             _name = details.ComponentName;
             _scriptClasses = details.ScriptClasses;
             _componentClass = details.ComponentClass;
-             
+            _componentClass = "d";
+
+            _apiClass = details.APIClass;
+            _commanderClass = details.CommanderClass;
+            _handlerClass = details.HandlerClass;
+
             _commandActions = new List<ComponentCommand>();
-            _apis = new List<ComponentAPI>();
+            _apis = new List<APIInvoker>();
             _scripts = new List<ComponentScript>();
             _status = 0; // Created not started
 
@@ -56,7 +70,7 @@ namespace Proline.Engine
         } 
          
 
-        internal ComponentAPI GetAPI(string apiName)
+        internal APIInvoker GetAPI(string apiName)
         {
             foreach (var item in _apis)
             {
@@ -122,6 +136,11 @@ namespace Proline.Engine
             }
         }
 
+        internal IEnumerable<ComponentScript> GetScripts()
+        {
+            return _scripts;
+        }
+
         public void Update()
         {
             if (EngineConfiguration.IsIsolated) return;
@@ -174,96 +193,123 @@ namespace Proline.Engine
 
         public void Load()
         {
-            if (_status != 0) throw new Exception("Component has already loaded");
-            Debugger.LogDebug("Attempting to load " + _assembly);
-            var assembly = Assembly.Load(_assembly); 
-            var am = APIManager.GetInstance();
-
-            if (!string.IsNullOrEmpty(_componentClass))
+            try
             {
+                if (_status != 0) throw new Exception("Component has already loaded");
+                Debugger.LogDebug("Attempting to load " + _assembly);
+                var assembly = Assembly.Load(_assembly);
+                var am = APIManager.GetInstance();
+               
+                var lookFor = EngineConfiguration.IsClient ? typeof(ClientAttribute) : typeof(ServerAttribute);
+
                 var controllerType = assembly.GetType(_componentClass);
-                _component = CreateComponentObject<AbstractComponent>(controllerType); 
-                var methods2 = controllerType.GetMethods()
-                  .Where(m => m.GetCustomAttributes(typeof(ComponentCommandAttribute), false).Length > 0)
-                  .ToArray();
-                foreach (var item in methods2)
+                var handler = assembly.GetType(_handlerClass);
+                var commander = assembly.GetType(_commanderClass);
+                var api = assembly.GetType(_apiClass);
+               
+
+                if (handler != null)
+                    _handler = CreateComponentObject<ComponentHandler>(handler);
+                if (commander != null)
+                    _commander = CreateComponentObject<ComponentCommander>(commander);
+                if (api != null)
+                    _api = CreateComponentObject<ComponentAPI>(api);
+                if (controllerType != null)
+                    _component = CreateComponentObject<AbstractComponent>(controllerType);
+
+               
+                if (_component != null)
                 {
-                   // Debugger.LogDebug(item.Name);
-                    _commandActions.Add(new ComponentCommand(_component, item));
+                    var methods = controllerType.GetMethods().Where(m => m.GetCustomAttributes(lookFor, false).Length > 0);
+                    var filer = methods.Where(m => m.GetCustomAttributes(typeof(ComponentCommandAttribute), false).Length > 0)
+                     .ToArray();
+                    foreach (var item in filer)
+                    {
+                        _commandActions.Add(new ComponentCommand(_component, item));
+                    }
+
+
+                    filer = methods.Where(m => m.GetCustomAttributes(typeof(ComponentAPIAttribute), false).Length > 0)
+                     .ToArray();
+                    foreach (var item in filer)
+                    {
+                        _apis.Add(new APIInvoker(_component, item));
+                    }
                 }
-                var methods3 = controllerType.GetMethods()
-                  .Where(m => m.GetCustomAttributes(typeof(ComponentAPIAttribute), false).Length > 0)
-                  .ToArray();
-                foreach (var item in methods3)
+
+
+               
+                if (_handler != null)
                 {
-                    //Debugger.LogDebug(item.Name);
-                    _apis.Add(new ComponentAPI(_component, item));
-                    //am.RegisterAPI(_simpleComponent, item, item.Name);
+                    _handler.OnComponentInitialized();
                 }
+
+               
+
+                if (_api != null)
+                {
+                    var methods = api.GetMethods();//.Where(m => m.GetCustomAttributes(lookFor, false).Length > 0); 
+                    var filer = methods.Where(m => m.GetCustomAttributes(typeof(ComponentAPIAttribute), false).Length > 0)
+                     .ToArray();
+                   
+                    foreach (var item in filer)
+                    {
+                        var type = IsAPIServer(item) ? -1 : 0;
+                        var debugOnly = IsAPIDebug(item);
+                        _apis.Add(new APIInvoker(_api, item, type, debugOnly));
+                    }
+                }
+
+               
+
+                if (_scriptClasses != null)
+                {
+                    foreach (var item in _scriptClasses)
+                    {
+                        var scriptType = assembly.GetType(item);
+                        if (scriptType == null) continue;
+                        var script = CreateComponentObject<ComponentScript>(scriptType);
+                        _scripts.Add(script);
+                    }
+                }
+
+                if (_handler != null)
+                {
+                    _handler.OnComponentLoad();
+                }
+
+                _status = 1; // Ready Not Started
             }
-            //else
-            //{
-
-            //    if (!string.IsNullOrEmpty(_apiClass))
-            //    {
-            //        var api = assembly.GetType(_apiClass);
-            //        if (api != null)
-            //        {
-            //            _api = CreateComponentObject<ComponentAPI>(api);
-            //            var methods3 = api.GetMethods()
-            //              .Where(m => m.GetCustomAttributes(typeof(ComponentAPIAttribute), false).Length > 0)
-            //              .ToArray();
-            //            foreach (var item in methods3)
-            //            {
-            //                Debugger.LogDebug(item.Name);
-            //                _apis.Add(new ComponentAP(_api, item)); 
-            //                //am.RegisterAPI(_api, item, item.Name);
-            //            }
-            //        } 
-            //    }
-
-            //    if (!string.IsNullOrEmpty(_commandClass))
-            //    {
-            //        var commandType = assembly.GetType(_commandClass);
-            //        if (commandType != null)
-            //        {
-            //            _commands = CreateComponentObject<ComponentCommands>(commandType);
-            //            var commandTypes = _commands.GetType();
-            //            var methods = commandType.GetMethods()
-            //              .Where(m => m.GetCustomAttributes(typeof(ComponentCommandAttribute), false).Length > 0)
-            //              .ToArray();
-            //            foreach (var item in methods)
-            //            {
-            //                //Debugger.LogDebug(item);
-            //                _commandActions.Add(new ComponentCommand(_commands, item));
-            //            }
-            //        }
-            //    }
-
-            //    if (!string.IsNullOrEmpty(_handlerClass))
-            //    {
-            //        var handlerType = assembly.GetType(_handlerClass);
-            //        if (handlerType != null)
-            //        {
-            //            _handler = CreateComponentObject<ComponentHandler>(handlerType);
-            //            _handler.OnComponentInitialized();
-            //        }
-            //    } 
-            //}
-
-
-            if (_scriptClasses != null)
+            catch (Exception e)
             {
-                foreach (var item in _scriptClasses)
+                Debugger.LogDebug(e, true);
+                throw;
+            }
+          
+        }
+
+        private bool IsAPIDebug(MethodInfo item)
+        {
+            foreach (var attribute in item.GetCustomAttributes())
+            {
+                if (attribute.GetType() == typeof(DebugAttribute))
                 {
-                    var scriptType = assembly.GetType(item);
-                    if (scriptType == null) continue;
-                    var script = CreateComponentObject<ComponentScript>(scriptType);
-                    _scripts.Add(script);
+                    return true;
                 }
             }
+            return false;
+        }
 
-            _status = 1; // Ready Not Started
+        private static bool IsAPIServer(MethodInfo item)
+        {
+            foreach (var attribute in item.GetCustomAttributes())
+            {
+                if (attribute.GetType() == typeof(ServerAttribute))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         internal IEnumerable<string> GetAPINames()
@@ -271,7 +317,7 @@ namespace Proline.Engine
             return _apis.Select(e=>e.Name);
         }
 
-        internal IEnumerable<ComponentAPI> GetAPIs()
+        internal IEnumerable<APIInvoker> GetAPIs()
         {
             return _apis;
         }

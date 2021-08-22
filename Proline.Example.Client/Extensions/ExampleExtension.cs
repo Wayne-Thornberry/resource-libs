@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Example.Client.Extensions
+namespace Proline.Example.Extensions
 {
     [Client]
     public class ExampleExtension : EngineExtension

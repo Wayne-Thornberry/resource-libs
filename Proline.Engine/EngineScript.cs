@@ -70,12 +70,12 @@ namespace Proline.Engine
         private void ExecuteInstance(LevelScript levelScript, object[] args)
         {
             //if(_status != 1) throw new Exception("Script not ready to be started");
-            var _task = new Task(async () => await Execute(levelScript, args));
-            _task.ContinueWith(x => Finish(_task));
+            var task = new Task(async () => await Execute(levelScript, args));
+            task.ContinueWith(x => Finish(task));
             var em = ExtensionManager.GetInstance();
             var sm = ScriptTaskManager.GetInstance();
-            sm.RegisterScriptTask(_task, _name);
-            _task.Start();
+            sm.RegisterScriptTask(task, _name);
+            task.Start();
             var extensions = em.GetExtensions();
             foreach (var extension in extensions)
             {
@@ -140,8 +140,7 @@ namespace Proline.Engine
             }
             catch (Exception e)
             {
-                Debugger.LogError(e, true);
-                throw;
+                Debugger.LogError(e, true); 
             }
         } 
     }

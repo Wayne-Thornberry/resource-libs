@@ -8,53 +8,47 @@ using System.Threading.Tasks;
 namespace Proline.Engine
 {
     public static class APICaller
-    {
-        public static async Task<T> CallAPIAsync<T>(string apiName, params object[] inputParameters)
+    { 
+        public static bool DoesAPIExist(int v)
         {
-            try
-            { 
-                var cm = APIManager.GetInstance();
-                var api = cm.GetAPI(apiName);
-                if (api == null)
-                {
-                    return await EngineAccess.ExecuteEngineMethodServer<T>(apiName, inputParameters);
-                }
-                else
-                {
-                    return (T)Convert.ChangeType(api.Invoke(inputParameters), typeof(T));
-                }
-            }
-            catch (Exception e)
-            {
-                Debugger.LogError(e.ToString(), true);
-                throw;
-            }
+            var cm = APIManager.GetInstance();
+            var api = cm.GetAPI(v);
+            if (api == null) return false;
+            return true;
         }
 
-        public static async Task<object> CallAPIAsync(string apiName, params object[] inputParameters)
+        public static async Task<object> CallAPIAsync(int apiName, params object[] inputParameters)
         {
             var cm = APIManager.GetInstance();
             var api = cm.GetAPI(apiName);
             if (api == null)
-                return await EngineAccess.ExecuteEngineMethodServer<object>(apiName, inputParameters);
-            else
-                return api.Invoke(inputParameters);
+                return null;
+            return await api.InvokeAsync(inputParameters);
         }
 
-        public static object CallAPI(string apiName, params object[] inputParameters)
+        public static async Task<T> CallAPIAsync<T>(int apiName, params object[] inputParameters)
         {
             var cm = APIManager.GetInstance();
             var api = cm.GetAPI(apiName);
+            if (api == null)
+                return default;
+            return await api.InvokeAsync<T>(inputParameters); 
+        }
+
+        public static object CallAPI(int apiName, params object[] inputParameters)
+        {
+            var cm = APIManager.GetInstance();
+            var api = cm.GetAPI(apiName);
+            if (api == null) return null;
             return api.Invoke(inputParameters);
         }
 
-        public static object CallNativeAPI<T>(ulong hash, params object[] inputParameters)
-        { 
-            return CitizenAccess.GetInstance().CallFunction<T>(hash, inputParameters);
-        }
-        public static void CallNativeAPI(ulong hash, params object[] inputParameters)
-        { 
-             CitizenAccess.GetInstance().CallFunction(hash, inputParameters);
+        public static T CallAPI<T>(int apiName, params object[] inputParameters)
+        {
+            var cm = APIManager.GetInstance();
+            var api = cm.GetAPI(apiName);
+            if (api == null) return default;
+            return (T) Convert.ChangeType(api.Invoke(inputParameters), typeof(T));
         }
     }
 }

@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7104F43E-8BD5-43AC-B575-5C5BC7642D02}"
 	ProjectSection(SolutionItems) = preProject
 		..\Proline.Engine.Client\Readme.txt = ..\Proline.Engine.Client\Readme.txt
+		Todo.txt = Todo.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proline.Engine.NUnit", "Proline.Engine.NUnit\Proline.Engine.NUnit.csproj", "{E5576182-E1E3-4FB7-B6B8-153CFC524552}"

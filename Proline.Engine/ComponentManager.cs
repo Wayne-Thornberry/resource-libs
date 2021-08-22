@@ -51,7 +51,7 @@ namespace Proline.Engine
                 comManager.RegisterCommand(command);
             } 
 
-            foreach (ComponentAPI apiName in component.GetAPIs())
+            foreach (APIInvoker apiName in component.GetAPIs())
             {
                 apiManager.RegisterAPI(apiName);
             }
@@ -69,7 +69,7 @@ namespace Proline.Engine
                 comManager.UnregisterCommand(command);
             }
 
-            foreach (ComponentAPI apiName in component.GetAPIs())
+            foreach (APIInvoker apiName in component.GetAPIs())
             {
                 apiManager.UnregisterAPI(apiName);
             }

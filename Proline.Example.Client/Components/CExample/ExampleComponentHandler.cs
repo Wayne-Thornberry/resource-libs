@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Example.Client.Components.CExample
+namespace Proline.Example.Components.CExample
 {
-    public class ExampleComponent : AbstractComponent
+    public class ExampleComponentHandler : ComponentHandler
     {
         public override void OnComponentInitialized()
         {
@@ -29,29 +29,6 @@ namespace Proline.Example.Client.Components.CExample
         public override void OnComponentStop()
         {
             base.OnComponentStop();
-        }
-
-        [Client]
-        [ComponentCommand("X")]
-        public void ExampleCommand()
-        {
-
-        }
-
-        [Client]
-        [ComponentAPI]
-        public int ExampleAPI()
-        {
-            return 1;
-        }
-
-        [Client]
-        [ComponentAPI]
-        public bool UnlockNeareastVehicle(int x, out int y)
-        {
-            Debugger.LogDebug(this, "It seems to have worked");
-            y = 100;
-            return true;
         }
     }
 }

@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APICaller.cs" />
-    <Compile Include="ComponentAPI.cs" />
+    <Compile Include="APIInvoker.cs" />
     <Compile Include="CitizenAccess.cs" />
     <Compile Include="APIManager.cs" />
     <Compile Include="CommandManager.cs" />
@@ -73,6 +73,7 @@
     <Compile Include="Data\MethodCall.cs" />
     <Compile Include="Data\MethodResult.cs" />
     <Compile Include="Data\NetworkHeader.cs" />
+    <Compile Include="NativeAPI.cs" />
     <Compile Include="NetworkManager.cs" />
     <Compile Include="Data\NetworkRequest.cs" />
     <Compile Include="Data\NetworkResponse.cs" />

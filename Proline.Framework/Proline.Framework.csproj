@@ -42,10 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientAttribute.cs" />
+    <Compile Include="ComponentAPI.cs" />
     <Compile Include="ComponentAPIAttribute.cs" />
     <Compile Include="ComponentCommandAttribute.cs" />
+    <Compile Include="ComponentCommander.cs" />
+    <Compile Include="ComponentHandler.cs" />
     <Compile Include="ComponentScript.cs" />
     <Compile Include="ConfigurationManager.cs" />
+    <Compile Include="DebugAttribute.cs" />
     <Compile Include="EngineExtension.cs" />
     <Compile Include="IEngineTracker.cs" />
     <Compile Include="LevelScript.cs" />

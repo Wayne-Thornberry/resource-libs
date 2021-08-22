@@ -28,9 +28,12 @@ namespace Proline.Engine
                 var resourceName = args[0];
                 var envType = int.Parse(args[1]);
                 var isDebug = bool.Parse(args[2]);
+                EngineConfiguration.IsClient = envType != -1;
+                var ty = EngineConfiguration.IsClient ? "Client" : "Server";
 
                 LoadConfig(isDebug);
                 LoadAssemblies();
+                Debugger.LogDebug("Engine in " + ty + " Mode");
 
                 InitializeExtensions();
                 InitializeComponents();
@@ -120,7 +123,7 @@ namespace Proline.Engine
                         var extensions = em.GetExtensions();
                         component.Load();
                         cm.RegisterComponent(component);
-                        Debugger.LogDebug(string.Format("{0} Component loaded sucessfully, {1} APIs loaded, {2} Commands Loaded", component.Name, component.GetAPIs().Count(), component.GetCommands().Count()));
+                        Debugger.LogDebug(string.Format("{0} Component loaded sucessfully, {1} APIs loaded, {2} Commands Loaded {3} Scripts Loaded", component.Name, component.GetAPIs().Count(), component.GetCommands().Count(), component.GetScripts().Count()));
                     }
                     catch (Exception e)
                     {
@@ -238,7 +241,7 @@ namespace Proline.Engine
                     break;
                 case "ExecuteComponentControl":
                     var componentNAme = args[0].ToString();
-                    var apiName = args[1].ToString();
+                    var apiName = int.Parse(args[1].ToString());
                     var list = JsonConvert.DeserializeObject<object[]>(args[2].ToString());
                     return APICaller.CallAPI(apiName, list.ToArray());
                 case "CreateAndInsertResponse":

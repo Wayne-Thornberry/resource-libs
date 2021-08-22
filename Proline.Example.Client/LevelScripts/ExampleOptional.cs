@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Example.Client.LevelScripts
+namespace Proline.Example.LevelScripts
 {
     [Client]
     public class ExampleOptional : GameScript

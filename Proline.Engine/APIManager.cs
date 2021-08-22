@@ -11,17 +11,15 @@ namespace Proline.Engine
     internal class APIManager
     {
         private static APIManager _instance;
-        private Dictionary<string, ComponentAPI> _apis;
-        private Dictionary<string, EngineComponent> _apisAndComponents;
+        private Dictionary<int, APIInvoker> _apis; 
 
         public APIManager()
         {
-            _apis = new Dictionary<string, ComponentAPI>();
-            _apisAndComponents = new Dictionary<string, EngineComponent>();
+            _apis = new Dictionary<int, APIInvoker>();
         }
 
 
-        internal ComponentAPI GetAPI(string apiName)
+        internal APIInvoker GetAPI(int apiName)
         {
             if (_apis.ContainsKey(apiName))
                 return _apis[apiName];
@@ -35,23 +33,13 @@ namespace Proline.Engine
             return _instance;
         }
 
-        internal void RegisterAPI(string apiName)
-        {
-            _apis.Add(apiName, null);
-        }
-
-        internal void RegisterAPI(object source, MethodInfo item, string apiName)
-        { 
-            _apis.Add(apiName, new ComponentAPI(source, item));
-        }
-
-        internal void RegisterAPI(ComponentAPI componentAP)
+        internal void RegisterAPI(APIInvoker componentAP)
         {
             try
             { 
-                Debugger.LogDebug("Registered " + componentAP.Type + " " + componentAP.Name);
+                Debugger.LogDebug("Registered " + componentAP.ToString());
                 //_apisAndComponents.Add(apiName, component);
-                _apis.Add(componentAP.Name, componentAP);
+                _apis.Add(componentAP.GetHashCode(), componentAP);
             }
             catch (ArgumentException e)
             {
@@ -59,12 +47,12 @@ namespace Proline.Engine
             }
         }
 
-        internal void UnregisterAPI(ComponentAPI apiName)
+        internal void UnregisterAPI(APIInvoker apiName)
         {
-            _apis.Remove(apiName.Name);
+            _apis.Remove(apiName.GetHashCode());
         }
 
-        internal IEnumerable<ComponentAPI> GetAPIs()
+        internal IEnumerable<APIInvoker> GetAPIs()
         {
             return _apis.Values;
         }

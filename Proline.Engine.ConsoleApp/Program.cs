@@ -1,5 +1,5 @@
 ﻿
-using Proline.Example.Client;
+using Proline.Example;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +23,6 @@ namespace Proline.Engine.ConsoleApp
         static void Main(string[] args)
         {
             var program = new Program();
-            //program.Test();
            var service =  new EngineService(program);
             service.Initialize("ConsoleApp", "0", "true");
             service.StartAllComponents();
@@ -44,7 +43,15 @@ namespace Proline.Engine.ConsoleApp
             var task = Task.Run(async ()  =>  {
                 while (true)
                 {
-                    await service.Tick();
+                    try
+                    {
+                        await service.Tick(); 
+                    }
+                    catch (Exception e)
+                    {
+
+                        throw;
+                    }
                 }
             });
 
@@ -60,17 +67,12 @@ namespace Proline.Engine.ConsoleApp
 
         public object CallFunction<T>(ulong hash, object[] inputParameters)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public void  CallFunction(ulong hash, object[] inputParameters)
         {
-            throw new NotImplementedException();
-        }
-
-        public object CallNativeAPI(string apiName, params object[] inputParameters)
-        {
-            throw new NotImplementedException();
+            return;
         }
 
         public async Task Delay(int ms)
