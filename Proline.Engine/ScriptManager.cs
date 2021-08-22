@@ -46,7 +46,10 @@ namespace Proline.Engine
 
         internal EngineScript GetScriptWrapper(string scriptName)
         {
-            return _scriptWrappers[scriptName];
+            if (_scriptWrappers.ContainsKey(scriptName))
+                return _scriptWrappers[scriptName];
+            else
+                return null;
         }
     }
 }

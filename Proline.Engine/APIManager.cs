@@ -47,9 +47,16 @@ namespace Proline.Engine
 
         internal void RegisterAPI(ComponentAPI componentAP)
         {
-            Debugger.LogDebug("Registered " + componentAP.Type + " " + componentAP.Name);
-            //_apisAndComponents.Add(apiName, component);
-            _apis.Add(componentAP.Name, componentAP);
+            try
+            { 
+                Debugger.LogDebug("Registered " + componentAP.Type + " " + componentAP.Name);
+                //_apisAndComponents.Add(apiName, component);
+                _apis.Add(componentAP.Name, componentAP);
+            }
+            catch (ArgumentException e)
+            {
+                Debugger.LogDebug("Could not add API, same API already exists");
+            }
         }
 
         internal void UnregisterAPI(ComponentAPI apiName)

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Proline.Example.Client.Extensions
 {
+    [Client]
     public class ExampleExtension : EngineExtension
     {
         public override void OnEngineAPICall(string apiName, params object[] args)

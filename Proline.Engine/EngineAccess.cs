@@ -146,6 +146,7 @@ namespace Proline.Engine
             var extensions = em.GetExtensions();
             var sm = ScriptManager.GetInstance();
             var wrapper = sm.GetScriptWrapper(scriptName);
+            if (wrapper == null) return;
             wrapper.StartNew(args); 
         }
 
@@ -155,6 +156,7 @@ namespace Proline.Engine
             var extensions = em.GetExtensions();
             var sm = ScriptManager.GetInstance();
             var wrapper = sm.GetScriptWrapper(scriptName);
+            if (wrapper == null) return;
             wrapper.KillAllInstances();
         }
     }

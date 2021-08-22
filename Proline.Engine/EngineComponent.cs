@@ -175,6 +175,7 @@ namespace Proline.Engine
         public void Load()
         {
             if (_status != 0) throw new Exception("Component has already loaded");
+            Debugger.LogDebug("Attempting to load " + _assembly);
             var assembly = Assembly.Load(_assembly); 
             var am = APIManager.GetInstance();
 
@@ -256,6 +257,7 @@ namespace Proline.Engine
                 foreach (var item in _scriptClasses)
                 {
                     var scriptType = assembly.GetType(item);
+                    if (scriptType == null) continue;
                     var script = CreateComponentObject<ComponentScript>(scriptType);
                     _scripts.Add(script);
                 }

@@ -33,9 +33,17 @@ namespace Proline.Engine
             _scriptTasks.Add(task, scriptName);
         }
 
-        internal void UnRegisterScriptTask(Task task)
+        internal void UnregisterScriptTask(Task task)
         {
             _scriptTasks.Remove(task);
+        }
+
+        internal IEnumerable<Task> GetScriptTasks(string name)
+        {
+            return _scriptTasks
+   .Where(pair => pair.Value.Equals(name))
+   .Select(pair => pair.Key)
+   .ToArray();
         }
     }
 }

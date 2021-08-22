@@ -57,9 +57,9 @@
       <Project>{00115faf-fb34-4dc7-bbeb-e8e9ae227c42}</Project>
       <Name>Proline.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Proline.Example.Client\Proline.Example.Client.csproj">
+    <ProjectReference Include="..\Proline.Example.Client\Proline.Example.csproj">
       <Project>{9603983b-d4e4-43ac-aa33-94e4162bb6e6}</Project>
-      <Name>Proline.Example.Client</Name>
+      <Name>Proline.Example</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

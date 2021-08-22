@@ -240,7 +240,16 @@ namespace Proline.Engine
                     var componentNAme = args[0].ToString();
                     var apiName = args[1].ToString();
                     var list = JsonConvert.DeserializeObject<object[]>(args[2].ToString());
-                    return APICaller.CallAPI(apiName, list.ToArray()); 
+                    return APICaller.CallAPI(apiName, list.ToArray());
+                case "CreateAndInsertResponse":
+                    var guid = (string)args[0];
+                    var value = args[1];
+                    var isException = (bool)args[2];
+                    var nm = NetworkManager.GetInstance();
+                    nm.CreateAndInsertResponse(guid, value, isException);
+                    return null;
+                        break;
+
                 default:
                     return null;
             }

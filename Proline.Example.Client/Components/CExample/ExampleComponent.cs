@@ -31,19 +31,21 @@ namespace Proline.Example.Client.Components.CExample
             base.OnComponentStop();
         }
 
+        [Client]
         [ComponentCommand("X")]
         public void ExampleCommand()
         {
 
         }
 
+        [Client]
         [ComponentAPI]
         public int ExampleAPI()
         {
             return 1;
         }
 
-
+        [Client]
         [ComponentAPI]
         public bool UnlockNeareastVehicle(int x, out int y)
         {

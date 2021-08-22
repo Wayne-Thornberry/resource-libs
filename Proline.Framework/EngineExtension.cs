@@ -58,7 +58,7 @@ namespace Proline.Framework
 
         public void OnScriptFinished(string name)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

@@ -70,11 +70,12 @@ namespace Proline.Engine
         private void ExecuteInstance(LevelScript levelScript, object[] args)
         {
             //if(_status != 1) throw new Exception("Script not ready to be started");
-            _task = Task.Run(() => Execute(levelScript, args));
-            _task.ContinueWith(x => Finish());
+            var _task = new Task(async () => await Execute(levelScript, args));
+            _task.ContinueWith(x => Finish(_task));
             var em = ExtensionManager.GetInstance();
             var sm = ScriptTaskManager.GetInstance();
-            sm.RegisterScriptTask(_task, _name);  
+            sm.RegisterScriptTask(_task, _name);
+            _task.Start();
             var extensions = em.GetExtensions();
             foreach (var extension in extensions)
             {
@@ -85,33 +86,44 @@ namespace Proline.Engine
 
         internal void StartNew(object[] args)
         {
-            _status = 0;
-            KillAllInstances();
-            var ls = InitializeNewInstance(args);
-            var arg = new List<object>(args);
-            if (_addionalArgs != null)
-                arg.AddRange(_addionalArgs);
-            ExecuteInstance(ls, arg.ToArray());
-            _instanceCount++;
+            try
+            { 
+                _status = 0;
+                KillAllInstances();
+                if (args == null)
+                    args = new object[0];
+
+                var ls = InitializeNewInstance(args);
+                var arg = new List<object>(args);
+                if (_addionalArgs != null)
+                    arg.AddRange(_addionalArgs);
+                ExecuteInstance(ls, arg.ToArray());
+                _instanceCount++;
+            }
+            catch (Exception e)
+            {
+                Debugger.LogDebug(e.ToString(), true);
+                throw;
+            }
         }
 
         internal void KillAllInstances()
         {
-            //if (_status != 2) throw new Exception("Script not ready to be started");
-            if (_task != null)
+            var stm = ScriptTaskManager.GetInstance();
+            var tasks = stm.GetScriptTasks(_name);
+            foreach (var item in tasks)
             {
-                _task.Dispose();
-                _script = null;
+                Finish(item);
             }
         }
          
 
-        private async Task Finish()
+        private async Task Finish(Task task)
         {
-            _task.Dispose();
             var em = ExtensionManager.GetInstance();
             var sm = ScriptTaskManager.GetInstance();
-            sm.UnRegisterScriptTask(_task);
+            task.Dispose();
+            sm.UnregisterScriptTask(task);
             var extensions = em.GetExtensions();
             foreach (var extension in extensions)
             {
