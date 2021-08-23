@@ -25,7 +25,19 @@ namespace Proline.Engine
 
         internal void Invoke(params object[] args)
         {
+            _item.Invoke(_source, args);
+        }
 
+        internal static void RegisterCommand(ComponentCommand command)
+        {
+            var im = InternalManager.GetInstance();
+            Debugger.LogDebug("Registered " + command.Type + " " + command.Name);
+            im.AddCommand(command);
+        }
+        internal static void UnregisterCommand(ComponentCommand command)
+        {
+            var im = InternalManager.GetInstance();
+            im.RemoveCommand(command);
         }
     }
 }

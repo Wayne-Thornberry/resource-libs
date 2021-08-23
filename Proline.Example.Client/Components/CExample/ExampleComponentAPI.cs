@@ -31,24 +31,6 @@ namespace Proline.Example.Components.CExample
             return 1;
         }
 
-        [Client]
-        [ComponentAPI]
-        public bool UnlockNeareastVehicle(int x, int y)
-        {
-            //Debugger.LogDebug(this, "It seems to have worked");
-            y = 100;
-            return true;
-        }
-
-        [Client]
-        [ComponentAPI]
-        public bool UnlockNeareastVehicle(int x, out int y)
-        {
-            //Debugger.LogDebug(this, "It seems to have worked");
-            y = 100;
-            return true;
-        }
-
         [Server]
         [ComponentAPI]
         public int ExampleAPI2()

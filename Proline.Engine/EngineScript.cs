@@ -10,10 +10,7 @@ using System.Threading.Tasks;
 namespace Proline.Engine
 {
     internal class EngineScript
-    {
-        private Task _task;
-        private LevelScript _script;
-
+    {  
         private string _assembly;
         private string _class;
 
@@ -54,10 +51,10 @@ namespace Proline.Engine
             script.Parameters = args;
 
             //_script = ScriptFactory.CreateScriptInstance(_name, _addionalArgs);
-            //ScriptManager.RegisterScript(this);
+            //InternalManager.RegisterScript(this);
             _status = 1;
 
-            var em = ExtensionManager.GetInstance();
+            var em = InternalManager.GetInstance();
             var extensions = em.GetExtensions();
             foreach (var extension in extensions)
             {
@@ -72,9 +69,9 @@ namespace Proline.Engine
             //if(_status != 1) throw new Exception("Script not ready to be started");
             var task = new Task(async () => await Execute(levelScript, args));
             task.ContinueWith(x => Finish(task));
-            var em = ExtensionManager.GetInstance();
-            var sm = ScriptTaskManager.GetInstance();
-            sm.RegisterScriptTask(task, _name);
+            var em = InternalManager.GetInstance();
+            var sm = InternalManager.GetInstance();
+            //sm.RegisterScriptTask(task, _name);
             task.Start();
             var extensions = em.GetExtensions();
             foreach (var extension in extensions)
@@ -86,10 +83,11 @@ namespace Proline.Engine
 
         internal void StartNew(object[] args)
         {
+            if (!EngineConfiguration.IsClient) return;
             try
             { 
                 _status = 0;
-                KillAllInstances();
+                //KillAllInstances();
                 if (args == null)
                     args = new object[0];
 
@@ -109,21 +107,21 @@ namespace Proline.Engine
 
         internal void KillAllInstances()
         {
-            var stm = ScriptTaskManager.GetInstance();
-            var tasks = stm.GetScriptTasks(_name);
-            foreach (var item in tasks)
-            {
-                Finish(item);
-            }
+            var stm = InternalManager.GetInstance();
+            //var tasks = stm.GetScriptTasks(_name);
+            //foreach (var item in tasks)
+            //{
+            //    Finish(item);
+            //}
         }
          
 
         private async Task Finish(Task task)
         {
-            var em = ExtensionManager.GetInstance();
-            var sm = ScriptTaskManager.GetInstance();
+            var em = InternalManager.GetInstance();
+            var sm = InternalManager.GetInstance();
             task.Dispose();
-            sm.UnregisterScriptTask(task);
+            //sm.UnregisterScriptTask(task);
             var extensions = em.GetExtensions();
             foreach (var extension in extensions)
             {
@@ -142,6 +140,19 @@ namespace Proline.Engine
             {
                 Debugger.LogError(e, true); 
             }
-        } 
+        }
+
+        internal static void RegisterScript(EngineScript script)
+        {
+            var sm = InternalManager.GetInstance();
+            Debugger.LogDebug("Registered " + script.Type + " " + script.Name);
+            sm.AddScript(script);
+        }
+
+        internal static void UnregisterScript(EngineScript scriptName)
+        {
+            var sm = InternalManager.GetInstance();
+            sm.RemoveScript(scriptName);
+        }
     }
 }

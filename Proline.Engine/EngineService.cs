@@ -31,6 +31,11 @@ namespace Proline.Engine
                 EngineConfiguration.IsClient = envType != -1;
                 var ty = EngineConfiguration.IsClient ? "Client" : "Server";
 
+                if (EngineConfiguration.IsClient)
+                {
+                    // Need to do some checks here
+                }
+
                 LoadConfig(isDebug);
                 LoadAssemblies();
                 Debugger.LogDebug("Engine in " + ty + " Mode");
@@ -56,27 +61,6 @@ namespace Proline.Engine
 
                 throw;
             }
-        }
-
-        public async Task Tick()
-        {
-            var cm = ComponentManager.GetInstance();
-            var components = cm.GetComponents();
-            foreach (var item in components)
-            {
-                item.Update();
-            } 
-
-
-            if (DateTime.UtcNow.Ticks - _lastCheck > 1000000)
-            {
-                foreach (var item in components)
-                {
-                    item.FixedUpdate();
-                }
-                _lastCheck = DateTime.UtcNow.Ticks;
-            }
-
         }
 
         private void RunEnvSpecificFunctions(int envType)
@@ -106,23 +90,25 @@ namespace Proline.Engine
         {
             if (EngineStatus.IsComponentsInitialized) return;
             var _componentDetails = new List<ComponentDetails>(EngineConfiguration.Components);
-            var am = APIManager.GetInstance();
-            var com = CommandManager.GetInstance();
-            var cm = ComponentManager.GetInstance();
+            var am = InternalManager.GetInstance();
+            var com = InternalManager.GetInstance();
+            var cm = InternalManager.GetInstance();
             if (_componentDetails != null)
             {
                 foreach (var componentDetails in _componentDetails)
                 {
+                    if (!EngineConfiguration.IsClient && componentDetails.EnvType == 1) continue;
+                    if (EngineConfiguration.IsClient && componentDetails.EnvType == -1) continue;
                     if (!EngineConfiguration.IsDebugEnabled && componentDetails.DebugOnly) throw new Exception("Component cannot be started, debug not enabled");
                     if (componentDetails == null) throw new Exception("Component path null");
                     try
                     {
                         if (cm.IsComponentRegistered(componentDetails.ComponentName)) throw new Exception("Component by that path already exists");
                         var component = new EngineComponent(componentDetails);
-                        var em = ExtensionManager.GetInstance();
+                        var em = InternalManager.GetInstance();
                         var extensions = em.GetExtensions();
                         component.Load();
-                        cm.RegisterComponent(component);
+                        EngineComponent.RegisterComponent(component);
                         Debugger.LogDebug(string.Format("{0} Component loaded sucessfully, {1} APIs loaded, {2} Commands Loaded {3} Scripts Loaded", component.Name, component.GetAPIs().Count(), component.GetCommands().Count(), component.GetScripts().Count()));
                     }
                     catch (Exception e)
@@ -140,14 +126,14 @@ namespace Proline.Engine
         {
             if (EngineStatus.IsExtensionsInitialized) return;
             var _extensionDetails = new List<ExtensionDetails>(EngineConfiguration.Extensions);
-            var em = ExtensionManager.GetInstance();
+            var em = InternalManager.GetInstance();
             if (_extensionDetails != null)
             {
                 foreach (var extensionPath in _extensionDetails)
                 {
                     try
                     {
-                        em.InitializeExtension(extensionPath);
+                        InitializeExtension(extensionPath);
                     }
                     catch (Exception e)
                     {
@@ -159,20 +145,33 @@ namespace Proline.Engine
             EngineStatus.IsExtensionsInitialized = true;
         }
 
+        internal static void InitializeExtension(ExtensionDetails extensionPath)
+        {
+            var assembly = Assembly.Load(extensionPath.Assembly);
+            var im = InternalManager.GetInstance();
+            foreach (var item in extensionPath.ExtensionClasses)
+            {
+                var types = assembly.GetType(item);
+                var extension = (EngineExtension)Activator.CreateInstance(types, null);
+                extension.OnInitialize();
+                im.AddExtension(extension);
+            }
+        }
+
         private static void InitializeScripts()
         {
             if (EngineStatus.IsScriptsInitialized) return;
             //InsertScriptAssemblies();
 
-            var spm = ScriptPackageManager.GetInstance();
-            var sm = ScriptManager.GetInstance();
+            var spm = InternalManager.GetInstance();
+            var sm = InternalManager.GetInstance();
             foreach (var item in EngineConfiguration.ScriptPackages)
             {
                 try
                 { 
                     var sp = ScriptPackage.Load(item);
                     if (sp == null) continue;
-                    spm.RegisterScriptPackage(sp);
+                    ScriptPackage.RegisterPackage(sp);
                     //Debugger.LogDebug("Successfully loaded script package");
                 }
                 catch (Exception e)
@@ -196,7 +195,12 @@ namespace Proline.Engine
             {
                 try
                 { 
-                    Assembly.Load(item);
+                    if(EngineConfiguration.IsClient && item.EnvType == 1)
+                        Assembly.Load(item.Assembly);
+                    else  if (!EngineConfiguration.IsClient && item.EnvType == -1)
+                        Assembly.Load(item.Assembly);
+                    else
+                        Assembly.Load(item.Assembly);
                 }
                 catch (Exception e)
                 {
@@ -217,7 +221,7 @@ namespace Proline.Engine
 
         //public static ComponentAPI GetComponentAPI(string componentName)
         //{
-        //    var cm = ComponentManager.GetInstance();
+        //    var cm = InternalManager.GetInstance();
         //    var component = cm.GetComponent(componentName);
         //    return component.GetAPI();
         //}

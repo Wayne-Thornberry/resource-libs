@@ -18,6 +18,11 @@ namespace Proline.Framework
 
         }
 
+        public virtual void OnComponentEvent(string eventName, params object[] args)
+        {
+
+        }
+
         public virtual void OnComponentStart()
         {
 

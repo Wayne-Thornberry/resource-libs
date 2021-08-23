@@ -8,6 +8,7 @@
 
     internal class ComponentDetails
     {
+        public int EnvType { get; set; }
         public string Assembly { get; set; }
         public string ComponentName { get; set; } 
         public string ComponentClass { get; set; }
@@ -45,7 +46,7 @@
         public long MasterKey { get; set; }
         public bool EnableDebug { get; set; }
         public string Args { get; set; }
-        public string[] Assemblies { get; set; }
+        public AssemblyDetails[] Assemblies { get; set; }
         public int EnvType { get; set; }
     }
 }

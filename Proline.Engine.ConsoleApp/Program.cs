@@ -40,20 +40,20 @@ namespace Proline.Engine.ConsoleApp
             thread.Start();
 
 
-            var task = Task.Run(async ()  =>  {
-                while (true)
-                {
-                    try
-                    {
-                        await service.Tick(); 
-                    }
-                    catch (Exception e)
-                    {
+            //var task = Task.Run(async ()  =>  {
+            //    while (true)
+            //    {
+            //        try
+            //        {
+            //            await service.Tick(); 
+            //        }
+            //        catch (Exception e)
+            //        {
 
-                        throw;
-                    }
-                }
-            });
+            //            throw;
+            //        }
+            //    }
+            //});
 
             var x = "public enum EngineAPI\n" +
                 "{\n"; 

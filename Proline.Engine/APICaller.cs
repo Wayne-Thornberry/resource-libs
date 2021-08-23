@@ -11,7 +11,7 @@ namespace Proline.Engine
     { 
         public static bool DoesAPIExist(int v)
         {
-            var cm = APIManager.GetInstance();
+            var cm = InternalManager.GetInstance();
             var api = cm.GetAPI(v);
             if (api == null) return false;
             return true;
@@ -19,7 +19,7 @@ namespace Proline.Engine
 
         public static async Task<object> CallAPIAsync(int apiName, params object[] inputParameters)
         {
-            var cm = APIManager.GetInstance();
+            var cm = InternalManager.GetInstance();
             var api = cm.GetAPI(apiName);
             if (api == null)
                 return null;
@@ -28,7 +28,7 @@ namespace Proline.Engine
 
         public static async Task<T> CallAPIAsync<T>(int apiName, params object[] inputParameters)
         {
-            var cm = APIManager.GetInstance();
+            var cm = InternalManager.GetInstance();
             var api = cm.GetAPI(apiName);
             if (api == null)
                 return default;
@@ -37,7 +37,7 @@ namespace Proline.Engine
 
         public static object CallAPI(int apiName, params object[] inputParameters)
         {
-            var cm = APIManager.GetInstance();
+            var cm = InternalManager.GetInstance();
             var api = cm.GetAPI(apiName);
             if (api == null) return null;
             return api.Invoke(inputParameters);
@@ -45,7 +45,7 @@ namespace Proline.Engine
 
         public static T CallAPI<T>(int apiName, params object[] inputParameters)
         {
-            var cm = APIManager.GetInstance();
+            var cm = InternalManager.GetInstance();
             var api = cm.GetAPI(apiName);
             if (api == null) return default;
             return (T) Convert.ChangeType(api.Invoke(inputParameters), typeof(T));

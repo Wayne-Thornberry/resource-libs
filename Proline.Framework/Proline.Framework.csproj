@@ -50,6 +50,7 @@
     <Compile Include="ComponentScript.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="DebugAttribute.cs" />
+    <Compile Include="EngineEventListenerAttribute.cs" />
     <Compile Include="EngineExtension.cs" />
     <Compile Include="IEngineTracker.cs" />
     <Compile Include="LevelScript.cs" />
@@ -59,7 +60,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetDir)$(ProjectName)*.*" "H:\servers\Game_Servers\FiveM\Project.Online\resources\$(SolutionName)\"/Y/D/E/I</PostBuildEvent>
   </PropertyGroup>
 </Project>

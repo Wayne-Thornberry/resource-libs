@@ -33,15 +33,15 @@ namespace Proline.Engine
         private long _ticks;
 
         private List<ComponentScript> _scripts;
-        private List<APIInvoker> _apis; 
+        private List<APIInvoker> _apis;
+
+
         private List<ComponentCommand> _commandActions;
-        private AbstractComponent _component;
-
-
-
-        private ComponentAPI _api;
+        private AbstractComponent _component;  
+        private ComponentAPI _api; 
         private ComponentHandler _handler;
         private ComponentCommander _commander;
+        private long _lastCheck;
 
         public string Name => _name;
         public ComponentStatus Status => (ComponentStatus)_status;
@@ -80,53 +80,41 @@ namespace Proline.Engine
 
         public void ExecuteCommand(string command, object[] args)
         {
-            //if (_status != 2) throw new Exception("Component not started");
-            //if (!_commandActions.ContainsKey(command)) return;
-            //_commandActions[command].Invoke(_commands, args);
-            var cm = CommandManager.GetInstance();
+            var cm = InternalManager.GetInstance();
             cm.GetCommand(command).Invoke(args); 
         }
-
-        // OLD IMPLEMENTATION, THIS IS REPLACED BY COMPONENTAPI FUNCTIONALITY
-        //public object ExecuteControl(string methodName, object[] args)
-        //{
-        //    if (_status != 2) throw new Exception("Component not started");
-        //    if (_controlActions == null || _controlActions.Count == 0 || !_controlActions.ContainsKey(methodName)) return null;
-        //    var method = _controlActions[methodName]; 
-        //    var parameters = method.GetParameters();
-        //    var paras = new object[args.Length]; 
-        //    for (int i = 0; i < paras.Length; i++)
-        //    {
-        //        var methodType = parameters[i].ParameterType;
-        //        Debugger.LogDebug(methodType.IsPrimitive);
-        //        Debugger.LogDebug(args[i].ToString());
-        //        try
-        //        { 
-        //            paras[i] = Convert.ChangeType(args[i], methodType);
-        //        }
-        //        catch (Exception)
-        //        { 
-        //            paras[i] = JsonConvert.DeserializeObject(args[i].ToString(), methodType);
-        //            throw;
-        //        } 
-        //    }
-        //    if(_simpleComponent != null)
-        //    {
-        //        return method.Invoke(_simpleComponent, paras); 
-        //    }
-        //    else
-        //    { 
-        //        return method.Invoke(_controller, paras);
-        //    }
-        //}
          
 
         internal IEnumerable<ComponentCommand> GetCommands()
         {
             return _commandActions;
-        } 
+        }
 
-        public void FixedUpdate()
+        internal void TriggerComponentEvent(string eventName, object[] args)
+        {
+            if (_handler != null)
+                _handler.OnComponentEvent(eventName, args);
+        }
+
+        internal void OnEngineEvent(string eventName, object[] args)
+        {
+            foreach (var item in _scripts)
+            {
+                item.OnEngineEvent(eventName, args);
+            }
+        }
+
+        internal async Task Tick()
+        {
+            Update();
+            if (DateTime.UtcNow.Ticks - _lastCheck > 1000000)
+            {
+                FixedUpdate(); 
+                _lastCheck = DateTime.UtcNow.Ticks;
+            }
+        }
+
+        internal void FixedUpdate()
         {
             foreach (var item in _scripts)
             {
@@ -139,7 +127,7 @@ namespace Proline.Engine
             return _scripts;
         }
 
-        public void Update()
+        internal void Update()
         {
             if (EngineConfiguration.IsIsolated) return;
             if (_status == 2)
@@ -152,9 +140,9 @@ namespace Proline.Engine
                     }
                 }
             } 
-        } 
+        }
 
-        public void Start()
+        internal void Start()
         { 
             if (_status != 1 && _status != 3) 
                 throw new Exception("Component cannot be started, component not ready or stopped"); 
@@ -176,7 +164,7 @@ namespace Proline.Engine
         }
 
 
-        public void Stop()
+        internal void Stop()
         {
             if (_status != 2) throw new Exception("Component cannot be stopped, component not started");
             //if (_handler != null)
@@ -187,16 +175,16 @@ namespace Proline.Engine
                     _handler.OnComponentStop();
             }
             _status = 3; // Stopped;
-        } 
+        }
 
-        public void Load()
+        internal void Load()
         {
             try
             {
                 if (_status != 0) throw new Exception("Component has already loaded");
                 Debugger.LogDebug("Attempting to load " + _name + " From assembly " + _assembly);
                 var assembly = Assembly.Load(_assembly);
-                var am = APIManager.GetInstance();
+                var am = InternalManager.GetInstance();
                
                 var lookFor = EngineConfiguration.IsClient ? typeof(ClientAttribute) : typeof(ServerAttribute);
 
@@ -309,6 +297,41 @@ namespace Proline.Engine
         {
             return (T)Activator.CreateInstance(commandType, null);
             //_handler.OnComponentInitialized();
+        }
+
+
+
+        internal static void RegisterComponent(EngineComponent component)
+        {
+            var im = InternalManager.GetInstance();
+            if (im.IsComponentRegistered(component.Name)) return;
+            foreach (ComponentCommand command in component.GetCommands())
+            {
+                ComponentCommand.RegisterCommand(command);
+            }
+
+            foreach (APIInvoker apiName in component.GetAPIs())
+            {
+                APIInvoker.RegisterAPI(apiName);
+            }
+            Debugger.LogDebug("Registered " + component.Type + " " + component.Name);
+            im.AddComponent(component);
+        }
+
+        internal static void UnregisterComponent(EngineComponent component)
+        {
+            var im = InternalManager.GetInstance();
+            if (!im.IsComponentRegistered(component.Name)) return;
+            foreach (ComponentCommand command in component.GetCommands())
+            {
+                ComponentCommand.UnregisterCommand(command);
+            }
+
+            foreach (APIInvoker apiName in component.GetAPIs())
+            {
+                APIInvoker.UnregisterAPI(apiName);
+            }
+            im.RemoveComponent(component);
         }
     }
 }

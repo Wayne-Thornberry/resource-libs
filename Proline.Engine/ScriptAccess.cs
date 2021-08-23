@@ -10,8 +10,8 @@ namespace Proline.Engine
     {
         internal static void StartStartupScripts()
         {
-            var sm = ScriptPackageManager.GetInstance();
-            foreach(ScriptPackage package in sm.GetScriptPackages())
+            var sm = InternalManager.GetInstance();
+            foreach(ScriptPackage package in sm.GetPackages())
             {
                 package.StartStartupScripts();
             }

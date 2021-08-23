@@ -21,6 +21,25 @@ namespace Proline.Engine
             return await ExecuteServerMethod(component.Name, methodName, args);
         }
 
+        public static void TriggerComponentEvent(string componentName, string eventName, params object[] args)
+        {
+            var cm = InternalManager.GetInstance();
+            var components = cm.GetComponent(componentName);
+            components.TriggerComponentEvent(eventName, args);
+        }
+
+        public static void TriggerEngineEvent(string eventName, params object[] args)
+        {
+            var cm = InternalManager.GetInstance();
+            var components = cm.GetComponents();
+            //Debugger.LogDebug("Engine event triggered " + eventName);
+            foreach (var item in components)
+            {
+                item.OnEngineEvent(eventName, args);
+            }
+
+        }
+
         public static async Task<T> ExecuteEngineMethodServer<T>(string methodName, params object[] args)
         {
             var response = await ExecuteEngineMethodServerI("ExecuteComponentControl", "", methodName, args);
@@ -45,7 +64,7 @@ namespace Proline.Engine
 
         public static IEnumerable<string> GetAllAPIs()
         {
-            var apis = APIManager.GetInstance();
+            var apis = InternalManager.GetInstance();
             var x = apis.GetAPIs();
             var l = new List<string>();
             var g = new List<string>();
@@ -156,20 +175,20 @@ namespace Proline.Engine
 
         public static void StartNewScript(string scriptName, params object[] args)
         {
-            var em = ExtensionManager.GetInstance();
+            var em = InternalManager.GetInstance();
             var extensions = em.GetExtensions();
-            var sm = ScriptManager.GetInstance();
-            var wrapper = sm.GetScriptWrapper(scriptName);
+            var sm = InternalManager.GetInstance();
+            var wrapper = sm.GetScript(scriptName);
             if (wrapper == null) return;
             wrapper.StartNew(args); 
         }
 
         public static void RequestScriptStop(string scriptName)
         {
-            var em = ExtensionManager.GetInstance();
+            var em = InternalManager.GetInstance();
             var extensions = em.GetExtensions();
-            var sm = ScriptManager.GetInstance();
-            var wrapper = sm.GetScriptWrapper(scriptName);
+            var sm = InternalManager.GetInstance();
+            var wrapper = sm.GetScript(scriptName);
             if (wrapper == null) return;
             wrapper.KillAllInstances();
         }

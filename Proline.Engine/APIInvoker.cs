@@ -12,7 +12,7 @@ namespace Proline.Engine
         private int _type;
         private int _hash;
 
-        public string Signature { get; }
+        public string Signature { get; private set; }
 
         public APIInvoker(object source, MethodInfo item, int type = 0, bool debugOnly = false)
         {
@@ -73,12 +73,15 @@ namespace Proline.Engine
 
         public override int GetHashCode()
         {
+            if (string.IsNullOrEmpty(Signature))
+                Signature = GenerateSignature();
+
             if (_hash == 0)
-                _hash = GenerateHash();
+                _hash = JoatHashing.GenerateHash(Signature);
             return _hash;
         }
 
-        private int GenerateHash()
+        private string GenerateSignature()
         {
             var h = _item.Name; 
             foreach (var item in _item.GetParameters())
@@ -86,25 +89,28 @@ namespace Proline.Engine
                 h += item.ParameterType.Name;
             }
             h += _item.ReturnType.Name;
-            return JOAT(h); 
+            return h; 
         }
 
-        private int JOAT(string key)
+        internal static void RegisterAPI(APIInvoker componentAP)
         {
-            var hash = 0;
-            int x = key.Length;
-            var chars = key.ToCharArray();
-
-            for (int i = x - 1; i >= 0; i--)
-            { 
-                hash += chars[i];
-                hash += (hash << 10);
-                hash ^= (hash >> 6);
+            try
+            {
+                InternalManager im = InternalManager.GetInstance();
+                Debugger.LogDebug("Registered " + componentAP.ToString());
+                //_apisAndComponents.Add(apiName, component);
+                im.AddAPI(componentAP);
             }
-            hash += (hash << 3);
-            hash ^= (hash >> 11);
-            hash += (hash << 15);
-            return hash;
+            catch (ArgumentException e)
+            {
+                Debugger.LogDebug("Could not add API, same API already exists");
+            }
+        }
+
+        internal static void UnregisterAPI(APIInvoker apiName)
+        {
+            InternalManager im = InternalManager.GetInstance();
+            im.RemoveAPI(apiName);
         }
     }
 }

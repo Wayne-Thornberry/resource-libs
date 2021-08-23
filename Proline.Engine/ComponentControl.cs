@@ -12,10 +12,12 @@ namespace Proline.Engine
         internal static void StartAllComponents()
         {
             if (!EngineStatus.IsComponentsInitialized) throw new Exception("Cannot start components, engine not initilized");
-            var cm = ComponentManager.GetInstance();
+            var cm = InternalManager.GetInstance();
+            var ca = CitizenAccess.GetInstance();
             foreach (var component in cm.GetComponents())
             {
                 StartComponent(component);
+                ca.AddTick(component.Tick);
             }
 
         }
@@ -23,10 +25,12 @@ namespace Proline.Engine
         internal static void StopAllComponents()
         {
             if (!EngineStatus.IsComponentsInitialized) throw new Exception("Cannot stop components, engine not initilized");
-            var cm = ComponentManager.GetInstance();
+            var cm = InternalManager.GetInstance();
+            var ca = CitizenAccess.GetInstance();
             foreach (var component in cm.GetComponents())
             {
                 StopComponent(component);
+                ca.RemoveTick(component.Tick);
             }
         }
 
@@ -36,7 +40,7 @@ namespace Proline.Engine
             try
             {
                 component.Start();
-                var em = ExtensionManager.GetInstance();
+                var em = InternalManager.GetInstance();
                 var extensions = em.GetExtensions();
                 foreach (var extension in extensions)
                 {
@@ -54,7 +58,7 @@ namespace Proline.Engine
             try
             {
                 component.Stop();
-                var em = ExtensionManager.GetInstance();
+                var em = InternalManager.GetInstance();
                 var extensions = em.GetExtensions();
                 foreach (var extension in extensions)
                 {
@@ -72,7 +76,7 @@ namespace Proline.Engine
             if (!EngineStatus.IsComponentsInitialized) throw new Exception("Cannot start component, engine not initilized");
             try
             {
-                var cm = ComponentManager.GetInstance();
+                var cm = InternalManager.GetInstance();
                 var component = cm.GetComponent(componentName);
                 StartComponent(component);
             }
@@ -91,7 +95,7 @@ namespace Proline.Engine
             if (!EngineStatus.IsComponentsInitialized) throw new Exception("Cannot stop component, engine not initilized");
             try
             {
-                var cm = ComponentManager.GetInstance();
+                var cm = InternalManager.GetInstance();
                 var component = cm.GetComponent(componentName);
                 StopComponent(component);
             }

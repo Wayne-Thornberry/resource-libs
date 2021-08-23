@@ -46,8 +46,7 @@ namespace Proline.Engine
 
             try
             {
-          _scripts[scriptName].StartNew(args);
-
+                _scripts[scriptName].StartNew(args); 
             }
             catch (Exception ex)
             {
@@ -118,6 +117,48 @@ namespace Proline.Engine
                     return item;
             }
             return null; 
+        }
+
+
+        internal static void UnregisterPackage(ScriptPackage sp)
+        {
+            var sm = InternalManager.GetInstance();
+            foreach (var scriptName in sp.GetScriptWrappers())
+            {
+                try
+                {
+                    EngineScript.UnregisterScript(scriptName);
+                }
+                catch (ArgumentException e)
+                {
+
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
+            }
+            sm.RemovePackage((sp));
+        }
+        internal static void RegisterPackage(ScriptPackage sp)
+        {
+            var sm = InternalManager.GetInstance();
+            foreach (var script in sp.GetScriptWrappers())
+            {
+                try
+                {
+                    EngineScript.RegisterScript(script);
+                }
+                catch (ArgumentException e)
+                {
+
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
+            }
+            sm.AddPackage(sp);
         }
     }
 }

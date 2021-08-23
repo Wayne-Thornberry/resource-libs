@@ -12,9 +12,7 @@ namespace Proline.Framework
 
         public virtual void Start() { }
         public virtual void Update() { }
-        public virtual void FixedUpdate()
-        {
-
-        }
+        public virtual void FixedUpdate() { }
+        public virtual void OnEngineEvent(string eventName, params object[] args) { }
     }
 }

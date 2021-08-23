@@ -17,6 +17,7 @@ namespace Proline.Example.Components.CExample
         }
         public override void FixedUpdate()
         {
+            //EngineAccess.TriggerComponentEvent("CExample", "ExampleEvent", 1);
             //Debugger.LogDebug("Woah");
         }
     }
