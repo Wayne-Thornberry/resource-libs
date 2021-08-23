@@ -16,8 +16,8 @@ namespace Proline.Engine
         public static AssemblyDetails[] Assemblies => _config.Assemblies;
         public static ComponentDetails[] Components => _config.Components;
         public static ExtensionDetails[] Extensions => _config.Extensions;
-        public static bool IsIsolated => _config.ConsoleLaunch;
-         
+        public static bool IsIsolated => _config.ConsoleLaunch; 
+        public static string[] StartupScripts => _config.StartScripts;
 
         internal static void LoadConfig()
         {

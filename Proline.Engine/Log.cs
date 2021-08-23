@@ -5,16 +5,17 @@ namespace Proline.Engine
 {
     internal class Log
     {
+        private const string Format = "yyyy-MM-ddThh:mm:ss:fffZ";
 
-        public string LogError(object data)
+        internal string LogError(object data)
         {
             var type = "Error";
             data = data == null ? "null object" : data;
-            var format = $"{DateTime.UtcNow.ToString("yyyy-MM-ddThh:mm:ss:fffZ")} [{type}] {data}";
+            var format = $"{DateTime.UtcNow.ToString(Format)} [{type}] {data}";
             return format;
         }
 
-        public string LogWarn(object data)
+        internal string LogWarn(object data)
         {
             var type = "Warn";
             data = data == null ? "null object" : data;
@@ -22,7 +23,7 @@ namespace Proline.Engine
             return format;
         }
 
-        public string LogDebug(object data)
+        internal string LogDebug(object data)
         {
             var type = "Debug";
             data = data == null ? "null object" : data;

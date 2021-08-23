@@ -1,5 +1,5 @@
 ﻿using Proline.Engine.Data;
-using Proline.Framework;
+using Proline.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +19,14 @@ namespace Proline.Engine
         private object[] _addionalArgs;
         private int _status;
         private bool _isDebug;
+        private int _envType;
+        private int _handles;
 
         public string Type { get; }
 
         public string Name => _name;
 
-        private EngineScript(string name, string assembly, string classType, ScriptConfig details)
+        private EngineScript(string name, string assembly, string classType, ScriptConfig details, int envType = 0)
         {
             //_name = details.Name;
             _assembly = assembly;
@@ -33,21 +35,22 @@ namespace Proline.Engine
             _name = name;
             _addionalArgs = details.AddionalArgs;
             _isDebug = details.DebugOnly;
+            _envType = envType;
             Type = "EngineScript";
         }
 
-        internal static EngineScript CreateNewScript(string name, Assembly assembly, Type type, ScriptConfig details)
+        internal static EngineScript CreateNewScript(string name, Assembly assembly, Type type, ScriptConfig details, int envType = 0)
         { 
-            return new EngineScript(name, assembly.FullName, type.FullName, details); 
+            return new EngineScript(name, assembly.FullName, type.FullName, details, envType); 
         }
 
-        internal LevelScript InitializeNewInstance(object[] args)
+        internal ScriptInstance InitializeNewInstance(object[] args)
         {
             if (_isDebug && !EngineConfiguration.IsDebugEnabled) throw new Exception("Cannot intialize a new instance, engine not in debug");
             if (_status != 0) throw new Exception("Cannot inialize script, script not reset");
             var assembly = Assembly.Load(_assembly);
             Type type = assembly.GetType(_class);
-            LevelScript script = (LevelScript)Activator.CreateInstance(type);
+            ScriptInstance script = (ScriptInstance)Activator.CreateInstance(type);
             script.Parameters = args;
 
             //_script = ScriptFactory.CreateScriptInstance(_name, _addionalArgs);
@@ -64,10 +67,12 @@ namespace Proline.Engine
             // Notify extensions here that the script has intialized
         }
 
-        private void ExecuteInstance(LevelScript levelScript, object[] args)
+        private int ExecuteInstance(ScriptInstance levelScript, object[] args)
         {
             //if(_status != 1) throw new Exception("Script not ready to be started");
             var task = new Task(async () => await Execute(levelScript, args));
+            _instanceCount++;
+            _handles++;
             task.ContinueWith(x => Finish(task));
             var em = InternalManager.GetInstance();
             var sm = InternalManager.GetInstance();
@@ -78,12 +83,13 @@ namespace Proline.Engine
             {
                 extension.OnScriptStarted(_name);
             }
+            return _handles;
             // Notify extensions here that the script has started
         }
 
-        internal void StartNew(object[] args)
+        internal int StartNew(object[] args)
         {
-            if (!EngineConfiguration.IsClient) return;
+            if (!EngineConfiguration.IsClient && _envType == 1) return -1;
             try
             { 
                 _status = 0;
@@ -95,8 +101,7 @@ namespace Proline.Engine
                 var arg = new List<object>(args);
                 if (_addionalArgs != null)
                     arg.AddRange(_addionalArgs);
-                ExecuteInstance(ls, arg.ToArray());
-                _instanceCount++;
+                return ExecuteInstance(ls, arg.ToArray());
             }
             catch (Exception e)
             {
@@ -129,7 +134,7 @@ namespace Proline.Engine
             }
         }
 
-        internal async Task Execute(LevelScript script, object[] args)
+        internal async Task Execute(ScriptInstance script, object[] args)
         {
             try
             {

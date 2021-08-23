@@ -3,7 +3,7 @@ using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Proline.Core.Client;
 using Proline.Engine;
-using Proline.Framework;
+using Proline.Engine;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Proline.Core.Client.LevelScripts
 {
-    public class EditorScript : LevelScript
+    public class EditorScript : GameScript
     {
         private Camera _cam;
         private RaycastResult _raycastResult; 

@@ -23,13 +23,13 @@ namespace Proline.Online.Script
         #region Networking
 
 
-        [EventHandler(NetworkManager.NetworkResponseListenerHandler)]
+        [EventHandler(EngineConstraints.NetworkResponseListenerHandler)]
         public void NetworkResponseListener([FromSource] Player player, string guid, string value, bool isException)
         {
             EngineService.ExecuteEngineMethod("CreateAndInsertResponse", guid, value, isException);
         }
 
-        [EventHandler(NetworkManager.NetworkRequestListenerHandle)]
+        [EventHandler(EngineConstraints.NetworkRequestListenerHandle)]
         public void NetworkRequestListener([FromSource] Player player, string guid, string methodName, string methodArgs)
         {
             var args = JsonConvert.DeserializeObject<object[]>(methodArgs);

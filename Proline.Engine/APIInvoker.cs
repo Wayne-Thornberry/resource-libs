@@ -38,7 +38,7 @@ namespace Proline.Engine
         {
             if (_debugOnly && !EngineConfiguration.IsDebugEnabled) throw new Exception("Debug mode not enabled on debug only API");
             if (_type == -1 && EngineConfiguration.IsClient)
-                await EngineAccess.ExecuteEngineMethodServer<object>(_item.Name, args).ContinueWith(callback);
+                await EngineAccess.ExecuteComponentAPI<object>(_item.Name, args).ContinueWith(callback);
             return (T)Convert.ChangeType(_item.Invoke(_source, args), typeof(T));
         }
 
@@ -46,7 +46,7 @@ namespace Proline.Engine
         {
             if (_debugOnly && !EngineConfiguration.IsDebugEnabled) throw new Exception("Debug mode not enabled on debug only API");
             if (_type == -1 && EngineConfiguration.IsClient)
-                await EngineAccess.ExecuteEngineMethodServer<object>(_item.Name, args).ContinueWith(callback);
+                await EngineAccess.ExecuteComponentAPI<object>(_item.Name, args).ContinueWith(callback);
             return _item.Invoke(_source, args);
         }
 
@@ -54,7 +54,7 @@ namespace Proline.Engine
         {
             if (_debugOnly && !EngineConfiguration.IsDebugEnabled) throw new Exception("Debug mode not enabled on debug only API");
             if (_type == -1 && EngineConfiguration.IsClient)
-                return await EngineAccess.ExecuteEngineMethodServer<T>(_item.Name, args);
+                return await EngineAccess.ExecuteComponentAPI<T>(_item.Name, args);
             return (T)Convert.ChangeType(_item.Invoke(_source, args),typeof(T));
         }
 
@@ -62,7 +62,7 @@ namespace Proline.Engine
         {
             if (_debugOnly && !EngineConfiguration.IsDebugEnabled) throw new Exception("Debug mode not enabled on debug only API");
             if (_type == -1 && EngineConfiguration.IsClient)
-               return await EngineAccess.ExecuteEngineMethodServer<object>(_item.Name, args);
+               return await EngineAccess.ExecuteComponentAPI<object>(_item.Name, args);
             return _item.Invoke(_source, args);
         }
 

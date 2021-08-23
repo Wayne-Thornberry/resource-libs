@@ -1,5 +1,5 @@
 ﻿using Proline.Engine;
-using Proline.Framework;
+using Proline.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Proline.Core.Server.Components.CExampleNetworking
 {
-    public class ExampleNetworkingComponent : AbstractComponent
+    public class ExampleNetworkingComponent : ComponentAPI
     {
         [ComponentAPI]
         public void LogDebug(string data)

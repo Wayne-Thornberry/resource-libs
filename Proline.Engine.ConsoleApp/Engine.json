@@ -5,7 +5,7 @@
   "Assemblies": [
     "Newtonsoft.Json",
     "Proline.Engine",
-    "Proline.Framework",
+    "Proline.Engine",
     "Proline.Example"
   ],
   "Components": [

@@ -1,5 +1,5 @@
 ﻿using Proline.Engine.Data;
-using Proline.Framework;
+using Proline.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +18,7 @@ namespace Proline.Engine
         private bool _isDebugPackage;
         private string[] _scriptClasses;
         private string[] _startupScripts;
+        private int _envType;
         private string _name;
 
         private Dictionary<string, EngineScript> _scripts; 
@@ -28,18 +29,11 @@ namespace Proline.Engine
             _scriptConfigs = config.ScriptConfigs != null ? config.ScriptConfigs : new ScriptConfig[0];
             _isDebugPackage = config.DebugOnly;
             _scriptClasses = config.ScriptClasses != null ? config.ScriptClasses : new string[0];
-            _startupScripts = config.StartScripts != null ? config.StartScripts : new string[0];
+            _envType = config.EnvType;
 
             _scripts = new Dictionary<string, EngineScript>();
         }
 
-        internal void StartStartupScripts()
-        {
-            foreach (var item in _startupScripts)
-            {
-                StartNewScript(item);
-            }
-        }
 
         internal void StartNewScript(string scriptName, params object[] args)
         {
@@ -93,7 +87,7 @@ namespace Proline.Engine
                 var type = assembly.GetType(classPath);
                 var scriptName = type.Name;
                 var scriptConfig = HasCustomConfig(scriptName) ? GetCustomConfig(scriptName) : new ScriptConfig();
-                var wrapper = EngineScript.CreateNewScript(scriptName, assembly, type, scriptConfig);
+                var wrapper = EngineScript.CreateNewScript(scriptName, assembly, type, scriptConfig, _envType);
                 _scripts.Add(wrapper.Name, wrapper);
                 _loadedScriptCount++; 
             }

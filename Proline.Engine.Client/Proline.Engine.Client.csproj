@@ -75,14 +75,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\repo\PROJECT_ONLINE_LIB\3rdParty\Newtsoft.Json\12.0.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Proline.Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Proline.Engine\Proline.Engine\bin\Debug\Proline.Engine.dll</HintPath>
-    </Reference>
-    <Reference Include="Proline.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Proline.Engine\Proline.Engine\bin\Debug\Proline.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -121,6 +113,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Proline.Engine\Proline.Engine.csproj">
+      <Project>{00115faf-fb34-4dc7-bbeb-e8e9ae227c42}</Project>
+      <Name>Proline.Engine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

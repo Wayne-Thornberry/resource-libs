@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Proline.Core.Client.Components.CWorld
 { 
@@ -11,27 +12,21 @@ namespace Proline.Core.Client.Components.CWorld
         public HandleTracker()
         {
             _trackedHandles = new HashSet<int>();
-        }
-
-        internal void UntrackEntityHandle(int v)
-        {
-            _trackedHandles.Remove(v);
-        }
+        } 
 
         internal bool IsHandleTracked(int v)
         {
             return _trackedHandles.Contains(v);
         }
 
-        internal IEnumerable<int> GetTrackedEntityHandles()
+        internal IEnumerable<int> Get()
         {
            return _trackedHandles;
         }
-
-        internal void TrackEntityHandle(int v)
+        internal void Set(HashSet<int> handles)
         {
-            _trackedHandles.Add(v);
-        }
+            _trackedHandles = handles;
+        } 
 
         internal static HandleTracker GetInstance()
         {

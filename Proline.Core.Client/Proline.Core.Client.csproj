@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIGenerator.cs" />
+    <Compile Include="Components\CScriptObjects\TrackedObjectsManager.cs" />
     <Compile Include="EngineAPI.cs" />
     <Compile Include="Components\CDebugInterface\DebugInterfaceAPI.cs" />
     <Compile Include="Components\CEditor\EditorHandler.cs" />
@@ -69,12 +71,8 @@
     <Compile Include="Components\CGlobals\GlobalsManager.cs" />
     <Compile Include="Components\CInstancing\InstanceAPI.cs" />
     <Compile Include="Components\CMPSession\MPSessionHandler.cs" />
-    <Compile Include="Components\CScriptObjects\Attributes\ModelScriptAttributes.cs" />
-    <Compile Include="Components\CScriptObjects\Attributes\PointScriptAttributes.cs" />
-    <Compile Include="Components\CScriptObjects\Data\ScriptObj.cs" />
-    <Compile Include="Components\CScriptObjects\Data\ScriptObjectPair.cs" />
-    <Compile Include="Components\CScriptObjects\ObjectBlacklist.cs" />
-    <Compile Include="Components\CScriptObjects\ScriptCache.cs" />
+    <Compile Include="Components\CScriptObjects\ScriptObj.cs" />
+    <Compile Include="Components\CScriptObjects\ScriptObjectPair.cs" />
     <Compile Include="Components\CScriptObjects\ScriptObjectScript.cs" />
     <Compile Include="Components\CScriptObjects\ScriptObjectsAPI.cs" />
     <Compile Include="Components\CScriptObjects\ScriptObjectsHandler.cs" />
@@ -112,10 +110,6 @@
     <ProjectReference Include="..\Proline.Engine\Proline.Engine.csproj">
       <Project>{00115faf-fb34-4dc7-bbeb-e8e9ae227c42}</Project>
       <Name>Proline.Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Proline.Framework\Proline.Framework.csproj">
-      <Project>{e36980ba-3207-40e5-bf24-9410110cadd3}</Project>
-      <Name>Proline.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

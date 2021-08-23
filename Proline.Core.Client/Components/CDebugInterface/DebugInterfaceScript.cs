@@ -2,7 +2,7 @@
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Proline.Core.Client;
-using Proline.Framework;
+using Proline.Engine;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,7 +12,7 @@ namespace Proline.Core.Client.Components.CDebugInterface
 {
     public class DebugInterfaceScript : ComponentScript
     {
-        private List<int> _handles;
+        private int[] _handles;
         
         public override void Update()
         {
@@ -30,43 +30,38 @@ namespace Proline.Core.Client.Components.CDebugInterface
                 + Game.PlayerPed.Health + "\n"
                 + Game.PlayerPed.Handle + "\n");
             API.DrawText(0.005f, 0.05f);
-             
 
-            foreach (var handle in _handles)
-            {
-                var entity = Entity.FromHandle(handle);
-                if (entity == null) continue;
-                if (!API.IsEntityVisible(entity.Handle) || World.GetDistance(entity.Position, Game.PlayerPed.Position) > 10f) continue;
-                var pos = entity.Model.GetDimensions();
-                var d = entity.Position + new Vector3(0, 0, (entity.Model.GetDimensions().Z * 0.8f));
-                var x = $"{entity.Handle}\n" +
-                    $"{entity.Model.Hash}\n" +
-                    $"{Math.Round(entity.Heading, 2)}\n" +
-                    $"{entity.Health}\n"; 
-                ExampleAPI.DrawEntityBoundingBox(entity.Handle, 125, 125, 125, 100);
-                ExampleAPI.DrawDebugText3D(x, d, 3f, 0); 
-            }
+
+            //foreach (var handle in _handles)
+            //{
+            //    var entity = Entity.FromHandle(handle);
+            //    if (entity == null) continue;
+            //    if (!API.IsEntityVisible(entity.Handle) || World.GetDistance(entity.Position, Game.PlayerPed.Position) > 10f) continue;
+            //    var pos = entity.Model.GetDimensions();
+            //    var d = entity.Position + new Vector3(0, 0, (entity.Model.GetDimensions().Z * 0.8f));
+            //    var x = $"{entity.Handle}\n" +
+            //        $"{entity.Model.Hash}\n" +
+            //        $"{Math.Round(entity.Heading, 2)}\n" +
+            //        $"{entity.Health}\n" +
+            //        $"{ExampleAPI.IsEntityScripted(entity.Handle)}";
+            //    //ExampleAPI.DrawEntityBoundingBox(entity.Handle, 125, 125, 125, 100);
+            //    ExampleAPI.DrawDebugText3D(x, d, 3f, 0);
+            //}
         }
 
         public override void OnEngineEvent(string eventName, params object[] args)
-        { 
-            if (((bool)args[0]))
+        {
+            if (eventName.Equals("entitiesInWorld"))
             {
-                _handles.Add((int)args[1]);
-                //Debugger.LogDebug((int)args[0]);
-            }
-            else
-            {
-                _handles.Remove((int)args[1]);
-                //Debugger.LogDebug((int)args[0]);
-            }
+                _handles = (int[]) args[0]; 
+            } 
         }
 
 
 
         public override void Start()
         {
-            _handles = new List<int>();
+            _handles = new int[0];
         }
        
     }

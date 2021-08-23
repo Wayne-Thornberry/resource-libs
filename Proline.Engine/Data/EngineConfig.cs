@@ -29,7 +29,7 @@
     internal class ScriptPackageConfig
     {
         public string Assembly { get; set; }
-        public string[] StartScripts { get; set; }
+        public int EnvType { get; set; }
         public bool DebugOnly { get; set; }
         public string[] ScriptClasses { get; set; }
         public ScriptConfig[] ScriptConfigs { get; set; }
@@ -42,6 +42,7 @@
         public ExtensionDetails[] Extensions { get; set; }
         public ComponentDetails[] Components { get; set; }
         public ScriptPackageConfig[] ScriptPackages { get; set; }
+        public string[] StartScripts { get; set; }
         public string CentralEndpoint { get; set; }
         public long MasterKey { get; set; }
         public bool EnableDebug { get; set; }

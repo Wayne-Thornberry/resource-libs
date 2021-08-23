@@ -64,10 +64,6 @@
       <Project>{9603983b-d4e4-43ac-aa33-94e4162bb6e6}</Project>
       <Name>Proline.Example</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Proline.Framework\Proline.Framework.csproj">
-      <Project>{e36980ba-3207-40e5-bf24-9410110cadd3}</Project>
-      <Name>Proline.Framework</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

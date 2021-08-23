@@ -2,7 +2,7 @@
 using CitizenFX.Core.Native;
 using Proline.Core.Client;
 using Proline.Engine;
-using Proline.Framework;
+using Proline.Engine;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -72,6 +72,7 @@ namespace Proline.Core.Client
 
         public static void FindAllPickups(out int[] entities)
         {
+            Proline.Engine.NewFolder1
             var args = new object[1] { null };
             APICaller.CallAPI((int)EngineAPI.FindAllPickups, args);
             entities = (int[])args[0];
@@ -129,6 +130,12 @@ namespace Proline.Core.Client
         {
             var args = new object[0];
             APICaller.CallAPI((int)EngineAPI.AttachBlipsToGasStations, args);
+        }
+
+        public static bool IsEntityScripted(int entityHandle)
+        {
+            var args = new object[1]{ entityHandle};
+            return (bool) APICaller.CallAPI(1187952361, args);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Proline.Engine.Script
                     if (_service == null)
                     {
                         _service = new EngineService(this);
-                        _service.Initialize(API.GetCurrentResourceName(), Game.PlayerPed.Handle.ToString(), "true");
+                        await _service.Initialize(API.GetCurrentResourceName(), Game.PlayerPed.Handle.ToString(), "true");
                         _service.StartAllComponents();
                         _service.StartStartupScripts();
                         //Tick += _service.Tick;
@@ -47,16 +47,16 @@ namespace Proline.Engine.Script
                     //    EngineService.ExecuteComponentCommand(component, method, param);
                     //}), false);
 
-                    var x = "public enum EngineAPI\n" +
-                        "{\n";
-                    var apis = EngineAccess.GetAllAPIs();
-                    foreach (var item in apis)
-                    {
-                        x += "  " + item + ",\n";
-                    }
-                    x += "\n" +
-                        "}";
-                    Debugger.LogDebug(x, true);
+                    //var x = "public enum EngineAPI\n" +
+                    //    "{\n";
+                    //var apis = EngineAccess.GetAllAPIs();
+                    //foreach (var item in apis)
+                    //{
+                    //    x += "  " + item + ",\n";
+                    //}
+                    //x += "\n" +
+                    //    "}";
+                    //Debugger.LogDebug(x, true);
                 }
             }
             catch (Exception)

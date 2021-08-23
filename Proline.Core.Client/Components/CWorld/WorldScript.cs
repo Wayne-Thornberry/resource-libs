@@ -1,7 +1,7 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using Proline.Engine;
-using Proline.Framework;
+using Proline.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +21,7 @@ namespace Proline.Core.Client.Components.CWorld
 
         public override void FixedUpdate()
         {
-            HashSet<int> handles = new HashSet<int>();
-
+            var handles = new HashSet<int>(); 
 
             int entHandle = -1;
             int handle; 
@@ -65,26 +64,33 @@ namespace Proline.Core.Client.Components.CWorld
                 handles.Add(entHandle);
                 entHandle = -1;
             }
-            API.EndFindVehicle(handle); 
+            API.EndFindVehicle(handle);
 
+            var newEntities = false;
+             
+            foreach (var item in _ht.Get())
+            {
+                if (!API.DoesEntityExist(item))
+                { 
+                    EngineAccess.TriggerEngineEvent("entityUntracked", item);
+                    newEntities = true;
+                }
+            }
 
-            //foreach (var item in _ht.GetTrackedEntityHandles().ToArray())
-            //{
-            //    if (!API.DoesEntityExist(item))
-            //    {
-            //        _ht.UntrackEntityHandle(item);
-            //        EngineAccess.TriggerEngineEvent("entityUntracked", true, item);
-            //    }
-            //}
+            foreach (var item in handles)
+            {
+                if (!_ht.IsHandleTracked(item) && API.DoesEntityExist(item))
+                { 
+                    EngineAccess.TriggerEngineEvent("entityTracked", item);
+                    newEntities = true;
+                }
+            }
 
-            //foreach (var item in handles)
-            //{
-            //    if (!_ht.IsHandleTracked(item) && API.DoesEntityExist(item))
-            //    {
-            //       _ht.TrackEntityHandle(item);
-            //        EngineAccess.TriggerEngineEvent("entityTracked", false, item);
-            //    }
-            //}
+            if (newEntities)
+            {
+                _ht.Set(handles);
+                EngineAccess.TriggerEngineEvent("entitiesInWorld", handles.ToArray()); 
+            }
         }
     }
 }

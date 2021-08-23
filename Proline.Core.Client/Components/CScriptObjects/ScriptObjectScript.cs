@@ -5,22 +5,38 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Drawing;
 
-using Proline.Framework; 
+using Proline.Engine; 
 
 using Proline.Core.Client;
 using CitizenFX.Core.Native;
 using Proline.Core.Client;
 using Proline.Engine;
+using CitizenFX.Core;
+using System.Linq;
 
 namespace Proline.Core.Client.Components.CScriptObjects
 {
+    public class X
+    {
+        public string ScriptName { get; set; }
+        public float ActivationRange { get; set; }
+        public bool ExecutedScript { get; set; }
+        public int ScriptHandle { get; internal set; }
+    }
+
+    public class TrackedObject
+    {
+        public List<X> Scripts { get; set; }
+        public int Handle { get; internal set; }
+    }
+
     public class ScriptObjectScript : ComponentScript
     {
-        private List<int> _handles;
+        private TrackedObjectsManager _tom;
 
         public override void Start()
         {
-            _handles = new List<int>();
+            _tom = TrackedObjectsManager.GetInstance();
         }
         public override void Update()
         {
@@ -29,64 +45,56 @@ namespace Proline.Core.Client.Components.CScriptObjects
 
         public override void OnEngineEvent(string eventName, params object[] args)
         {
-            if (((bool)args[0]))
+            if (eventName.Equals("entityTracked"))
             {
-                _handles.Add((int)args[1]);
-                //Debugger.LogDebug((int)args[0]);
+                var handle = (int)args[0];
+                var hash = API.GetEntityModel(handle);
+                var item = ScriptObjectsManager.GetScriptObjectPair(hash);
+                if (item == null) return;
+                if (hash != 0 && (hash == item.Hash))
+                {
+                    _tom.Add(handle, item);
+                }
+                //Debugger.LogDebug(handle);
             }
-            else 
+            else if (eventName.Equals("entityUntracked"))
             {
-                _handles.Remove((int)args[1]);
-                //Debugger.LogDebug((int)args[0]);
+                var handle = (int)args[0];
+                _tom.Remove(handle);
+                //Debugger.LogDebug(handle);
             }
         }
 
         public override void FixedUpdate()
         {
-           // return;
-            if (ScriptObjectsManager.HasScriptObjectPairs())
-            { 
-                foreach (var item in ObjectBlacklist.GetList())
-                { 
-                    if (!API.DoesEntityExist(item))
-                        ObjectBlacklist.Remove(item);
+            foreach (var trackedObject in _tom.GetTrackedObjects().ToArray())
+            {
+                var entity = Entity.FromHandle(trackedObject.Handle);
+                if (entity == null)
+                {
+                    _tom.Remove(trackedObject.Handle);
+                    continue;
                 }
 
-                foreach (var handle in _handles)
+                if (entity.Exists())
                 {
-                    var blacklist = false;
-                    foreach (var item in ScriptObjectsManager.GetScriptObjectPairs())
+                    foreach (var item in trackedObject.Scripts)
                     {
-                        // TODO, Wrap this on the engine
-                        var modelHash = API.GetEntityModel(handle);
-                        if(item.ModelName != 0)
+                        var distance = World.GetDistance(Game.PlayerPed.Position, entity.Position);
+                        var inRange = distance < item.ActivationRange;
+                        //Debugger.LogDebug("Looking through the scripts " + distance);
+                        //Debugger.LogDebug("Looking through the scripts " + inRange);
+                        //Debugger.LogDebug("Looking through the scripts " + item.ExecutedScript);
+                        if (!item.ExecutedScript && inRange)
                         {
-                            blacklist = NewMethod(handle, blacklist, item, modelHash, item.ModelName); 
-                        }
-                        else
-                        {
-                            if (!string.IsNullOrEmpty(item.ModelHash))
-                            {
-                                var hash = API.GetHashKey(item.ModelHash);
-                                blacklist = NewMethod(handle, blacklist, item, modelHash, hash);
-                            }
+                            Debugger.LogDebug("Object within activation range and has not executed the script, starting a script");
+                            var handle = EngineAccess.StartNewScript(item.ScriptName, new object[1] { trackedObject.Handle });
+                            item.ExecutedScript = true;
+                            item.ScriptHandle = handle;
                         }
                     }
-                    if (blacklist && !ObjectBlacklist.Contains(handle))
-                        ObjectBlacklist.Add(handle);
                 }
             }
-        }
-
-        private static bool NewMethod(int handle, bool blacklist, ScriptObjectPair item, int modelHash, int hash)
-        {
-            if (hash == modelHash && !ObjectBlacklist.Contains(handle))
-            {
-                Debugger.LogDebug("Found new object that should start a script");
-                EngineAccess.StartNewScript(item.ScriptName, new object[1] { handle });
-                blacklist = true;
-            }
-            return blacklist;
         }
     }
 }

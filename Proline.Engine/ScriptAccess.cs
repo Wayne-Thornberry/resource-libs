@@ -11,9 +11,9 @@ namespace Proline.Engine
         internal static void StartStartupScripts()
         {
             var sm = InternalManager.GetInstance();
-            foreach(ScriptPackage package in sm.GetPackages())
+            foreach(string package in EngineConfiguration.StartupScripts)
             {
-                package.StartStartupScripts();
+                EngineAccess.StartNewScript(package);
             }
         }
     }

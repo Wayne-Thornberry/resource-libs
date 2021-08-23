@@ -1,5 +1,5 @@
 ﻿
-using Proline.Framework;
+using Proline.Engine;
 
 namespace Proline.Core.Client.Components.CGlobals
 {

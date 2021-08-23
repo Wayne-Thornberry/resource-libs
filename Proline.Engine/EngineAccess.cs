@@ -1,7 +1,7 @@
 ﻿
 
 using Newtonsoft.Json;
-using Proline.Framework;
+using Proline.Engine;
 using Proline.Engine.Networking;
 using System;
 using System.Collections.Generic;
@@ -16,10 +16,10 @@ namespace Proline.Engine
     {
         private static int _timeout = 1000;
 
-        internal static async Task<NetworkResponse> ExecuteComponentAPI(AbstractComponent component, string methodName, params object[] args)
-        { 
-            return await ExecuteServerMethod(component.Name, methodName, args);
-        }
+        //internal static async Task<NetworkResponse> ExecuteComponentAPI(AbstractComponent component, string methodName, params object[] args)
+        //{ 
+        //    return await ExecuteServerMethod(component.Name, methodName, args);
+        //}
 
         public static void TriggerComponentEvent(string componentName, string eventName, params object[] args)
         {
@@ -28,7 +28,7 @@ namespace Proline.Engine
             components.TriggerComponentEvent(eventName, args);
         }
 
-        public static void TriggerEngineEvent(string eventName, params object[] args)
+        public static async Task TriggerEngineEvent(string eventName, params object[] args)
         {
             var cm = InternalManager.GetInstance();
             var components = cm.GetComponents();
@@ -37,12 +37,17 @@ namespace Proline.Engine
             {
                 item.OnEngineEvent(eventName, args);
             }
-
         }
 
-        public static async Task<T> ExecuteEngineMethodServer<T>(string methodName, params object[] args)
+        public static async Task<T> ExecuteComponentAPI<T>(string methodName, params object[] args)
         {
             var response = await ExecuteEngineMethodServerI("ExecuteComponentControl", "", methodName, args);
+            if (response.Result.ResultValue == null) return default;
+            return (T)Convert.ChangeType(response.Result.ResultValue, typeof(T));
+        }
+        public static async Task<T> ExecuteEngineMethodServer<T>(string methodName, params object[] args)
+        {
+            var response = await ExecuteEngineMethodServerI(methodName, args);
             if (response.Result.ResultValue == null) return default;
             return (T)Convert.ChangeType(response.Result.ResultValue, typeof(T));
         }
@@ -54,12 +59,12 @@ namespace Proline.Engine
 
         public static async Task<T> ExecuteServerMethod<T>(string methodName, params object[] args)
         {
-            return await ExecuteEngineMethodServer<T>("ExecuteComponentControl", "", methodName, args);
+            return await ExecuteComponentAPI<T>("ExecuteComponentControl", "", methodName, args);
         }
 
         public static async Task<T> ExecuteServerMethod<T>(string componentName, string methodName, params object[] args)
         {
-            return await ExecuteEngineMethodServer<T>("ExecuteComponentControl", componentName, methodName, args);
+            return await ExecuteComponentAPI<T>("ExecuteComponentControl", componentName, methodName, args);
         } 
 
         public static IEnumerable<string> GetAllAPIs()
@@ -173,14 +178,14 @@ namespace Proline.Engine
             return response;
         }
 
-        public static void StartNewScript(string scriptName, params object[] args)
+        public static int StartNewScript(string scriptName, params object[] args)
         {
             var em = InternalManager.GetInstance();
             var extensions = em.GetExtensions();
             var sm = InternalManager.GetInstance();
             var wrapper = sm.GetScript(scriptName);
-            if (wrapper == null) return;
-            wrapper.StartNew(args); 
+            if (wrapper == null) return -1;
+            return wrapper.StartNew(args); 
         }
 
         public static void RequestScriptStop(string scriptName)

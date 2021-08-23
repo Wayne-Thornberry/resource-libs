@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Proline.Engine.Data;
-using Proline.Framework;
+using Proline.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace Proline.Engine
             CitizenAccess.SetScriptSource(tickSubscriber);  
         }
 
-        public void Initialize(params string[] args)
+        public async Task Initialize(params string[] args)
         {
             try
             { 
@@ -31,11 +31,18 @@ namespace Proline.Engine
                 EngineConfiguration.IsClient = envType != -1;
                 var ty = EngineConfiguration.IsClient ? "Client" : "Server";
 
+                int status = 0;
                 if (EngineConfiguration.IsClient)
                 {
-                    // Need to do some checks here
+                    status = await EngineAccess.ExecuteEngineMethodServer<int>("Healthcheck");
+                }
+                else
+                {
+                    status = 1;
                 }
 
+                if (status == 0)
+                    throw new Exception("Cannot initialize client side, server side not healthy");
                 LoadConfig(isDebug);
                 LoadAssemblies();
                 Debugger.LogDebug("Engine in " + ty + " Mode");
@@ -49,6 +56,8 @@ namespace Proline.Engine
 
 
                 InitializeScripts();
+
+                //_startupScripts = config.StartScripts != null ? config.StartScripts : new string[0];
 
                 SetupResource(resourceName);
                 RunEnvSpecificFunctions(envType);
@@ -199,7 +208,7 @@ namespace Proline.Engine
                         Assembly.Load(item.Assembly);
                     else  if (!EngineConfiguration.IsClient && item.EnvType == -1)
                         Assembly.Load(item.Assembly);
-                    else
+                    else if(item.EnvType == 0)
                         Assembly.Load(item.Assembly);
                 }
                 catch (Exception e)
@@ -243,6 +252,8 @@ namespace Proline.Engine
                     Debugger.LogWarn(args[0]);
                     return null;
                     break;
+                case "Healthcheck":
+                    return EngineStatus.IsEngineInitialized ? 1 : 0;
                 case "ExecuteComponentControl":
                     var componentNAme = args[0].ToString();
                     var apiName = int.Parse(args[1].ToString());

@@ -1,5 +1,6 @@
 ﻿using CitizenFX.Core;
-using Proline.Framework;
+using Proline.Engine;
+using Proline.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Proline.Core.Client.LevelScripts
 {
-    public class BlowUp : LevelScript
+    public class BlowUp : GameScript
     {
         public override async Task Execute(params object[] args)
         {

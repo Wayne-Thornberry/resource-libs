@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 using Proline.Engine.Data;
-using Proline.Framework;
+using Proline.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,8 +36,7 @@ namespace Proline.Engine
         private List<APIInvoker> _apis;
 
 
-        private List<ComponentCommand> _commandActions;
-        private AbstractComponent _component;  
+        private List<ComponentCommand> _commandActions; 
         private ComponentAPI _api; 
         private ComponentHandler _handler;
         private ComponentCommander _commander;

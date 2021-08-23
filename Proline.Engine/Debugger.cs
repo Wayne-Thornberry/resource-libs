@@ -1,4 +1,4 @@
-﻿using Proline.Framework;
+﻿using Proline.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +17,7 @@ namespace Proline.Engine
             F8Console.WriteLine(entry);
             if (replicate && EngineConfiguration.EnvType == 0 && EngineStatus.IsEngineInitialized)
                 EngineAccess.ExecuteEngineMethodServer("LogError", "[Client] " + data.ToString());
+            EngineAccess.TriggerEngineEvent("logError", entry);
         }
 
         public static void LogWarn(object data, bool replicate = false)
@@ -27,6 +28,7 @@ namespace Proline.Engine
             F8Console.WriteLine(entry);
             if (replicate && EngineConfiguration.EnvType == 0 && EngineStatus.IsEngineInitialized)
                 EngineAccess.ExecuteEngineMethodServer("LogWarn", "[Client] " + data.ToString());
+            EngineAccess.TriggerEngineEvent("logWarn", entry);
         }
 
         public static void LogDebug(IEngineTracker trackedObject, object data)
@@ -42,6 +44,7 @@ namespace Proline.Engine
             F8Console.WriteLine(entry);
             if (replicate && EngineConfiguration.EnvType == 0 && EngineStatus.IsEngineInitialized)
                 EngineAccess.ExecuteEngineMethodServer("LogDebug", "[Client] " + data.ToString());
+            EngineAccess.TriggerEngineEvent("logDebug", entry);
         }
 
     }

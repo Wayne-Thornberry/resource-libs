@@ -1,34 +1,35 @@
-﻿using Proline.Framework;
+﻿using Proline.Engine;
 using System.Threading.Tasks;
 
 namespace Proline.Engine
 {
-    public abstract class GameScript : LevelScript
+    public abstract class GameScript : ScriptInstance
     {
         private IScriptSource _ca;
+        internal Log _log;
 
         public GameScript()
         {
             _ca = CitizenAccess.GetInstance();
-            //Header = Util.GenerateCoreHeader(this);
-        }
-        public void DoesEntityExist(int handle, out bool exists)
+            _log = new Log();
+        } 
+
+        protected void LogDebug(object data)
         {
-            exists = false;
-            //var engine = (Engine)AppEnviroment.GetEnviorment(); 
-            //return engine.DoesEntityExist(Header, handle, out exists);
+            _log.LogDebug(Type + data);
         }
-        public void LogDebug(object data)
-        { 
-            Debugger.LogDebug(this, data);
-            //var engine = (Engine)AppEnviroment.GetEnviorment();
-            //return engine._Debugger.LogDebug(Header, data);
-        }
-        public void StartNewScript(string scriptName, object[] args)
+        protected void LogWarn(object data)
         {
-            EngineAccess.StartNewScript("CScripting"); 
-            //var engine = (Engine)AppEnviroment.GetEnviorment();
-            //return engine.StartNewScript(Header, scriptName, args);
+            _log.LogWarn(Type + data);
+        }
+        protected void LogError(object data)
+        {
+            _log.LogError(Type + data);
+        }
+
+        protected void StartNewScript(string scriptName, object[] args)
+        {
+            EngineAccess.StartNewScript(scriptName); 
         }
 
         protected async Task Delay(int ms)

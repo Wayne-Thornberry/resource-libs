@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Engine.NewFolder1
+namespace Proline.Engine
 {
     public static class EngineConstraints
     {
