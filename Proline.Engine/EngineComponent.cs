@@ -158,10 +158,10 @@ namespace Proline.Engine
         { 
             if (_status != 1 && _status != 3) 
                 throw new Exception("Component cannot be started, component not ready or stopped"); 
-            if (_component != null)
+            if (_handler != null)
             {
                 if(!EngineConfiguration.IsIsolated)
-                    _component.OnComponentStart();
+                    _handler.OnComponentStart();
             }
 
             foreach (var item in _scripts)
@@ -181,10 +181,10 @@ namespace Proline.Engine
             if (_status != 2) throw new Exception("Component cannot be stopped, component not started");
             //if (_handler != null)
             //    _handler.OnComponentStop();
-            if (_component != null)
+            if (_handler != null)
             {
                 if (!EngineConfiguration.IsIsolated)
-                    _component.OnComponentStop();
+                    _handler.OnComponentStop();
             }
             _status = 3; // Stopped;
         } 

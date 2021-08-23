@@ -41,7 +41,21 @@ namespace Proline.Engine
         public static async Task<T> ExecuteServerMethod<T>(string componentName, string methodName, params object[] args)
         {
             return await ExecuteEngineMethodServer<T>("ExecuteComponentControl", componentName, methodName, args);
+        } 
+
+        public static IEnumerable<string> GetAllAPIs()
+        {
+            var apis = APIManager.GetInstance();
+            var x = apis.GetAPIs();
+            var l = new List<string>();
+            var g = new List<string>();
+            foreach (var item in x)
+            {
+                l.Add(item.Name + ((l.Where(e=>e.Contains(item.Name)).Count() > 0) ? "_" + l.Where(e => e.Contains(item.Name)).Count() : "") + "=" + item.GetHashCode());
+            }
+            return l;
         }
+
         internal static async Task<NetworkResponse> ExecuteEngineMethodServerI(string methodName, params object[] args)
         {
             var nm = NetworkManager.GetInstance();
@@ -160,4 +174,5 @@ namespace Proline.Engine
             wrapper.KillAllInstances();
         }
     }
+
 }

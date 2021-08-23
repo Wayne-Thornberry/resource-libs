@@ -55,8 +55,16 @@ namespace Proline.Engine.ConsoleApp
                 }
             });
 
-
-
+            var x = "public enum EngineAPI\n" +
+                "{\n"; 
+            var apis = EngineAccess.GetAllAPIs();
+            foreach (var item in apis)
+            {
+                x += "  " + item + ",\n";
+            }
+            x += "\n" +
+                "}";
+            Console.WriteLine(x);
             Console.ReadKey();
         }
 
