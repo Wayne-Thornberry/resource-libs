@@ -10,7 +10,7 @@ namespace Proline.Engine
     {
         public static string Load(string resourceName, string filePath)
         {
-            var ca = CitizenAccess.GetInstance();
+            var ca = EngineService.GetInstance();
             return ca.LoadResourceFile(resourceName, filePath);
         }
 

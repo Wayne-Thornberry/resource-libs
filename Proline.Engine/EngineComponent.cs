@@ -299,6 +299,67 @@ namespace Proline.Engine
         }
 
 
+        internal static void StartAllComponents()
+        {
+            if (!EngineStatus.IsComponentsInitialized) throw new Exception("Cannot start components, engine not initilized");
+            var cm = InternalManager.GetInstance();
+            var ca = EngineService.GetInstance();
+            foreach (var component in cm.GetComponents())
+            {
+                StartComponent(component);
+                ca.AddTick(component.Tick);
+            }
+
+        }
+
+        internal static void StopAllComponents()
+        {
+            if (!EngineStatus.IsComponentsInitialized) throw new Exception("Cannot stop components, engine not initilized");
+            var cm = InternalManager.GetInstance();
+            var ca = EngineService.GetInstance();
+            foreach (var component in cm.GetComponents())
+            {
+                StopComponent(component);
+                ca.RemoveTick(component.Tick);
+            }
+        }
+
+
+        internal static void StartComponent(EngineComponent component)
+        {
+            try
+            {
+                component.Start();
+                var em = InternalManager.GetInstance();
+                var extensions = em.GetExtensions();
+                foreach (var extension in extensions)
+                {
+                    extension.OnComponentStarted(component.Name);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        internal static void StopComponent(EngineComponent component)
+        {
+            try
+            {
+                component.Stop();
+                var em = InternalManager.GetInstance();
+                var extensions = em.GetExtensions();
+                foreach (var extension in extensions)
+                {
+                    extension.OnComponentStopped(component.Name);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
         internal static void RegisterComponent(EngineComponent component)
         {

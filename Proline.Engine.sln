@@ -27,8 +27,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proline.Core.Client", "Prol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proline.Core.Server", "Proline.Core.Server\Proline.Core.Server.csproj", "{0902217D-C696-4FFA-BB2E-E9201F5A3DF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proline.Freemode.Client", "Proline.Freemode\Proline.Freemode.Client.csproj", "{812F7E9A-B0BD-4AB0-B49F-81BD78E2D88E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,14 +99,6 @@ Global
 		{0902217D-C696-4FFA-BB2E-E9201F5A3DF6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0902217D-C696-4FFA-BB2E-E9201F5A3DF6}.Release|x64.ActiveCfg = Release|Any CPU
 		{0902217D-C696-4FFA-BB2E-E9201F5A3DF6}.Release|x64.Build.0 = Release|Any CPU
-		{812F7E9A-B0BD-4AB0-B49F-81BD78E2D88E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{812F7E9A-B0BD-4AB0-B49F-81BD78E2D88E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{812F7E9A-B0BD-4AB0-B49F-81BD78E2D88E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{812F7E9A-B0BD-4AB0-B49F-81BD78E2D88E}.Debug|x64.Build.0 = Debug|Any CPU
-		{812F7E9A-B0BD-4AB0-B49F-81BD78E2D88E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{812F7E9A-B0BD-4AB0-B49F-81BD78E2D88E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{812F7E9A-B0BD-4AB0-B49F-81BD78E2D88E}.Release|x64.ActiveCfg = Release|Any CPU
-		{812F7E9A-B0BD-4AB0-B49F-81BD78E2D88E}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,7 +107,6 @@ Global
 		{9603983B-D4E4-43AC-AA33-94E4162BB6E6} = {37D2FCDA-66F8-4B7C-B414-F8C319141B1A}
 		{0FAB5E40-DA40-4D52-8B76-041B51F34139} = {37D2FCDA-66F8-4B7C-B414-F8C319141B1A}
 		{0902217D-C696-4FFA-BB2E-E9201F5A3DF6} = {37D2FCDA-66F8-4B7C-B414-F8C319141B1A}
-		{812F7E9A-B0BD-4AB0-B49F-81BD78E2D88E} = {37D2FCDA-66F8-4B7C-B414-F8C319141B1A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {013289F4-78DA-4029-94DE-2A6DE5FC4C4D}

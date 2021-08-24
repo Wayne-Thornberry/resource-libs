@@ -12,7 +12,7 @@ namespace Proline.Freemode.Client
         public static bool IsEntityInActivationRange(int entHandle)
         {
             var args = new object[1] { entHandle };
-            return false;
+            return (bool)APICaller.CallAPI(-1536245805, args);
         }
     }
 }

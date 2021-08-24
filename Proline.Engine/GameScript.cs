@@ -10,7 +10,7 @@ namespace Proline.Engine
 
         public GameScript()
         {
-            _ca = CitizenAccess.GetInstance();
+            _ca = EngineService.GetInstance();
             _log = new Log();
         } 
 

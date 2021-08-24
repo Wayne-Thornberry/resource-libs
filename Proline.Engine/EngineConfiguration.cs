@@ -21,7 +21,7 @@ namespace Proline.Engine
 
         internal static void LoadConfig()
         {
-            var configJson = CitizenAccess.GetInstance().LoadResourceFile(CitizenAccess.GetInstance().GetCurrentResourceName(), "Engine.json");
+            var configJson = EngineService.GetInstance().LoadResourceFile(EngineService.GetInstance().GetCurrentResourceName(), "Engine.json");
             _config = JsonConvert.DeserializeObject<EngineConfig>(configJson);
         }   
     }

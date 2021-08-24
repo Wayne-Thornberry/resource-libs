@@ -4,9 +4,9 @@ using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Proline.Engine;
 using Proline.Engine;
-using Proline.Freemode.Client;
 
-namespace Proline.Engine.LevelScripts.Object
+
+namespace Proline.Core.Client.LevelScripts.Object
 {
     public class ObVaultDoor : GameScript
     {
@@ -21,7 +21,7 @@ namespace Proline.Engine.LevelScripts.Object
             //API.DoorControl((uint)LocalEntity.Model.Hash, LocalEntity.Position.X, LocalEntity.Position.Y, LocalEntity.Position.Z, true,
             //    1f, 1f, 1f);
 
-            while (FreemodeAPI.IsEntityInActivationRange(handle))
+            while (ExampleAPI.IsEntityInActivationRange(handle))
             {
                 Screen.DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to open the vault door");
                  

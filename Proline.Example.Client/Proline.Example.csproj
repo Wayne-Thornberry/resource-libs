@@ -44,6 +44,7 @@
     <Compile Include="Components\CExample\ExampleComponentCommander.cs" />
     <Compile Include="Components\CExample\ExampleComponentHandler.cs" />
     <Compile Include="Components\CExample\ExampleComponentAPI.cs" />
+    <Compile Include="Components\CExample\ExampleComponentObject.cs" />
     <Compile Include="Components\CExample\ExampleComponentScript.cs" />
     <Compile Include="ExampleAPI.cs" />
     <Compile Include="Extensions\ExampleExtension.cs" />

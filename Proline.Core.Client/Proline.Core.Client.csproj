@@ -94,11 +94,32 @@
     <Compile Include="ExampleAPI.cs" />
     <Compile Include="Extensions\Tracking.cs" />
     <Compile Include="LevelScripts\BlowUp.cs" />
+    <Compile Include="LevelScripts\CharacterCreator.cs" />
     <Compile Include="LevelScripts\DoSomething.cs" />
+    <Compile Include="LevelScripts\Editor.cs" />
     <Compile Include="LevelScripts\EditorScript.cs" />
+    <Compile Include="LevelScripts\Event\ReArmouredTruck.cs" />
+    <Compile Include="LevelScripts\ExampleTest.cs" />
     <Compile Include="LevelScripts\LSCustoms.cs" />
+    <Compile Include="LevelScripts\Main.cs" />
+    <Compile Include="LevelScripts\Mission\HePacStandard.cs" />
     <Compile Include="LevelScripts\MPStartup.cs" />
-    <Compile Include="LevelScripts\Objects\ObBankTruck.cs" />
+    <Compile Include="LevelScripts\Object\ObBankTruck.cs" />
+    <Compile Include="LevelScripts\Object\ObAtm.cs" />
+    <Compile Include="LevelScripts\Object\ObCashRegister.cs" />
+    <Compile Include="LevelScripts\Object\ObCCTVCamera.cs" />
+    <Compile Include="LevelScripts\Object\ObVaultDoor.cs" />
+    <Compile Include="LevelScripts\PlayerDeath.cs" />
+    <Compile Include="LevelScripts\RespawnScript.cs" />
+    <Compile Include="LevelScripts\StatsInit.cs" />
+    <Compile Include="LevelScripts\Test2.cs" />
+    <Compile Include="LevelScripts\UI\UIFreemodeHUD.cs" />
+    <Compile Include="LevelScripts\UI\UIInteractiveMenu.cs" />
+    <Compile Include="LevelScripts\UI\UIMainMenu.cs" />
+    <Compile Include="LevelScripts\UI\UIMultiplayerMenu.cs" />
+    <Compile Include="LevelScripts\UI\UIPlayerSwitch.cs" />
+    <Compile Include="LevelScripts\VehicleFuel.cs" />
+    <Compile Include="LevelScripts\VehicleJacking.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -72,7 +72,6 @@ namespace Proline.Core.Client
 
         public static void FindAllPickups(out int[] entities)
         {
-            Proline.Engine.NewFolder1
             var args = new object[1] { null };
             APICaller.CallAPI((int)EngineAPI.FindAllPickups, args);
             entities = (int[])args[0];

@@ -97,7 +97,7 @@ namespace Proline.Engine
             };
             var data = JsonConvert.SerializeObject(requestParams);
             Debugger.LogDebug(data);
-            CitizenAccess.GetInstance().TriggerServerEvent(NetworkManager.NetworkRequestListenerHandle, guid, methodName, JsonConvert.SerializeObject(args));
+            EngineService.GetInstance().TriggerServerEvent(NetworkManager.NetworkRequestListenerHandle, guid, methodName, JsonConvert.SerializeObject(args));
             NetworkResponse response = await MakeRequest(guid, request);
 
             return response;
@@ -121,7 +121,7 @@ namespace Proline.Engine
             };
             var data = JsonConvert.SerializeObject(requestParams);
             Debugger.LogDebug(data);
-            CitizenAccess.GetInstance().TriggerServerEvent(NetworkManager.NetworkRequestListenerHandle, guid, componentName, methodName, JsonConvert.SerializeObject(args));
+            EngineService.GetInstance().TriggerServerEvent(NetworkManager.NetworkRequestListenerHandle, guid, componentName, methodName, JsonConvert.SerializeObject(args));
             NetworkResponse response = await MakeRequest(guid, request);
 
             return response;
@@ -145,7 +145,7 @@ namespace Proline.Engine
             };
             var data = JsonConvert.SerializeObject(requestParams);
             Debugger.LogDebug(data);
-            CitizenAccess.GetInstance().TriggerEvent(NetworkManager.NetworkRequestListenerHandle, guid, componentName, methodName, JsonConvert.SerializeObject(args));
+            EngineService.GetInstance().TriggerEvent(NetworkManager.NetworkRequestListenerHandle, guid, componentName, methodName, JsonConvert.SerializeObject(args));
 
             NetworkResponse response = await MakeRequest(guid, request);
 
@@ -168,7 +168,7 @@ namespace Proline.Engine
                     }
                 }
                 request.Ticks++;
-                await CitizenAccess.GetInstance().Delay(0);
+                await EngineService.GetInstance().Delay(0);
             }
             if (response == null)
             {

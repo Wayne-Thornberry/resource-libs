@@ -12,11 +12,11 @@ namespace Proline.Engine
     public class EngineService
     { 
         private CitizenResource _executingResource;
-        private long _lastCheck;
+        private static CitizenAccess _scriptSource;
 
-        public EngineService(IScriptSource tickSubscriber)
+        public EngineService(IScriptSource scriptSource)
         {
-            CitizenAccess.SetScriptSource(tickSubscriber);  
+            _scriptSource = new CitizenAccess(scriptSource); 
         }
 
         public async Task Initialize(params string[] args)
@@ -38,6 +38,7 @@ namespace Proline.Engine
                 }
                 else
                 {
+                    // This part should try and communicate with the central server
                     status = 1;
                 }
 
@@ -49,15 +50,7 @@ namespace Proline.Engine
 
                 InitializeExtensions();
                 InitializeComponents();
-
-                // Create the components
-                // Register all apis from components
-                // Initialize all components
-
-
                 InitializeScripts();
-
-                //_startupScripts = config.StartScripts != null ? config.StartScripts : new string[0];
 
                 SetupResource(resourceName);
                 RunEnvSpecificFunctions(envType);
@@ -198,6 +191,16 @@ namespace Proline.Engine
             ScriptAccess.StartStartupScripts();
         }
 
+        public void StartAllComponents()
+        {
+            EngineComponent.StartAllComponents();
+        }
+
+        public void StopAllComponents()
+        {
+            EngineComponent.StopAllComponents();
+        }
+
         private void LoadAssemblies()
         { 
             foreach (var item in EngineConfiguration.Assemblies)
@@ -217,23 +220,6 @@ namespace Proline.Engine
                 }
             }
         }
-
-        public void StartAllComponents()
-        {
-            ComponentControl.StartAllComponents();
-        }
-
-        public void StopAllComponents()
-        { 
-            ComponentControl.StopAllComponents();
-        }
-
-        //public static ComponentAPI GetComponentAPI(string componentName)
-        //{
-        //    var cm = InternalManager.GetInstance();
-        //    var component = cm.GetComponent(componentName);
-        //    return component.GetAPI();
-        //}
 
         public static object ExecuteEngineMethod(string methodName, params object[] args)
         {
@@ -272,15 +258,9 @@ namespace Proline.Engine
                     return null;
             }
         }
-
-        //public static object ExecuteComponentControl(string componentName, string control, object[] args)
-        //{
-        //   return ComponentAccess.ExecuteComponentControl(componentName, control, args);
-        //}
-
-        //public static void ExecuteComponentCommand(string componentName, string command, object[] args)
-        //{
-        //    ComponentAccess.ExecuteComponentCommand(componentName, command, args);
-        //} 
+        public static IScriptSource GetInstance()
+        {
+            return _scriptSource;
+        } 
     }
 }

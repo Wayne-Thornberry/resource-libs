@@ -10,13 +10,13 @@ namespace Proline.Engine
     {
         public static object Get(string key)
         {
-            var access = CitizenAccess.GetInstance();
+            var access = EngineService.GetInstance();
             return access.GetGlobal(key);
         }
 
         public static void Set(string key, object data)
         { 
-            var access = CitizenAccess.GetInstance();
+            var access = EngineService.GetInstance();
             access.SetGlobal(key, data, true);
         }
     }

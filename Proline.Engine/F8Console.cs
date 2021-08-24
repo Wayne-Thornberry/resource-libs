@@ -10,13 +10,13 @@ namespace Proline.Engine
     {
         public static void Write(object obj)
         {
-            var ca = CitizenAccess.GetInstance();
+            var ca = EngineService.GetInstance();
             ca.Write(obj);
         }
 
         public static void WriteLine(object obj)
         { 
-            var ca = CitizenAccess.GetInstance();
+            var ca = EngineService.GetInstance();
             ca.WriteLine(obj);
         }
 
