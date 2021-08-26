@@ -47,7 +47,7 @@ namespace Proline.Engine
 
         }
 
-        public virtual void OnInitialize()
+        public virtual void Initialize()
         {
 
         }

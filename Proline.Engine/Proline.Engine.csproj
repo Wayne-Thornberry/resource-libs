@@ -59,9 +59,8 @@
     <Compile Include="Configuration\ScriptPackageConfig.cs" />
     <Compile Include="Component\ComponentCommand.cs" />
     <Compile Include="Component\ComponentCommandAttribute.cs" />
-    <Compile Include="EngineScript.cs" />
     <Compile Include="Configuration\AssemblyDetails.cs" />
-    <Compile Include="Debug\DebugAttribute.cs" />
+    <Compile Include="Component\DebugAttribute.cs" />
     <Compile Include="Debug\Debugger.cs" />
     <Compile Include="EngineObject.cs" />
     <Compile Include="Component\EngineComponent.cs" />

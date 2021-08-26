@@ -16,6 +16,7 @@ namespace Proline.Example.Components.CExample
 
         protected override void OnInitialize()
         {
+            TriggerComponentEvent("X", 1);
             base.OnInitialized();
         }
 
@@ -31,6 +32,7 @@ namespace Proline.Example.Components.CExample
 
         protected override void OnStart()
         {
+            TriggerComponentEvent("ExampleEvent");
             base.OnStart();
         }
 
@@ -49,9 +51,24 @@ namespace Proline.Example.Components.CExample
             base.OnStop();
         }
 
+
+        [ComponentEvent("")]
+        public void ExampleEvent()
+        {
+            return;
+        }
+
         [Client]
         [ComponentAPI]
         public int ExampleAPI()
+        {
+            return 1;
+        }
+
+        [Client]
+        [ComponentAPI]
+        [Debug]
+        public int ExampleAPIDebug()
         {
             return 1;
         }

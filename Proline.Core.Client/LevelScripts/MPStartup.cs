@@ -23,14 +23,14 @@ namespace Proline.Freemode.LevelScripts
             { 
                 NativeAPI.CallNativeAPI((ulong)Hash.SET_PED_COMPONENT_VARIATION, Game.PlayerPed.Handle, i, 0, 0, 0);
             }
-            Debugger.LogDebug("Testing Persistence: "  + Persistence.Get("EnableSomething"));
+            LogDebug("Testing Persistence: "  + Persistence.Get("EnableSomething"));
             var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
             var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
             stat.SetValue(0);
             stat2.SetValue(0);
-            Debugger.LogDebug(stat.GetValue());
-            Debugger.LogDebug(stat2.GetValue());
-            Debugger.LogDebug(await ExampleAPI.TestNetworkAPI(1,1,1), true);
+            LogDebug(stat.GetValue());
+            LogDebug(stat2.GetValue());
+            LogDebug(await ExampleAPI.TestNetworkAPI(1,1,1));
             ExampleAPI.PlayerAPI(Game.Player.Name);
             //await World.CreateVehicle(new Model(1747439474), Game.PlayerPed.Position);
             //NativeStats.RegisterNativeStat("SUCCESSFUL_COUNTERS");

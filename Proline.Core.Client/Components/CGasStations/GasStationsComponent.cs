@@ -1,5 +1,7 @@
 ﻿
-using CitizenFX.Core;
+
+using Newtonsoft.Json;
+using Proline.Freemode;
 using Proline.Engine;
 using Proline.Engine;
 using System;
@@ -7,11 +9,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CitizenFX.Core;
 
 namespace Proline.Freemode.Components.CGasStations
 {
-    public class GasStationsAPI : ComponentAPI
-    {
+
+    public class GasStationsComponent : EngineComponent
+    { 
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+        }
+
+        protected override void OnLoad()
+        { 
+        }
+
+        protected override void OnStart()
+        { 
+            // var data = ResourceFile.Load(// API.GetCurrentResourceName(), "data/gasstations.json"); 
+            //var _x = JsonConvert.DeserializeObject<GasStation[]>(data);
+        }
         private List<Blip> _blips = new List<Blip>();
         private GasStation[] _x = new GasStation[0];
 
@@ -21,7 +40,7 @@ namespace Proline.Freemode.Components.CGasStations
             foreach (var item in _x)
             {
                 var vector = new Vector3(item.X, item.Y, item.Z);
-                Debugger.LogDebug(item.Name);
+                LogDebug(item.Name);
                 _blips.Add(World.CreateBlip(vector));
             }
         }

@@ -28,8 +28,6 @@ namespace Proline.Engine.Script
                 {
                     _started = true; 
                     await _service.Start(API.GetCurrentResourceName(), Game.PlayerPed.Handle.ToString(), "true");
-                    _service.StartAllComponents();
-                    _service.StartStartupScripts();
                 }
             }
             catch (Exception)

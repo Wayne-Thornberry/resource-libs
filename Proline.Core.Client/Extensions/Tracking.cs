@@ -15,19 +15,19 @@ namespace Proline.Freemode.Extensions
         public override void OnEngineAPICall(string apiName, params object[] args)
         {
            
-            Debugger.LogDebug("Engine Call " + apiName + " ");
+            LogDebug("Engine Call " + apiName + " ");
         }
 
         public override void OnComponentLoading(string componentName)
         {
            
-            Debugger.LogDebug("Component " + componentName + " Loadeding...");
+            LogDebug("Component " + componentName + " Loadeding...");
         }
 
         public override void OnComponentInitialized(string componentName)
         {
            
-            Debugger.LogDebug("Component " + componentName + " Loaded Succesfully");
+            LogDebug("Component " + componentName + " Loaded Succesfully");
         }
     }
 }

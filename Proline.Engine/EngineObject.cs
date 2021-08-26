@@ -24,22 +24,21 @@ namespace Proline.Engine
         protected EngineObject(string typeName)
         {
             _log = new Log();
-            _source = EngineService.GetInstance();
             _type = typeName;
         }
 
    
 
-        public static async Task TriggerEngineEvent(string eventName, params object[] args)
-        {
-            var cm = InternalManager.GetInstance();
-            var components = cm.GetComponents();
-            //Debugger.LogDebug("Engine event triggered " + eventName);
-            foreach (var item in components)
-            {
-                item.OnEngineEvent(eventName, args);
-            }
-        }
+        //public static async Task TriggerEngineEvent(string eventName, params object[] args)
+        //{
+        //    var cm = InternalManager.GetInstance();
+        //    var components = cm.GetComponents();
+        //    //Debugger.LogDebug("Engine event triggered " + eventName);
+        //    foreach (var item in components)
+        //    {
+        //        item.OnEngineEvent(eventName, args);
+        //    }
+        //}
 
         public async Task<T> ExecuteComponentAPI<T>(string methodName, params object[] args)
         {
@@ -155,7 +154,7 @@ namespace Proline.Engine
                     }
                 }
                 request.Ticks++;
-                await EngineService.GetInstance().Delay(0);
+                await Delay(0);
             }
             if (response == null)
             {
@@ -179,19 +178,22 @@ namespace Proline.Engine
         protected void LogDebug(object data)
         {
             var d = _log.LogDebug($"[{_type}] " + data);
-            ExecuteEngineMethodServer(EngineConstraints.LogDebug, data.ToString());
+            if (EngineConfiguration.IsClient)
+                ExecuteEngineMethodServer(EngineConstraints.LogDebug, data.ToString());
             F8Console.WriteLine(d);
         }
         protected void LogWarn(object data)
         {
             var d = _log.LogWarn($"[{_type}] " + data);
-            ExecuteEngineMethodServer(EngineConstraints.LogWarn, data.ToString());
+            if (EngineConfiguration.IsClient)
+                ExecuteEngineMethodServer(EngineConstraints.LogWarn, data.ToString());
             F8Console.WriteLine(d);
         }
         protected void LogError(object data)
         {
-            var d = _log.LogError($"[{_type}] " + data);
-            ExecuteEngineMethodServer(EngineConstraints.LogError, data.ToString());
+                var d = _log.LogError($"[{_type}] " + data);
+            if (EngineConfiguration.IsClient)
+                ExecuteEngineMethodServer(EngineConstraints.LogError, data.ToString());
             F8Console.WriteLine(d);
         }
 
@@ -208,6 +210,8 @@ namespace Proline.Engine
 
         protected async Task Delay(int ms)
         {
+            if(_source == null)
+                _source = EngineService.GetInstance();
             await _source.Delay(ms);
         }
     }

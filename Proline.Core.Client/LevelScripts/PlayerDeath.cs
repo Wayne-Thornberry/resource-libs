@@ -64,7 +64,7 @@ namespace Proline.Freemode.LevelScripts
         private void ReviveSelf()
         {
             Game.PlayerPed.Position = Game.PlayerPed.Position;
-            Debugger.LogDebug("reviving");
+            LogDebug("reviving");
             CitizenFX.Core.Native.API.NetworkRespawnCoords(Game.PlayerPed.Handle, Game.PlayerPed.Position.X, Game.PlayerPed.Position.Y,
                 Game.PlayerPed.Position.Z, false, false);
             CitizenFX.Core.Native.API.ResurrectPed(Game.PlayerPed.Handle);
@@ -94,8 +94,8 @@ namespace Proline.Freemode.LevelScripts
                         Game.DisableAllControlsThisFrame(0);
                         break;
                 }
-                //Debugger.LogDebug(Stage);
-                //Debugger.LogDebug(_timer);
+                //LogDebug(Stage);
+                //LogDebug(_timer);
                 await BaseScript.Delay(0);
             }
         }

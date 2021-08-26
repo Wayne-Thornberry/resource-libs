@@ -27,7 +27,7 @@ namespace Proline.Online.Script
         [EventHandler(EngineConstraints.NetworkResponseListenerHandler)]
         public void NetworkResponseListener([FromSource] Player player, string guid, string value, bool isException)
         {
-            EngineService.ExecuteEngineMethod("CreateAndInsertResponse", guid, value, isException);
+            _service.ExecuteEngineMethod("CreateAndInsertResponse", guid, value, isException);
         }
 
         [EventHandler(EngineConstraints.NetworkRequestListenerHandler)]
@@ -38,7 +38,7 @@ namespace Proline.Online.Script
             bool isException = false;
             try
             {
-                result = EngineService.ExecuteEngineMethod(methodName, args);
+                result = _service.ExecuteEngineMethod(methodName, args);
                 if (result != null)
                 {
                     if (!result.GetType().IsPrimitive)
@@ -49,7 +49,7 @@ namespace Proline.Online.Script
             }
             catch (Exception e)
             {
-                Debugger.LogError(e.ToString());
+                //Debugger.LogError(e.ToString());
                 isException = true;
                 throw;
             }

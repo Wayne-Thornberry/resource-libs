@@ -24,7 +24,8 @@ namespace Proline.Engine
         public async Task Start(params string[] args)
         {
             try
-            { 
+            {
+                await Delay(2000);
                 if (EngineStatus.IsEngineInitialized) throw new Exception("Cannot Initialize engine, engine already initilized");
 
                 var resourceName = args[0];
@@ -39,9 +40,10 @@ namespace Proline.Engine
                 int status = 0;
                 if (EngineConfiguration.IsClient && !EngineConfiguration.IsIsolated)
                 {
-                    status = await ExecuteEngineMethodServer<int>(EngineConstraints.HealthCheck);
-                    if (status == 0)
-                        throw new Exception("Cannot initialize client side, server side not healthy");
+                    status = 1;
+                    //status = await ExecuteEngineMethodServer<int>(EngineConstraints.HealthCheck);
+                    //if (status == 0)
+                    //    throw new Exception("Cannot initialize client side, server side not healthy");
                 }
                 else
                 {
@@ -49,15 +51,20 @@ namespace Proline.Engine
                     status = 1;
                 }
 
+                SetupResource(resourceName);
+
                 LoadConfig(isDebug);
                 LoadAssemblies();
+                LoadExtensions();
                 LoadComponents();
                 LoadScripts();
 
                 InitializeExtensions();
                 InitializeComponents();
 
-                SetupResource(resourceName);
+                StartAllComponents();
+                StartStartupScripts();
+
                 RunEnvSpecificFunctions(envType);
 
 
@@ -72,8 +79,29 @@ namespace Proline.Engine
 
         public async Task Update()
         {
-            var requests = _internalManager.GetStartScriptRequest();
-            Script.StartScripts(requests);
+            try
+            {
+                while (!_internalManager.IsScriptRequestsQueueEmpty())
+                {
+                    var requests = _internalManager.DequeueStartScriptRequest();
+                    Script.StartScript(requests);
+                }
+
+               
+                while (!_internalManager.IsComponentEventQueueEmpty())
+                {
+                    var events = _internalManager.DequeueComponentEvent();
+                    foreach (var item in _internalManager.GetComponents())
+                    {
+                        item.InvokeComponentEvent(events);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                LogError(e);
+                throw e;
+            }
         }
 
         private void RunEnvSpecificFunctions(int envType)
@@ -137,7 +165,7 @@ namespace Proline.Engine
             }
         }
 
-        private void InitializeExtensions()
+        private void LoadExtensions()
         {
             if (EngineStatus.IsExtensionsInitialized) return;
             var _extensionDetails = new List<ExtensionDetails>(EngineConfiguration.Extensions);
@@ -148,7 +176,7 @@ namespace Proline.Engine
                 {
                     try
                     {
-                        InitializeExtension(extensionPath);
+                        LoadExtension(extensionPath);
                     }
                     catch (Exception e)
                     {
@@ -160,7 +188,7 @@ namespace Proline.Engine
             EngineStatus.IsExtensionsInitialized = true;
         }
 
-        internal void InitializeExtension(ExtensionDetails extensionPath)
+        internal void LoadExtension(ExtensionDetails extensionPath)
         {
             var assembly = Assembly.Load(extensionPath.Assembly);
             var im = InternalManager.GetInstance();
@@ -168,8 +196,17 @@ namespace Proline.Engine
             {
                 var types = assembly.GetType(item);
                 var extension = (EngineExtension)Activator.CreateInstance(types, null);
-                extension.OnInitialize();
+                //extension.OnInitialize();
                 im.AddExtension(extension);
+            }
+        }
+
+        private void InitializeExtensions()
+        {
+            var im = InternalManager.GetInstance();
+            foreach (var extension in im.GetExtensions())
+            {
+                extension.Initialize();
             }
         }
 
@@ -237,40 +274,41 @@ namespace Proline.Engine
 
         public object ExecuteEngineMethod(string methodName, params object[] args)
         {
-            LogDebug("Called Engine event " + methodName);
-            switch (methodName)
-            {
-                case EngineConstraints.LogDebug: 
-                    LogDebug("[Client]" + args[0]);
-                    return null;
-                    break;
-                case EngineConstraints.LogError:
-                    LogError("[Client]" + args[0]);
-                    return null;
-                    break;
-                case EngineConstraints.LogWarn:
-                    LogWarn("[Client]" + args[0]);
-                    return null;
-                    break;
-                case EngineConstraints.HealthCheck:
-                    return EngineStatus.IsEngineInitialized ? 1 : 0;
-                case EngineConstraints.ExecuteComponentAPI:
-                    var componentNAme = args[0].ToString();
-                    var apiName = int.Parse(args[1].ToString());
-                    var list = JsonConvert.DeserializeObject<object[]>(args[2].ToString());
-                    return APICaller.CallAPI(apiName, list.ToArray());
-                case EngineConstraints.CreateAndInsertResponse:
-                    var guid = (string)args[0];
-                    var value = args[1];
-                    var isException = (bool)args[2];
-                    var nm = NetworkManager.GetInstance();
-                    nm.CreateAndInsertResponse(guid, value, isException);
-                    return null;
-                        break;
+            //LogDebug("Called Engine event " + methodName);
+            //switch (methodName)
+            //{
+            //    case EngineConstraints.LogDebug: 
+            //        LogDebug("[Client]" + args[0]);
+            //        return null;
+            //        break;
+            //    case EngineConstraints.LogError:
+            //        LogError("[Client]" + args[0]);
+            //        return null;
+            //        break;
+            //    case EngineConstraints.LogWarn:
+            //        LogWarn("[Client]" + args[0]);
+            //        return null;
+            //        break;
+            //    case EngineConstraints.HealthCheck:
+            //        return EngineStatus.IsEngineInitialized ? 1 : 0;
+            //    case EngineConstraints.ExecuteComponentAPI:
+            //        var componentNAme = args[0].ToString();
+            //        var apiName = int.Parse(args[1].ToString());
+            //        var list = JsonConvert.DeserializeObject<object[]>(args[2].ToString());
+            //        return APICaller.CallAPI(apiName, list.ToArray());
+            //    case EngineConstraints.CreateAndInsertResponse:
+            //        var guid = (string)args[0];
+            //        var value = args[1];
+            //        var isException = (bool)args[2];
+            //        var nm = NetworkManager.GetInstance();
+            //        nm.CreateAndInsertResponse(guid, value, isException);
+            //        return null;
+            //            break;
 
-                default:
-                    return null;
-            }
+            //    default:
+            //        return null;
+            //}
+            return null;
         }
         public static IScriptSource GetInstance()
         {

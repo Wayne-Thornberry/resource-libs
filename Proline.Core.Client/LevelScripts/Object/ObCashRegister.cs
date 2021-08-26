@@ -18,8 +18,8 @@ namespace Proline.Freemode.LevelScripts.Object
             //{
             //    if (LocalEntity.Model == API.GetHashKey("prop_till_01_dam"))
             //    {
-            //        Debugger.LogDebug(((uint) LocalEntity.Model.Hash).ToString());
-            //        Debugger.LogDebug(((uint) LocalEntity.Model.Hash).ToString());
+            //        LogDebug(((uint) LocalEntity.Model.Hash).ToString());
+            //        LogDebug(((uint) LocalEntity.Model.Hash).ToString());
             //    }
 
             //    if (!LocalEntity.HasBeenDamagedByAnyWeapon())

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Proline.Freemode.Components.CMPSession
 {
-    public class MPSessionHandler : ComponentHandler
+    public class MPSessionComponent : EngineComponent
     {
-        public override void OnStart()
+        protected override void OnStart()
         {
             base.OnStart();
         }

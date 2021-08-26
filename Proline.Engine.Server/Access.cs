@@ -30,7 +30,7 @@ namespace Proline.Online.Script
 
         public async Task Delay(int ms)
         {
-            await Delay(ms);
+            await BaseScript.Delay(ms);
         }
 
         public string GetCurrentResourceName()

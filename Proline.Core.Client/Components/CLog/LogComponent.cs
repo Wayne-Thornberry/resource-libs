@@ -6,18 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Server.Components.CLog
+namespace Proline.Freemode.Components.CLog
 {
-    public class LogHandler : ComponentHandler
+    public class LogComponent : EngineComponent
     {
         private const string _path = @"logs\";
         private const string _name = "_log";
-        private const string _dtFormat = "yyyy_MM_dd";
+        private const string _dtFormat = "yyyy-MM-dd";
         private const string _extension = ".txt";
         private FileStream _fileStream;
         private string _path2;
 
-        public override void OnInitialized()
+        protected override void OnInitialized()
         {
             var filename = DateTime.UtcNow.ToString(_dtFormat) + _name + _extension;
             _path2 = Path.Combine(_path, filename);
@@ -25,7 +25,7 @@ namespace Proline.Core.Server.Components.CLog
                 File.Create(_path2);
         }
 
-        public override void OnStart()
+        protected override void OnStart()
         {
         }
 

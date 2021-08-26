@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Proline.Freemode.Components.CInstancing
 {
-    public class InstanceAPI : ComponentAPI
+    public class InstanceComponent : EngineComponent
     {
         [Client]
         [ComponentAPI]

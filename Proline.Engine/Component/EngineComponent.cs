@@ -30,6 +30,7 @@ namespace Proline.Engine
 
         private List<ComponentAPI> _apis;
         private List<ComponentCommand> _commands;
+        private Dictionary<string, MethodInfo> _events;
         private List<PropertyInfo> _syncedProperties;
 
         private long _lastCheck;
@@ -42,9 +43,14 @@ namespace Proline.Engine
             _commands = new List<ComponentCommand>();
             _apis = new List<ComponentAPI>();
             _syncedProperties = new List<PropertyInfo>();
+            _events = new Dictionary<string, MethodInfo>();
             _status = 0; // Created not started 
-        } 
-         
+        }
+        protected void StartNewScript(string scriptName, params object[] args)
+        {
+            var im = InternalManager.GetInstance();
+            im.EnqueueStartScriptRequest(new StartScriptRequest(scriptName, args));
+        }
 
         internal ComponentAPI GetAPI(string apiName)
         {
@@ -56,7 +62,7 @@ namespace Proline.Engine
             return null;
         }
 
-        public void ExecuteCommand(string command, object[] args)
+        public void InvokeCommand(string command, object[] args)
         {
             var cm = InternalManager.GetInstance();
             cm.GetCommand(command).Invoke(args); 
@@ -68,8 +74,10 @@ namespace Proline.Engine
             return _commands;
         }
 
-        internal void TriggerComponentEvent(string eventName, object[] args)
+        protected void TriggerComponentEvent(string eventName, params object[] args)
         {
+            var im = InternalManager.GetInstance();
+            im.EnqueueComponentEvent(eventName, args);
             //if (_handler != null)
             //   ((ComponentHandler) _handler).OnComponentEvent(eventName, args);
         }
@@ -119,6 +127,12 @@ namespace Proline.Engine
             }
         }
 
+        internal void InvokeComponentEvent(KeyValuePair<string, object[]> events)
+        {
+            if (!_events.ContainsKey(events.Key)) return;
+            _events[events.Key].Invoke(this, events.Value);
+        }
+
         internal void Initalize()
         {
             OnInitialize();
@@ -163,6 +177,15 @@ namespace Proline.Engine
             } 
         }
 
+        protected void Push()
+        {
+            // Pushes the components data onto the server, if the data is out of sync, is pushed onto the clients with new data once the server has been set
+        }
+
+        protected void Pull()
+        {
+            // Pulls the servers component synced data onto its own
+        } 
 
         internal static EngineComponent Load(ComponentDetails details)
         { 
@@ -186,7 +209,7 @@ namespace Proline.Engine
                     return component;
                 }
             }
-            throw new Exception("Failed to load component");
+            throw new Exception("Failed to load component " + name + " " + componentClass );
         }
 
         private void Load(string name, bool debug)
@@ -228,8 +251,18 @@ namespace Proline.Engine
                     _syncedProperties.Add(item);
                 }
 
+                 filer = this.GetType().GetMethods().Where(m => m.GetCustomAttributes(typeof(ComponentEventAttribute), false).Length > 0)
+                 .ToArray();
+
+                foreach (var item in filer)
+                {
+                    //var type = IsServerMethod(item) ? -1 : 0;
+                    //var debugOnly = IsDebugMethod(item);
+                    _events.Add(item.Name, item);
+                }
+
                 OnLoad();
-                LogDebug(string.Format("Component {0} loaded sucessfully, {1} APIs loaded, {2} Commands Loaded {3} Synced Properties", Name, _apis.Count(), _commands.Count(), _syncedProperties.Count()));
+                LogDebug(string.Format("Component {0} loaded sucessfully, {1} APIs loaded, {2} Commands Loaded {3} Synced Properties, {4} Events ", Name, _apis.Count(), _commands.Count(), _syncedProperties.Count(), _events.Count()));
                 _status = 1; // Ready Not Started
             }
             catch (Exception e)

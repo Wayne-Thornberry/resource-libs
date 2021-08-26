@@ -13,21 +13,33 @@ using CitizenFX.Core.Native;
 
 namespace Proline.Freemode.Components.CWorld
 {
-    public class WorldHandler : ComponentHandler
+    public class WorldComponent : EngineComponent
     {
         private HandleTracker _ht;
+        [Client]
+        [ComponentAPI]
+        public void GetNearbyEntities(out int[] entities)
+        {
+            var _ht = HandleTracker.GetInstance();
+            entities = _ht.Get().ToArray();
+        }
+        [ComponentCommand("DoSomething")]
+        public void DoSomething()
+        {
+            LogDebug("It worked!");
+        }
 
-        public override void OnInitialized()
+        protected override void OnInitialized()
         {
             Console.WriteLine("World Component Initialized");
             _ht = HandleTracker.GetInstance();
         }
 
-        public override void OnStart()
+        protected override void OnStart()
         {
             Console.WriteLine("World Component Started");
         }
-        public override void OnFixedUpdate()
+        protected override void OnFixedUpdate()
         {
             var handles = new HashSet<int>();
 
@@ -80,7 +92,7 @@ namespace Proline.Freemode.Components.CWorld
             {
                 if (!API.DoesEntityExist(item))
                 {
-                    EngineObject.TriggerEngineEvent("entityUntracked", item);
+                    TriggerComponentEvent("EntityUntracked", item);
                     newEntities = true;
                 }
             }
@@ -89,7 +101,7 @@ namespace Proline.Freemode.Components.CWorld
             {
                 if (!_ht.IsHandleTracked(item) && API.DoesEntityExist(item))
                 {
-                    EngineObject.TriggerEngineEvent("entityTracked", item);
+                    TriggerComponentEvent("EntityTracked", item);
                     newEntities = true;
                 }
             }
@@ -97,7 +109,7 @@ namespace Proline.Freemode.Components.CWorld
             if (newEntities)
             {
                 _ht.Set(handles);
-                EngineObject.TriggerEngineEvent("entitiesInWorld", handles.ToArray());
+                TriggerComponentEvent("entitiesInWorld", handles.ToArray());
             }
         }
 

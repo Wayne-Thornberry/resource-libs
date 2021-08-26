@@ -1,5 +1,4 @@
-﻿
-using CitizenFX.Core;
+﻿using Proline.Freemode;
 using Proline.Engine;
 using System;
 using System.Collections.Generic;
@@ -7,11 +6,53 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CitizenFX.Core.Native;
+using CitizenFX.Core;
 
 namespace Proline.Freemode.Components.CDebugInterface
 {
-    public class DebugInterfaceAPI : ComponentAPI
+    public class DebugInterfaceComponent : EngineComponent
     {
+        private int[] _handles;
+
+        protected override void OnUpdate()
+        {
+            API.SetTextFont(0);
+            API.SetTextProportional(true);
+            API.SetTextScale(0.0f, 0.3f);
+            API.SetTextColour(255, 255, 255, 255);
+            // API.SetTextDropshadow(0, 0, 0, 0, 255);
+            // API.SetTextEdge(1, 0, 0, 0, 255);
+            API.SetTextDropShadow();
+            API.SetTextOutline();
+            API.SetTextEntry("STRING");
+            API.AddTextComponentString(Game.PlayerPed.Position.ToString() + "H:" + Game.PlayerPed.Heading + "\n"
+               + Game.PlayerPed.Model.Hash + "\n"
+               + Game.PlayerPed.Health + "\n"
+               + Game.PlayerPed.Handle + "\n");
+            API.DrawText(0.005f, 0.05f);
+
+
+            foreach (var handle in _handles)
+            {
+                var entity = Entity.FromHandle(handle);
+                if (entity == null) continue;
+                if (!API.IsEntityVisible(entity.Handle) || World.GetDistance(entity.Position, Game.PlayerPed.Position) > 10f) continue;
+                var pos = entity.Model.GetDimensions();
+                var d = entity.Position + new Vector3(0, 0, (entity.Model.GetDimensions().Z * 0.8f));
+                var x = $"{entity.Handle}\n" +
+                    $"{entity.Model.Hash}\n" +
+                    $"{Math.Round(entity.Heading, 2)}\n" +
+                    $"{entity.Health}\n";// +
+                                         //$"{ExampleAPI.IsEntityScripted(entity.Handle)}";
+                                         //ExampleAPI.DrawEntityBoundingBox(entity.Handle, 125, 125, 125, 100);
+                                         //ExampleAPI.DrawDebugText3D(x, d, 3f, 0);
+            }
+        }
+        protected override void OnStart()
+        {
+            _handles = new int[0];
+        }
         [ComponentAPI]
         public void Draw2DBox(float x, float y, float width, float heigth, Color color)
         {
@@ -45,7 +86,7 @@ namespace Proline.Freemode.Components.CDebugInterface
             // API.BeginTextCommandLineCount(text);
             // API.AddTextComponentString(text);
             //var lines = // API.EndTextCommandGetLineCount(vector2.X, vector2.Y);
-            // Debugger.LogDebug(lines);
+            // LogDebug(lines);
             //// API.GetTextScaleHeight();
             // API.DrawText(vector2.X, vector2.Y);
         }
@@ -395,5 +436,12 @@ namespace Proline.Freemode.Components.CDebugInterface
                 // API.DrawLine(x1, y1, z1, x2, y2, z2, r, g, b, a);
             }
         }
+        //public override void OnEngineEvent(string eventName, params object[] args)
+        //{
+        //    if (eventName.Equals("entitiesInWorld"))
+        //    {
+        //        _handles = (int[])args[0];
+        //    }
+        //}
     }
 }

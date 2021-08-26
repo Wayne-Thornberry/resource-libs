@@ -22,13 +22,13 @@ namespace Proline.Freemode.LevelScripts.Objects
             if(args.Length > 0)
             {
                 var entityHandle = (int)args[0];
-                Debugger.LogDebug(entityHandle);
+                LogDebug(entityHandle);
                 var entity = Entity.FromHandle(entityHandle);
                 _blip = entity.AttachBlip();
                 var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
                 var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
-                Debugger.LogDebug(stat.GetValue());
-                Debugger.LogDebug(stat2.GetValue());
+                LogDebug(stat.GetValue());
+                LogDebug(stat2.GetValue());
                 while (ExampleAPI.IsEntityInActivationRange(entity.Handle))
                 {
                     Screen.DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to recive money");

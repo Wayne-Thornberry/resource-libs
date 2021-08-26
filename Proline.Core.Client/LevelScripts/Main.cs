@@ -60,7 +60,7 @@ namespace Proline.Freemode.LevelScripts
             //Global.SetGlobalValue("Gamemode", "Freemode");
 
             //var v = Global.GetGlobalValue("Gamemode");
-            //Debugger.LogDebugLine(v.ToString());
+            //LogDebugLine(v.ToString());
 
 
             while (true)

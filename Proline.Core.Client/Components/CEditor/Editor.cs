@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Proline.Freemode.Components.CEditorHandler
 {
-    public class EditorHandler : ComponentHandler
+    public class Editor : EngineComponent
     {
     }
 }

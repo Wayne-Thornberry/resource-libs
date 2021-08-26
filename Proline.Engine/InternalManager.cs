@@ -22,9 +22,11 @@ namespace Proline.Engine
         private Dictionary<string, Script> _scripts;
         //private Dictionary<Task, string> _tasks;
 
+        private Queue<KeyValuePair<string, object[]>> _eventQueue;
+        private Queue<StartScriptRequest> _scriptRequest;
+
         private List<EngineExtension> _extensions;
         private List<ScriptPackage> _packages;
-        private List<StartScriptRequest> _scriptRequest;
 
         public InternalManager() : base("InternalManager")
         {
@@ -34,10 +36,12 @@ namespace Proline.Engine
             _requests = new Dictionary<string, NetworkRequest>();
             _responses = new Dictionary<string, NetworkResponse>();
             _scripts = new Dictionary<string, Script>();
-            //_tasks = new Dictionary<Task, string>();
+
             _extensions = new List<EngineExtension>();
             _packages = new List<ScriptPackage>();
-            _scriptRequest = new List<StartScriptRequest>();
+
+            _scriptRequest = new Queue<StartScriptRequest>();
+            _eventQueue = new Queue<KeyValuePair<string, object[]>>();
         }
 
 
@@ -50,9 +54,21 @@ namespace Proline.Engine
 
         internal ComponentAPI GetAPI(int apiName)
         {
+            LogDebug("Getting API " + apiName);
             if (_apis.ContainsKey(apiName))
                 return _apis[apiName];
+            LogDebug("API does not exist " + apiName);
             return null;
+        }
+
+        internal void EnqueueComponentEvent(string eventName, object[] args)
+        {
+            _eventQueue.Enqueue(new KeyValuePair<string,object[]>(eventName, args));
+        }
+
+        internal KeyValuePair<string,object[]> DequeueComponentEvent()
+        {
+            return _eventQueue.Dequeue();
         }
 
         internal IEnumerable<EngineComponent> GetComponents()
@@ -64,6 +80,10 @@ namespace Proline.Engine
             return _packages;
         }
 
+        internal bool IsScriptRequestsQueueEmpty()
+        {
+            return _scriptRequest.Count == 0;
+        }
 
         internal EngineComponent GetComponent(string componentName)
         {
@@ -75,18 +95,15 @@ namespace Proline.Engine
             return _components.ContainsKey(componentName);
         }
 
+        internal bool IsComponentEventQueueEmpty()
+        {
+            return _eventQueue.Count == 0;
+        }
+
         internal IEnumerable<EngineExtension> GetExtensions()
         {
             return _extensions;
-        }
-
-   //     internal IEnumerable<Task> GetScriptTasks(string name)
-   //     {
-   //         return _tasks
-   //.Where(pair => pair.Value.Equals(name))
-   //.Select(pair => pair.Key)
-   //.ToArray();
-   //     }
+        } 
 
 
         internal int GetScriptCount()
@@ -140,20 +157,16 @@ namespace Proline.Engine
             _components.Remove(component.Name);
         }
 
-        internal void AddStartScriptRequest(StartScriptRequest startScriptRequest)
+        internal void EnqueueStartScriptRequest(StartScriptRequest startScriptRequest)
         {
             if (_scriptRequest.Count >= 30) return;
-            _scriptRequest.Add(startScriptRequest);
+            _scriptRequest.Enqueue(startScriptRequest);
         }
 
-        internal StartScriptRequest[] GetStartScriptRequest()
-        {
-            return _scriptRequest.ToArray();
-        }
 
-        internal void RemoveStartScriptRequest(StartScriptRequest startScriptRequest)
+        internal StartScriptRequest DequeueStartScriptRequest()
         { 
-            _scriptRequest.Remove(startScriptRequest);
+            return _scriptRequest.Dequeue();
         }
 
         internal void AddCommand(ComponentCommand command)

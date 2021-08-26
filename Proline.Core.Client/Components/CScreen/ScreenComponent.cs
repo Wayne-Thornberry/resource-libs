@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Proline.Freemode.Components.CScreen
 {
-    public class ScreenAPI : ComponentAPI
+    public class ScreenComponent : EngineComponent
     {
         [Client]
         [ComponentAPI]

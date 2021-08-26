@@ -52,42 +52,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\CExampleComponent\CExampleComponent.cs" />
-    <Compile Include="Components\CExampleNetworking\ExampleNetworkingComponent.cs" />
-    <Compile Include="Components\CLog\LogHandler.cs" />
+    <Compile Include="Components\CLog\LogComponent.cs" />
     <Compile Include="Components\CScriptObjects\TrackedObjectsManager.cs" />
-    <Compile Include="Components\CDebugInterface\DebugInterfaceAPI.cs" />
-    <Compile Include="Components\CEditor\EditorHandler.cs" />
-    <Compile Include="Components\CDebugInterface\DebugInterfaceHandler.cs" />
-    <Compile Include="Components\CExampleComponent\ExampleAPI.cs" />
-    <Compile Include="Components\CExampleComponent\ExampleCommander.cs" />
-    <Compile Include="Components\CExampleComponent\ExampleHandler.cs" />
-    <Compile Include="Components\CExampleNetworking\ExampleNetworkingAPI.cs" />
-    <Compile Include="Components\CGasStations\GasStationsHandler.cs" />
-    <Compile Include="Components\CGasStations\GasStations.cs" />
-    <Compile Include="Components\CGasStations\GasStationsAPI.cs" />
-    <Compile Include="Components\CGlobals\GlobalEntry.cs" />
-    <Compile Include="Components\CGlobals\GlobalsHandler.cs" />
-    <Compile Include="Components\CGlobals\GlobalsManager.cs" />
-    <Compile Include="Components\CInstancing\InstanceAPI.cs" />
-    <Compile Include="Components\CMPSession\MPSessionHandler.cs" />
+    <Compile Include="Components\CEditor\Editor.cs" />
+    <Compile Include="Components\CDebugInterface\DebugInterfaceComponent.cs" />
+    <Compile Include="Components\CGasStations\GasStation.cs" />
+    <Compile Include="Components\CGasStations\GasStationsComponent.cs" />
+    <Compile Include="Components\CInstancing\InstanceComponent.cs" />
+    <Compile Include="Components\CMPSession\MPSessionComponent.cs" />
     <Compile Include="Components\CScriptObjects\ScriptObj.cs" />
     <Compile Include="Components\CScriptObjects\ScriptObjectPair.cs" />
-    <Compile Include="Components\CScriptObjects\ScriptObjectsAPI.cs" />
-    <Compile Include="Components\CScriptObjects\ScriptObjectsHandler.cs" />
+    <Compile Include="Components\CScriptObjects\ScriptObjectsComponent.cs" />
     <Compile Include="Components\CScriptObjects\ScriptObjectsManager.cs" />
     <Compile Include="Components\CScriptPos\Data\ScriptPositions.cs" />
     <Compile Include="Components\CScriptPos\Data\ScriptPositionsPair.cs" />
     <Compile Include="Components\CScriptPos\PosBlacklist.cs" />
-    <Compile Include="Components\CScriptPos\ScriptPosAPI.cs" />
-    <Compile Include="Components\CScriptPos\ScriptPosHandler.cs" />
+    <Compile Include="Components\CScriptPos\ScriptPosComponent.cs" />
     <Compile Include="Components\CScriptPos\ScriptPositionManager.cs" />
     <Compile Include="Components\CWorld\EntityType.cs" />
     <Compile Include="Components\CWorld\HandleTracker.cs" />
-    <Compile Include="Components\CWorld\WorldAPI.cs" />
-    <Compile Include="Components\CWorld\WorldCommander.cs" />
-    <Compile Include="Components\CWorld\WorldHandler.cs" />
-    <Compile Include="Components\CScreen\ScreenAPI.cs" />
+    <Compile Include="Components\CWorld\WorldComponent.cs" />
+    <Compile Include="Components\CScreen\ScreenComponent.cs" />
     <Compile Include="Extensions\Tracking.cs" />
     <Compile Include="LevelScripts\BlowUp.cs" />
     <Compile Include="LevelScripts\CharacterCreator.cs" />
@@ -132,6 +117,11 @@
     <PackageReference Include="CitizenFX.Core.Client">
       <Version>1.0.4000</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

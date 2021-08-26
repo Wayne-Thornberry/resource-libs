@@ -20,7 +20,7 @@ namespace Proline.Freemode.LevelScripts
             ExampleAPI.AttachBlipsToGasStations();
             StartNewScript("MPStartup", null);
             Persistence.Set("EnableSomething", false);
-            Debugger.LogDebug("Testing on another script: " + Persistence.Get("EnableSomething"));
+            LogDebug("Testing on another script: " + Persistence.Get("EnableSomething"));
             StartNewScript("PlayerDeath", null);
             while (true)
             {

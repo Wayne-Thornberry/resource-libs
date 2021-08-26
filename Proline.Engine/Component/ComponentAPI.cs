@@ -26,6 +26,7 @@ namespace Proline.Engine
 
         internal object Invoke(params object[] args)
         {
+            LogDebug("Invoking API " + _item.Name);
             if (_debugOnly && !EngineConfiguration.IsDebugEnabled) throw new Exception("Debug mode not enabled on debug only API");
             if (_type == -1 && EngineConfiguration.IsClient)
                 throw new Exception("Cannot invoke a server method while as a client non async");

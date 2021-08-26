@@ -72,7 +72,7 @@ namespace Proline.Freemode.LevelScripts.Object
                             API.ShowCursorThisFrame();
                             //io.SetCursorState(1);
                             io.SetMouseInput(Game.GetControlNormal(0, Control.CursorX), Game.GetControlNormal(0, Control.CursorY));
-                            //Debugger.LogDebugLine(Game.GetControlNormal(0, Control.CursorX) + " " + Game.GetControlNormal(0, Control.CursorY));
+                            //LogDebugLine(Game.GetControlNormal(0, Control.CursorX) + " " + Game.GetControlNormal(0, Control.CursorY));
 
 
                             if (DisplayedView == 5)

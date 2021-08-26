@@ -25,8 +25,6 @@ namespace Proline.Engine.ConsoleApp
         private async Task Start()
         { 
             await _service.Start("ConsoleApp", "0", "true");
-            _service.StartAllComponents();
-            _service.StartStartupScripts();
             _service.DumpLog();
             this.AddTick(_service.Update);
         }
@@ -46,7 +44,7 @@ namespace Proline.Engine.ConsoleApp
                 if (_ticks == null) continue;
                 foreach (var item in _ticks)
                 {
-                    await item.Invoke();
+                        await item.Invoke();
                 }
             };
         }

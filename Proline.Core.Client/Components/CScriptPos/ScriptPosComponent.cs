@@ -13,12 +13,43 @@ using CitizenFX.Core;
 
 namespace Proline.Freemode.Components.CScriptPos
 {
-    public class ScriptPosHandler : ComponentHandler
+    public class ScriptPosComponent : EngineComponent
     {
-        public override void OnInitialized()
+        [Client]
+        [ComponentAPI]
+        [SuppressUnmanagedCodeSecurity]
+        public bool IsInActivationRange(Vector3 vector3)
+        {
+            return World.GetDistance(Game.PlayerPed.Position, vector3) < 10f;
+        }
+
+        [Client]
+        [ComponentAPI]
+        public void Test(string x, string y, string z)
+        {
+
+            //LogDebug(x);
+            //LogDebug(y);
+            //LogDebug(z);
+        }
+
+        [Client]
+        [ComponentAPI]
+        public void Wow2()
+        {
+
+        }
+
+        [Client]
+        [ComponentAPI]
+        public void testc()
+        {
+
+        }
+        protected override void OnInitialized()
         {
             var data = ResourceFile.Load(API.GetCurrentResourceName(), "data/scriptpositions.json");
-            //Debugger.LogDebug(data);
+            //LogDebug(data);
             var scriptPosition = JsonConvert.DeserializeObject<ScriptPositions>(data);
 
             ScriptPositionManager.AddScriptPositionPairs(scriptPosition.scriptPositionPairs);
@@ -26,12 +57,12 @@ namespace Proline.Freemode.Components.CScriptPos
             PosBlacklist.Create();
         }
 
-        public override void OnStart()
+        protected override void OnStart()
         {
 
 
         }
-        public override void OnFixedUpdate()
+        protected override void OnFixedUpdate()
         {
             //return;
             if (ScriptPositionManager.HasScriptPositionPairs())

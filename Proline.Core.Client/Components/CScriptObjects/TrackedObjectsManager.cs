@@ -40,11 +40,11 @@ namespace Proline.Freemode.Components.CScriptObjects
 
         internal void Add(int handle, SOP item)
         {
-            Debugger.LogDebug("Found an object that should start a script, monitoring it");
+            //LogDebug("Found an object that should start a script, monitoring it");
             var x = new List<X>();
             foreach (var i in item.Pairs)
             {
-                Debugger.LogDebug("ddsadadad it");
+               // LogDebug("ddsadadad it");
                 x.Add(new X() { ActivationRange = 5f, ExecutedScript = false, ScriptHandle = -1, ScriptName = i.ScriptName });
             }
             _trackedObjects.Add(handle, new TrackedObject() { Handle = handle, Scripts = x });
@@ -63,7 +63,7 @@ namespace Proline.Freemode.Components.CScriptObjects
         {
             if (_trackedObjects.ContainsKey(handle))
             {
-                Debugger.LogDebug("tracked object no longer exists, this object should be untracked");
+                //LogDebug("tracked object no longer exists, this object should be untracked");
                 _trackedObjects.Remove(handle);
             }
         }

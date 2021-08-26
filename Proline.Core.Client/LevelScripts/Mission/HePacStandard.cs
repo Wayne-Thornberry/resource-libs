@@ -88,28 +88,28 @@ namespace Proline.Freemode.LevelScripts.Mission
                 if (entity.Model == CitizenFX.Core.Native.API.GetHashKey(_cameraNameHash))
                 {
                     _cameras.Add(entity);
-                    Debugger.LogDebug("Found the camera\n");
+                    LogDebug("Found the camera\n");
                     continue;
                 }
 
                 if (entity.Model == CitizenFX.Core.Native.API.GetHashKey(_securityPanelNameHash))
                 {
                     _securityPanels.Add(entity);
-                    Debugger.LogDebug("Found the security panel\n");
+                    LogDebug("Found the security panel\n");
                     continue;
                 }
 
                 if (entity.Model == CitizenFX.Core.Native.API.GetHashKey(_vaultNameHash))
                 {
                     _vaultDoor = entity;
-                    Debugger.LogDebug("Found the vault door\n");
+                    LogDebug("Found the vault door\n");
                 }
 
                 foreach (var doorNameHash in _doorNameHash)
                     if (entity.Model == CitizenFX.Core.Native.API.GetHashKey(doorNameHash))
                     {
                         _bankDoors.Add(entity);
-                        Debugger.LogDebug("Found a door\n");
+                        LogDebug("Found a door\n");
                     }
             }
         }
@@ -151,7 +151,7 @@ namespace Proline.Freemode.LevelScripts.Mission
             _vaultDoor.IsPositionFrozen = true;
             foreach (var door in _bankDoors)
             {
-                Debugger.LogDebug("Looping through detected door... \n");
+                LogDebug("Looping through detected door... \n");
                 door.IsPositionFrozen = true;
                 CitizenFX.Core.Native.API.DoorControl((uint)door.Model.Hash, door.Position.X, door.Position.Y, door.Position.Z, true, 1f, 1f,
                     1f);

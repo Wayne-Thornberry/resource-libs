@@ -36,7 +36,7 @@ namespace Proline.Engine
         protected void StartNewScript(string scriptName, params object[] args)
         {
             var im = InternalManager.GetInstance();
-            im.AddStartScriptRequest(new StartScriptRequest(scriptName, args));
+            im.EnqueueStartScriptRequest(new StartScriptRequest(scriptName, args));
         }
 
         public abstract Task Execute(params object[] args);

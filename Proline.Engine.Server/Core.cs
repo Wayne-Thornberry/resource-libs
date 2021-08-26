@@ -16,6 +16,7 @@ namespace Proline.Online.Script
 
         public EngineScript()
         {
+            _service = new EngineService(this);
             Tick += OnTick;
         }
 
@@ -27,16 +28,10 @@ namespace Proline.Online.Script
                 {
                     _started = true;
 
-                    if (_service == null)
-                    {
-                        _service = new EngineService(this);
-                        await _service.Start(API.GetCurrentResourceName(), "-1", "true");
-                        _service.StartAllComponents();
-                        _service.StartStartupScripts();
-                    }
+                    await _service.Start(API.GetCurrentResourceName(), "-1", "true");
 
                 }
-                EngineService.ExecuteEngineMethod("ExecuteComponentControl", "", "4392749", JsonConvert.SerializeObject(new object[] { "Testo8717" }));
+                //EngineService.ExecuteEngineMethod("ExecuteComponentControl", "", "4392749", JsonConvert.SerializeObject(new object[] { "Testo8717" }));
             }
             catch (Exception)
             { 
