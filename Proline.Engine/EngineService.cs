@@ -9,17 +9,19 @@ using System.Threading.Tasks;
 
 namespace Proline.Engine
 {
-    public class EngineService
-    { 
+    public class EngineService : EngineObject
+    {
         private CitizenResource _executingResource;
+        private InternalManager _internalManager;
         private static CitizenAccess _scriptSource;
 
-        public EngineService(IScriptSource scriptSource)
+        public EngineService(IScriptSource scriptSource) : base("EngineService")
         {
+            _internalManager = InternalManager.GetInstance();
             _scriptSource = new CitizenAccess(scriptSource); 
         }
 
-        public async Task Initialize(params string[] args)
+        public async Task Start(params string[] args)
         {
             try
             { 
@@ -28,13 +30,18 @@ namespace Proline.Engine
                 var resourceName = args[0];
                 var envType = int.Parse(args[1]);
                 var isDebug = bool.Parse(args[2]);
+                var isIsolated = resourceName.Equals("ConsoleApp");
                 EngineConfiguration.IsClient = envType != -1;
-                var ty = EngineConfiguration.IsClient ? "Client" : "Server";
+                EngineConfiguration.IsIsolated = isIsolated;
+                EngineConfiguration.IsDebugEnabled = isDebug;
+                LogDebug("Engine in " + (EngineConfiguration.IsClient ? "Client" : "Server") + " Mode");
 
                 int status = 0;
-                if (EngineConfiguration.IsClient)
+                if (EngineConfiguration.IsClient && !EngineConfiguration.IsIsolated)
                 {
-                    status = await EngineAccess.ExecuteEngineMethodServer<int>("Healthcheck");
+                    status = await ExecuteEngineMethodServer<int>(EngineConstraints.HealthCheck);
+                    if (status == 0)
+                        throw new Exception("Cannot initialize client side, server side not healthy");
                 }
                 else
                 {
@@ -42,15 +49,13 @@ namespace Proline.Engine
                     status = 1;
                 }
 
-                if (status == 0)
-                    throw new Exception("Cannot initialize client side, server side not healthy");
                 LoadConfig(isDebug);
                 LoadAssemblies();
-                Debugger.LogDebug("Engine in " + ty + " Mode");
+                LoadComponents();
+                LoadScripts();
 
                 InitializeExtensions();
                 InitializeComponents();
-                InitializeScripts();
 
                 SetupResource(resourceName);
                 RunEnvSpecificFunctions(envType);
@@ -63,6 +68,12 @@ namespace Proline.Engine
 
                 throw;
             }
+        }
+
+        public async Task Update()
+        {
+            var requests = _internalManager.GetStartScriptRequest();
+            Script.StartScripts(requests);
         }
 
         private void RunEnvSpecificFunctions(int envType)
@@ -88,43 +99,45 @@ namespace Proline.Engine
             _executingResource = new CitizenResource(executingResource);
         }
 
-        private static void InitializeComponents()
+        private void InitializeComponents()
         {
             if (EngineStatus.IsComponentsInitialized) return;
             var _componentDetails = new List<ComponentDetails>(EngineConfiguration.Components);
             var am = InternalManager.GetInstance();
-            var com = InternalManager.GetInstance();
-            var cm = InternalManager.GetInstance();
             if (_componentDetails != null)
-            {
-                foreach (var componentDetails in _componentDetails)
+            { 
+                foreach (var item in am.GetComponents())
                 {
-                    if (!EngineConfiguration.IsClient && componentDetails.EnvType == 1) continue;
-                    if (EngineConfiguration.IsClient && componentDetails.EnvType == -1) continue;
-                    if (!EngineConfiguration.IsDebugEnabled && componentDetails.DebugOnly) throw new Exception("Component cannot be started, debug not enabled");
-                    if (componentDetails == null) throw new Exception("Component path null");
-                    try
-                    {
-                        if (cm.IsComponentRegistered(componentDetails.ComponentName)) throw new Exception("Component by that path already exists");
-                        var component = new EngineComponent(componentDetails);
-                        var em = InternalManager.GetInstance();
-                        var extensions = em.GetExtensions();
-                        component.Load();
-                        EngineComponent.RegisterComponent(component);
-                        Debugger.LogDebug(string.Format("{0} Component loaded sucessfully, {1} APIs loaded, {2} Commands Loaded {3} Scripts Loaded", component.Name, component.GetAPIs().Count(), component.GetCommands().Count(), component.GetScripts().Count()));
-                    }
-                    catch (Exception e)
-                    {
-                        Debugger.LogDebug(e);
-                    }
+                    item.Initalize();
                 }
-            }
-            Debugger.LogDebug(string.Format("Components initialized sucessfully, {0} Components loaded, {1} APIs loaded, {2} Commands Loaded", cm.GetComponents().Count(), am.GetAPIs().Count(), com.GetCommands().Count()));
+            } 
+            LogDebug(string.Format("Components initialized sucessfully, {0} Components loaded, {1} APIs loaded, {2} Commands Loaded", am.GetComponents().Count(), am.GetAPIs().Count(), am.GetCommands().Count()));
             EngineStatus.IsComponentsInitialized = true;
         }
 
+        private void LoadComponents()
+        {
+            var _componentDetails = new List<ComponentDetails>(EngineConfiguration.Components);
+            var am = InternalManager.GetInstance();
+            var extensions = am.GetExtensions();
+            foreach (var componentDetails in _componentDetails)
+            {
+                if ((!EngineConfiguration.IsClient && componentDetails.EnvType == 1) || (EngineConfiguration.IsClient && componentDetails.EnvType == -1))continue; 
+                if (!EngineConfiguration.IsDebugEnabled && componentDetails.DebugOnly) throw new Exception("Component cannot be started, debug not enabled");
+                if (componentDetails == null) throw new Exception("Component path null");
+                try
+                {
+                    var component = EngineComponent.Load(componentDetails);
+                    EngineComponent.RegisterComponent(component);
+                }
+                catch (Exception e)
+                {
+                    LogDebug(e);
+                }
+            }
+        }
 
-        private static void InitializeExtensions()
+        private void InitializeExtensions()
         {
             if (EngineStatus.IsExtensionsInitialized) return;
             var _extensionDetails = new List<ExtensionDetails>(EngineConfiguration.Extensions);
@@ -139,7 +152,7 @@ namespace Proline.Engine
                     }
                     catch (Exception e)
                     {
-                        Debugger.LogDebug(e);
+                        LogDebug(e);
                     }
                 }
 
@@ -147,7 +160,7 @@ namespace Proline.Engine
             EngineStatus.IsExtensionsInitialized = true;
         }
 
-        internal static void InitializeExtension(ExtensionDetails extensionPath)
+        internal void InitializeExtension(ExtensionDetails extensionPath)
         {
             var assembly = Assembly.Load(extensionPath.Assembly);
             var im = InternalManager.GetInstance();
@@ -160,12 +173,10 @@ namespace Proline.Engine
             }
         }
 
-        private static void InitializeScripts()
+        private void LoadScripts()
         {
             if (EngineStatus.IsScriptsInitialized) return;
-            //InsertScriptAssemblies();
-
-            var spm = InternalManager.GetInstance();
+            //InsertScriptAssemblies(); 
             var sm = InternalManager.GetInstance();
             foreach (var item in EngineConfiguration.ScriptPackages)
             {
@@ -178,17 +189,20 @@ namespace Proline.Engine
                 }
                 catch (Exception e)
                 {
-                    Debugger.LogError(e.ToString(), true);
+                    LogError(e.ToString());
                     throw;
                 }
             }
-            Debugger.LogDebug(string.Format("Scripts initialized sucessfully, {0} Scripts loaded", sm.GetScriptCount()));
+            LogDebug(string.Format("Scripts initialized sucessfully, {0} Scripts loaded", sm.GetScriptCount()));
             EngineStatus.IsScriptsInitialized = true;
         }
 
         public void StartStartupScripts()
         {
-            ScriptAccess.StartStartupScripts();
+            foreach (var item in EngineConfiguration.StartupScripts)
+            { 
+                Script.StartScript(new StartScriptRequest(item, null));
+            }
         }
 
         public void StartAllComponents()
@@ -216,36 +230,36 @@ namespace Proline.Engine
                 }
                 catch (Exception e)
                 {
-                    Debugger.LogError(e.ToString()); 
+                    LogError(e.ToString()); 
                 }
             }
         }
 
-        public static object ExecuteEngineMethod(string methodName, params object[] args)
+        public object ExecuteEngineMethod(string methodName, params object[] args)
         {
-            Debugger.LogDebug("Called Engine event " + methodName);
+            LogDebug("Called Engine event " + methodName);
             switch (methodName)
             {
-                case "LogDebug": 
-                    Debugger.LogDebug(args[0]);
+                case EngineConstraints.LogDebug: 
+                    LogDebug("[Client]" + args[0]);
                     return null;
                     break;
-                case "LogError":
-                    Debugger.LogError(args[0]);
+                case EngineConstraints.LogError:
+                    LogError("[Client]" + args[0]);
                     return null;
                     break;
-                case "LogWarn":
-                    Debugger.LogWarn(args[0]);
+                case EngineConstraints.LogWarn:
+                    LogWarn("[Client]" + args[0]);
                     return null;
                     break;
-                case "Healthcheck":
+                case EngineConstraints.HealthCheck:
                     return EngineStatus.IsEngineInitialized ? 1 : 0;
-                case "ExecuteComponentControl":
+                case EngineConstraints.ExecuteComponentAPI:
                     var componentNAme = args[0].ToString();
                     var apiName = int.Parse(args[1].ToString());
                     var list = JsonConvert.DeserializeObject<object[]>(args[2].ToString());
                     return APICaller.CallAPI(apiName, list.ToArray());
-                case "CreateAndInsertResponse":
+                case EngineConstraints.CreateAndInsertResponse:
                     var guid = (string)args[0];
                     var value = args[1];
                     var isException = (bool)args[2];

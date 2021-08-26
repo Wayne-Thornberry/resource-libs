@@ -4,9 +4,9 @@ using CitizenFX.Core;
 using CitizenFX.Core.UI;
 using Proline.Engine;
 
-namespace Proline.Core.Client.LevelScripts.Event
+namespace Proline.Freemode.LevelScripts.Event
 {
-    public class ReArmouredTruck : GameScript
+    public class ReArmouredTruck : LevelScript
     {
         private readonly Vector3 _endLocal;
         private readonly int _maxReward;

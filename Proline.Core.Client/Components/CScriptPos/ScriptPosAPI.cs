@@ -1,4 +1,5 @@
-﻿using CitizenFX.Core;
+﻿
+using CitizenFX.Core;
 using Proline.Engine;
 using Proline.Engine;
 using System;
@@ -8,7 +9,7 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CScriptPos
+namespace Proline.Freemode.Components.CScriptPos
 {
     public class ScriptPosAPI : ComponentAPI
     {
@@ -18,7 +19,7 @@ namespace Proline.Core.Client.Components.CScriptPos
         [SuppressUnmanagedCodeSecurity]
         public bool IsInActivationRange(Vector3 vector3)
         {
-            return World.GetDistance(Game.PlayerPed.Position, vector3) < 10f;
+            return World.GetDistance(Game.PlayerPed.Position, vector3) < 10f; 
         }
 
         [Client]
@@ -26,9 +27,9 @@ namespace Proline.Core.Client.Components.CScriptPos
         public void Test(string x, string y, string z)
         {
 
-            Debugger.LogDebug(x);
-            Debugger.LogDebug(y);
-            Debugger.LogDebug(z);
+            //Debugger.LogDebug(x);
+            //Debugger.LogDebug(y);
+            //Debugger.LogDebug(z);
         }
 
         [Client]

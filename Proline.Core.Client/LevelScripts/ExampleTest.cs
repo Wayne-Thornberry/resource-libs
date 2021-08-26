@@ -1,4 +1,4 @@
-﻿using CitizenFX.Core;
+﻿
 using Proline.Engine;
 using System;
 using System.Collections.Generic;
@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.LevelScripts
+namespace Proline.Freemode.LevelScripts
 {
-    public class ExampleTest : GameScript
+    public class ExampleTest : LevelScript
     {
         
 
@@ -18,7 +18,7 @@ namespace Proline.Core.Client.LevelScripts
             {
                 testc();
                 break;
-                await BaseScript.Delay(0);
+                await EngineService.GetInstance().Delay(0);
             }
 
 

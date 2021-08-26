@@ -1,6 +1,6 @@
-﻿using CitizenFX.Core;
-using CitizenFX.Core.Native;
-using Proline.Core.Client;
+﻿
+
+using Proline.Freemode;
 using Proline.Engine;
 using Proline.Engine;
 using System;
@@ -9,32 +9,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CExampleComponent
+namespace Proline.Freemode.Components.CExampleComponent
 {
     public class ExampleHandler : ComponentHandler
     {
-        public override void OnComponentInitialized()
+        public override void OnInitialized()
         {
-            base.OnComponentInitialized();
+            base.OnInitialized();
         }
 
-        public override void OnComponentLoad()
+        public override void OnLoad()
         {
-            base.OnComponentLoad();
+            base.OnLoad();
         }
 
-        public override void OnComponentStart()
+        public override void OnStart()
         {
             //EngineAccess.ExecuteComponentAPI(this, "ExampleControl", new object[] { "X", "Y", "X" });
             Persistence.Set("EnableSomething", true);
             Debugger.LogDebug("ExampleLog", true);
             
-            base.OnComponentStart();
+            base.OnStart();
         }
 
-        public override void OnComponentStop()
+        public override void OnStop()
         {
-            base.OnComponentStop();
+            base.OnStop();
         }
     }
 }

@@ -1,32 +1,32 @@
 {
   "GameName": "Freemode",
   "EnableDebug": true,
-  "ConsoleLaunch": false,
+  "ConsoleLaunch": true,
   "Assemblies": [
-    "Newtonsoft.Json",
-    "Proline.Engine",
-    "Proline.Engine",
-    "Proline.Example"
+    {
+      "Assembly": "Newtonsoft.Json",
+      "EnvType": 0
+    },
+    {
+      "Assembly": "Proline.Engine",
+      "EnvType": 0
+    },
+    {
+      "Assembly": "Proline.Example",
+      "EnvType": 0
+    }
   ],
   "Components": [
     {
       "ComponentName": "CExampleComponent",
       "Assembly": "Proline.Example",
-      "HandlerClass": "Proline.Example.Components.CExample.ExampleComponentHandler",
-      "APIClass": "Proline.Example.Components.CExample.ExampleComponentAPI",
-      "CommanderClass": "Proline.Example.Components.CExample.ExampleComponentCommander",
-      "ScriptClasses": [
-        "Proline.Example.Components.CExample.ExampleComponentScript"
-      ]
+      "EnvType": 0,
+      "ComponentClass": "Proline.Example.Components.CExample.ExampleComponent"
     }
   ],
   "ScriptPackages": [
     {
       "Assembly": "Proline.Example",
-      "StartScripts": [
-
-        "ExampleMain"
-      ],
       "ScriptConfigs": [
         {
           "ScriptName": "ExampleMain",
@@ -41,6 +41,9 @@
         "Proline.Example.LevelScripts.ExampleOptional"
       ]
     }
+  ],
+  "StartScripts": [ 
+    "ExampleMain"
   ],
   "Extensions": [
     {

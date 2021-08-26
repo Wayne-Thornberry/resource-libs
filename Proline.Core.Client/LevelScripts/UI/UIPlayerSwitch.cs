@@ -6,9 +6,9 @@ using CitizenFX.Core.UI;
 using Project.Five.Scaleforms;
 using Proline.Engine;
 
-namespace Proline.Core.Client.LevelScripts.UI
+namespace Proline.Freemode.LevelScripts.UI
 {
-    public class UIPlayerSwitch : GameScript
+    public class UIPlayerSwitch : LevelScript
     {
         private PlayerSwitch plySwitch;
         private int sel;

@@ -4,9 +4,9 @@ using CitizenFX.Core;
 using CitizenFX.Core.UI;
 using Proline.Engine;
 
-namespace Proline.Core.Client.LevelScripts
+namespace Proline.Freemode.LevelScripts
 {
-    public class Editor : GameScript
+    public class Editor : LevelScript
     {
         private Camera _cam;
         private float _cameraSensitivity;

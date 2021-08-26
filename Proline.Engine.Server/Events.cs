@@ -1,9 +1,10 @@
 ﻿using System;
-using CitizenFX.Core;
+
 using CitizenFX.Core.Native;
 using Newtonsoft.Json;
 using Proline.Engine.Networking;
 using Proline.Engine;
+using CitizenFX.Core;
 
 namespace Proline.Online.Script
 {
@@ -29,7 +30,7 @@ namespace Proline.Online.Script
             EngineService.ExecuteEngineMethod("CreateAndInsertResponse", guid, value, isException);
         }
 
-        [EventHandler(EngineConstraints.NetworkRequestListenerHandle)]
+        [EventHandler(EngineConstraints.NetworkRequestListenerHandler)]
         public void NetworkRequestListener([FromSource] Player player, string guid, string methodName, string methodArgs)
         {
             var args = JsonConvert.DeserializeObject<object[]>(methodArgs);

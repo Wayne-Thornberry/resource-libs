@@ -30,7 +30,7 @@ namespace Proline.Online.Script
                     if (_service == null)
                     {
                         _service = new EngineService(this);
-                        await _service.Initialize(API.GetCurrentResourceName(), "-1", "true");
+                        await _service.Start(API.GetCurrentResourceName(), "-1", "true");
                         _service.StartAllComponents();
                         _service.StartStartupScripts();
                     }

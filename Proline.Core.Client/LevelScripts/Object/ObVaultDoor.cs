@@ -2,13 +2,14 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
+using Proline.Core;
 using Proline.Engine;
 using Proline.Engine;
 
 
-namespace Proline.Core.Client.LevelScripts.Object
+namespace Proline.Freemode.LevelScripts.Object
 {
-    public class ObVaultDoor : GameScript
+    public class ObVaultDoor : LevelScript
     {
 
         public Entity LocalEntity { get; set; }

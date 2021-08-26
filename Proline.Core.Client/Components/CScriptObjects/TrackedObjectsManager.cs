@@ -5,8 +5,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CScriptObjects
+namespace Proline.Freemode.Components.CScriptObjects
 {
+    public class X
+    {
+        public string ScriptName { get; set; }
+        public float ActivationRange { get; set; }
+        public bool ExecutedScript { get; set; }
+        public int ScriptHandle { get; internal set; }
+    }
+
+    public class TrackedObject
+    {
+        public List<X> Scripts { get; set; }
+        public int Handle { get; internal set; }
+    }
+
     internal class TrackedObjectsManager
     {
         private static TrackedObjectsManager _instance;

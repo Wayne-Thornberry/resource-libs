@@ -5,9 +5,9 @@ using Project.Five.Scaleforms;
 using Proline.Engine;
 using Proline.Engine.Scaleforms;
 
-namespace Proline.Core.Client.LevelScripts
+namespace Proline.Freemode.LevelScripts
 {
-    public class RespawnScript : GameScript
+    public class RespawnScript : LevelScript
     {
         public enum SpawnType
         {

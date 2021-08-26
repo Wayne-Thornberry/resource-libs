@@ -1,4 +1,5 @@
-﻿using CitizenFX.Core;
+﻿
+using CitizenFX.Core;
 using Newtonsoft.Json;
 
 using System;

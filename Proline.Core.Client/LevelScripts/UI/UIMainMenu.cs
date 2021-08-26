@@ -4,9 +4,9 @@ using CitizenFX.Core;
 using Project.Five.Scaleforms;
 using Proline.Engine;
 
-namespace Proline.Core.Client.LevelScripts.UI
+namespace Proline.Freemode.LevelScripts.UI
 {
-    public class UIMainMenu : GameScript
+    public class UIMainMenu : LevelScript
     {
         public UIMainMenu()
         {

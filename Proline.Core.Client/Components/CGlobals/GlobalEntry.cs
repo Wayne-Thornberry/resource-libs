@@ -1,5 +1,5 @@
 ﻿
-namespace Proline.Core.Client.Components.CGlobals
+namespace Proline.Freemode.Components.CGlobals
 {
     public class GlobalEntry
     {

@@ -1,4 +1,4 @@
-﻿using Proline.Core.Client;
+﻿using Proline.Freemode;
 using Proline.Engine;
 using Proline.Engine;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CExampleNetworking
+namespace Proline.Freemode.Components.CExampleNetworking
 {
     public class ExampleNetworkingAPI : ComponentAPI 
     { 

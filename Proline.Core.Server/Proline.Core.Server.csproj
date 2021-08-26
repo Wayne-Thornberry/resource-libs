@@ -47,9 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\CExampleComponent.cs" />
-    <Compile Include="Components\CExampleNetworking\ExampleNetworkingComponent.cs" />
-    <Compile Include="Components\CLog\LogHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

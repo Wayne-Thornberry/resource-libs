@@ -1,4 +1,4 @@
-﻿namespace Proline.Core.Client.Components.CScriptPos
+﻿namespace Proline.Freemode.Components.CScriptPos
 {
 
     public class ScriptPositions

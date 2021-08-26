@@ -1,9 +1,9 @@
 using Proline.Engine;
 using System.Threading.Tasks; 
 
-namespace Proline.Core.Client.LevelScripts
+namespace Proline.Freemode.LevelScripts
 {
-    public class CharacterCreator : GameScript
+    public class CharacterCreator : LevelScript
     {
 
         public CharacterCreator()

@@ -10,32 +10,34 @@ using System.Threading.Tasks;
 
 namespace Proline.Engine
 {
-    public class InternalManager
+    public class InternalManager : EngineObject
     {
         private static InternalManager _instance;
 
-        private Dictionary<int, APIInvoker> _apis;
+        private Dictionary<int, ComponentAPI> _apis;
         private Dictionary<string, ComponentCommand> _commands;
         private Dictionary<string, EngineComponent> _components;
         private Dictionary<string, NetworkRequest> _requests;
         private Dictionary<string, NetworkResponse> _responses;
-        private Dictionary<string, EngineScript> _scripts;
+        private Dictionary<string, Script> _scripts;
         //private Dictionary<Task, string> _tasks;
 
         private List<EngineExtension> _extensions;
         private List<ScriptPackage> _packages;
+        private List<StartScriptRequest> _scriptRequest;
 
-        public InternalManager()
+        public InternalManager() : base("InternalManager")
         {
-            _apis = new Dictionary<int, APIInvoker>();
+            _apis = new Dictionary<int, ComponentAPI>();
             _commands = new Dictionary<string, ComponentCommand>();
             _components = new Dictionary<string, EngineComponent>();
             _requests = new Dictionary<string, NetworkRequest>();
             _responses = new Dictionary<string, NetworkResponse>();
-            _scripts = new Dictionary<string, EngineScript>();
+            _scripts = new Dictionary<string, Script>();
             //_tasks = new Dictionary<Task, string>();
             _extensions = new List<EngineExtension>();
             _packages = new List<ScriptPackage>();
+            _scriptRequest = new List<StartScriptRequest>();
         }
 
 
@@ -46,7 +48,7 @@ namespace Proline.Engine
             return _instance;
         }
 
-        internal APIInvoker GetAPI(int apiName)
+        internal ComponentAPI GetAPI(int apiName)
         {
             if (_apis.ContainsKey(apiName))
                 return _apis[apiName];
@@ -92,7 +94,7 @@ namespace Proline.Engine
             return _scripts.Count;
         }
 
-        internal EngineScript GetScript(string scriptName)
+        internal Script GetScript(string scriptName)
         {
             if (_scripts.ContainsKey(scriptName))
                 return _scripts[scriptName];
@@ -105,7 +107,7 @@ namespace Proline.Engine
             return _commands.Values;
         }
 
-        internal IEnumerable<APIInvoker> GetAPIs()
+        internal IEnumerable<ComponentAPI> GetAPIs()
         {
             return _apis.Values;
         }
@@ -125,11 +127,11 @@ namespace Proline.Engine
             _packages.Remove(sp);
         }
 
-        internal void RemoveAPI(APIInvoker api)
+        internal void RemoveAPI(ComponentAPI api)
         {
             _apis.Remove(api.GetHashCode());
         }
-        internal void RemoveScript(EngineScript scriptName)
+        internal void RemoveScript(Script scriptName)
         {
             _scripts.Remove(scriptName.Name);
         }
@@ -138,47 +140,78 @@ namespace Proline.Engine
             _components.Remove(component.Name);
         }
 
+        internal void AddStartScriptRequest(StartScriptRequest startScriptRequest)
+        {
+            if (_scriptRequest.Count >= 30) return;
+            _scriptRequest.Add(startScriptRequest);
+        }
+
+        internal StartScriptRequest[] GetStartScriptRequest()
+        {
+            return _scriptRequest.ToArray();
+        }
+
+        internal void RemoveStartScriptRequest(StartScriptRequest startScriptRequest)
+        { 
+            _scriptRequest.Remove(startScriptRequest);
+        }
+
         internal void AddCommand(ComponentCommand command)
         {
+            LogDebug("Registered " + command.Type + " " + command.Name);
             _commands.Add(command.Name, command);
         }
 
         internal void AddPackage(ScriptPackage sp)
         {
-            _packages.Add(sp);
+            try
+            {
+                LogDebug("Registered " + sp.ToString());
+                _packages.Add(sp);
+            }
+            catch (ArgumentException e)
+            {
+
+            }
         }
 
-
-        internal void AddScript(EngineScript script)
+        internal void AddScript(Script script)
         {
-            _scripts.Add(script.Name, script);
+            try
+            {
+                LogDebug("Registered " + script.Type + " " + script.Name);
+                _scripts.Add(script.Name, script);
+            }
+            catch (ArgumentException e)
+            {
+
+            }
         }
 
-        internal void AddAPI(APIInvoker api)
+        internal void AddAPI(ComponentAPI api)
         {
-            _apis.Add(api.GetHashCode(), api);
+            try
+            {
+                LogDebug("Registered " + api.ToString());
+                _apis.Add(api.GetHashCode(), api);
+            }
+            catch (ArgumentException e)
+            {
+
+            }
         }
 
 
         internal void AddExtension(EngineExtension extension)
         {
+            LogDebug("Registered " + extension.Type + " ");
             _extensions.Add(extension);
         }
 
         internal void AddComponent(EngineComponent component)
         {
+            LogDebug("Registered " + component.Type + " " + component.Name);
             _components.Add(component.Name, component);
         }
-
-        //internal void RegisterScriptTask(Task task, string scriptName)
-        //{
-        //    _tasks.Add(task, scriptName);
-        //}
-
-        //internal void UnregisterScriptTask(Task task)
-        //{
-        //    _tasks.Remove(task);
-        //}
-
     }
 }

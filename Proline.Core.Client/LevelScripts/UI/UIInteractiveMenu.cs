@@ -1,5 +1,5 @@
 
-namespace Proline.Core.Client.LevelScripts.UI
+namespace Proline.Freemode.LevelScripts.UI
 {
     public class UIInteractiveMenu
     {

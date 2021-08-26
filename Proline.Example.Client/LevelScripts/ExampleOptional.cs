@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Proline.Example.LevelScripts
 {
     [Client]
-    public class ExampleOptional : GameScript
+    public class ExampleOptional : LevelScript
     {
         public override async Task Execute(params object[] args)
         {

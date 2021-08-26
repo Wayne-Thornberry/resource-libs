@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CScriptPos
+namespace Proline.Freemode.Components.CScriptPos
 {
     internal static class PosBlacklist
     {

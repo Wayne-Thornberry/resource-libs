@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using Proline.Engine;
 
-namespace Proline.Core.Client.LevelScripts
+namespace Proline.Freemode.LevelScripts
 {
-    public class VehicleJacking : GameScript
+    public class VehicleJacking : LevelScript
     {
         public VehicleJacking()
         {

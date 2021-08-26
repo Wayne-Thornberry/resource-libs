@@ -5,9 +5,9 @@ using CitizenFX.Core.UI;
 using Proline.Engine;
 using Proline.Engine;
 
-namespace Proline.Core.Client.LevelScripts
+namespace Proline.Freemode.LevelScripts
 {
-    public class PlayerDeath : GameScript
+    public class PlayerDeath : LevelScript
     {
         public enum SpawnType
         {

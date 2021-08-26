@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Proline.Core.Client.Components.CWorld
+namespace Proline.Freemode.Components.CWorld
 { 
     internal class HandleTracker
     {

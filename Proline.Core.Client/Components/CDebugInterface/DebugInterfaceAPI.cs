@@ -1,6 +1,5 @@
-﻿using CitizenFX.Core;
-using CitizenFX.Core.Native;
-using CitizenFX.Core.UI;
+﻿
+using CitizenFX.Core;
 using Proline.Engine;
 using System;
 using System.Collections.Generic;
@@ -9,14 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CDebugInterface
+namespace Proline.Freemode.Components.CDebugInterface
 {
     public class DebugInterfaceAPI : ComponentAPI
     {
         [ComponentAPI]
         public void Draw2DBox(float x, float y, float width, float heigth, Color color)
         {
-            API.DrawRect(x, y, width, heigth, color.R, color.G, color.B, color.A);
+            // API.DrawRect(x, y, width, heigth, color.R, color.G, color.B, color.A);
         }
 
         [ComponentAPI]
@@ -33,38 +32,38 @@ namespace Proline.Core.Client.Components.CDebugInterface
         [ComponentAPI]
         public void DrawDebugText2D(string text, PointF vector2, float scale, int font)
         {
-            API.SetTextFont(font);
-            API.SetTextProportional(true);
-            API.SetTextScale(0f, scale);
-            API.SetTextColour(255, 255, 255, 255);
-            //API.SetTextDropShadow();
-            API.SetTextOutline();
-            //API.SetTextDropshadow(0, 0, 0, 0, 255);
-            //API.SetTextEdge(1, 0, 0, 0, 255);
-            API.SetTextEntry("STRING");
-            API.SetTextCentre(true);
-            API.BeginTextCommandLineCount(text);
-            API.AddTextComponentString(text);
-            var lines = API.EndTextCommandGetLineCount(vector2.X, vector2.Y);
+            // API.SetTextFont(font);
+            // API.SetTextProportional(true);
+            // API.SetTextScale(0f, scale);
+            // API.SetTextColour(255, 255, 255, 255);
+            //// API.SetTextDropShadow();
+            // API.SetTextOutline();
+            //// API.SetTextDropshadow(0, 0, 0, 0, 255);
+            //// API.SetTextEdge(1, 0, 0, 0, 255);
+            // API.SetTextEntry("STRING");
+            // API.SetTextCentre(true);
+            // API.BeginTextCommandLineCount(text);
+            // API.AddTextComponentString(text);
+            //var lines = // API.EndTextCommandGetLineCount(vector2.X, vector2.Y);
             // Debugger.LogDebug(lines);
-            //API.GetTextScaleHeight();
-            API.DrawText(vector2.X, vector2.Y);
+            //// API.GetTextScaleHeight();
+            // API.DrawText(vector2.X, vector2.Y);
         }
 
         [ComponentAPI]
         public void DrawDebugText3D(string text, Vector3 vector3, float scale2, int font)
         {
-            var camCoords = API.GetGameplayCamCoord();
-            var distance = World.GetDistance(camCoords, vector3);
-            var scale = (1 / distance) * scale2;
-            var fov = (1 / API.GetGameplayCamFov()) * 75;
-            scale = scale * fov * 1f;
+            //var camCoords = // API.GetGameplayCamCoord();
+            //var distance = World.GetDistance(camCoords, vector3);
+            //var scale = (1 / distance) * scale2;
+            //var fov = (1 / // API.GetGameplayCamFov()) * 75;
+            //scale = scale * fov * 1f;
 
-            var d = Screen.WorldToScreen(vector3);
-            var p = new PointF((d.X / 1280) * 1f, (d.Y / 720) * 1f);
+            //var d = Screen.WorldToScreen(vector3);
+            //var p = new PointF((d.X / 1280) * 1f, (d.Y / 720) * 1f);
 
-            if (p == PointF.Empty) return;
-            DrawDebugText2D(text, p, scale, font);
+            //if (p == PointF.Empty) return;
+            //DrawDebugText2D(text, p, scale, font);
         }
 
 
@@ -123,15 +122,15 @@ namespace Proline.Core.Client.Components.CDebugInterface
             Vector3 min = Vector3.Zero;
             Vector3 max = Vector3.Zero;
 
-            //API.GetModelDimensions((uint)API.GetEntityModel(entity), ref min, ref max);
+            //// API.GetModelDimensions((uint)// API.GetEntityModel(entity), ref min, ref max);
             var center = (start + end) / 2;
             min = center - start;
             max = center - end;
 
             var dx = center.X - end.X;
             var dy = center.Y - end.Y;
-            //var heading = API.GetHeadingFromVector_2d(dx, dy);
-            //heading = API.GetGameplayCamRelativeHeading();
+            //var heading = // API.GetHeadingFromVector_2d(dx, dy);
+            //heading = // API.GetGameplayCamRelativeHeading();
             //const float pad = 0f;
             const float pad = 0.001f;
 
@@ -177,27 +176,28 @@ namespace Proline.Core.Client.Components.CDebugInterface
         /// <returns></returns>
         internal static Vector3[] GetEntityBoundingBox(int entity)
         {
-            Vector3 min = Vector3.Zero;
-            Vector3 max = Vector3.Zero;
+            //Vector3 min = Vector3.Zero;
+            //Vector3 max = Vector3.Zero;
 
-            API.GetModelDimensions((uint)API.GetEntityModel(entity), ref min, ref max);
-            //const float pad = 0f;
-            const float pad = 0.001f;
-            var retval = new Vector3[8]
-            {
-                // Bottom
-                API.GetOffsetFromEntityInWorldCoords(entity, min.X - pad, min.Y - pad, min.Z - pad),
-                API.GetOffsetFromEntityInWorldCoords(entity, max.X + pad, min.Y - pad, min.Z - pad),
-                API.GetOffsetFromEntityInWorldCoords(entity, max.X + pad, max.Y + pad, min.Z - pad),
-                API.GetOffsetFromEntityInWorldCoords(entity, min.X - pad, max.Y + pad, min.Z - pad),
+            //// API.GetModelDimensions((uint)// API.GetEntityModel(entity), ref min, ref max);
+            ////const float pad = 0f;
+            //const float pad = 0.001f;
+            //var retval = new Vector3[8]
+            //{
+            //    // Bottom
+            //    // API.GetOffsetFromEntityInWorldCoords(entity, min.X - pad, min.Y - pad, min.Z - pad),
+            //    // API.GetOffsetFromEntityInWorldCoords(entity, max.X + pad, min.Y - pad, min.Z - pad),
+            //    // API.GetOffsetFromEntityInWorldCoords(entity, max.X + pad, max.Y + pad, min.Z - pad),
+            //    // API.GetOffsetFromEntityInWorldCoords(entity, min.X - pad, max.Y + pad, min.Z - pad),
 
-                // Top
-                API.GetOffsetFromEntityInWorldCoords(entity, min.X - pad, min.Y - pad, max.Z + pad),
-                API.GetOffsetFromEntityInWorldCoords(entity, max.X + pad, min.Y - pad, max.Z + pad),
-                API.GetOffsetFromEntityInWorldCoords(entity, max.X + pad, max.Y + pad, max.Z + pad),
-                API.GetOffsetFromEntityInWorldCoords(entity, min.X - pad, max.Y + pad, max.Z + pad)
-            };
-            return retval;
+            //    // Top
+            //    // API.GetOffsetFromEntityInWorldCoords(entity, min.X - pad, min.Y - pad, max.Z + pad),
+            //    // API.GetOffsetFromEntityInWorldCoords(entity, max.X + pad, min.Y - pad, max.Z + pad),
+            //    // API.GetOffsetFromEntityInWorldCoords(entity, max.X + pad, max.Y + pad, max.Z + pad),
+            //    // API.GetOffsetFromEntityInWorldCoords(entity, min.X - pad, max.Y + pad, max.Z + pad)
+            //};
+            //return retval;
+            return new Vector3[0];
         }
 
         /// <summary>
@@ -368,7 +368,7 @@ namespace Proline.Core.Client.Components.CDebugInterface
                 float x3 = poly[2].X;
                 float y3 = poly[2].Y;
                 float z3 = poly[2].Z;
-                API.DrawPoly(x1, y1, z1, x2, y2, z2, x3, y3, z3, r, g, b, a);
+                // API.DrawPoly(x1, y1, z1, x2, y2, z2, x3, y3, z3, r, g, b, a);
             }
         }
 
@@ -392,7 +392,7 @@ namespace Proline.Core.Client.Components.CDebugInterface
                 float y2 = line[1].Y;
                 float z2 = line[1].Z;
 
-                API.DrawLine(x1, y1, z1, x2, y2, z2, r, g, b, a);
+                // API.DrawLine(x1, y1, z1, x2, y2, z2, r, g, b, a);
             }
         }
     }

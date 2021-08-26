@@ -1,4 +1,5 @@
-﻿using CitizenFX.Core;
+﻿
+using CitizenFX.Core;
 using Proline.Engine;
 using Proline.Engine;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CGasStations
+namespace Proline.Freemode.Components.CGasStations
 {
     public class GasStationsAPI : ComponentAPI
     {

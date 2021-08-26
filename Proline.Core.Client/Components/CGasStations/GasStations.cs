@@ -1,7 +1,7 @@
-﻿using CitizenFX.Core;
-using CitizenFX.Core.Native;
+﻿
+
 using Newtonsoft.Json;
-using Proline.Core.Client;
+using Proline.Freemode;
 using Proline.Engine;
 using Proline.Engine;
 using System;
@@ -10,25 +10,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CGasStations
+namespace Proline.Freemode.Components.CGasStations
 {
 
     public class GasStationsHandler : ComponentHandler
     { 
 
-        public override void OnComponentInitialized()
+        public override void OnInitialized()
         {
-            base.OnComponentInitialized();
+            base.OnInitialized();
         }
 
-        public override void OnComponentLoad()
+        public override void OnLoad()
         { 
         }
 
-        public override void OnComponentStart()
+        public override void OnStart()
         { 
-             var data = ResourceFile.Load(API.GetCurrentResourceName(), "data/gasstations.json"); 
-            var _x = JsonConvert.DeserializeObject<GasStation[]>(data);
+            // var data = ResourceFile.Load(// API.GetCurrentResourceName(), "data/gasstations.json"); 
+            //var _x = JsonConvert.DeserializeObject<GasStation[]>(data);
         }
     }
 }

@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CWorld
+namespace Proline.Freemode.Components.CWorld
 {
-    public class WorldCommander : ComponentCommander
+    public class WorldCommander : ComponentCommands
     {
 
-        [ComponentCommand("DoSomething")]
+        [EngineCommand("DoSomething")]
         public void DoSomething()
         {
 

@@ -4,9 +4,9 @@ using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Proline.Engine;
 
-namespace Proline.Core.Client.LevelScripts
+namespace Proline.Freemode.LevelScripts
 {
-    public class Main : GameScript
+    public class Main : LevelScript
     { 
 
         public Main()

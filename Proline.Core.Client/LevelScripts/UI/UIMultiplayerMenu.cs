@@ -6,7 +6,7 @@ using CitizenFX.Core;
 using Project.Five.Scaleforms;
 using Proline.Engine;
 
-namespace Proline.Core.Client.LevelScripts.UI
+namespace Proline.Freemode.LevelScripts.UI
 {
     public struct MultiplayerMenuSlot
     {
@@ -24,7 +24,7 @@ namespace Proline.Core.Client.LevelScripts.UI
         }
     }
 
-    public class UIMultiplayerMenu : GameScript
+    public class UIMultiplayerMenu : LevelScript
     {
         private int tick;
         private MPMMFreemodeMenu freemodeMenu;

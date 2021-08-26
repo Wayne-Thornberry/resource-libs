@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Proline.Engine;
 
-namespace Proline.Core.Client.LevelScripts
+namespace Proline.Freemode.LevelScripts
 {
-    public class StatsInit : GameScript
+    public class StatsInit : LevelScript
     {
         public StatsInit()
         {

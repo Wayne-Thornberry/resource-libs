@@ -15,23 +15,22 @@ namespace Proline.Example.Extensions
     {
         public override void OnEngineAPICall(string apiName, params object[] args)
         {
-            Debugger.LogDebug(this, "Engine Call " + apiName + " ");
+            LogDebug("Engine Call " + apiName + " ");
         }
 
         public override void OnComponentLoading(string componentName)
         {
-           
-            Debugger.LogDebug(this, "Component " + componentName + " Loadeding...");
+            LogDebug("Component " + componentName + " Loadeding...");
         }
 
         public override void OnComponentInitialized(string componentName)
         { 
-            Debugger.LogDebug(this, "Component " + componentName + " Loaded Succesfully");
+            LogDebug("Component " + componentName + " Loaded Succesfully");
         }
 
         public override void OnScriptInitialized(string scriptName)
         {
-            Debugger.LogDebug(this, "Script  " + scriptName + " Initialized");
+            LogDebug("Script  " + scriptName + " Initialized");
         }
     }
 }

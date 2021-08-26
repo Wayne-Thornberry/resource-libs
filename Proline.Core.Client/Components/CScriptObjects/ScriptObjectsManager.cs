@@ -1,4 +1,5 @@
-﻿using CitizenFX.Core.Native;
+﻿
+using CitizenFX.Core.Native;
 using Newtonsoft.Json;
 using Proline.Engine;
 using Proline.Engine;
@@ -9,7 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CScriptObjects
+namespace Proline.Freemode.Components.CScriptObjects
 {
 
 
@@ -35,9 +36,9 @@ namespace Proline.Core.Client.Components.CScriptObjects
             {
                 var modelHash = item.ModelName;
                 if (modelHash == 0)
-                    modelHash = API.GetHashKey(item.ModelHash);
+                    modelHash =  API.GetHashKey(item.ModelHash);
                 if (!_scriptObjectPairs.ContainsKey(modelHash))
-                { 
+                {
                     _scriptObjectPairs.Add(modelHash, new SOP() { Hash = modelHash, Pairs = new List<ScriptObjectPair>() });
                 };
                 _scriptObjectPairs[modelHash].Pairs.Add(item);

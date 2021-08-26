@@ -13,59 +13,42 @@ namespace Proline.Engine.ConsoleApp
 {
     class Program : IScriptSource
     {
-        private static List<Func<Task>> _ticks;
+        private EngineService _service;
+        private List<Func<Task>> _ticks;
 
         public Program()
         {
+            _service = new EngineService(this);
             _ticks = new List<Func<Task>>();
+        }
+
+        private async Task Start()
+        { 
+            await _service.Start("ConsoleApp", "0", "true");
+            _service.StartAllComponents();
+            _service.StartStartupScripts();
+            _service.DumpLog();
+            this.AddTick(_service.Update);
         }
 
         static void Main(string[] args)
         {
             var program = new Program();
-           var service =  new EngineService(program);
-            service.Initialize("ConsoleApp", "0", "true");
-            service.StartAllComponents();
-            service.StartStartupScripts();
-            var thread = new Thread(e=> {
-                while (true)
-                {
-                    if (_ticks != null) continue;
-                    foreach (var item in _ticks)
-                    {
-                        item.Invoke();
-                    }
-                }
-            });
-            thread.Start();
-
-
-            //var task = Task.Run(async ()  =>  {
-            //    while (true)
-            //    {
-            //        try
-            //        {
-            //            await service.Tick(); 
-            //        }
-            //        catch (Exception e)
-            //        {
-
-            //            throw;
-            //        }
-            //    }
-            //});
-
-            var x = "public enum EngineAPI\n" +
-                "{\n"; 
-            var apis = EngineAccess.GetAllAPIs();
-            foreach (var item in apis)
-            {
-                x += "  " + item + ",\n";
-            }
-            x += "\n" +
-                "}";
-            Console.WriteLine(x);
+            program.Start().Wait();
+            var thread = Task.Run(program.NewMethod);
             Console.ReadKey();
+        }
+
+        private async Task NewMethod()
+        {
+            while (true)
+            {
+                if (_ticks == null) continue;
+                foreach (var item in _ticks)
+                {
+                    await item.Invoke();
+                }
+            };
         }
 
         public void AddTick(Func<Task> task)

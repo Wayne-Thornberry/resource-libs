@@ -1,5 +1,7 @@
-﻿using CitizenFX.Core;
+﻿
+using CitizenFX.Core;
 using CitizenFX.Core.UI;
+using Proline.Core;
 using Proline.Engine;
 using Proline.Engine;
 using System;
@@ -8,9 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.LevelScripts
+namespace Proline.Freemode.LevelScripts
 {
-    public class LSCustoms : GameScript
+    public class LSCustoms : LevelScript
     {
         public override async Task Execute(params object[] args)
         {

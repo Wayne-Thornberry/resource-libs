@@ -1,4 +1,4 @@
-﻿using CitizenFX.Core;
+﻿
 using Proline.Engine;
 using Proline.Engine;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CScriptObjects
+namespace Proline.Freemode.Components.CScriptObjects
 {
     public class ScriptObjectsAPI : ComponentAPI
     {
@@ -18,7 +18,7 @@ namespace Proline.Core.Client.Components.CScriptObjects
             var args = new List<object>(param);
             args.Add(handle);
             args.AddRange(param);
-            EngineAccess.StartNewScript(scriptName, args.ToArray());
+            StartNewScript(scriptName, args.ToArray());
         }
 
         [Client]

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Proline.Core.Client.Components.CInstancing
+namespace Proline.Freemode.Components.CInstancing
 {
     public class InstanceAPI : ComponentAPI
     {

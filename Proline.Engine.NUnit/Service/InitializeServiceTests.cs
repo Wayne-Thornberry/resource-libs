@@ -15,7 +15,7 @@ namespace Proline.Engine.NUnit
         {
              
             var service = new EngineService(new TestScript());
-            service.Initialize(); 
+            service.Start(); 
         }
     }
 }

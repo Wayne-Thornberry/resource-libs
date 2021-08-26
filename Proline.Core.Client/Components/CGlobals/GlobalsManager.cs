@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Proline.Core.Client.Components.CGlobals
+namespace Proline.Freemode.Components.CGlobals
 {
     public class GlobalsManager
     {

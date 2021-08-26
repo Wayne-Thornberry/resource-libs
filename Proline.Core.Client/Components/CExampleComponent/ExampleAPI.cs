@@ -1,5 +1,5 @@
-﻿using CitizenFX.Core;
-using CitizenFX.Core.Native;
+﻿
+
 using Proline.Engine;
 using Proline.Engine;
 using System;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CExampleComponent
+namespace Proline.Freemode.Components.CExampleComponent
 {
     public class ExampleAPI : ComponentAPI
     {
@@ -27,31 +27,31 @@ namespace Proline.Core.Client.Components.CExampleComponent
         [ComponentAPI]
         public void SetPlayerAsPartOfPoliceGroup()
         {
-            var vehicles = World.GetAllPeds();
-            var entity = World.GetClosest<Ped>(Game.PlayerPed.Position, vehicles.ToArray());
-            Debugger.LogDebug(entity.PedGroup);
-            var id = API.GetPedGroupIndex(entity.Handle);
-            Debugger.LogDebug(id);
-            API.SetPedAsGroupMember(Game.PlayerPed.Handle, id);
-            Debugger.LogDebug("ids");
+            //var vehicles = World.GetAllPeds();
+            //var entity = World.GetClosest<Ped>(Game.PlayerPed.Position, vehicles.ToArray());
+            //Debugger.LogDebug(entity.PedGroup);
+            //var id = // API.GetPedGroupIndex(entity.Handle);
+            //Debugger.LogDebug(id);
+            //// API.SetPedAsGroupMember(Game.PlayerPed.Handle, id);
+            //Debugger.LogDebug("ids");
         }
 
         [Client]
         [ComponentAPI]
         public void UnlockNeareastVehicle()
         {
-            var vehicles = World.GetAllVehicles();
-            var entity = World.GetClosest<Vehicle>(Game.PlayerPed.Position, vehicles.ToArray());
-            Debugger.LogDebug(entity.Handle);
+            //var vehicles = World.GetAllVehicles();
+            //var entity = World.GetClosest<Vehicle>(Game.PlayerPed.Position, vehicles.ToArray());
+            //Debugger.LogDebug(entity.Handle);
 
-            NativeAPI.CallNativeAPI((ulong)Hash.SET_VEHICLE_NEEDS_TO_BE_HOTWIRED, entity.Handle, false);
-            API.SetVehicleIsWanted(entity.Handle, false);
-            API.SetVehicleIsStolen(entity.Handle, false);
-            API.SetVehicleDoorsLocked(entity.Handle, 1);
-            API.SetVehicleDoorsLockedForAllPlayers(entity.Handle, false);
-            API.SetVehicleHasBeenDrivenFlag(entity.Handle, true);
-            API.SetVehicleHasBeenOwnedByPlayer(entity.Handle, true);
-            Debugger.LogDebug("Donedsad");
+            //Native// API.CallNativeAPI((ulong)Hash.SET_VEHICLE_NEEDS_TO_BE_HOTWIRED, entity.Handle, false);
+            //// API.SetVehicleIsWanted(entity.Handle, false);
+            //// API.SetVehicleIsStolen(entity.Handle, false);
+            //// API.SetVehicleDoorsLocked(entity.Handle, 1);
+            //// API.SetVehicleDoorsLockedForAllPlayers(entity.Handle, false);
+            //// API.SetVehicleHasBeenDrivenFlag(entity.Handle, true);
+            //// API.SetVehicleHasBeenOwnedByPlayer(entity.Handle, true);
+            //Debugger.LogDebug("Donedsad");
         }
     }
 }

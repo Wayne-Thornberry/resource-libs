@@ -1,5 +1,5 @@
-﻿using CitizenFX.Core;
-using CitizenFX.Core.Native;
+﻿
+
 using Proline.Engine;
 using Proline.Engine;
 using System;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CWorld
+namespace Proline.Freemode.Components.CWorld
 {
     public class WorldAPI : ComponentAPI
     {

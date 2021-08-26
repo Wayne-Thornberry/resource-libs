@@ -1,5 +1,5 @@
 ﻿
-using Proline.Engine;
+using Proline.Core;
 using Proline.Engine;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Proline.Example.LevelScripts
 {
     [Client]
-    public class ExampleMain : GameScript
+    public class ExampleMain : LevelScript
     {
         private int tick;
 
@@ -19,7 +19,7 @@ namespace Proline.Example.LevelScripts
             //NativeAPI.CallNativeAPI(231321313, null);
             var ti = DateTime.UtcNow;
             ExampleAPI.Example();
-            Debugger.LogDebug((DateTime.UtcNow - ti).ToString("ss'.'ffff")); 
+            LogDebug((DateTime.UtcNow - ti).ToString("ss'.'ffff")); 
             while (Stage == 0)
             {
                 var result = ExampleAPI.Example();
@@ -29,6 +29,7 @@ namespace Proline.Example.LevelScripts
                 if (tick > 100)
                     Stage = -1;
             }
+            //StartNewScript("ExampleMain");
         }
     }
 }

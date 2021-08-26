@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CExampleComponent
+namespace Proline.Freemode.Components.CExampleComponent
 {
-    public class ExampleCommander : ComponentCommander
+    public class ExampleCommander : ComponentCommands
     {
-        [ComponentCommand("X")]
+        [EngineCommand("X")]
         public void ExampleCommand()
         {
 

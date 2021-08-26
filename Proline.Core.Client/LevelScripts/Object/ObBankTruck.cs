@@ -1,6 +1,6 @@
-﻿using CitizenFX.Core;
+﻿
 using CitizenFX.Core.UI;
-using Proline.Core.Client;
+using Proline.Freemode;
 using Proline.Engine;
 using Proline.Engine.Scaleforms;
 using System;
@@ -8,10 +8,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CitizenFX.Core;
+using Proline.Core;
 
-namespace Proline.Core.Client.LevelScripts.Objects
+namespace Proline.Freemode.LevelScripts.Objects
 {
-    public class ObBankTruck : GameScript
+    public class ObBankTruck : LevelScript
     {
         private Blip _blip;
 

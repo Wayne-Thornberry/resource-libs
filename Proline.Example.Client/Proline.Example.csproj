@@ -41,22 +41,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\CExample\ExampleComponentCommander.cs" />
-    <Compile Include="Components\CExample\ExampleComponentHandler.cs" />
-    <Compile Include="Components\CExample\ExampleComponentAPI.cs" />
-    <Compile Include="Components\CExample\ExampleComponentObject.cs" />
-    <Compile Include="Components\CExample\ExampleComponentScript.cs" />
-    <Compile Include="ExampleAPI.cs" />
+    <Compile Include="Components\CExampleComponent\ExampleComponent.cs" />
     <Compile Include="Extensions\ExampleExtension.cs" />
     <Compile Include="LevelScripts\ExampleMain.cs" />
     <Compile Include="LevelScripts\ExampleOptional.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Proline.Core\Proline.Core.csproj">
+      <Project>{AF853EFD-8935-4A68-AD73-1F8F05165D08}</Project>
+      <Name>Proline.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Proline.Engine\Proline.Engine.csproj">
       <Project>{00115faf-fb34-4dc7-bbeb-e8e9ae227c42}</Project>
       <Name>Proline.Engine</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Client">
+      <Version>1.0.4000</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

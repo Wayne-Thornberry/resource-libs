@@ -9,14 +9,6 @@ namespace Proline.Engine
 {
     public static class APICaller
     { 
-        public static bool DoesAPIExist(int v)
-        {
-            var cm = InternalManager.GetInstance();
-            var api = cm.GetAPI(v);
-            if (api == null) return false;
-            return true;
-        }
-
         public static async Task<object> CallAPIAsync(int apiName, params object[] inputParameters)
         {
             var cm = InternalManager.GetInstance();

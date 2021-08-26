@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Core.Client.Components.CScreen
+namespace Proline.Freemode.Components.CScreen
 {
     public class ScreenAPI : ComponentAPI
     {
@@ -62,7 +62,7 @@ namespace Proline.Core.Client.Components.CScreen
             var x2dp = 0f;
             var y2dp = 0f;
 
-            bool success = API.World3dToScreen2d(pos.X, pos.Y, pos.Z, ref x2dp, ref y2dp); //  GET_SCREEN_COORD_FROM_WORLD_COORD and previously, _WORLD3D_TO_SCREEN2D
+            bool success =  API.World3dToScreen2d(pos.X, pos.Y, pos.Z, ref x2dp, ref y2dp); //  GET_SCREEN_COORD_FROM_WORLD_COORD and previously, _WORLD3D_TO_SCREEN2D
             result = new Vector2(x2dp, y2dp);
             return success;
         }

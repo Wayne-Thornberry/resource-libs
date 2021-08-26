@@ -5,9 +5,9 @@ using CitizenFX.Core.UI;
 using Proline.Engine;
 using Proline.Engine;
 
-namespace Proline.Core.Client.LevelScripts.Mission
+namespace Proline.Freemode.LevelScripts.Mission
 {
-    public class HePacStandard : GameScript
+    public class HePacStandard : LevelScript
     {
         private readonly List<Entity> _bankDoors;
         private readonly string _cameraNameHash;

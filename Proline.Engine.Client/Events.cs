@@ -24,11 +24,11 @@ namespace Proline.Engine.Script
 
         [EventHandler(EngineConstraints.NetworkResponseListenerHandler)]
         public void NetworkResponseListener(string guid, string value, bool isException)
-        { 
-            EngineService.ExecuteEngineMethod("CreateAndInsertResponse", guid, value, isException);
+        {
+            _service.ExecuteEngineMethod("CreateAndInsertResponse", guid, value, isException);
         }
 
-        [EventHandler(EngineConstraints.NetworkRequestListenerHandle)]
+        [EventHandler(EngineConstraints.NetworkRequestListenerHandler)]
         public void NetworkRequestListener(string guid, string componentName, string methodName, string methodArgs)
         { 
             var args = JsonConvert.DeserializeObject<object[]>(methodArgs);
@@ -36,7 +36,7 @@ namespace Proline.Engine.Script
             bool isException = false;
             try
             { 
-                result = EngineService.ExecuteEngineMethod(methodName, args);
+                result = _service.ExecuteEngineMethod(methodName, args);
                 if(result != null)
                 { 
                     if (!result.GetType().IsPrimitive)
@@ -47,7 +47,7 @@ namespace Proline.Engine.Script
             }
             catch (Exception e)
             {
-                Debugger.LogError(e.ToString());
+                //Debugger.LogError(e.ToString());
                 isException = true;
                 throw;
             }
@@ -55,7 +55,14 @@ namespace Proline.Engine.Script
             {
                 TriggerEvent(NetworkManager.NetworkResponseListenerHandler, guid, result, isException);
             }
-        } 
+        }
+
+        [EventHandler(EngineConstraints.PushHandler)]
+        public void PushListener(string componentName, string propertyName, string data)
+        {
+            
+
+        }
         #endregion
 
         #region FiveM Events

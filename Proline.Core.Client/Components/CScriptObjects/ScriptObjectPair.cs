@@ -1,4 +1,4 @@
-﻿namespace Proline.Core.Client.Components.CScriptObjects
+﻿namespace Proline.Freemode.Components.CScriptObjects
 {
     public class ScriptObjectPair
     {

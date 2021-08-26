@@ -1,5 +1,5 @@
 ﻿
-namespace Proline.Core.Client.Components.CWorld
+namespace Proline.Freemode.Components.CWorld
 {
     public enum EntityType
     {

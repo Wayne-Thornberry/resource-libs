@@ -2,9 +2,9 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using Proline.Engine;
 
-namespace Proline.Core.Client.LevelScripts
+namespace Proline.Freemode.LevelScripts
 {
-    public class VehicleFuel : GameScript
+    public class VehicleFuel : LevelScript
     {
         public VehicleFuel()
         {

@@ -1,6 +1,6 @@
-﻿using CitizenFX.Core;
+﻿
 using CitizenFX.Core.Native;
-using Proline.Core.Client;
+using Proline.Freemode;
 using Proline.Engine;
 using Proline.Engine.Scaleforms;
 using Proline.Engine;
@@ -9,10 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CitizenFX.Core;
+using Proline.Core;
 
-namespace Proline.Core.Client.LevelScripts
+namespace Proline.Freemode.LevelScripts
 {
-    public class MPStartup : GameScript
+    public class MPStartup : LevelScript
     {
         public override async Task Execute(params object[] args)
         {

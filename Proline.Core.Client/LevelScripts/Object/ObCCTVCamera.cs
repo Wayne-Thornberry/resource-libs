@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Proline.Engine;
 
-namespace Proline.Core.Client.LevelScripts.Object
+namespace Proline.Freemode.LevelScripts.Object
 {
-    public class ObCCTVCamera : GameScript
+    public class ObCCTVCamera : LevelScript
     {
         public ObCCTVCamera()
         {

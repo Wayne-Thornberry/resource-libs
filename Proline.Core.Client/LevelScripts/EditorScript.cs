@@ -1,7 +1,7 @@
-﻿using CitizenFX.Core;
+﻿
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
-using Proline.Core.Client;
+using Proline.Freemode;
 using Proline.Engine;
 using Proline.Engine;
 using System;
@@ -10,10 +10,12 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CitizenFX.Core;
+using Proline.Core;
 
-namespace Proline.Core.Client.LevelScripts
+namespace Proline.Freemode.LevelScripts
 {
-    public class EditorScript : GameScript
+    public class EditorScript : LevelScript
     {
         private Camera _cam;
         private RaycastResult _raycastResult; 
@@ -232,7 +234,7 @@ namespace Proline.Core.Client.LevelScripts
             {  
                 foreach (var item in _garbage)
                 {
-                    EngineAccess.StartNewScript("BlowUp", item.Handle);
+                    StartNewScript("BlowUp", item.Handle);
                 }
             }
 

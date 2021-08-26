@@ -2,12 +2,13 @@
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using Project.Five.Scaleforms;
+using Proline.Core;
 using Proline.Engine;
 
 
-namespace Proline.Core.Client.LevelScripts.Object
+namespace Proline.Freemode.LevelScripts.Object
 {
-    public class ObAtm : GameScript
+    public class ObAtm : LevelScript
     {
         private Atm io;
         private int ticks;

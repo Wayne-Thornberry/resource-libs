@@ -1,4 +1,4 @@
-﻿namespace Proline.Core.Client.Components.CGasStations
+﻿namespace Proline.Freemode.Components.CGasStations
 {
     internal class GasStation
     {
