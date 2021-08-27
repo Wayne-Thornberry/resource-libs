@@ -8,5 +8,6 @@ namespace Proline.Engine.Networking
         public DateTime DateCreated { get; set; }
         public DateTime DateRecived { get; set; }
         public DateTime DateSent { get; set; }
+        public int PlayerId { get; internal set; }
     }
 }

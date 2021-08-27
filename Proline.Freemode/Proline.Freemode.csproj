@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0FAB5E40-DA40-4D52-8B76-041B51F34139}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Proline.Freemode</RootNamespace>
+    <AssemblyName>Proline.Freemode</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Proline.Engine\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Server\Components\CLog\LogComponent.cs" />
+    <Compile Include="Client\Components\CScriptObjects\TrackedObjectsManager.cs" />
+    <Compile Include="Client\Components\CEditor\Editor.cs" />
+    <Compile Include="Client\Components\CDebugInterface\DebugInterfaceComponent.cs" />
+    <Compile Include="Client\Components\CGasStations\GasStation.cs" />
+    <Compile Include="Client\Components\CGasStations\GasStationsComponent.cs" />
+    <Compile Include="Client\Components\CInstancing\InstanceComponent.cs" />
+    <Compile Include="Client\Components\CMPSession\MPSessionComponent.cs" />
+    <Compile Include="Client\Components\CScriptObjects\ScriptObj.cs" />
+    <Compile Include="Client\Components\CScriptObjects\ScriptObjectPair.cs" />
+    <Compile Include="Client\Components\CScriptObjects\ScriptObjectsComponent.cs" />
+    <Compile Include="Client\Components\CScriptObjects\ScriptObjectsManager.cs" />
+    <Compile Include="Client\Components\CScriptPos\Data\ScriptPositions.cs" />
+    <Compile Include="Client\Components\CScriptPos\Data\ScriptPositionsPair.cs" />
+    <Compile Include="Client\Components\CScriptPos\PosBlacklist.cs" />
+    <Compile Include="Client\Components\CScriptPos\ScriptPosComponent.cs" />
+    <Compile Include="Client\Components\CScriptPos\ScriptPositionManager.cs" />
+    <Compile Include="Client\Components\CWorld\EntityType.cs" />
+    <Compile Include="Client\Components\CWorld\HandleTracker.cs" />
+    <Compile Include="Client\Components\CWorld\WorldComponent.cs" />
+    <Compile Include="Client\Components\CScreen\ScreenComponent.cs" />
+    <Compile Include="Client\Extensions\Tracking.cs" />
+    <Compile Include="Client\LevelScripts\BlowUp.cs" />
+    <Compile Include="Client\LevelScripts\CharacterCreator.cs" />
+    <Compile Include="Client\LevelScripts\DoSomething.cs" />
+    <Compile Include="Client\LevelScripts\EditorScript.cs" />
+    <Compile Include="Client\LevelScripts\Event\ReArmouredTruck.cs" />
+    <Compile Include="Client\LevelScripts\ExampleTest.cs" />
+    <Compile Include="Client\LevelScripts\LSCustoms.cs" />
+    <Compile Include="Client\LevelScripts\Main.cs" />
+    <Compile Include="Client\LevelScripts\Mission\HePacStandard.cs" />
+    <Compile Include="Client\LevelScripts\MPStartup.cs" />
+    <Compile Include="Client\LevelScripts\Object\ObAtm.cs" />
+    <Compile Include="Client\LevelScripts\Object\ObBankTruck.cs" />
+    <Compile Include="Client\LevelScripts\Object\ObCashRegister.cs" />
+    <Compile Include="Client\LevelScripts\Object\ObCCTVCamera.cs" />
+    <Compile Include="Client\LevelScripts\Object\ObVaultDoor.cs" />
+    <Compile Include="Client\LevelScripts\PlayerDeath.cs" />
+    <Compile Include="Client\LevelScripts\RespawnScript.cs" />
+    <Compile Include="Client\LevelScripts\StatsInit.cs" />
+    <Compile Include="Client\LevelScripts\Test2.cs" />
+    <Compile Include="Client\LevelScripts\UI\UIFreemodeHUD.cs" />
+    <Compile Include="Client\LevelScripts\UI\UIInteractiveMenu.cs" />
+    <Compile Include="Client\LevelScripts\UI\UIMainMenu.cs" />
+    <Compile Include="Client\LevelScripts\UI\UIMultiplayerMenu.cs" />
+    <Compile Include="Client\LevelScripts\UI\UIPlayerSwitch.cs" />
+    <Compile Include="Client\LevelScripts\VehicleFuel.cs" />
+    <Compile Include="Client\LevelScripts\VehicleJacking.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Shared\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Proline.Core\Proline.Core.csproj">
+      <Project>{af853efd-8935-4a68-ad73-1f8f05165d08}</Project>
+      <Name>Proline.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Proline.Engine\Proline.Engine.csproj">
+      <Project>{00115faf-fb34-4dc7-bbeb-e8e9ae227c42}</Project>
+      <Name>Proline.Engine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Target Name="ChangeAliasesOfNugetRefs" BeforeTargets="FindReferenceAssembliesForReferences;ResolveReferences">
+    <ItemGroup>
+      <ReferencePath Condition="'%(FileName)' == 'CitizenFX.Core.Server'">
+        <Aliases>Server</Aliases>
+      </ReferencePath>
+      <ReferencePath Condition="'%(FileName)' == 'CitizenFX.Core.Client'">
+        <Aliases>Client</Aliases>
+      </ReferencePath>
+    </ItemGroup>
+  </Target>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)$(ProjectName)*.*" "H:\servers\Game_Servers\FiveM\Project.Online\resources\$(SolutionName)\"/Y/D/E/I</PostBuildEvent>
+  </PropertyGroup>
+</Project>

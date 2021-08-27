@@ -1,6 +1,6 @@
-﻿namespace Proline.Engine.Data
+﻿namespace Proline.Engine
 {
-    public class AssemblyDetails
+    internal class AssemblyDetails
     {
         public int EnvType { get; set; }
         public string Assembly { get; set; }

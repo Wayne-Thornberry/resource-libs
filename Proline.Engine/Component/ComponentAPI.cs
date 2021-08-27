@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Proline.Engine.Networking;
+using System;
 using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Proline.Engine
 {
-    internal class ComponentAPI : EngineObject
+    public class ComponentAPI : EngineObject
     {
         private object _source;
         private MethodInfo _item;
@@ -14,7 +15,7 @@ namespace Proline.Engine
 
         public string Signature { get; private set; }
 
-        public ComponentAPI(object source, MethodInfo item, int type = 0, bool debugOnly = false) : base("API")
+        internal ComponentAPI(object source, MethodInfo item, int type = 0, bool debugOnly = false) : base("API")
         {
             _source = source;
             _item = item;
@@ -26,7 +27,7 @@ namespace Proline.Engine
 
         internal object Invoke(params object[] args)
         {
-            LogDebug("Invoking API " + _item.Name);
+            //LogDebug("Invoking API " + _item.Name);
             if (_debugOnly && !EngineConfiguration.IsDebugEnabled) throw new Exception("Debug mode not enabled on debug only API");
             if (_type == -1 && EngineConfiguration.IsClient)
                 throw new Exception("Cannot invoke a server method while as a client non async");
@@ -37,15 +38,23 @@ namespace Proline.Engine
         {
             if (_debugOnly && !EngineConfiguration.IsDebugEnabled) throw new Exception("Debug mode not enabled on debug only API");
             if (_type == -1 && EngineConfiguration.IsClient)
-                await ExecuteComponentAPI<object>(_item.Name, args).ContinueWith(callback);
+                await ExecuteServerAPI<object>(_item.Name, args).ContinueWith(callback);
             return (T)Convert.ChangeType(_item.Invoke(_source, args), typeof(T));
         }
+
+
+        private async Task<T> ExecuteServerAPI<T>(string methodName, params object[] args)
+        {
+            var client = new NetClient();
+            return await client.ExecuteEngineMethodServer<T>(EngineConstraints.ExecuteAPI, new object[] { methodName, args });
+        }
+
 
         internal async Task<object> InvokeAsync(Action<object> callback, params object[] args)
         {
             if (_debugOnly && !EngineConfiguration.IsDebugEnabled) throw new Exception("Debug mode not enabled on debug only API");
             if (_type == -1 && EngineConfiguration.IsClient)
-                await ExecuteComponentAPI<object>(_item.Name, args).ContinueWith(callback);
+                await ExecuteServerAPI<object>(_item.Name, args).ContinueWith(callback);
             return _item.Invoke(_source, args);
         }
 
@@ -53,7 +62,7 @@ namespace Proline.Engine
         {
             if (_debugOnly && !EngineConfiguration.IsDebugEnabled) throw new Exception("Debug mode not enabled on debug only API");
             if (_type == -1 && EngineConfiguration.IsClient)
-                return await ExecuteComponentAPI<T>(_item.Name, args);
+                return await ExecuteServerAPI<T>(_item.Name, args);
             return (T)Convert.ChangeType(_item.Invoke(_source, args),typeof(T));
         }
 
@@ -61,7 +70,7 @@ namespace Proline.Engine
         {
             if (_debugOnly && !EngineConfiguration.IsDebugEnabled) throw new Exception("Debug mode not enabled on debug only API");
             if (_type == -1 && EngineConfiguration.IsClient)
-               return await ExecuteComponentAPI<object>(_item.Name, args);
+               return await ExecuteServerAPI<object>(_item.Name, args);
             return _item.Invoke(_source, args);
         }
 
@@ -101,6 +110,40 @@ namespace Proline.Engine
         {
             InternalManager im = InternalManager.GetInstance();
             im.RemoveAPI(apiName);
+        }
+
+        public static async Task<object> CallAPIAsync(int apiName, params object[] inputParameters)
+        {
+            var cm = InternalManager.GetInstance();
+            var api = cm.GetAPI(apiName);
+            if (api == null)
+                return null;
+            return await api.InvokeAsync(inputParameters);
+        }
+
+        public static async Task<T> CallAPIAsync<T>(int apiName, params object[] inputParameters)
+        {
+            var cm = InternalManager.GetInstance();
+            var api = cm.GetAPI(apiName);
+            if (api == null)
+                return default;
+            return await api.InvokeAsync<T>(inputParameters);
+        }
+
+        public static object CallAPI(int apiName, params object[] inputParameters)
+        {
+            var cm = InternalManager.GetInstance();
+            var api = cm.GetAPI(apiName);
+            if (api == null) return null;
+            return api.Invoke(inputParameters);
+        }
+
+        public static T CallAPI<T>(int apiName, params object[] inputParameters)
+        {
+            var cm = InternalManager.GetInstance();
+            var api = cm.GetAPI(apiName);
+            if (api == null) return default;
+            return (T)Convert.ChangeType(api.Invoke(inputParameters), typeof(T));
         }
     }
 }

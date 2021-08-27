@@ -81,15 +81,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Access.cs" />
-    <Compile Include="Core.cs" />
-    <Compile Include="Events.cs" />
+    <Compile Include="Script.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="CitizenFX.Core.Server">
-      <Version>1.0.4000</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Proline.Engine\Proline.Engine.csproj">
@@ -97,6 +90,17 @@
       <Name>Proline.Engine</Name>
     </ProjectReference>
   </ItemGroup>
+  
+  <Target Name="ChangeAliasesOfNugetRefs" BeforeTargets="FindReferenceAssembliesForReferences;ResolveReferences">
+    <ItemGroup>
+      <ReferencePath Condition="'%(FileName)' == 'CitizenFX.Core.Server'">
+        <Aliases>Server</Aliases>
+      </ReferencePath>
+      <ReferencePath Condition="'%(FileName)' == 'CitizenFX.Core.Client'">
+        <Aliases>Client</Aliases>
+      </ReferencePath>
+    </ItemGroup>
+  </Target>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(TargetDir)$(ProjectName)*.*" "H:\servers\Game_Servers\FiveM\Project.Online\resources\$(SolutionName)\"/Y/D/E/I</PostBuildEvent>

@@ -142,7 +142,7 @@ namespace Proline.Engine
             var extensions = em.GetExtensions();
             var wrapper = em.GetScript(startScriptRequest.ScriptName);
             if (wrapper == null) return -1;
-            return wrapper.StartNewInstance(null);
+            return wrapper.StartNewInstance(startScriptRequest.Args);
         }
 
         internal static int[] StartScripts(StartScriptRequest[] startScriptRequests)

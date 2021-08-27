@@ -10,15 +10,13 @@ using System.Threading.Tasks;
 
 namespace Proline.Engine
 {
-    public class InternalManager : EngineObject
+    internal class InternalManager : EngineObject
     {
         private static InternalManager _instance;
 
         private Dictionary<int, ComponentAPI> _apis;
         private Dictionary<string, ComponentCommand> _commands;
-        private Dictionary<string, EngineComponent> _components;
-        private Dictionary<string, NetworkRequest> _requests;
-        private Dictionary<string, NetworkResponse> _responses;
+        private Dictionary<string, EngineComponent> _components; 
         private Dictionary<string, Script> _scripts;
         //private Dictionary<Task, string> _tasks;
 
@@ -32,9 +30,7 @@ namespace Proline.Engine
         {
             _apis = new Dictionary<int, ComponentAPI>();
             _commands = new Dictionary<string, ComponentCommand>();
-            _components = new Dictionary<string, EngineComponent>();
-            _requests = new Dictionary<string, NetworkRequest>();
-            _responses = new Dictionary<string, NetworkResponse>();
+            _components = new Dictionary<string, EngineComponent>(); 
             _scripts = new Dictionary<string, Script>();
 
             _extensions = new List<EngineExtension>();
@@ -54,16 +50,19 @@ namespace Proline.Engine
 
         internal ComponentAPI GetAPI(int apiName)
         {
-            LogDebug("Getting API " + apiName);
+            //LogDebug("Getting API " + apiName);
             if (_apis.ContainsKey(apiName))
                 return _apis[apiName];
-            LogDebug("API does not exist " + apiName);
+            //LogDebug("API does not exist " + apiName);
             return null;
         }
 
         internal void EnqueueComponentEvent(string eventName, object[] args)
         {
-            _eventQueue.Enqueue(new KeyValuePair<string,object[]>(eventName, args));
+            foreach (var item in _components.Values)
+            {
+                item.EnqueueEvent(new KeyValuePair<string, object[]>(eventName, args));
+            } 
         }
 
         internal KeyValuePair<string,object[]> DequeueComponentEvent()

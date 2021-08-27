@@ -8,6 +8,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
+using Proline.Engine.Networking;
 
 namespace Proline.Engine
 {
@@ -26,15 +28,20 @@ namespace Proline.Engine
         private string _name;  
         private int _status;
         private bool _isDebug;
-        private string _assembly;  
+        private string _assembly;
 
         private List<ComponentAPI> _apis;
         private List<ComponentCommand> _commands;
         private Dictionary<string, MethodInfo> _events;
         private List<PropertyInfo> _syncedProperties;
+        private Queue<KeyValuePair<string, object[]>> _eventQueue;
 
+        private int _hostId;
+        private bool _isOutOfSync;
         private long _lastCheck;
+        private bool _changed;
 
+        internal int Td { get; set; }
         internal string Name => _name;
         public ComponentStatus Status => (ComponentStatus)_status;
          
@@ -44,6 +51,7 @@ namespace Proline.Engine
             _apis = new List<ComponentAPI>();
             _syncedProperties = new List<PropertyInfo>();
             _events = new Dictionary<string, MethodInfo>();
+            _eventQueue = new Queue<KeyValuePair<string, object[]>>();
             _status = 0; // Created not started 
         }
         protected void StartNewScript(string scriptName, params object[] args)
@@ -77,9 +85,15 @@ namespace Proline.Engine
         protected void TriggerComponentEvent(string eventName, params object[] args)
         {
             var im = InternalManager.GetInstance();
+            if (args == null) args = new object[0];
             im.EnqueueComponentEvent(eventName, args);
             //if (_handler != null)
             //   ((ComponentHandler) _handler).OnComponentEvent(eventName, args);
+        }
+
+        internal void EnqueueEvent(KeyValuePair<string, object[]> keyValuePair)
+        {
+            _eventQueue.Enqueue(keyValuePair);
         }
 
         internal void OnEngineEvent(string eventName, object[] args)
@@ -101,16 +115,25 @@ namespace Proline.Engine
 
         internal async Task Tick()
         {
+
             if (_status != 0 && _status != 5)
-            { 
+            {
+               // await Sync();
+                while (_eventQueue.Count > 0)
+                {
+                    var item = _eventQueue.Dequeue();
+                    if (!_events.ContainsKey(item.Key)) continue;
+                    _events[item.Key].Invoke(this, item.Value);
+                }
+
                 if (_status == 2)
                 {
                     OnStart();
                     _status = 3;
                 }
 
-                if(_status == 3)
-                { 
+                if (_status == 3)
+                {
                     OnUpdate();
                     if (DateTime.UtcNow.Ticks - _lastCheck > 1000000)
                     {
@@ -119,16 +142,35 @@ namespace Proline.Engine
                     }
                 }
 
-                if(_status == 4)
+                if (_status == 4)
                 {
                     OnStop();
                     _status = 5;
                 }
+
+                var obj = new object[_syncedProperties.Count];
+                for (int i = 0; i < obj.Length; i++)
+                {
+                    obj[i] = _syncedProperties[i].GetValue(this);
+                }
             }
+        }
+
+
+        internal async Task Sync()
+        {
+            await Push();
+            await Pull();
+        }
+
+        internal void MarkAsOutOfSync()
+        {
+            _isOutOfSync = true;
         }
 
         internal void InvokeComponentEvent(KeyValuePair<string, object[]> events)
         {
+            //LogDebug(events.Key);
             if (!_events.ContainsKey(events.Key)) return;
             _events[events.Key].Invoke(this, events.Value);
         }
@@ -136,7 +178,7 @@ namespace Proline.Engine
         internal void Initalize()
         {
             OnInitialize();
-            LogDebug($"Initializing Component " +Name);
+            LogDebug($"Initializing Component " + Name);
             OnInitialized();
         } 
 
@@ -177,39 +219,83 @@ namespace Proline.Engine
             } 
         }
 
-        protected void Push()
+        protected async Task Push()
         {
-            // Pushes the components data onto the server, if the data is out of sync, is pushed onto the clients with new data once the server has been set
+            if (EngineService.IsClient)
+            {
+                var client = new NetClient();
+                if (_changed)
+                {
+                    var obj = new object[_syncedProperties.Count];
+                    for (int i = 0; i < obj.Length; i++)
+                    {
+                        obj[i] = _syncedProperties[i].GetValue(this);
+                    }
+                    var data = JsonConvert.SerializeObject(obj);
+                    await client.ExecuteEngineMethodServer(EngineConstraints.PushHandler);
+                }
+            }
         }
 
-        protected void Pull()
+        protected async Task Pull()
         {
-            // Pulls the servers component synced data onto its own
+            if (_isOutOfSync)
+            {
+                if (EngineService.IsClient)
+                {
+                    var client = new NetClient();
+                    var data = await client.ExecuteEngineMethodServer<string>(EngineConstraints.PullHandler);
+                    var objs = JsonConvert.DeserializeObject<object[]>(data);
+                    for (int i = 0; i < objs.Length; i++)
+                    {
+                        var type = _syncedProperties[i].GetType();
+                        object value = null;
+                        if (type.IsClass)
+                        {
+                            value = JsonConvert.DeserializeObject(_syncedProperties[i].ToString(), type);
+                        }
+                        else
+                        {
+                            value = objs[i];
+                        }
+                        _syncedProperties[i].SetValue(this, value);
+                    }
+                }
+            }
         } 
 
         internal static EngineComponent Load(ComponentDetails details)
-        { 
-            var isDebug = details.DebugOnly;
-            var assemblyClass = details.Assembly;
-            var name = details.ComponentName;
+        {
+            if (EngineConfiguration.IsClient && details.EnvType == 1)
+            { 
+                var isDebug = details.DebugOnly;
+                var assemblyClass = details.Assembly;
+                var name = details.ComponentName;
 
-            var componentClass = details.ComponentClass;
+                var componentClass = details.ComponentClass;
 
-            var assembly = Assembly.Load(assemblyClass);
+                var assembly = Assembly.Load(assemblyClass);
 
-            var lookFor = EngineConfiguration.IsClient ? typeof(ClientAttribute) : typeof(ServerAttribute);
+                var lookFor = EngineConfiguration.IsClient ? typeof(ClientAttribute) : typeof(ServerAttribute);
 
-            if (!string.IsNullOrEmpty(componentClass))
-            {
-                var componentType = assembly.GetType(componentClass);
-                if (componentType != null)
+                if (!string.IsNullOrEmpty(componentClass))
                 {
-                    var component = CreateComponentObject<EngineComponent>(componentType);
-                    component.Load(name, isDebug);
-                    return component;
+                    var componentType = assembly.GetType(componentClass);
+                    if (componentType != null)
+                    {
+                        var component = CreateComponentObject<EngineComponent>(componentType);
+                        component.Td = details.EnvType;
+                        component.Load(name, isDebug);
+                        return component;
+                    }
                 }
+                throw new Exception("Failed to load component " + name + " " + componentClass);
             }
-            throw new Exception("Failed to load component " + name + " " + componentClass );
+            else
+            {
+                return null;
+            }
+
         }
 
         private void Load(string name, bool debug)
@@ -270,7 +356,39 @@ namespace Proline.Engine
                 LogDebug(e);
                 throw;
             } 
-        } 
+        }
+
+        internal void PushData(string data)
+        {
+            if (_isOutOfSync)
+            { 
+                var objs = JsonConvert.DeserializeObject<object[]>(data);
+                for (int i = 0; i < objs.Length; i++)
+                {
+                    var type = _syncedProperties[i].GetType();
+                    object value = null;
+                    if (type.IsClass)
+                    {
+                        value = JsonConvert.DeserializeObject(_syncedProperties[i].ToString(), type);
+                    }
+                    else
+                    {
+                        value = objs[i];
+                    }
+                    _syncedProperties[i].SetValue(this, value);
+                }
+            }
+        }
+
+        internal object PullData()
+        {
+            var obj = new object[_syncedProperties.Count];
+            for (int i = 0; i < obj.Length; i++)
+            {
+                obj[i] = _syncedProperties[i].GetValue(this);
+            }
+            return JsonConvert.SerializeObject(obj);
+        }
 
         private static bool IsDebugMethod(MethodInfo item)
         {
@@ -332,6 +450,11 @@ namespace Proline.Engine
             {
                 component.Stop();
             }
+        }
+
+        internal void SetHost(int hostId)
+        {
+            _hostId = hostId;
         }
 
 

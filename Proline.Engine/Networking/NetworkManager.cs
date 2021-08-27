@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace Proline.Engine
 {
-    public class NetworkManager
+    internal class NetworkManager
     {
         private static NetworkManager _instance;
-        public const string NetworkRequestListenerHandle = "networkRequestListener";
-        public const string NetworkResponseListenerHandler = "networkResponseListener";
 
         private Dictionary<string, NetworkRequest> _requests;
         private Dictionary<string, NetworkResponse> _responses;
-        private NetworkManager()
+        private Queue<NetworkRequest> _requestQueue;
+        internal NetworkManager()
         {
             _requests = new Dictionary<string, NetworkRequest>();
             _responses = new Dictionary<string, NetworkResponse>();
+            _requestQueue = new Queue<NetworkRequest>();
         }
 
         internal static NetworkManager GetInstance()
@@ -29,13 +29,7 @@ namespace Proline.Engine
             return _instance;
         }
 
-
-        public string CreateAndInsertResponse(string guid, object value, bool isException = false)
-        { 
-            return JsonConvert.SerializeObject(CreateAndInsertResponseI(guid, value, isException));
-        }
-
-        internal NetworkResponse CreateAndInsertResponseI(string guid, object value, bool isException = false)
+        internal NetworkResponse CreateAndInsertResponse(string guid, object value, bool isException = false)
         {
             NetworkResponse response = CreateResponse(guid, value, isException);
             InsertResponse(guid, response);
@@ -83,21 +77,9 @@ namespace Proline.Engine
             return response;
         }
 
-        internal string CreateAndInsertRequest(string guid, string componentName, string methodName, params object[] args)
-        { 
-            return JsonConvert.SerializeObject(CreateAndInsertRequestI(guid,componentName,methodName, args));
-        }
-
-        internal NetworkRequest CreateAndInsertRequestI(string guid, string methodName, params object[] args)
+        internal NetworkRequest CreateAndInsertRequest(string guid, int playerId, string methodName, params object[] args)
         {
-            NetworkRequest request = CreateRequest(guid, methodName, args);
-            InsertRequest(guid, request);
-            return request;
-        }
-
-        internal NetworkRequest CreateAndInsertRequestI(string guid, string componentName, string methodName, params object[] args)
-        {
-            NetworkRequest request = CreateRequest(guid, componentName, methodName, args);
+            NetworkRequest request = CreateRequest(guid, playerId, methodName, args);
             InsertRequest(guid, request);
             return request;
         }
@@ -108,12 +90,18 @@ namespace Proline.Engine
             _requests.Add(guid, request);
         }
 
-        private static NetworkRequest CreateRequest(string guid, string methodName, object[] args)
+        internal NetworkRequest GetRequest(string guid)
+        {
+            return _requests[guid];
+        }
+
+        private static NetworkRequest CreateRequest(string guid, int playerId, string methodName, object[] args)
         {
             var header = new NetworkHeader()
             {
                 Guid = guid,
                 DateCreated = DateTime.UtcNow,
+                PlayerId = playerId,
             };
             var request = new NetworkRequest()
             {
@@ -128,25 +116,9 @@ namespace Proline.Engine
             return request;
         }
 
-        private static NetworkRequest CreateRequest(string guid, string componentName, string methodName, object[] args)
+        internal Queue<NetworkRequest> GetEnqueuedRequests()
         {
-            var header = new NetworkHeader()
-            {
-                Guid = guid,
-                DateCreated = DateTime.UtcNow,
-            };
-            var request = new NetworkRequest()
-            {
-                Header = header,
-                Call = new MethodCall
-                {
-                    ComponentName = componentName,
-                    MethodName = methodName,
-                    MethodArgs = args,
-                },
-                Exception = null,
-            };
-            return request;
+            return _requestQueue;
         }
 
         public bool HasResponses()

@@ -28,31 +28,7 @@ namespace Proline.Engine.NUnit
             _ticks.Add(task);
         }
 
-        public object CallFunction<T>(ulong hash, object[] inputParameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CallFunction(ulong hash, object[] inputParameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CallNativeAPI(string apiName, params object[] inputParameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task Delay(int ms)
-        {
-            await Task.Delay(ms);
-        }
-
-        public string GetCurrentResourceName()
-        {
-            return "Proline.Engine.Client";
-        }
-
+     
         public object GetGlobal(string key)
         {
             throw new NotImplementedException();
@@ -69,26 +45,6 @@ namespace Proline.Engine.NUnit
         }
 
         public void SetGlobal(string key, object data, bool replicated)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void TriggerClientEvent(string eventName, params object[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void TriggerClientEvent(int playerId, string eventName, params object[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void TriggerEvent(string eventName, params object[] data)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void TriggerServerEvent(string eventName, params object[] args)
         {
             throw new NotImplementedException();
         }

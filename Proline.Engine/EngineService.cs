@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿extern alias Client;
+extern alias Server;
+
+using Newtonsoft.Json;
 using Proline.Engine.Data;
 using Proline.Engine;
 using System;
@@ -6,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Proline.Engine.Networking;
 
 namespace Proline.Engine
 {
@@ -14,36 +18,41 @@ namespace Proline.Engine
         private CitizenResource _executingResource;
         private InternalManager _internalManager;
         private static CitizenAccess _scriptSource;
+        private NetworkManager _nm;
+
+        public static bool IsClient => EngineConfiguration.IsClient;
 
         public EngineService(IScriptSource scriptSource) : base("EngineService")
         {
             _internalManager = InternalManager.GetInstance();
-            _scriptSource = new CitizenAccess(scriptSource); 
+            _scriptSource = new CitizenAccess(scriptSource);
+            _nm = NetworkManager.GetInstance();
         }
 
         public async Task Start(params string[] args)
         {
             try
             {
-                await Delay(2000);
                 if (EngineStatus.IsEngineInitialized) throw new Exception("Cannot Initialize engine, engine already initilized");
 
                 var resourceName = args[0];
-                var envType = int.Parse(args[1]);
+                var sourceHandle = int.Parse(args[1]);
                 var isDebug = bool.Parse(args[2]);
                 var isIsolated = resourceName.Equals("ConsoleApp");
-                EngineConfiguration.IsClient = envType != -1;
+                EngineConfiguration.IsClient = sourceHandle != -1;
                 EngineConfiguration.IsIsolated = isIsolated;
                 EngineConfiguration.IsDebugEnabled = isDebug;
+                EngineConfiguration.OwnerHandle = sourceHandle;
+                EngineConfiguration.EnvTypeName = (EngineConfiguration.IsClient ? "Client" : "Server");
                 LogDebug("Engine in " + (EngineConfiguration.IsClient ? "Client" : "Server") + " Mode");
 
                 int status = 0;
                 if (EngineConfiguration.IsClient && !EngineConfiguration.IsIsolated)
                 {
-                    status = 1;
-                    //status = await ExecuteEngineMethodServer<int>(EngineConstraints.HealthCheck);
-                    //if (status == 0)
-                    //    throw new Exception("Cannot initialize client side, server side not healthy");
+                    var client = new NetClient();
+                    status = await client.ExecuteEngineMethodServer<int>(EngineConstraints.HealthCheck);
+                    if (status == 0)
+                        throw new Exception("Cannot initialize client side, server side not healthy");
                 }
                 else
                 {
@@ -65,9 +74,10 @@ namespace Proline.Engine
                 StartAllComponents();
                 StartStartupScripts();
 
-                RunEnvSpecificFunctions(envType);
+                RunEnvSpecificFunctions(sourceHandle);
 
 
+                _scriptSource.AddTick(Update);
                 EngineStatus.IsEngineInitialized = true;
             }
             catch (Exception e)
@@ -75,6 +85,49 @@ namespace Proline.Engine
 
                 throw;
             }
+        }
+
+        public void PlayerConnectingHandler(object player, string playerName, dynamic setKickReason, dynamic deferrals)
+        {
+            //deferrals.defer();
+
+            //// mandatory wait!
+            //await Delay(0);
+
+            //var licenseIdentifier = player.Identifiers["license"];
+
+            ////_service.LogDebug(_header, $"A player with the name {playerName} (Identifier: [{licenseIdentifier}]) is connecting to the server.");
+
+            //deferrals.update($"Hello {playerName}, your license [{licenseIdentifier}] is being checked");
+
+            //// Check if the connecting client (Player) has a matching identifier with any identifier passed
+            //// If a match is found, fetch the user identity and prepare to tie this player 
+            //// If over 50% of the identiies match from this player and what we have in the DB, use the existing identity row
+            //// Fetch the player profile if one exists
+            //// Search the user table for any active bans
+            //// If one exists, check if its a global ban, if true, defer connection on the bases of a global ban
+            //// If false, check if the instance id matches the instance id stored in a data object here
+            //// If the user has no bans, check if the player has a ban
+            //// if true, check if its a global ban.... same as above
+            //// If everything checks out, continue connection
+
+            //// Priority, if the server has a queue enabled, prepare to do some queue stuff
+            //// This involves looking at the user and player priority.
+            //// On a per instance level, instances have a table for player priority, while users have a priority Id
+            //// We get both user and player priorty (if one exists) and take the highest of the two numbers 
+            //// Thats your priority into the queue, the higher the number, the better the postition in queue
+
+            //if (true)
+            //{
+            //    //deferrals.done("Rejected..");
+            //}
+
+            //deferrals.done();
+        }
+
+        public void PlayerDroppedHandler(object player, string reason)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task Update()
@@ -87,13 +140,44 @@ namespace Proline.Engine
                     Script.StartScript(requests);
                 }
 
-               
-                while (!_internalManager.IsComponentEventQueueEmpty())
+                var queue = _nm.GetEnqueuedRequests();
+                while (queue.Count > 0)
                 {
-                    var events = _internalManager.DequeueComponentEvent();
-                    foreach (var item in _internalManager.GetComponents())
+                    var request = queue.Dequeue();
+                    var guid = request.Header.Guid;
+                    object result = null;
+                    bool isException = false;
+                    try
                     {
-                        item.InvokeComponentEvent(events);
+                        result = ExecuteEngineMethod(request.Call.MethodName, request.Call.MethodArgs);
+                        if (result != null)
+                        {
+                            if (!result.GetType().IsPrimitive)
+                            {
+                                result = JsonConvert.SerializeObject(result);
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        isException = true;
+                        throw;
+                    }
+                    finally
+                    {
+                        /// THIS NEEDS TO BE HERE, OTHERWISE IT WILL CAUSE A CIRCLAR DEPENENCY OF THE CLIENT CALLING THE SERVER AND THE SERVER CALLING THE CLIENT
+                        if (request.Header.PlayerId != -1)
+                        {
+                            var response = new object[] { result, isException };
+                            var data = JsonConvert.SerializeObject(response);
+                            // LogDebug(guid + methodName + argData + data + playerId);
+                            if (!EngineConfiguration.IsClient)
+                            { 
+                                Server.CitizenFX.Core.BaseScript.TriggerClientEvent(EngineConstraints.ExecuteEngineMethodHandler, EngineConfiguration.OwnerHandle, guid, EngineConstraints.CreateAndInsertResponse, data);
+                            }
+                            else if (EngineConfiguration.IsClient)
+                                Server.CitizenFX.Core.BaseScript.TriggerEvent(EngineConstraints.ExecuteEngineMethodHandler, EngineConfiguration.OwnerHandle, guid, EngineConstraints.CreateAndInsertResponse, data);
+                        }
                     }
                 }
             }
@@ -150,12 +234,12 @@ namespace Proline.Engine
             var extensions = am.GetExtensions();
             foreach (var componentDetails in _componentDetails)
             {
-                if ((!EngineConfiguration.IsClient && componentDetails.EnvType == 1) || (EngineConfiguration.IsClient && componentDetails.EnvType == -1))continue; 
                 if (!EngineConfiguration.IsDebugEnabled && componentDetails.DebugOnly) throw new Exception("Component cannot be started, debug not enabled");
                 if (componentDetails == null) throw new Exception("Component path null");
                 try
                 {
                     var component = EngineComponent.Load(componentDetails);
+                    if (component == null) continue;
                     EngineComponent.RegisterComponent(component);
                 }
                 catch (Exception e)
@@ -242,6 +326,11 @@ namespace Proline.Engine
             }
         }
 
+        public void StartScript(string scriptName)
+        {
+            Script.StartScript(new StartScriptRequest(scriptName, null));
+        }
+
         public void StartAllComponents()
         {
             EngineComponent.StartAllComponents();
@@ -272,44 +361,60 @@ namespace Proline.Engine
             }
         }
 
-        public object ExecuteEngineMethod(string methodName, params object[] args)
+        private object ExecuteEngineMethod(string methodName, params object[] args)
         {
             //LogDebug("Called Engine event " + methodName);
-            //switch (methodName)
-            //{
-            //    case EngineConstraints.LogDebug: 
-            //        LogDebug("[Client]" + args[0]);
-            //        return null;
-            //        break;
-            //    case EngineConstraints.LogError:
-            //        LogError("[Client]" + args[0]);
-            //        return null;
-            //        break;
-            //    case EngineConstraints.LogWarn:
-            //        LogWarn("[Client]" + args[0]);
-            //        return null;
-            //        break;
-            //    case EngineConstraints.HealthCheck:
-            //        return EngineStatus.IsEngineInitialized ? 1 : 0;
-            //    case EngineConstraints.ExecuteComponentAPI:
-            //        var componentNAme = args[0].ToString();
-            //        var apiName = int.Parse(args[1].ToString());
-            //        var list = JsonConvert.DeserializeObject<object[]>(args[2].ToString());
-            //        return APICaller.CallAPI(apiName, list.ToArray());
-            //    case EngineConstraints.CreateAndInsertResponse:
-            //        var guid = (string)args[0];
-            //        var value = args[1];
-            //        var isException = (bool)args[2];
-            //        var nm = NetworkManager.GetInstance();
-            //        nm.CreateAndInsertResponse(guid, value, isException);
-            //        return null;
-            //            break;
-
-            //    default:
-            //        return null;
-            //}
+            var im = InternalManager.GetInstance();
+            switch (methodName)
+            {
+                case EngineConstraints.Log:
+                    var type = long.Parse(args[0].ToString());
+                    var data = args[1].ToString();
+                    switch (type)
+                    {
+                        case 0: LogDebug(data); break;
+                        case 1: LogWarn(data); break;
+                        case 2: LogError(data); break;
+                    }
+                    return null;
+                case EngineConstraints.HealthCheck:
+                    return EngineStatus.IsEngineInitialized ? 1 : 0;
+                case EngineConstraints.ExecuteAPI:
+                    var apiName = int.Parse(args[0].ToString());
+                    var list = JsonConvert.DeserializeObject<object[]>(args[1].ToString());
+                    return ComponentAPI.CallAPI(apiName, list.ToArray());
+                case EngineConstraints.PullHandler:
+                    var cn = args[0].ToString();
+                    var c = im.GetComponent(cn);
+                    return c.PullData();
+                case EngineConstraints.PushHandler:
+                    var compeonentName = args[0].ToString();
+                    var data2 = args[1].ToString();
+                    var component = im.GetComponent(compeonentName);
+                    component.PushData(data2);
+                    break;
+                default:
+                    return null;
+            }
             return null;
         }
+
+        public void RequestResponseHandler(int playerId, string guid, string methodName, string argData)
+        {
+            var args = JsonConvert.DeserializeObject<object[]>(argData);
+            var nm = NetworkManager.GetInstance();
+            if (!methodName.Equals(EngineConstraints.CreateAndInsertResponse))
+            {
+                nm.CreateAndInsertRequest(guid, playerId, methodName, args); 
+            }
+            else
+            { 
+                var value = args[0];
+                var isException = bool.Parse(args[1].ToString());
+                nm.CreateAndInsertResponse(guid, value, isException);
+            }
+        }
+
         public static IScriptSource GetInstance()
         {
             return _scriptSource;

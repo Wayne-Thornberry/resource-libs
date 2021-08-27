@@ -1,4 +1,10 @@
-﻿using System;
+﻿extern alias Client;
+extern alias Server;
+
+using Client.CitizenFX.Core;
+using Server.CitizenFX.Core;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,25 +16,32 @@ namespace Proline.Engine
     {
         public static void Write(object obj)
         {
-            var ca = EngineService.GetInstance();
-            ca.Write(obj);
+            if (EngineConfiguration.IsClient && !EngineConfiguration.IsIsolated)
+            {
+                Client.CitizenFX.Core.Debug.Write(obj.ToString());
+            }
+            else if(!EngineConfiguration.IsClient && !EngineConfiguration.IsIsolated)
+            {
+                Server.CitizenFX.Core.Debug.Write(obj.ToString());
+            }else
+            {
+                Console.Write(obj);
+            }
         }
 
         public static void WriteLine(object obj)
-        { 
-            var ca = EngineService.GetInstance();
-            ca.WriteLine(obj);
-        }
-
-        // Need to come back to this
-        //public static void RegisterCommnad(string command, Func<void> function)
-        //{
-
-        //}
-
-        public static void ExecuteCommand(string command, params object[] args)
         {
-
-        }
+            if (EngineConfiguration.IsClient && !EngineConfiguration.IsIsolated)
+            {
+                Client.CitizenFX.Core.Debug.WriteLine(obj.ToString());
+            }
+            else if (!EngineConfiguration.IsClient && !EngineConfiguration.IsIsolated)
+            {
+                Server.CitizenFX.Core.Debug.WriteLine(obj.ToString());
+            }else
+            { 
+                Console.WriteLine(obj);
+            }
+        } 
     }
 }

@@ -20,7 +20,7 @@
     {
       "ComponentName": "CExampleComponent",
       "Assembly": "Proline.Example",
-      "EnvType": 0,
+      "EnvType": 1,
       "ComponentClass": "Proline.Example.Components.CExample.ExampleComponent"
     }
   ],

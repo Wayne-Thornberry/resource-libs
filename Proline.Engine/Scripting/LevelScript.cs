@@ -29,7 +29,7 @@ namespace Proline.Engine
             }
             catch (Exception e)
             {
-                LogError(e);
+                LogError(e.ToString());
             }
         }
 
@@ -37,6 +37,11 @@ namespace Proline.Engine
         {
             var im = InternalManager.GetInstance();
             im.EnqueueStartScriptRequest(new StartScriptRequest(scriptName, args));
+        }
+
+        protected void TerminateScript()
+        {
+            throw new Exception("Script Terminated");
         }
 
         public abstract Task Execute(params object[] args);

@@ -31,6 +31,25 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -38,6 +57,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,7 +66,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="APICaller.cs" />
     <Compile Include="Component\ComponentAPI.cs" />
     <Compile Include="CitizenFX\CitizenAccess.cs" />
     <Compile Include="Component\ClientAttribute.cs" />
@@ -61,7 +80,26 @@
     <Compile Include="Component\ComponentCommandAttribute.cs" />
     <Compile Include="Configuration\AssemblyDetails.cs" />
     <Compile Include="Component\DebugAttribute.cs" />
-    <Compile Include="Debug\Debugger.cs" />
+    <Compile Include="Core\Door.cs" />
+    <Compile Include="Core\HudColor.cs" />
+    <Compile Include="Core\Interior.cs" />
+    <Compile Include="Core\Marker.cs" />
+    <Compile Include="Core\MPStat.cs" />
+    <Compile Include="Core\PedHeadshot.cs" />
+    <Compile Include="Core\Scaleforms\Atm.cs" />
+    <Compile Include="Core\Scaleforms\CellPhoneIFruit.cs" />
+    <Compile Include="Core\Scaleforms\CustomWarningScreen.cs" />
+    <Compile Include="Core\Scaleforms\Menu.cs" />
+    <Compile Include="Core\Scaleforms\MPBigMessageFreemode.cs" />
+    <Compile Include="Core\Scaleforms\MPMMFreemodeMenu.cs" />
+    <Compile Include="Core\Scaleforms\MPRankBar.cs" />
+    <Compile Include="Core\Scaleforms\MPRankBar2.cs" />
+    <Compile Include="Core\Scaleforms\PlayerSwitch.cs" />
+    <Compile Include="Core\Scaleforms\ScaleformHud.cs" />
+    <Compile Include="Core\Scaleforms\ScaleformUI.cs" />
+    <Compile Include="Core\Scaleforms\WebBrowser.cs" />
+    <Compile Include="Core\UIBox.cs" />
+    <Compile Include="Core\UIText.cs" />
     <Compile Include="EngineObject.cs" />
     <Compile Include="Component\EngineComponent.cs" />
     <Compile Include="Configuration\EngineConfig.cs" />
@@ -75,10 +113,12 @@
     <Compile Include="CitizenFX\JoatHashing.cs" />
     <Compile Include="Debug\Log.cs" />
     <Compile Include="Debug\LogEntry.cs" />
+    <Compile Include="Networking\NetClient.cs" />
     <Compile Include="Networking\EventRequestParams.cs" />
     <Compile Include="Networking\EventResponseParams.cs" />
     <Compile Include="Networking\MethodCall.cs" />
     <Compile Include="Networking\MethodResult.cs" />
+    <Compile Include="Networking\NetServer.cs" />
     <Compile Include="Networking\NetworkHeader.cs" />
     <Compile Include="Core\NativeAPI.cs" />
     <Compile Include="Networking\NetworkManager.cs" />
@@ -88,7 +128,7 @@
     <Compile Include="CitizenFX\Persistence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CitizenFX\CitizenResource.cs" />
-    <Compile Include="ResourceCache.cs" />
+    <Compile Include="CitizenFX\ResourceCache.cs" />
     <Compile Include="CitizenFX\ResourceFile.cs" />
     <Compile Include="Scripting\LevelScript.cs" />
     <Compile Include="Scripting\ScriptPackage.cs" />
@@ -99,6 +139,24 @@
   <ItemGroup>
     <Folder Include="Math\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Client">
+      <Version>1.0.4439</Version>
+    </PackageReference>
+    <PackageReference Include="CitizenFX.Core.Server">
+      <Version>1.0.4439</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Target Name="ChangeAliasesOfNugetRefs" BeforeTargets="FindReferenceAssembliesForReferences;ResolveReferences">
+    <ItemGroup>
+      <ReferencePath Condition="'%(FileName)' == 'CitizenFX.Core.Server'">
+        <Aliases>Server</Aliases>
+      </ReferencePath>
+      <ReferencePath Condition="'%(FileName)' == 'CitizenFX.Core.Client'">
+        <Aliases>Client</Aliases>
+      </ReferencePath>
+    </ItemGroup>
+  </Target>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(TargetDir)$(ProjectName)*.*" "H:\servers\Game_Servers\FiveM\Project.Online\resources\$(SolutionName)\"/Y/D/E/I</PostBuildEvent>

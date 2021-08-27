@@ -1,5 +1,4 @@
-﻿
-using Proline.Example;
+﻿ 
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Threading.Tasks; 
 
 namespace Proline.Engine.ConsoleApp
 {
@@ -17,7 +16,7 @@ namespace Proline.Engine.ConsoleApp
         private List<Func<Task>> _ticks;
 
         public Program()
-        {
+        { 
             _service = new EngineService(this);
             _ticks = new List<Func<Task>>();
         }
@@ -26,7 +25,6 @@ namespace Proline.Engine.ConsoleApp
         { 
             await _service.Start("ConsoleApp", "0", "true");
             _service.DumpLog();
-            this.AddTick(_service.Update);
         }
 
         static void Main(string[] args)
@@ -54,26 +52,6 @@ namespace Proline.Engine.ConsoleApp
             _ticks.Add(task);
         }
 
-        public object CallFunction<T>(ulong hash, object[] inputParameters)
-        {
-            return null;
-        }
-
-        public void  CallFunction(ulong hash, object[] inputParameters)
-        {
-            return;
-        }
-
-        public async Task Delay(int ms)
-        {
-            await Task.Delay(ms);
-        }
-
-        public string GetCurrentResourceName()
-        {
-            return "Proline.Engine.Client";
-        }
-
         public object GetGlobal(string key)
         {
             throw new NotImplementedException();
@@ -90,26 +68,6 @@ namespace Proline.Engine.ConsoleApp
         }
 
         public void SetGlobal(string key, object data, bool replicated)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void TriggerClientEvent(string eventName, params object[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void TriggerClientEvent(int playerId, string eventName, params object[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void TriggerEvent(string eventName, params object[] data)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void TriggerServerEvent(string eventName, params object[] args)
         {
             throw new NotImplementedException();
         }
