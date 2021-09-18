@@ -4,30 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6D87F6B5-D7AD-4D1F-B282-20ABEE9F4D7A}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{00115FAF-FB34-4DC7-BBEB-E8E9AE227C42}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Proline.Engine.Client</RootNamespace>
-    <AssemblyName>Proline.Engine.Client.net</AssemblyName>
+    <RootNamespace>Proline.Engine</RootNamespace>
+    <AssemblyName>Proline.Engine.Client</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <Deterministic>false</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -46,16 +31,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
@@ -69,6 +49,9 @@
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -86,37 +69,52 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Script.cs" />
+    <Compile Include="Componentry\ClientComponent.cs" />
+    <Compile Include="Debugger.cs" />
+    <Compile Include="Debugging\DebugConsole.cs" />
+    <Compile Include="F8Console.cs" />
+    <Compile Include="Resource\ClientFileLoader.cs" />
+    <Compile Include="ClientEngineService.cs" />
+    <Compile Include="Five\Door.cs" />
+    <Compile Include="Five\HudColor.cs" />
+    <Compile Include="Five\Interior.cs" />
+    <Compile Include="Five\Marker.cs" />
+    <Compile Include="Five\MPStat.cs" />
+    <Compile Include="Five\NativeAPI.cs" />
+    <Compile Include="Five\PedHeadshot.cs" />
+    <Compile Include="Five\Scaleforms\Atm.cs" />
+    <Compile Include="Five\Scaleforms\CellPhoneIFruit.cs" />
+    <Compile Include="Five\Scaleforms\CustomWarningScreen.cs" />
+    <Compile Include="Five\Scaleforms\Menu.cs" />
+    <Compile Include="Five\Scaleforms\MPBigMessageFreemode.cs" />
+    <Compile Include="Five\Scaleforms\MPMMFreemodeMenu.cs" />
+    <Compile Include="Five\Scaleforms\MPRankBar.cs" />
+    <Compile Include="Five\Scaleforms\MPRankBar2.cs" />
+    <Compile Include="Five\Scaleforms\PlayerSwitch.cs" />
+    <Compile Include="Five\Scaleforms\ScaleformHud.cs" />
+    <Compile Include="Five\Scaleforms\ScaleformUI.cs" />
+    <Compile Include="Five\Scaleforms\WebBrowser.cs" />
+    <Compile Include="Five\UIBox.cs" />
+    <Compile Include="Five\UIText.cs" />
+    <Compile Include="Networking\NetClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
+    <Folder Include="Global\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
+    <PackageReference Include="CitizenFX.Core.Client">
+      <Version>1.0.4438</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Proline.Engine\Proline.Engine.csproj">
-      <Project>{00115faf-fb34-4dc7-bbeb-e8e9ae227c42}</Project>
-      <Name>Proline.Engine</Name>
+    <ProjectReference Include="..\Proline.Engine.Shared\Proline.Engine.Shared.csproj">
+      <Project>{331c1790-0782-4784-a640-6b691e338ad3}</Project>
+      <Name>Proline.Engine.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <Target Name="ChangeAliasesOfNugetRefs" BeforeTargets="FindReferenceAssembliesForReferences;ResolveReferences">
-    <ItemGroup>
-      <ReferencePath Condition="'%(FileName)' == 'CitizenFX.Core.Server'">
-        <Aliases>Server</Aliases>
-      </ReferencePath>
-      <ReferencePath Condition="'%(FileName)' == 'CitizenFX.Core.Client'">
-        <Aliases>Client</Aliases>
-      </ReferencePath>
-    </ItemGroup>
-  </Target>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)$(ProjectName)*.*" "H:\servers\Game_Servers\FiveM\Project.Online\resources\$(SolutionName)\"/Y/D/E/I</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetPath)" "H:\servers\Game_Servers\FiveM\Project.Online\resources\$(SolutionName)\"/Y/D/E/I</PostBuildEvent>
   </PropertyGroup>
 </Project>
