@@ -11,7 +11,7 @@ namespace Proline.Classic.LevelScripts
         {
             var position = (Vector3)args[0];
             var blip = World.CreateBlip(position);
-            while (ComponentAPI.IsInActivationRange(position))
+            while (true)
             {
                 if (CitizenFX.Core.Game.PlayerPed.IsInVehicle())
                 {

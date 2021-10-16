@@ -19,7 +19,7 @@ namespace Proline.Classic.LevelScripts.Object
             //API.DoorControl((uint)LocalEntity.Model.Hash, LocalEntity.Position.X, LocalEntity.Position.Y, LocalEntity.Position.Z, true,
             //    1f, 1f, 1f);
 
-            while (ComponentAPI.IsEntityInActivationRange(handle))
+            while (true)
             {
                 Screen.DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to open the vault door");
                  

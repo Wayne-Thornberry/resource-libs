@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.UI;
+using Proline.CFXExtended.Core;
 using Proline.CScripting.Framework;
 
 namespace Proline.Classic.LevelScripts.Object
@@ -21,7 +22,7 @@ namespace Proline.Classic.LevelScripts.Object
                 var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
                 LogDebug(stat.GetValue());
                 LogDebug(stat2.GetValue());
-                while (ComponentAPI.IsEntityInActivationRange(entity.Handle))
+                while (true)
                 {
                     Screen.DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to recive money");
                     if (CitizenFX.Core.Game.IsControlJustPressed(0, Control.Context))

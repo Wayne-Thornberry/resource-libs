@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
+using Proline.CFXExtended.Core.Scaleforms;
 using Proline.CScripting.Framework;
 
 namespace Proline.Classic.LevelScripts.UI

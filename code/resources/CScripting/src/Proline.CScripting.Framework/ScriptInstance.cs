@@ -22,8 +22,13 @@ namespace Proline.CScripting.Framework
 
         protected void StartNewScript(string scriptName, params object[] args)
         {
-            var im = InternalManager.GetInstance();
-            im.EnqueueStartScriptRequest(new StartScriptRequest(scriptName, args));
+            //var im = InternalManager.GetInstance();
+            //im.EnqueueStartScriptRequest(new StartScriptRequest(scriptName, args));
+        } 
+
+        public void LogDebug(object x)
+        {
+
         }
 
         public abstract Task Execute(params object[] args);

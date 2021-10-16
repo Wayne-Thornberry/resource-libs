@@ -111,43 +111,43 @@ namespace Proline.CScripting
 
         internal static void UnregisterPackage(ScriptPackage sp)
         {
-            var sm = InternalManager.GetInstance();
-            foreach (var scriptName in sp.GetScriptWrappers())
-            {
-                try
-                {
-                    ScriptWrapper.UnregisterScript(scriptName);
-                }
-                catch (ArgumentException e)
-                {
+            //var sm = InternalManager.GetInstance();
+            //foreach (var scriptName in sp.GetScriptWrappers())
+            //{
+            //    try
+            //    {
+            //        ScriptWrapper.UnregisterScript(scriptName);
+            //    }
+            //    catch (ArgumentException e)
+            //    {
 
-                }
-                catch (Exception e)
-                {
-                    throw;
-                }
-            }
-            sm.RemovePackage((sp));
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        throw;
+            //    }
+            //}
+            //sm.RemovePackage((sp));
         }
         internal static void RegisterPackage(ScriptPackage sp)
         {
-            var sm = InternalManager.GetInstance();
-            foreach (var script in sp.GetScriptWrappers())
-            {
-                try
-                {
-                    ScriptWrapper.RegisterScript(script);
-                }
-                catch (ArgumentException e)
-                {
+            //var sm = InternalManager.GetInstance();
+            //foreach (var script in sp.GetScriptWrappers())
+            //{
+            //    try
+            //    {
+            //        ScriptWrapper.RegisterScript(script);
+            //    }
+            //    catch (ArgumentException e)
+            //    {
 
-                }
-                catch (Exception e)
-                {
-                    throw;
-                }
-            }
-            sm.AddPackage(sp);
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        throw;
+            //    }
+            //}
+            //sm.AddPackage(sp);
         }
     }
 }

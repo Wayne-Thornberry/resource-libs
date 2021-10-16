@@ -84,8 +84,8 @@ namespace Proline.Classic.LevelScripts
                     var d = item.Position + new Vector3(0, 0, (item.Model.GetDimensions().Z * 0.8f));
                     World.DrawMarker(MarkerType.DebugSphere, item.Position, new Vector3(0, 0, 0),
                         new Vector3(0, 0, 0), new Vector3(0.2f, 0.2f, 0.2f), Color.FromArgb(150, 255, 0, 0));
-                    ComponentAPI.DrawEntityBoundingBox(item.Handle, 125, 0, 0, 100);
-                    ComponentAPI.DrawDebugText3D(x, d, 3f, 0);
+                    //ComponentAPI.DrawEntityBoundingBox(item.Handle, 125, 0, 0, 100);
+                    //ComponentAPI.DrawDebugText3D(x, d, 3f, 0);
                 }
 
                 //if (_startPos != Vector3.Zero && _endPos != Vector3.Zero)
@@ -141,7 +141,8 @@ namespace Proline.Classic.LevelScripts
                     Reset();
                 if (!_multiSelectEnabled)
                 {
-                    var d = ComponentAPI.ScreenRelToWorld(_cam.Position, _cam.Rotation, new Vector2(_cx, _cy), out var dir);
+                    Vector3 d = Vector3.Right;//ComponentAPI.ScreenRelToWorld(_cam.Position, _cam.Rotation, new Vector2(_cx, _cy), out var dir);
+                    Vector3 dir = Vector3.Right;//ComponentAPI.ScreenRelToWorld(_cam.Position, _cam.Rotation, new Vector2(_cx, _cy), out var dir);
                     _raycastResult = World.Raycast(d, dir, 1000f, IntersectOptions.Everything);
                     if (_raycastResult.DitHit)
                     {
@@ -184,12 +185,12 @@ namespace Proline.Classic.LevelScripts
                     _worldPos = new Vector3[_points.Length];
                     _p = new Vector2[_points.Length];
 
-                    for (int i = 0; i < _points.Length; i++)
-                    {
-                        var raycast = World.Raycast(ComponentAPI.ScreenRelToWorld(_cam.Position, _cam.Rotation, _points[i], out var dir), dir, 1000f, IntersectOptions.Everything);
-                        _worldPos[i] = raycast.HitPosition;
-                        _p[i] = new Vector2(raycast.HitPosition.X, raycast.HitPosition.Y);
-                    }
+                    //for (int i = 0; i < _points.Length; i++)
+                    //{
+                    //    var raycast = World.Raycast(ComponentAPI.ScreenRelToWorld(_cam.Position, _cam.Rotation, _points[i], out var dir), dir, 1000f, IntersectOptions.Everything);
+                    //    _worldPos[i] = raycast.HitPosition;
+                    //    _p[i] = new Vector2(raycast.HitPosition.X, raycast.HitPosition.Y);
+                    //}
 
                     foreach (var item in han)
                     {
@@ -214,7 +215,7 @@ namespace Proline.Classic.LevelScripts
                 _buttonHeld2++;
                 if(_buttonHeld2 > 10)
                 {
-                    ComponentAPI.DrawDebug2DBox(_st, new PointF(_cx, _cy), Color.FromArgb(100, 100, 100, 100));
+                    //ComponentAPI.DrawDebug2DBox(_st, new PointF(_cx, _cy), Color.FromArgb(100, 100, 100, 100));
                     _multiSelectEnabled = true;
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using Proline.CFXExtended.Core.Scaleforms;
 using Proline.CScripting.Framework;
 
 namespace Proline.Classic.LevelScripts.Object
@@ -32,7 +33,7 @@ namespace Proline.Classic.LevelScripts.Object
             DisplayedView = 0;
             ScriptStage = 9;
 
-            while (ScriptStage != -1 && entity.Exists() && ComponentAPI.IsEntityInActivationRange(entityHandle))
+            while (ScriptStage != -1 && entity.Exists() && true)
             { 
 
                 if(ScriptStage == 9)

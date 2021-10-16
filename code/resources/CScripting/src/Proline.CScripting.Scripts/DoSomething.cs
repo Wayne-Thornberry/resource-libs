@@ -8,7 +8,7 @@ namespace Proline.Classic.LevelScripts
     {
         public override async Task Execute(params object[] args)
         {
-            ComponentAPI.AttachBlipsToGasStations();
+            //ComponentAPI.AttachBlipsToGasStations();
             StartNewScript("MPStartup", null);
             //Globals.Set("EnableSomething", false);
             LogDebug("Testing on another script: " + "");//Globals.Get("EnableSomething"));
@@ -18,7 +18,7 @@ namespace Proline.Classic.LevelScripts
                 if(CitizenFX.Core.Game.IsControlJustPressed(0, Control.VehicleExit))
                 {
                     //ExampleAPI.SetPlayerAsPartOfPoliceGroup();
-                    ComponentAPI.UnlockNeareastVehicle();
+                    //ComponentAPI.UnlockNeareastVehicle();
                 }
                 await BaseScript.Delay(0);
             }

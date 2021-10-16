@@ -92,19 +92,19 @@ namespace Proline.CScripting
 
         internal void EndRunInstance(ScriptInstance scriptInstance)
         {
-            var em = InternalManager.GetInstance();
-            var extensions = em.GetExtensions();
-            _instances.Remove(scriptInstance);
-            _handles++;
-            foreach (var extension in extensions)
-            {
-                extension.OnScriptStarted(_name);
-            }
+            //var em = InternalManager.GetInstance();
+            //var extensions = em.GetExtensions();
+            //_instances.Remove(scriptInstance);
+            //_handles++;
+            //foreach (var extension in extensions)
+            //{
+            //    extension.OnScriptStarted(_name);
+            //}
         }
 
         internal int StartNewInstance(object[] args)
         {
-            if (!EngineConfiguration.IsClient && _envType == 1) return -1;
+            //if (!EngineConfiguration.IsClient && _envType == 1) return -1;
             try
             { 
                 _status = 0;
@@ -120,7 +120,7 @@ namespace Proline.CScripting
             }
             catch (Exception e)
             {
-                LogDebug(e.ToString());
+                //LogDebug(e.ToString());
                 throw;
             }
         }
@@ -132,23 +132,24 @@ namespace Proline.CScripting
 
         internal static void RegisterScript(ScriptWrapper script)
         {
-            var sm = InternalManager.GetInstance();
-            sm.AddScript(script);
+            //var sm = InternalManager.GetInstance();
+            //sm.AddScript(script);
         }
 
         internal static void UnregisterScript(ScriptWrapper scriptName)
         {
-            var sm = InternalManager.GetInstance();
-            sm.RemoveScript(scriptName);
+            //var sm = InternalManager.GetInstance();
+            //sm.RemoveScript(scriptName);
         }
 
         internal static int StartScript(StartScriptRequest startScriptRequest)
         {
-            var em = InternalManager.GetInstance();
-            var extensions = em.GetExtensions();
-            var wrapper = em.GetScript(startScriptRequest.ScriptName);
-            if (wrapper == null) return -1;
-            return wrapper.StartNewInstance(null);
+            //var em = InternalManager.GetInstance();
+            //var extensions = em.GetExtensions();
+            //var wrapper = em.GetScript(startScriptRequest.ScriptName);
+            //if (wrapper == null) return -1;
+            //return wrapper.StartNewInstance(null);
+            return default;
         }
 
         internal static int[] StartScripts(StartScriptRequest[] startScriptRequests)

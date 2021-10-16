@@ -1,3 +1,4 @@
+using Proline.CScripting.Framework;
 using System.Threading.Tasks;
 
 namespace Proline.Classic.LevelScripts

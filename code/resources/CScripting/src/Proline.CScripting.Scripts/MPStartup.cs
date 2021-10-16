@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CitizenFX.Core;
+using Proline.CFXExtended.Core;
 using Proline.CScripting.Framework;
 
 namespace Proline.Classic.LevelScripts
@@ -20,8 +21,8 @@ namespace Proline.Classic.LevelScripts
             stat2.SetValue(0);
             LogDebug(stat.GetValue());
             LogDebug(stat2.GetValue());
-            LogDebug(await ComponentAPI.TestNetworkAPI(1,1,1));
-            ComponentAPI.PlayerAPI(CitizenFX.Core.Game.Player.Name);
+            //LogDebug(await ComponentAPI.TestNetworkAPI(1,1,1));
+            //ComponentAPI.PlayerAPI(CitizenFX.Core.Game.Player.Name);
 
             //API.RequestIpl("");
             //await World.CreateVehicle(new Model(1747439474), Game.PlayerPed.Position);
