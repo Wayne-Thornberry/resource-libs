@@ -10,6 +10,7 @@ var commonDir = "./code/common";
 var resourceDir = "./code/resources";
 var componentDir = "./code/components";
 var libDir = "./../../libs";
+var dataDir = "./../../../data/resources";
 var toolsDir = "./code/tools";
 var resourceFramework = "Proline.Component.Framework";
 
@@ -121,23 +122,13 @@ Task("Deploy")
             var resourceDeployDir = $"{resourceOutputDir}/{resource.Name}";
             CleanDirectory(resourceDeployDir);
 	        Information("Cleaned " + resourceDeployDir);
-
-            CopyFile($"{resource.FullPath}/component.json", resourceDeployDir + "/component.json"); 
-	        Information($"Copied {resource.FullPath}/component.json" + " To " + resourceDeployDir + "/component.json");
-            
-            CopyFile($"{resource.FullPath}/fxmanifest.lua", resourceDeployDir + "/fxmanifest.lua"); 
-	        Information($"Copied {resource.FullPath}/fxmanifest.lua" + " To " + resourceDeployDir + "/fxmanifest.lua");
+ 
+            // Copy any working data files to the resource, data should probably be its own repo
+            CopyDirectory($"{dataDir}/{resource.Name}", resourceDeployDir); 
+	        Information($"Copied {dataDir}/{resource.Name}" + " To " + resourceDeployDir);
 
             CopyDirectory($"{artificatsOutputDir}/{resource.Name}", resourceDeployDir); 
-	        Information($"Copied {artificatsOutputDir}/{resource.Name}" + " To " + resourceDeployDir);
-
-            // Copy any working data files to the resource, data should probably be its own repo
-            CopyDirectory($"{resource.FullPath}/data", resourceDeployDir + "/data"); 
-	        Information($"Copied {resource.FullPath}/data" + " To " + resourceDeployDir + "/data");
-
-            // Copy the framework to the resource dir to make it work
-            //CopyDirectory($"{artificatsOutputDir}/{resourceFramework}", resourceDeployDir); 
-	        //Information($"Copied {artificatsOutputDir}/{resourceFramework}" + " To " + resourceDeployDir);
+	        Information($"Copied {artificatsOutputDir}/{resource.Name}" + " To " + resourceDeployDir); 
 
             // Delete this to avoid causing issues with loading and running the .net libraries
             DeleteFiles(resourceDeployDir + "/CitizenFX.Core.*.dll");
