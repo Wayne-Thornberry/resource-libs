@@ -1,0 +1,9 @@
+﻿namespace Proline.Resource.Client.Component
+{
+    public enum ComponentType
+    {
+        LINKED, // ALLOWS COMMUNICATION ACROSS THE WIRE
+        CONNECTED, // FUNCTIONALLY WISE, SEVER PROCESSES HAPPEN FIRST THEN CLIENT PROCESSES
+        INDEPENDENT, // BOTH CONTEXTS RUN INDEPENDELY OF EACH OTHER
+    }
+}

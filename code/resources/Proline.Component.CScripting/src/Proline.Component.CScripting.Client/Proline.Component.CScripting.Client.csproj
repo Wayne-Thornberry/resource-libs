@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <RootNamespace>Proline.Component.CScripting.Client</RootNamespace>
+    <AssemblyName>Proline.Component.CScripting.Client.net</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Client" Version="1.0.5153" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Proline.Component.CScripting.Framework\Proline.Component.CScripting.Framework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Proline.Component.Framework.Client">
+      <HintPath>..\..\..\..\..\artifacts\Proline.Component.Framework\Proline.Component.Framework.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,6 @@
+{
+  "ComponentName": "CScripting",
+  "ComponentType": 1,
+  "ServerAssembly": "Proline.CScripting.Server",
+  "ClientAssembly": "Proline.CScripting.Client"
+}

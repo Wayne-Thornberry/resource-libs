@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <AssemblyName>Proline.Classic.LevelScripts</AssemblyName>
+    <RootNamespace>Proline.Classic.LevelScripts</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Client" Version="1.0.5153" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Proline.Component.CScripting.Client\Proline.Component.CScripting.Client.csproj" />
+    <ProjectReference Include="..\Proline.Component.CScripting.Framework\Proline.Component.CScripting.Framework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Proline.CFXExtended.Core.Client">
+      <HintPath>..\..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Component.CScriptAreas.Core">
+      <HintPath>..\..\..\..\..\artifacts\Proline.Component.CScriptAreas\Proline.Component.CScriptAreas.Core.dll</HintPath>
+    </Reference> 
+    <Reference Include="Proline.Component.Framework.Client">
+      <HintPath>..\..\..\..\..\artifacts\Proline.Component.Framework\Proline.Component.Framework.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
