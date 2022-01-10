@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Proline.Proxies.UserManagment.Client">
+      <HintPath>..\..\..\..\..\artifacts\Proline.Proxies.UserManagment\Proline.Proxies.UserManagment.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
+</Project>

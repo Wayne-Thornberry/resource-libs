@@ -6,6 +6,7 @@ description 'Project Online Freemode Game'
 version '1.0.0.0'
 
 client_script 'Proline.Component.CScripting.Client.net.dll'
+server_script 'Proline.Component.CScripting.Server.net.dll'
 files {
 '*.json',
 '*.dll',

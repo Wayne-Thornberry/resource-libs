@@ -1,6 +1,7 @@
 ﻿using CitizenFX.Core;
 using Proline.Resource.Client.Eventing;
 using Proline.Resource.Client.Framework;
+using Proline.Resource.Client.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,16 @@ namespace Proline.Resource.Component.Events
             _internalHandlerCollection = handlers;
         }
 
-        internal static void InvokeEvent(string eventName, params object[] args)
+        public static void InvokeEvent(string eventName, params object[] args)
         {
+            var log = Logger.GetInstance().GetLog();
+            //log.Debug(eventName + " Invoke");
             BaseScript.TriggerEvent(eventName, new List<object>(args));
+        }
+
+        public static void InvokeEventV2(string eventName, params object[] args)
+        {
+            BaseScript.TriggerEvent(eventName, args);
         }
 
         public static void AddEventListener(string eventName, Delegate delegat)
@@ -41,6 +49,11 @@ namespace Proline.Resource.Component.Events
                 _eventHandlerDictionary.Add(eventName, eh);
                 _internalHandlerCollection.Add(eventName, eh.Callback);
             }
+        }
+
+        public static void AddEventListenerV2(string eventName, Delegate delegat)
+        {
+            _internalHandlerCollection.Add(eventName, delegat);
         }
 
         public static void RemoveEventListener(string eventName)

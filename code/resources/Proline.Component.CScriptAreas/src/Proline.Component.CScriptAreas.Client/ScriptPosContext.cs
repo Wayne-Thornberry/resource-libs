@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Proline.Component.Framework.Client.Access;
 using Proline.Resource.Client.Framework;
 using Proline.Resource.Client.Res;
+using Proline.Resource.Component.Events;
 using System;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace Proline.Classic.Engine.Components.CScriptPosition
     {
         public ScriptPosContext()
         { 
-            ExportManager.CreateExport("IsPointWithinActivationRange", new Func<Vector3,bool>(IsPointWithinActivationRange));
+          //  ExportManager.CreateExport("IsPointWithinActivationRange", new Func<Vector3,bool>(IsPointWithinActivationRange));
         }
 
         public override void OnLoad()
@@ -21,12 +22,7 @@ namespace Proline.Classic.Engine.Components.CScriptPosition
             var scriptPosition = JsonConvert.DeserializeObject<ScriptPositions>(data); 
             ScriptPositionManager.AddScriptPositionPairs(scriptPosition.scriptPositionPairs); 
             PosBlacklist.Create(); 
-        }
-
-        private bool IsPointWithinActivationRange(Vector3 position)
-        {
-            return World.GetDistance(position, CitizenFX.Core.Game.PlayerPed.Position) < 10f;
-        }
+        } 
 
         public override async Task OnTick()
         {
@@ -39,7 +35,7 @@ namespace Proline.Classic.Engine.Components.CScriptPosition
                     if (World.GetDistance(vector, CitizenFX.Core.Game.PlayerPed.Position) < 10f && !PosBlacklist.Contains(positionsPair))
                     {
                         _log.Debug("In range");
-                        StartScript(positionsPair.ScriptName, vector);
+                        EventManager.InvokeEventV2("StartScriptHandler", positionsPair.ScriptName, vector); 
                         PosBlacklist.Add(positionsPair);
                     }
                     else if (World.GetDistance(vector, CitizenFX.Core.Game.PlayerPed.Position) > 10f && PosBlacklist.Contains(positionsPair))
@@ -48,12 +44,6 @@ namespace Proline.Classic.Engine.Components.CScriptPosition
                     };
                 }
             }
-        }
-
-        private void StartScript(string scriptName, Vector3 vector)
-        {
-            var exports = ExportManager.GetExports();
-            exports["Proline.Component.CScripting"].StartScript(scriptName, vector);
-        }
+        } 
     }
 }

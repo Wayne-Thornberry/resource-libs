@@ -2,9 +2,9 @@
 {
     public interface ILogMethods
     {
-        void Debug(string data);
-        void Error(string data);
-        void Info(string data);
-        void Warn(string data);
+        void Debug(string data, bool broadcast = false);
+        void Error(string data, bool broadcast = false);
+        void Info(string data, bool broadcast = false);
+        void Warn(string data, bool broadcast = false);
     }
 }

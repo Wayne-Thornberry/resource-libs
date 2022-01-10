@@ -15,7 +15,7 @@ namespace Proline.Resource.Client.Framework
 {
     public abstract class ComponentContext : BaseScript
     {
-        protected Log _log => Logger.GetInstance().GetLog();
+        protected Log _log;
         public string Name { get; internal set; }
 
         public virtual void OnLoad() { }
@@ -26,7 +26,8 @@ namespace Proline.Resource.Client.Framework
         {
             EventManager.SetHandlerCollection(EventHandlers);
             ExportManager.SetExportDictionary(Exports);
-            Globals.SetGlobalBag(GlobalState); 
+            Globals.SetGlobalBag(GlobalState);
+            _log = Logger.GetInstance().GetLog();
             Tick += InternalOnTick;
         }
           
@@ -39,17 +40,18 @@ namespace Proline.Resource.Client.Framework
                 { 
                     OnLoad();
                     OnStart();
+                    _isSetup = true;
                 }
                 await OnTick();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 Tick -= InternalOnTick;
+                _log.Error(e.ToString(), true);
                 throw;
             }
             finally
             {
-                _isSetup = true;
                 //Tick -= InternalOnTick;
             }
         }  

@@ -1,4 +1,6 @@
-﻿using Proline.Common.Logging;
+﻿using CitizenFX.Core;
+using Proline.Common.Logging;
+using Proline.Component.Framework.Client.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,32 +18,42 @@ namespace Proline.Resource.Client.Logging
             _entries = new List<string>(); 
         } 
 
-        public void Debug(string data)
+        public void Debug(string data, bool broadcast = false)
         {
             var type = "Debug";
-            LogEntry(type, data);
+            LogEntry(type, data); 
         }
 
-        private void LogEntry(string type, string data)
+        private void LogEntry(string type, string data, bool broadcast = false)
         {
             var entry = string.Format("[{0}] [{1}] {2}", DateTime.UtcNow.ToString(), type, data); 
             AddEntry(data, entry);
             CitizenFX.Core.Debug.WriteLine(entry);
+            int x = 0;
+            switch (entry)
+            {
+                case "Debug": x = 0; break;
+                case "Info": x = 1; break;
+                case "Warn": x = 2; break;
+                case "Error": x = 3; break;
+            }
+            if(broadcast)
+                CNetwork.InvokeNetworkEvent("LogHandler", data, x);
         }
 
-        public void Warn(string data)
+        public void Warn(string data, bool broadcast = false)
         { 
             var type = "Warn";
             LogEntry(type, data);
         }
 
-        public void Info(string data)
+        public void Info(string data, bool broadcast = false)
         { 
             var type = "Info";
             LogEntry(type, data);
         }
 
-        public void Error(string data)
+        public void Error(string data, bool broadcast = false)
         { 
             var type = "Error";
             LogEntry(type, data);

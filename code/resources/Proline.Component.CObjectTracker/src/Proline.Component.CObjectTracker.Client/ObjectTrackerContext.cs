@@ -9,6 +9,7 @@ using Proline.Resource.Client.Eventing;
 using Proline.Resource.Client.Framework;
 using Proline.Resource.Client.Memory;
 using Proline.Resource.Client.Res;
+using Proline.Resource.Component.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,62 +20,43 @@ namespace Proline.Classic.Client.Engine.Components.CBrain
 {
     public class ObjectTrackerContext : ComponentContext
     {
-        private List<int> _trackedObjects;
+        private HashSet<int> _trackedHandles;
 
         public ObjectTrackerContext()
         {
-            _trackedObjects = new List<int>();
+            _trackedHandles = new HashSet<int>();
         }
-
-        public override void OnLoad()
-        {
-            MemoryCache.Cache("TrackedHandles", _trackedObjects);
-
-        }
-
-        public void StartNewScript(string name, params object[] args)
-        {
-            var exports = ExportManager.GetExports();
-            _log.Debug(name);
-            exports["Proline.Component.CScripting"].StartScript("Test");
-        }
-
 
         public override async Task OnTick()
         {
-            var oldHandles = new List<int>(_trackedObjects);
-            var newHandles = new List<int>(HandleManager.EntityHandles);
+            var entityHandles = new Queue<int>(HandleManager.EntityHandles);
+            var addedHandles = new List<object>();
+            var removedHanldes = new List<object>();
 
-            //StartNewScript("x"); 
-
-            foreach (var handle in oldHandles)
+            while(entityHandles.Count > 0)
             {
-                // We know the object tracked and still exists
-                if (newHandles.Contains(handle))
-                {
-                    newHandles.Remove(handle); // We subtrack the new handle that is already tracked, what we will have left at the end is new items that are untracked
-                    //_log.Debug(handle + " Handle already tracked");
+                var handle = entityHandles.Dequeue();
+                if (_trackedHandles.Contains(handle))
                     continue;
-                }
-
-                // We know the object is not tracked and doesnt exist anymore
-                if (!API.DoesEntityExist(handle))
-                {
-                    _trackedObjects.Remove(handle);
-                    //_log.Debug(handle + " Entity of handle does not exist anymore");
-                    BaseScript.TriggerEvent("EntityHandleUnTracked", handle);
-                    //_entityHandleUnTrackedHandler.Invoke(handle);
-                }
+                _trackedHandles.Add(handle);
+                addedHandles.Add(handle);
+               // EventManager.InvokeEventV2("EntityHandleTracked", handle);
             }
 
-            foreach (var handle in newHandles)
+            var combinedHandles = new Queue<int>(_trackedHandles); 
+            while (combinedHandles.Count > 0)
             {
-                _trackedObjects.Add(handle);
-                // _log.Debug(handle + " New handle not tracked");
-                BaseScript.TriggerEvent("EntityHandleTracked", handle);
-               // _entityHandleTrackedHandler.Invoke(handle);
+                var handle = combinedHandles.Dequeue();
+                if (API.DoesEntityExist(handle)) 
+                    continue;
+                _trackedHandles.Remove(handle);
+                removedHanldes.Add(handle);
+                //EventManager.InvokeEventV2("EntityHandleUnTracked", handle);
             }
-            await BaseScript.Delay(1000); 
+            EventManager.InvokeEventV2("EntityHandlesTracked", addedHandles);
+            await BaseScript.Delay(100);
+            EventManager.InvokeEventV2("EntityHandlesUnTracked", removedHanldes);
+            await BaseScript.Delay(900);
         }
     }
 }

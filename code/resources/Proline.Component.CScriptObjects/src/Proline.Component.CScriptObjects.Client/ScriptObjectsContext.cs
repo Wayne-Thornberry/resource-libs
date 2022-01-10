@@ -5,6 +5,7 @@ using Proline.Component.Framework.Client.Access;
 using Proline.Resource.Client.Eventing;
 using Proline.Resource.Client.Framework;
 using Proline.Resource.Client.Res;
+using Proline.Resource.Component.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,21 +15,16 @@ namespace Proline.Classic.Engine.Components.CScriptObjects
 {
     public class ScriptObjectsContext : ComponentContext
     {
-        private List<ScriptObjectData> _scriptObjData;
-        private List<ScriptObject> _scriptObjs;
-
-        private CEvent _entityTrackedHandler;
-        private CEvent _entityUnTrackedHandler;
+        private Dictionary<int, List<ScriptObjectData>> _scriptObjData;
+        private Dictionary<int, ScriptObject> _processScriptObjs;
 
         public ScriptObjectsContext()
         { 
-            _scriptObjData = new List<ScriptObjectData>();
-            _scriptObjs = new List<ScriptObject>();
-            _entityTrackedHandler = new CEvent("CObjectTracker", "EntityHandleTracked");
-            _entityUnTrackedHandler = new CEvent("CObjectTracker", "EntityHandleUnTracked");
+            _scriptObjData = new Dictionary<int, List<ScriptObjectData>>();
+            _processScriptObjs = new Dictionary<int, ScriptObject>();
 
-            EventHandlers.Add("EntityHandleTracked", new Action<int>(OnEntityTracked));
-            EventHandlers.Add("EntityHandleUnTracked", new Action<int>(OnEntityUntracked));
+            EventManager.AddEventListenerV2("EntityHandlesTracked", new Action<List<object>>(OnNewHandlesFound)); 
+            //EventManager.AddEventListenerV2("EntityHandlesUnTracked", new Action<List<object>>(OnEntityUntracked));
         }
 
         public override void OnLoad()
@@ -38,111 +34,113 @@ namespace Proline.Classic.Engine.Components.CScriptObjects
             var data = rfl.Load("data/scriptobjects.json");
             var objs = JsonConvert.DeserializeObject<ScriptObjectData[]>(data);
 
-
-            //_scriptObjData.Add(new ScriptObjectData()
-            //{
-            //    ActivationRange = 30f,
-            //    ModelHash = "prop_atm_03",
-            //    ModelName = -1,
-            //    ScriptName = "ObAtm"
-            //});
-
-
-
-            _scriptObjData.AddRange(objs);
-
-            _entityTrackedHandler.AddListener(new Action<int>(OnEntityTracked));
-            _entityUnTrackedHandler.AddListener(new Action<int>(OnEntityUntracked));
-
+            foreach (var item in objs)
+            {
+                var hash = string.IsNullOrEmpty(item.ModelHash) ? item.ModelName : API.GetHashKey(item.ModelHash);
+                if (!_scriptObjData.ContainsKey(hash))
+                    _scriptObjData.Add(hash, new List<ScriptObjectData>());
+                _scriptObjData[hash].Add(item);
+            }
             base.OnLoad();
         }
 
-        private void OnEntityUntracked(int handle)
+        //private void OnEntityUntracked(List<object> handles)
+        //{
+        //    try
+        //    {
+        //        foreach (int handle in handles)
+        //        {
+        //            if (API.DoesEntityExist(handle)) return;
+        //            var modelHash = API.GetEntityModel(handle);
+        //            if (!_scriptObjData.ContainsKey(modelHash)) return;
+        //            if (_scriptObjs.ContainsKey(handle))
+        //                _scriptObjs.Remove(handle);
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _log.Error(e.ToString(), true);
+        //        throw;
+        //    }
+        //}
+
+        private void OnNewHandlesFound(List<object> handles)
         {
-            //_log.Debug(handle + " Old handle untracked, if a tracked obj existed here but had not been activated, we remove it");
-            var entity = Entity.FromHandle(handle);
-            var so = _scriptObjs.Where(e => e.Handle == handle).FirstOrDefault(); 
-            if(so != null)
-                _scriptObjs.Remove(so);
-            ProcessScriptObjects();
+            try
+            {
+
+                foreach (int handle in handles)
+                {
+                    if (!API.DoesEntityExist(handle)) return;
+                    var modelHash = API.GetEntityModel(handle);
+                    if (!_processScriptObjs.ContainsKey(handle) && _scriptObjData.ContainsKey(modelHash))
+                    {
+                        _log.Debug(handle + " Oh boy, we found a matching script object with that model hash from that handle, time to track it");
+                        _processScriptObjs.Add(handle, new ScriptObject()
+                        {
+                            Data = _scriptObjData[modelHash],
+                            Handle = handle,
+                            State = 0,
+                        });
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+
+                _log.Error(e.ToString(), true);
+                throw;
+            }
         }
 
-        private void OnEntityTracked(int handle)
+        public override async Task OnTick()
         {
-           // _log.Debug(handle + " New handle found, time to see if we can start a script from it");
-            var entity = Entity.FromHandle(handle);
-            if (!entity.Exists()) return;
-
-            var data = _scriptObjData.Where(e => API.GetHashKey(e.ModelHash) == entity.Model).FirstOrDefault();
-            if (data == null)
-                return;
-
-            _log.Debug(handle + " Oh boy, we found a matching script object with that model hash from that handle, time to track it");
-
-            var so = new ScriptObject()
-            {
-                Data = data,
-                Handle = handle,
-                State = 0,
-            };
-
-            if (!_scriptObjs.Contains(so))
-                _scriptObjs.Add(so);
-
             ProcessScriptObjects();
+            await BaseScript.Delay(10);
         }
 
         private void ProcessScriptObjects()
         {
-            foreach (var so in _scriptObjs.ToArray())
-            {
+            var quew = new Queue<ScriptObject>(_processScriptObjs.Values);
+            while (quew.Count > 0)
+            { 
+                var so = quew.Dequeue();
                 ProcessScriptObject(so);
             }
         }
 
-        public void StartNewScript(string name, params object[] args)
+        public void StartNewScript(string name, int handle)
         {
-            BaseScript.TriggerEvent("StartScriptHandler", name, new List<object>(args)); 
+            EventManager.InvokeEventV2("StartScriptHandler", name, handle);
         }
 
 
         private void ProcessScriptObject(ScriptObject so)
         {
-            var entity = Entity.FromHandle(so.Handle);
-            if (entity == null)
+            if (!API.DoesEntityExist(so.Handle))
             {
-                _scriptObjs.Remove(so);
+                _processScriptObjs.Remove(so.Handle);
                 return;
             }
-
-
-            // _log.Debug(so.Handle + " Processing script object to see if the player is in activation range");
-            if (IsEntityWithinActivationRange(entity, Game.PlayerPed, so.Data.ActivationRange))
-            { 
-                _log.Debug(so.Handle + " Player is within range here, we should start the script and no longer track this for processing");
-                //var si = ScriptManager.GetInstance();
-                StartNewScript(so.Data.ScriptName, so.Handle);
-                so.State = -1;
-                _scriptObjs.Remove(so);
-            }
-            else
+            var entity = Entity.FromHandle(so.Handle);
+            foreach (var item in so.Data)
             {
-               // _log.Debug(so.Handle + " Player is not in range yet, we should see if this obj is tracked, if not, we should add it for processing later");
-                so.State = 1;
-                if (!_scriptObjs.Contains(so))
-                    _scriptObjs.Add(so);
+                if (IsEntityWithinActivationRange(entity, Game.PlayerPed, item.ActivationRange) && so.State == 0)
+                {
+                    _log.Debug(so.Handle + " Player is within range here, we should start the script and no longer track this for processing");
+                    StartNewScript(item.ScriptName, so.Handle);
+                    so.State = 1;
+                    _processScriptObjs.Remove(so.Handle);
+                    return;
+                }
             }
         }
 
         private bool IsEntityWithinActivationRange(Entity entity, Entity playerPed, float activationRange)
         {
-            return World.GetDistance(entity.Position, playerPed.Position) <= activationRange;
-        }
-         
-
-        public override void OnStart()
-        {
-
+            var pos = Game.PlayerPed.Position;
+            var pos2 = entity.Position;
+            return API.Vdist2(pos.X, pos.Y, pos.Z, pos2.X, pos2.Y, pos2.Z) <= activationRange;
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
-using Newtonsoft.Json;
-using Proline.Component.CSaving.Client;
+using Newtonsoft.Json; 
 using Proline.Component.Framework.Client.Access;
 using Proline.Resource.Client.Eventing;
 using Proline.Resource.Client.Framework;
 using Proline.Resource.Client.Res;
+using Proline.Resource.Component.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +19,9 @@ namespace Proline.Classic.Engine.Components.CScriptObjects
 
        public FileContext()
         { 
-            ExportManager.CreateExport("CreateFile", new Action(CreateFile));
-            ExportManager.CreateExport("AddData", new Action<string, object>(AddData));
-            ExportManager.CreateExport("UploadData", new Action(UploadData));
+            EventManager.AddEventListenerV2("CreateFile", new Action(CreateFile));
+            EventManager.AddEventListenerV2("AddData", new Action<string, object>(AddData));
+            EventManager.AddEventListenerV2("UploadFile", new Action(UploadData));
         }
 
         private void CreateFile()
@@ -43,13 +43,7 @@ namespace Proline.Classic.Engine.Components.CScriptObjects
 
         public override void OnLoad()
         {
-            FileAPI.CreateFile();
-            FileAPI.AddData("Test", 1);
-            FileAPI.AddData("Test2", true);
-            FileAPI.AddData("Test3", "string");
-            FileAPI.AddData("Test4", 1.0f);
-            FileAPI.AddData("Test5", new object[] { 1,"ses",false});
-            FileAPI.UploadData();
+           
             base.OnLoad();
         }
 

@@ -20,7 +20,7 @@ namespace Proline.Resource.Component.Events
 
         internal void OnCallBack(List<object> obj)
         {
-            _log.Debug("Event Called");
+            //_log.Debug("Event Called");
             foreach (var item in _actions)
             {
                 item.DynamicInvoke(obj.ToArray());

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.Proxies.UserManagment.Client", "Proline.Component.UserManagment.Client\Proline.Proxies.UserManagment.Client.csproj", "{56F18B08-B1A6-471F-9F16-59D7E557E669}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56F18B08-B1A6-471F-9F16-59D7E557E669}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56F18B08-B1A6-471F-9F16-59D7E557E669}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56F18B08-B1A6-471F-9F16-59D7E557E669}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56F18B08-B1A6-471F-9F16-59D7E557E669}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {650EDD46-1AE1-4B96-BFFA-11254DF0D99B}
+	EndGlobalSection
+EndGlobal
