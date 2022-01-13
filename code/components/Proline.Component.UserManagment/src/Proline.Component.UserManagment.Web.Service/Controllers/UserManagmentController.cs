@@ -45,11 +45,11 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
 
             try
             { 
-                var identity = _context.PlayerIdentity.FirstOrDefault(e => e.Identifier.Equals(inParameter.Identifier));
+                var identity = _context.LinkedIdentity.FirstOrDefault(e => e.Identifier.Equals(inParameter.Identifier));
                 if (identity == null)
                     return Ok(new EmptyResult());
 
-                var denies = _context.UserDeny.Where(e => e.UserId == identity.UserId).OrderByDescending(e => e.ExpiresAt);
+                var denies = _context.UserDenial.Where(e => e.UserId == identity.UserId).OrderByDescending(e => e.ExpiresAt);
                 var x = new LoginPlayerOutParameter()
                 {
                     UserId = identity.UserId,
@@ -100,7 +100,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
             {
                 var identities = inParameter.Identifiers;
                 var primaryIdentity = identities.First();
-                var identity = _context.PlayerIdentity.FirstOrDefault(e => e.Identifier.Equals(primaryIdentity.Identifier));
+                var identity = _context.LinkedIdentity.FirstOrDefault(e => e.Identifier.Equals(primaryIdentity.Identifier));
 
                 var playerAccount = new PlayerAccount()
                 {
@@ -120,14 +120,14 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
               
                 if (identity == null)
                 {
-                    var x = _context.PlayerIdentity.Where(e => identities.Select(x => x.Identifier).Contains(e.Identifier)).ToArray();
+                    var x = _context.LinkedIdentity.Where(e => identities.Select(x => x.Identifier).Contains(e.Identifier)).ToArray();
                     if (x.Length > 0)
                     {
                         identity = x.First();
                         _context.PlayerAccounts.Add(playerAccount);
                         _context.SaveChanges();
 
-                        _context.PlayerIdentity.Add(new PlayerIndentity()
+                        _context.LinkedIdentity.Add(new LinkedIndentity()
                         {
                             Identifier = primaryIdentity.Identifier,
                             IdentityTypeId = primaryIdentity.IdentitierType,
@@ -143,11 +143,11 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
                         _context.PlayerAccounts.Add(playerAccount);
                         _context.UserAccounts.Add(userAccount);
                         _context.SaveChanges();
-                        var list = new List<PlayerIndentity>();
+                        var list = new List<LinkedIndentity>();
 
                         foreach (var item in identities)
                         {
-                            list.Add(new PlayerIndentity()
+                            list.Add(new LinkedIndentity()
                             {
                                 Identifier = item.Identifier,
                                 IdentityTypeId = item.IdentitierType,
@@ -155,7 +155,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
                                 UserId = userAccount.UserId
                             });
                         }
-                        _context.PlayerIdentity.AddRange(list);
+                        _context.LinkedIdentity.AddRange(list);
                         _context.SaveChanges();
                     }
                 }

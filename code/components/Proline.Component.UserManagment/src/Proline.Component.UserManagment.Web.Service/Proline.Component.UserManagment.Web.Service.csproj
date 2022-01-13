@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Database\Factory\**" />
+    <Content Remove="Database\Factory\**" />
+    <EmbeddedResource Remove="Database\Factory\**" />
+    <None Remove="Database\Factory\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.21">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,7 +29,6 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.21" />
 	</ItemGroup>
   <ItemGroup>
-    <Folder Include="Database\Factory\" />
     <Folder Include="Database\Migrations\" />
   </ItemGroup>
 

@@ -23,16 +23,18 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
 
         // GET: api/UserDenies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDeny>>> GetUserDeny()
+        [Route("GetDenials")]
+        public async Task<ActionResult<IEnumerable<UserDenial>>> GetDenials()
         {
-            return await _context.UserDeny.ToListAsync();
+            return await _context.UserDenial.ToListAsync();
         }
 
         // GET: api/UserDenies/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserDeny>> GetUserDeny(long id)
+        [HttpGet]
+        [Route("GetDenial")]
+        public async Task<ActionResult<UserDenial>> GetDeny(long id)
         {
-            var userDeny = await _context.UserDeny.FindAsync(id);
+            var userDeny = await _context.UserDenial.FindAsync(id);
 
             if (userDeny == null)
             {
@@ -43,10 +45,11 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
         }
 
         // GET: api/UserDenies/5
-        [HttpGet("{userId:long}")]
-        public async Task<ActionResult<IEnumerable<UserDeny>>> GetUserDenies(long userId)
+        [HttpGet]
+        [Route("GetUserDenials")]
+        public async Task<ActionResult<IEnumerable<UserDenial>>> GetUserDenials(long userId)
         {
-            var userDeny =  _context.UserDeny.Where(e=>e.UserId == userId).ToList();
+            var userDeny =  _context.UserDenial.Where(e=>e.UserId == userId).ToList();
 
             if (userDeny == null)
             {
@@ -54,13 +57,29 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
             }
 
             return userDeny;
+        }
+
+
+
+        // POST: api/UserDenies
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost]
+        [Route("PostDenial")]
+        public async Task<ActionResult<UserDenial>> PostUserDeny(UserDenial userDeny)
+        {
+            _context.UserDenial.Add(userDeny);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetUserDeny", new { id = userDeny.DenyId }, userDeny);
         }
 
         // PUT: api/UserDenies/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserDeny(long id, UserDeny userDeny)
+        [HttpPut]
+        [Route("PutDenial")]
+        public async Task<IActionResult> PutUserDeny(long id, UserDenial userDeny)
         {
             if (id != userDeny.DenyId)
             {
@@ -88,29 +107,18 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
             return NoContent();
         }
 
-        // POST: api/UserDenies
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<UserDeny>> PostUserDeny(UserDeny userDeny)
-        {
-            _context.UserDeny.Add(userDeny);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUserDeny", new { id = userDeny.DenyId }, userDeny);
-        }
-
         // DELETE: api/UserDenies/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<UserDeny>> DeleteUserDeny(long id)
+        [HttpDelete]
+        [Route("DeleteDenial")]
+        public async Task<ActionResult<UserDenial>> DeleteUserDeny(long id)
         {
-            var userDeny = await _context.UserDeny.FindAsync(id);
+            var userDeny = await _context.UserDenial.FindAsync(id);
             if (userDeny == null)
             {
                 return NotFound();
             }
 
-            _context.UserDeny.Remove(userDeny);
+            _context.UserDenial.Remove(userDeny);
             await _context.SaveChangesAsync();
 
             return userDeny;
@@ -118,7 +126,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
 
         private bool UserDenyExists(long id)
         {
-            return _context.UserDeny.Any(e => e.DenyId == id);
+            return _context.UserDenial.Any(e => e.DenyId == id);
         }
     }
 }

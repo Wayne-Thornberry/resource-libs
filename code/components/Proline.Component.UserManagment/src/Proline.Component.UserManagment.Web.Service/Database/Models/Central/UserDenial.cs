@@ -11,7 +11,7 @@ namespace Proline.CentralEngine.DBApi.Models.Central
 {
     // Bans a user account which means all child player accounts tied to this user will be banned on either an instance or global level
     [Table("UserDeny")]
-    public class UserDeny 
+    public class UserDenial 
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

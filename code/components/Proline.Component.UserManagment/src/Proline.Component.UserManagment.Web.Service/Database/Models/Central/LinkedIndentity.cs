@@ -9,7 +9,7 @@ using System.Web;
 namespace Proline.CentralEngine.DBApi.Models.Central
 {
     [Table("PlayerIndentity")]
-    public class PlayerIndentity
+    public class LinkedIndentity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -23,13 +23,15 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
 
         // GET: api/UserAccounts
         [HttpGet]
+        [Route("GetUserAccounts")]
         public async Task<ActionResult<IEnumerable<UserAccount>>> GetUserAccounts()
         {
             return await _context.UserAccounts.ToListAsync();
         }
 
         // GET: api/UserAccounts/5
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("GetUserAccount")]
         public async Task<ActionResult<UserAccount>> GetUserAccount(long id)
         {
             var userAccount = await _context.UserAccounts.FindAsync(id);
@@ -42,10 +44,24 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
             return userAccount;
         }
 
+        // POST: api/UserAccounts
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost]
+        [Route("PostUserAccount")]
+        public async Task<ActionResult<UserAccount>> PostUserAccount(UserAccount userAccount)
+        {
+            _context.UserAccounts.Add(userAccount);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetUserAccount", new { id = userAccount.UserId }, userAccount);
+        }
+
         // PUT: api/UserAccounts/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
+        [HttpPut]
+        [Route("PutUserAccount")]
         public async Task<IActionResult> PutUserAccount(long id, UserAccount userAccount)
         {
             if (id != userAccount.UserId)
@@ -74,20 +90,9 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
             return NoContent();
         }
 
-        // POST: api/UserAccounts
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<UserAccount>> PostUserAccount(UserAccount userAccount)
-        {
-            _context.UserAccounts.Add(userAccount);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUserAccount", new { id = userAccount.UserId }, userAccount);
-        }
-
         // DELETE: api/UserAccounts/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("DeleteUserAccount")]
         public async Task<ActionResult<UserAccount>> DeleteUserAccount(long id)
         {
             var userAccount = await _context.UserAccounts.FindAsync(id);

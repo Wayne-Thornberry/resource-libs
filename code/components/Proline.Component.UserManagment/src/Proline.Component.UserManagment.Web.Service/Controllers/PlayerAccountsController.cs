@@ -23,13 +23,15 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
 
         // GET: api/PlayerAccounts
         [HttpGet]
+        [Route("GetPlayerAccounts")]
         public async Task<ActionResult<IEnumerable<PlayerAccount>>> GetPlayerAccounts()
         {
             return await _context.PlayerAccounts.ToListAsync();
         }
 
         // GET: api/PlayerAccounts/5
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("GetPlayerAccount")]
         public async Task<ActionResult<PlayerAccount>> GetPlayerAccount(long id)
         {
             var playerAccount = await _context.PlayerAccounts.FindAsync(id);
@@ -42,10 +44,24 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
             return playerAccount;
         }
 
+        // POST: api/PlayerAccounts
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost]
+        [Route("PostPlayerAccount")]
+        public async Task<ActionResult<PlayerAccount>> PostPlayerAccount(PlayerAccount playerAccount)
+        {
+            _context.PlayerAccounts.Add(playerAccount);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetPlayerAccount", new { id = playerAccount.PlayerId }, playerAccount);
+        }
+
         // PUT: api/PlayerAccounts/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
+        [HttpPut]
+        [Route("PutPlayerAccount")]
         public async Task<IActionResult> PutPlayerAccount(long id, PlayerAccount playerAccount)
         {
             if (id != playerAccount.PlayerId)
@@ -74,20 +90,10 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
             return NoContent();
         }
 
-        // POST: api/PlayerAccounts
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<PlayerAccount>> PostPlayerAccount(PlayerAccount playerAccount)
-        {
-            _context.PlayerAccounts.Add(playerAccount);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetPlayerAccount", new { id = playerAccount.PlayerId }, playerAccount);
-        }
 
         // DELETE: api/PlayerAccounts/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("DeletePlayerAccount")]
         public async Task<ActionResult<PlayerAccount>> DeletePlayerAccount(long id)
         {
             var playerAccount = await _context.PlayerAccounts.FindAsync(id);
