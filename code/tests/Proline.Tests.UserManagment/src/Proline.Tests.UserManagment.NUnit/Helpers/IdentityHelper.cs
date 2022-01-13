@@ -1,6 +1,4 @@
-﻿using Proline.Online.Data;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,6 +7,17 @@ using System.Threading.Tasks;
 
 namespace Proline.CentralEngine.NUnit.Helpers
 {
+
+    public enum IdentifierType
+    {
+        STEAM,
+        IP,
+        SOCIAL,
+        DISCORD,
+        EPIC,
+        HWID,
+    }
+
     public static class IdentityHelper
     {
         public static string CreatePlayerIdentity(string identity = "steam:00012371704", int identityType = 0)

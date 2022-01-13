@@ -21,7 +21,7 @@ namespace Proline.CentralEngine.DBApi.Contexts
         }
 
 
-        public DbSet<UserAccount> Users { get; set; }
+        public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<UserInstanceLicence> UserInstanceLicence { get; set; }
         public DbSet<UserAllow> UserAllow { get; set; }
         public DbSet<UserDeny> UserDeny { get; set; }
@@ -29,7 +29,7 @@ namespace Proline.CentralEngine.DBApi.Contexts
         public DbSet<InstancePlayer> InstancePlayer { get; set; }
         public DbSet<InstanceUserDeny> InstanceUserDeny { get; set; }
         public DbSet<InstanceUserAllow> InstanceUserAllow { get; set; }
-        public DbSet<PlayerAccount> PlayerRegistration { get; set; }
+        public DbSet<PlayerAccount> PlayerAccounts { get; set; }
         public DbSet<PlayerIndentity> PlayerIdentity { get; set; }
         public DbSet<PlayerIndentityType> PlayerIdentityType { get; set; }
     }
