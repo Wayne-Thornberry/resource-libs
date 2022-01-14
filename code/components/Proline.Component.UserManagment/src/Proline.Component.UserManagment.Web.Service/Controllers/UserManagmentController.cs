@@ -127,7 +127,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
                         _context.PlayerAccounts.Add(playerAccount);
                         _context.SaveChanges();
 
-                        _context.LinkedIdentity.Add(new LinkedIndentity()
+                        _context.LinkedIdentity.Add(new LinkedIdentity()
                         {
                             Identifier = primaryIdentity.Identifier,
                             IdentityTypeId = primaryIdentity.IdentitierType,
@@ -143,11 +143,11 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
                         _context.PlayerAccounts.Add(playerAccount);
                         _context.UserAccounts.Add(userAccount);
                         _context.SaveChanges();
-                        var list = new List<LinkedIndentity>();
+                        var list = new List<LinkedIdentity>();
 
                         foreach (var item in identities)
                         {
-                            list.Add(new LinkedIndentity()
+                            list.Add(new LinkedIdentity()
                             {
                                 Identifier = item.Identifier,
                                 IdentityTypeId = item.IdentitierType,

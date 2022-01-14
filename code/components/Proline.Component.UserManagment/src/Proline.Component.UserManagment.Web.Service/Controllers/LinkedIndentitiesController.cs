@@ -24,14 +24,14 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
         // GET: api/PlayerIndentities
         [HttpGet]
         [Route("GetAllIdentities")]
-        public async Task<ActionResult<IEnumerable<LinkedIndentity>>> GetAllIdentities()
+        public async Task<ActionResult<IEnumerable<LinkedIdentity>>> GetAllIdentities()
         {
             return await _context.LinkedIdentity.ToListAsync();
         }
 
         [HttpGet]
         [Route("GetAllMatchingIdentities")]
-        public async Task<ActionResult<IEnumerable<LinkedIndentity>>> GetAllMatchingIdentities(List<string> identities)
+        public async Task<ActionResult<IEnumerable<LinkedIdentity>>> GetAllMatchingIdentities(List<string> identities)
         {
             return await _context.LinkedIdentity.Where(e=> identities.Contains(e.Identifier)).ToListAsync();
         }
@@ -39,7 +39,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
         // GET: api/PlayerIndentities/5
         [HttpGet]
         [Route("GetAllPlayerIdentities")]
-        public async Task<ActionResult<IEnumerable<LinkedIndentity>>> GetAllPlayerIndentities(long playerId)
+        public async Task<ActionResult<IEnumerable<LinkedIdentity>>> GetAllPlayerIndentities(long playerId)
         {
             var playerIndentity = await _context.LinkedIdentity.Where(e=>e.PlayerId == playerId).ToListAsync();
 
@@ -53,7 +53,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
 
         [HttpGet]
         [Route("GetAllUserIdentities")]
-        public async Task<ActionResult<IEnumerable<LinkedIndentity>>> GetAllUserIdentities(long userId)
+        public async Task<ActionResult<IEnumerable<LinkedIdentity>>> GetAllUserIdentities(long userId)
         {
             var playerIndentity = await _context.LinkedIdentity.Where(e => e.UserId == userId).ToListAsync();
 
@@ -67,7 +67,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
 
         [HttpGet]
         [Route("GetIdentity")]
-        public async Task<ActionResult<LinkedIndentity>> GetIdentity(long id)
+        public async Task<ActionResult<LinkedIdentity>> GetIdentity(long id)
         {
             var playerIndentity = await _context.LinkedIdentity.FindAsync(id);
 
@@ -81,7 +81,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
 
         [HttpGet]
         [Route("GetMatchingIdentity")]
-        public async Task<ActionResult<LinkedIndentity>> GetMatchingIdentity(string identifier)
+        public async Task<ActionResult<LinkedIdentity>> GetMatchingIdentity(string identifier)
         {
             var playerIndentity = await _context.LinkedIdentity.FirstOrDefaultAsync(e=>e.Identifier.Equals(identifier));
 
@@ -99,7 +99,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         [Route("PostIdentity")]
-        public async Task<ActionResult<LinkedIndentity>> PostPlayerIndentity(LinkedIndentity playerIndentity)
+        public async Task<ActionResult<LinkedIdentity>> PostPlayerIndentity(LinkedIdentity playerIndentity)
         {
             _context.LinkedIdentity.Add(playerIndentity);
             await _context.SaveChangesAsync();
@@ -112,7 +112,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         [Route("PostIdentities")]
-        public async Task<ActionResult<LinkedIndentity>> PostPlayerIndentity(List<LinkedIndentity> playerIndentities)
+        public async Task<ActionResult<IEnumerable<LinkedIdentity>>> PostPlayerIndentities(List<LinkedIdentity> playerIndentities)
         {
             _context.LinkedIdentity.AddRange(playerIndentities);
             await _context.SaveChangesAsync();
@@ -131,7 +131,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut]
         [Route("PutIdentity")]
-        public async Task<IActionResult> PutPlayerIndentity(long id, LinkedIndentity playerIndentity)
+        public async Task<IActionResult> PutPlayerIndentity(long id, LinkedIdentity playerIndentity)
         {
             if (id != playerIndentity.IdentityId)
             {
@@ -163,7 +163,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
         // DELETE: api/PlayerIndentities/5
         [HttpDelete]
         [Route("DeleteIdentity")]
-        public async Task<ActionResult<LinkedIndentity>> DeletePlayerIndentity(long id)
+        public async Task<ActionResult<LinkedIdentity>> DeletePlayerIndentity(long id)
         {
             var playerIndentity = await _context.LinkedIdentity.FindAsync(id);
             if (playerIndentity == null)

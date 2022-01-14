@@ -1,5 +1,4 @@
-﻿using Proline.Component.UserManagment;
-using Proline.Proxies.UserManagment;
+﻿using Proline.Proxies.UserManagment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,29 +23,34 @@ namespace Proline.Resource.Core.Access
 
             try
             {
-                var identity = GetIdentity(inParameter.Identifier);
-                if (identity == null)
-                    return null;
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.DefaultRequestHeaders.Authorization = _authHeader;
+                    var client = new Client("http://localhost:9703/", httpClient);
+                    var identity = GetIdentity(client, inParameter.Identifier);
+                    if (identity == null)
+                        return null;
 
-                var denies = GetUserDenies(identity.UserId).OrderByDescending(e => e.ExpiresAt);
-                var x = new LoginPlayerOutParameter()
-                {
-                    UserId = identity.UserId,
-                    PlayerId = identity.PlayerId,
-                    Deny = new UserDenyOutParameter(),
-                };
-                if (denies.Count() > 0)
-                {
-                    var deny = denies.First();
-                    x.IsDenied = true;
-                    x.Deny = new UserDenyOutParameter()
+                    var denies = GetUserDenies(client, identity.UserId).OrderByDescending(e => e.ExpiresAt);
+                    var x = new LoginPlayerOutParameter()
                     {
-                        DenyId = deny.DenyId,
-                        Reason = deny.Reason,
-                        Untill = deny.ExpiresAt,
+                        UserId = identity.UserId,
+                        PlayerId = identity.PlayerId,
+                        Deny = new UserDenyOutParameter(),
                     };
+                    if (denies.Count() > 0)
+                    {
+                        var deny = denies.First();
+                        x.IsDenied = true;
+                        x.Deny = new UserDenyOutParameter()
+                        {
+                            DenyId = deny.DenyId,
+                            Reason = deny.Reason,
+                            Untill = deny.ExpiresAt,
+                        };
+                    }
+                    return x;
                 }
-                return x;
             }
             catch (Exception e)
             {
@@ -63,78 +67,84 @@ namespace Proline.Resource.Core.Access
 
             try
             {
-                var identities = inParameter.Identifiers;
-                var primaryIdentity = identities.First();
-                var identity = GetIdentity(primaryIdentity.Identifier);
-
-                var playerAccount = new PlayerAccount()
+                using (var httpClient = new HttpClient())
                 {
-                    Name = inParameter.Username,
-                    Priority = inParameter.Priority,
-                    RegisteredAt = DateTime.UtcNow
-                };
+                    httpClient.DefaultRequestHeaders.Authorization = _authHeader;
+                    var client = new Client("http://localhost:9703/", httpClient);
 
-                var userAccount = new UserAccount()
-                {
-                    Username = inParameter.Username,
-                    Priority = inParameter.Priority,
-                    CreatedOn = DateTime.UtcNow,
-                    GroupId = 0
-                };
+                    var identities = inParameter.Identifiers;
+                    var primaryIdentity = identities.First();
+                    var identity = GetIdentity(client, primaryIdentity.Identifier);
 
-
-                if (identity == null)
-                {
-                    var x = GetIdentities(identities.Select(a => a.Identifier));
-                    if (x.Count() > 0)
+                    var playerAccount = new PlayerAccount()
                     {
-                        identity = x.First();
-                        var playerId = PutPlayerAccount(playerAccount);
-                        playerAccount = GetPlayerAccount(playerId.PlayerId);
+                        Name = inParameter.Username,
+                        Priority = inParameter.Priority,
+                        RegisteredAt = DateTime.UtcNow
+                    };
 
-                        var identityId = PutPlayerIdentity(new PlayerIndentity()
+                    var userAccount = new UserAccount()
+                    {
+                        Username = inParameter.Username,
+                        Priority = inParameter.Priority,
+                        CreatedOn = DateTime.UtcNow,
+                        GroupId = 0
+                    };
+
+
+                    if (identity == null)
+                    {
+                        var x = GetIdentities(client, identities.Select(a => a.Identifier));
+                        if (x.Count() > 0)
                         {
-                            Identifier = primaryIdentity.Identifier,
-                            IdentityTypeId = primaryIdentity.IdentitierType,
-                            PlayerId = playerAccount.PlayerId,
-                            UserId = identity.UserId
-                        });
+                            identity = x.First();
+                            var playerId = PostPlayerAccount(client, playerAccount);
+                            playerAccount = GetPlayerAccount(client, playerId.PlayerId);
 
-                        userAccount = GetUserAccount(identity.UserId);
+                            var identityId = PostPlayerIdentity(client, new LinkedIdentity()
+                            {
+                                Identifier = primaryIdentity.Identifier,
+                                IdentityTypeId = primaryIdentity.IdentitierType,
+                                PlayerId = playerAccount.PlayerId,
+                                UserId = identity.UserId
+                            });
+
+                            userAccount = GetUserAccount(client, identity.UserId);
+                        }
+                        else
+                        {
+                            var playerId = PostPlayerAccount(client, playerAccount);
+                            var userId = PostUserAccount(client, userAccount);
+
+                            var list = new List<LinkedIdentity>();
+
+                            foreach (var item in identities)
+                            {
+                                list.Add(new LinkedIdentity()
+                                {
+                                    Identifier = item.Identifier,
+                                    IdentityTypeId = item.IdentitierType,
+                                    PlayerId = playerAccount.PlayerId,
+                                    UserId = userAccount.UserId
+                                });
+                            }
+                            PostPlayerIdentities(client, list);
+                        }
                     }
                     else
                     {
-                        var playerId = PutPlayerAccount(playerAccount);
-                        var userId = PutUserAccount(userAccount);
-
-                        var list = new List<PlayerIndentity>();
-
-                        foreach (var item in identities)
-                        {
-                            list.Add(new PlayerIndentity()
-                            {
-                                Identifier = item.Identifier,
-                                IdentityTypeId = item.IdentitierType,
-                                PlayerId = playerAccount.PlayerId,
-                                UserId = userAccount.UserId
-                            });
-                        }
-                        PutPlayerIdentities(list); 
+                        return null;
                     }
-                }
-                else
-                {
-                    return null;
-                }
 
-                var outParameters = new RegistrationPlayerOutParameter()
-                {
-                    Username = playerAccount.Name,
-                    PlayerId = playerAccount.PlayerId,
-                    Priority = playerAccount.Priority,
-                    UserId = userAccount.UserId
-                };
-                return outParameters;
+                    var outParameters = new RegistrationPlayerOutParameter()
+                    {
+                        Username = playerAccount.Name,
+                        PlayerId = playerAccount.PlayerId,
+                        Priority = playerAccount.Priority,
+                        UserId = userAccount.UserId
+                    };
+                    return outParameters;
+                }
             }
             catch (Exception e)
             {
@@ -143,96 +153,49 @@ namespace Proline.Resource.Core.Access
             }
         }
 
-        private IEnumerable<PlayerIndentity> PutPlayerIdentities(List<PlayerIndentity> list)
+        private IEnumerable<LinkedIdentity> PostPlayerIdentities(Client client, List<LinkedIdentity> list)
         {
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = _authHeader;
-                var userCleint = new Client("http://localhost:9703/", httpClient);
-                return userCleint.PlayerIndentitiesPOSTAsync(list).Result;
-            }
+            return client.PostIdentitiesAsync(list).Result;
         }
 
-        private UserAccount PutUserAccount(UserAccount userAccount)
+        private UserAccount PostUserAccount(Client client, UserAccount userAccount)
         {
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = _authHeader;
-                var userCleint = new Client("http://localhost:9703/", httpClient);
-                return userCleint.UserAccountsPOSTAsync(userAccount).Result;
-            }
+            return client.PostUserAccountAsync(userAccount).Result;
         }
 
-        private PlayerIndentity PutPlayerIdentity(PlayerIndentity playerIndentity)
+        private LinkedIdentity PostPlayerIdentity(Client client, LinkedIdentity LinkedIdentity)
         {
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = _authHeader;
-                var userCleint = new Client("http://localhost:9703/", httpClient);
-                return userCleint.PlayerIndentitiesPOSTAsync(playerIndentity).Result;
-            }
+            return client.PostIdentityAsync(LinkedIdentity).Result;
         }
 
-        private IEnumerable<PlayerIndentity> GetIdentities(IEnumerable<string> enumerable)
+        private IEnumerable<LinkedIdentity> GetIdentities(Client client, IEnumerable<string> enumerable)
         {
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = _authHeader;
-                var userCleint = new Client("http://localhost:9703/", httpClient);
-                return userCleint.PlayerIndentitiesAllAsync(enumerable).Result;
-            }
+            return client.GetAllMatchingIdentitiesAsync(enumerable).Result;
         }
 
-        private PlayerAccount PutPlayerAccount(PlayerAccount playerAccount)
+        private PlayerAccount PostPlayerAccount(Client client, PlayerAccount playerAccount)
         {
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = _authHeader;
-                var userCleint = new Client("http://localhost:9703/", httpClient);
-                return userCleint.PlayerAccountsPOSTAsync(playerAccount).Result;
-            }
+            return client.PostPlayerAccountAsync(playerAccount).Result;
         }
 
-        private IEnumerable<UserDeny> GetUserDenies(long userId)
-        { 
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = _authHeader;
-                var userCleint = new Client("http://localhost:9703/", httpClient);
-                return userCleint.UserDeniesAll2Async(userId).Result;
-            }
+        private IEnumerable<UserDenial> GetUserDenies(Client client, long userId)
+        {
+            return client.GetUserDenialsAsync(userId).Result;
         }
 
-        private PlayerIndentity GetIdentity(string identifier)
-        { 
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = _authHeader;
-                var userCleint = new Client("http://localhost:9703/", httpClient);
-                return userCleint.PlayerIndentitiesGET2Async(identifier).Result;
-            }
+        private LinkedIdentity GetIdentity(Client client, string identifier)
+        {
+            return client.GetMatchingIdentityAsync(identifier).Result;
         } 
-
-        
          
-        private PlayerAccount GetPlayerAccount(long playerId)
+        private PlayerAccount GetPlayerAccount(Client client, long playerId)
         {
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = _authHeader;
-                var userCleint = new Client("http://localhost:9703/", httpClient);
-                return userCleint.PlayerAccountsGETAsync(playerId).Result;
-            }
+            return client.GetPlayerAccountAsync(playerId).Result;
         }
 
-        private UserAccount GetUserAccount(long id)
+        private UserAccount GetUserAccount(Client client, long id)
         {
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = _authHeader;
-                var userCleint = new Client("http://localhost:9703/", httpClient);
-                return userCleint.UserAccountsGETAsync(id).Result;
-            }
+            return client.GetUserAccountAsync(id).Result;
         }
 
         public void Dispose()

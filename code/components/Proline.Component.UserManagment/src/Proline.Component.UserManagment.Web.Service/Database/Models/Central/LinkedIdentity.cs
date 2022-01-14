@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
+
 
 namespace Proline.CentralEngine.DBApi.Models.Central
 {
-    [Table("UserInstanceLicence")]
-    public class UserInstanceLicence
+    [Table("PlayerIndentity")]
+    public class LinkedIdentity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long InstanceIdentityId { get; set; }
-        public string Key { get; set; }
+        public long IdentityId { get; set; }
+        public long PlayerId { get; set; }
+        public int IdentityTypeId { get; set; }
+        // if any of the identifiers match, then link that player with the user
         public long UserId { get; set; }
+        public string Identifier { get; set; }
     }
 }

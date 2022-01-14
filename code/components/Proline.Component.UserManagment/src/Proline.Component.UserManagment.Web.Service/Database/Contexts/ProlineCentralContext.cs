@@ -30,7 +30,7 @@ namespace Proline.CentralEngine.DBApi.Contexts
         public DbSet<InstanceUserDeny> InstanceUserDeny { get; set; }
         public DbSet<InstanceUserAllow> InstanceUserAllow { get; set; }
         public DbSet<PlayerAccount> PlayerAccounts { get; set; }
-        public DbSet<LinkedIndentity> LinkedIdentity { get; set; }
+        public DbSet<LinkedIdentity> LinkedIdentity { get; set; }
         public DbSet<PlayerIndentityType> PlayerIdentityType { get; set; }
     }
 }
