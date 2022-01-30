@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <AssemblyName>Proline.Game.Core</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Client" Version="1.0.5180" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Proline.Component.Framework.Client">
+      <HintPath>..\..\..\..\..\artifacts\Proline.Component.Framework\Proline.Component.Framework.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Framework.Client">
+      <HintPath>..\..\..\..\..\artifacts\Proline.Resource.Framework\Proline.Resource.Framework.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

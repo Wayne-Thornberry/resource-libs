@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <RootNamespace>Proline.Component.CScriptObjects.Client</RootNamespace>
+    <AssemblyName>Proline.Component.CScriptObjects.Client.net</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Client" Version="1.0.5153" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ResourceFramework.Client">
+      <HintPath>..\..\..\..\..\artifacts\Proline.ResourceFramework\Proline.ResourceFramework.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
