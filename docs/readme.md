@@ -1,0 +1,1 @@
+Where i put all the files i use to document the components i'm writing or ideas

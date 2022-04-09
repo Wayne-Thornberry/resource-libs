@@ -1,0 +1,1 @@
+Stuff that is not core to the project goes here. External resources or components, scripts or anything that isnt a tool.
