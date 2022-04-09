@@ -1,109 +1,89 @@
 ﻿using CitizenFX.Core;
-using CitizenFX.Core.Native; 
-using Proline.Resource.IO;
-using Proline.Resource.Logging;
+using CitizenFX.Core.Native;
+using Newtonsoft.Json;
+using Proline.ResourceFramework.Logging;
+using Proline.ResourceFramework.Networking;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Resource.Framework
+namespace Proline.ResourceFramework
 {
-    public abstract class ComponentContext : BaseScript
+    public abstract class ComponentContext : BaseScript, IBaseScriptMethods
     {
-        protected Log _log;
-        public string Name { get; internal set; }
+        protected Log _log = new Log(); 
+        private Assembly _sourcAssembly;   
 
-        public virtual void OnLoad() { }
-        public virtual void OnStart() { }
-        public virtual async Task OnTick() { }
+        public string Name { get; internal set; } 
 
-        public ComponentContext()
+        public ComponentContext() 
         {
-            EventManager.SetHandlerCollection(EventHandlers);
-            ExportManager.SetExportDictionary(Exports);
-            Globals.SetGlobalBag(GlobalState);
-            _log = Logger.GetInstance().GetLog();
+            _sourcAssembly = Assembly.GetCallingAssembly(); 
+
+            //_context = ResourceType.CLIENT;
+            //_env.AddAPI<DebugAPI>();
+            //_socket = new EventSocket(API.GetCurrentResourceName());
             Tick += InternalOnTick;
         }
 
-        [EventHandler("onResourceStart")]
-        public virtual void OnResourceStart(string resourceName) { }
-
-        [EventHandler("onResourceStarting")]
-        public virtual void OnResourceStarting(string resourceName) { }
-
-        [EventHandler("onResourceStop")]
-        public virtual void OnResourceStop(string resourceName) { }
-
-        private bool _isSetup;
-        
-        protected void RegisterScriptContext(ResourceScript context)
+         
+        public void RegisterExport(string eventName, Delegate callback)
         {
-            foreach (var method in GetMethods(context, typeof(TickAttribute)))
-            {
-                if (method.IsStatic)
-                    this.RegisterTick((Func<Task>)Delegate.CreateDelegate(typeof(Func<Task>), method));
-                else
-                    this.RegisterTick((Func<Task>)Delegate.CreateDelegate(typeof(Func<Task>), context, method.Name));
-            }
+            Exports.Add(eventName, callback);
         }
 
-        protected void RegisterEventContext(ResourceEventHandler context)
-        {
-            foreach (var method in GetMethods(context,typeof(EventHandlerAttribute)))
-            {
-                var parameters = method.GetParameters().Select(p => p.ParameterType).ToArray();
-                var actionType = Expression.GetDelegateType(parameters.Concat(new[] { typeof(void) }).ToArray());
-                var attribute = method.GetCustomAttribute<EventHandlerAttribute>();
- 
-
-                if (method.IsStatic)
-                    this.RegisterEventHandler(attribute.Name, Delegate.CreateDelegate(actionType, method));
-                else
-                    this.RegisterEventHandler(attribute.Name, Delegate.CreateDelegate(actionType, context, method.Name));
-            }
-        }
-        IEnumerable<MethodInfo> GetMethods(object x, Type t)
-        {
-            return x.GetType().GetMethods().Where(m => m.GetCustomAttributes(t, false).Length > 0);
+        public void AddGlobal(string key, object value)
+        { 
+            GlobalState.Set(key, value, true);
         }
 
-        internal void RegisterEventHandler(string eventName, Delegate callback)
+        public object GetGlobal(string key)
+        { 
+            return GlobalState.Get(key);
+        }
+        public dynamic GetResourceExport(string name)
         {
-            EventHandlers[eventName] += callback;
+            return Exports[name];
         }
 
-        internal void RegisterTick(Func<Task> tick)
+        public void AddTick(Func<Task> x)
         {
-            Tick += tick;
+            Tick += x;
         }
 
-        private async Task InternalOnTick()
+        public void RemoveTick(Func<Task> x)
         {
+            Tick += x;
+        }
+
+        public void AddEventListener(string eventName, Delegate delegat)
+        {
+            EventHandlers.Add(eventName, delegat);
+        }
+
+        public void RemoveEventListener(string eventName)
+        { 
+            EventHandlers.Remove(eventName);
+        }
+
+        public async Task InternalOnTick()
+        { 
             try
             {
-                if (!_isSetup)
-                { 
-                    OnLoad();
-                    OnStart();
-                    _isSetup = true;
-                }
-                await OnTick();
+                var types = _sourcAssembly.GetTypes().First(e => e.Name.Equals("Resource"));
+                types.GetMethod("Main").Invoke(null, new object[] { (int)ResourceType.CLIENT });
             }
             catch (Exception e)
             {
-                Tick -= InternalOnTick;
                 _log.Error(e.ToString(), true);
                 throw;
             }
             finally
             {
-                //Tick -= InternalOnTick;
+                Tick -= InternalOnTick;
             }
-        }  
+        }
+
     }
 }

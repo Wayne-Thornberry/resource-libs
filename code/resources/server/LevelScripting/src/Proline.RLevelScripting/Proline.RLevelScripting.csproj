@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <AssemblyName>Proline.Resource.Engine.Server.net</AssemblyName>
+    <RootNamespace>Proline.Resource.Engine.Server</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Server" Version="1.0.5180" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" /> 
+    <Reference Include="Proline.ResourceFramework.Server">
+      <HintPath>..\..\..\..\..\artifacts\Proline.ResourceFramework\Proline.ResourceFramework.Server.dll</HintPath>
+    </Reference> 
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+</Project>

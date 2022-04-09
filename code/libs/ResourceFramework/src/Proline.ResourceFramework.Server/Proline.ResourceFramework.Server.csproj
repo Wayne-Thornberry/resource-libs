@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net452</TargetFramework>
@@ -7,6 +7,16 @@
 
   <ItemGroup>
     <PackageReference Include="CitizenFX.Core.Server" Version="1.0.5179" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Proline.ResourceFramework\Proline.ResourceFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

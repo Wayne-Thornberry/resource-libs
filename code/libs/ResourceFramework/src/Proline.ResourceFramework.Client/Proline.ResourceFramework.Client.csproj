@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Proline.ResourceFramework.Common\Proline.ResourceFramework.Common.csproj" />
+    <ProjectReference Include="..\Proline.ResourceFramework\Proline.ResourceFramework.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

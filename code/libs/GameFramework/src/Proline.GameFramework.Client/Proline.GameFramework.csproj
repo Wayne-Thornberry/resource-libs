@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <Reference Include="Proline.ResourceFramework.Client">
-      <HintPath>..\..\..\..\..\artifacts\Proline.ResourceFramework\Proline.ResourceFramework.Client.dll</HintPath>
+      <HintPath>..\..\..\..\..\artifacts\ResourceFramework\Proline.ResourceFramework.Client.dll</HintPath>
     </Reference>
   </ItemGroup>
 

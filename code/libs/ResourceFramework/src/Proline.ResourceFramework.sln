@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ResourceFramework.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ResourceFramework.Server", "Proline.ResourceFramework.Server\Proline.ResourceFramework.Server.csproj", "{D4DD6670-58ED-4A43-B4AD-AE21D945E634}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ResourceFramework.Common", "Proline.ResourceFramework.Common\Proline.ResourceFramework.Common.csproj", "{C06BA432-6C8B-48FF-B0CB-F70DB5BCE372}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ResourceFramework", "Proline.ResourceFramework\Proline.ResourceFramework.csproj", "{C06BA432-6C8B-48FF-B0CB-F70DB5BCE372}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

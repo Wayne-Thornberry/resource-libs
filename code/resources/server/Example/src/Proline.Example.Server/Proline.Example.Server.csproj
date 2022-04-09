@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <RootNamespace>Proline.Example</RootNamespace>
+    <AssemblyName>Proline.Example.Server.net</AssemblyName> 
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Server" Version="1.0.5153" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ResourceFramework">
+      <HintPath>..\..\..\..\..\artifacts\ResourceFramework\Proline.ResourceFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ResourceFramework.Server">
+      <HintPath>..\..\..\..\..\artifacts\ResourceFramework\Proline.ResourceFramework.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
+</Project>
