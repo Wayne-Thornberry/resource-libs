@@ -35,7 +35,7 @@ namespace Proline.Resource.Framework
             {
                 var main = (object) GetMainMethod();
 
-                CreateScriptInstances();
+               // CreateScriptInstances();
 
 
                 if (main == null)
@@ -45,7 +45,7 @@ namespace Proline.Resource.Framework
                 else
                 {
                     ((MethodInfo)main).Invoke(null, new object[] { new string[] { (ResourceType.CLIENT.ToString()) } }); 
-                    SubscribeScriptsToTick();
+                  //  SubscribeScriptsToTick();
                 }
             }
             catch (Exception e)

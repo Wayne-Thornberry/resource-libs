@@ -10,7 +10,7 @@ namespace Proline.Resource.Common
     {
         bool EnableFrameSync { get; set; }
         bool HasStarted { get; }
-        bool IsPaused { get; } 
+        bool IsPaused { get; set; } 
         int State { get; set; }
         Task OnStart(); 
         Task OnUpdate();

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Proline.Resource.Logging;
+using Proline.ResourceConfiguration;
+using Proline.Resource.ModuleCore.Configuration;
 
 namespace Proline.Resource.ModuleCore
 {
@@ -12,12 +14,16 @@ namespace Proline.Resource.ModuleCore
         private static Log _log = new Log();
         private static Dictionary<string, Module> _modules;
 
-        public static Module LoadModule(ModuleConfig config)
+        public static Module LoadModule(string moduleName)
         {
             if (_modules == null)
                 _modules = new Dictionary<string, Module>();
 
-            var assembly = config.Assembly;
+            var moduleConfiguration = ConfigManager.GetResourceConfigSection<ModualConfiguration>("ModualConfiguration");
+
+            var moduleConfig = moduleConfiguration.GetConfigSection<ModuleConfig>(moduleName);// ConfigManager.GetResourceConfigSection<ModuleConfig>(moduleName);
+
+            var assembly = moduleConfig.Assembly;
 
             Resource.Console.Console.WriteLine(_log.Debug($"Loading {assembly}"));
             var ass = Assembly.Load(assembly);
@@ -44,7 +50,7 @@ namespace Proline.Resource.ModuleCore
             {
                 BaseScripts = bsInstances,
                 Name = ass.GetName(),
-                Data = config.Data,
+                Data = moduleConfig.Data,
                 Context = instance,
             };
             // ResourceConsole.Console.WriteLine(_log.Debug($"Inseted {ass.GetName().Name} into memory"));
@@ -62,10 +68,11 @@ namespace Proline.Resource.ModuleCore
             }
         }
 
-        public static void LoadModules(ModuleConfig[] modualConfigs)
+        public static void LoadModules()
         {
+            var moduleConfiguration = ConfigManager.GetResourceConfigSection<ModualConfiguration>("ModualConfiguration");
             Resource.Console.Console.WriteLine(_log.Debug($"Loading modules from assemblies..."));
-            foreach (var item in modualConfigs)
+            foreach (var item in moduleConfiguration.Modules)
             {
                 LoadModule(item);
             }

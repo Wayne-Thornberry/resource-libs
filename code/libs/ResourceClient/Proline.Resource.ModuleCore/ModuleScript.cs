@@ -2,9 +2,6 @@
 using Proline.Resource.Common;
 using Proline.Resource.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Proline.Resource.ModuleCore
@@ -16,7 +13,7 @@ namespace Proline.Resource.ModuleCore
         protected Log _log = new Log();
         public bool EnableFrameSync { get; set; }
         public bool HasStarted => State > 0;
-        public bool IsPaused => State == -1;
+        public bool IsPaused { get; set; }
 
         public int State
         {
@@ -31,24 +28,25 @@ namespace Proline.Resource.ModuleCore
         }
 
         public ModuleScript()
-        {
-            Tick += OnTick;
+        { 
+            _state = -1;
         }
 
         public virtual async Task OnStart() { }
 
         public virtual async Task OnUpdate() { }
 
+        [Tick]
         public async Task OnTick()
         {
             try
             {
-                if (!IsPaused)
-                {
+                if(State > 0 && !IsPaused)
+                { 
                     if (!HasStarted)
                     {
                         await OnStart();
-                        State = 1;
+                        State = 2;
                     }
                     else
                     {

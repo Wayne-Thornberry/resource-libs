@@ -1,4 +1,8 @@
 {
+    "Sections" : [
+        "ModualConfiguration"
+    ],
+
     "Resources":[
         "Proline.Resource.Configuration.Client",
         "Proline.Resource.Console.Client",
@@ -14,12 +18,18 @@
         "Proline.ClassicOnline.MRendering",
         "Proline.ClassicOnline.MScreen",
         "Proline.ClassicOnline.MScripting",
-        "Proline.ClassicOnline.MWorld"
-    ],
+        "Proline.ClassicOnline.MWorld",
+        "Proline.CFXExtended.Core.Client",
+        "Proline.LevelScripts.Classic"
+    ], 
 
-
-    "ModuleConfigs" : [
-        {
+    "ModualConfiguration" : {
+        "Modules" :[
+            "MScripting",
+            "MBrain",
+            "MWorld"
+            ],
+        "MScripting" :{ 
             "Name" : "MScripting",
             "Assembly" : "Proline.ClassicOnline.MScripting",
             "Data" : {
@@ -27,23 +37,20 @@
                     "Proline.LevelScripts.Classic" 
                 ]
             }
-            
-        }, 
-        {
+        },
+        "MBrain" :{ 
             "Name" : "MBrain",
             "Assembly" : "Proline.ClassicOnline.MBrain",
             "Data" : {
                 
             }
-            
         },
-        {
+        "MWorld" : { 
             "Name" : "MWorld",
             "Assembly" : "Proline.ClassicOnline.MWorld",
             "Data" : {
                 
             }
-            
-        }
-    ]
+        } 
+    }
 }

@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Proline.Resource.Common\Proline.Resource.Common.csproj" />
+    <ProjectReference Include="..\Proline.Resource.Configuration\Proline.Resource.Configuration.csproj" />
     <ProjectReference Include="..\Proline.Resource.Console\Proline.Resource.Console.csproj" />
     <ProjectReference Include="..\Proline.Resource.Logging\Proline.Resource.Logging.csproj" />
   </ItemGroup>

@@ -52,6 +52,7 @@ ProjectInformation resourceLoaderPack;
 ///////////////////////////////////////////////////////////////////////////////
 
 
+CakeExecuteScript($"./code/libs/ResourceClient/build.cake"); 
 CakeExecuteScript($"./code/resources/client/ModualLoader/build.cake"); 
 CakeExecuteScript($"./ext/modules/client/ClassicOnline/build.cake"); 
 CakeExecuteScript($"./ext/levelscripts/ClassicScripts/build.cake"); 

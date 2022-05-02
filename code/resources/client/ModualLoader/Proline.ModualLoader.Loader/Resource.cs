@@ -3,8 +3,8 @@ using Proline.Resource.ModuleCore;
 using Proline.Resource.Framework;
 using Proline.Resource.Logging;
 using Proline.ResourceConfiguration;
-using Proline.ResourceLoader.Main.Configuration;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace Proline.ResourceLoader.Main
 {
@@ -12,15 +12,21 @@ namespace Proline.ResourceLoader.Main
     {
         private static Log _log = new Log();
         public static void Main(string[] args)
-        {
-            var config = ConfigManager.GetConfig<COConfiguration>(API.GetCurrentResourceName());
-
-            foreach (var item in config.Resources)
-            {
-                Assembly.Load(item);
+        { 
+            var sections = ConfigManager.GetResourceConfigSection<string[]>("sections");
+            Modules.LoadModules();
+            foreach (var item in sections)
+            { 
+                if (item.Equals("Resources"))
+                {
+                    var resources = ConfigManager.GetResourceConfigSection<string[]>(item);
+                    foreach (var resource in resources)
+                    {
+                        Assembly.Load(resource);
+                    }
+                }
             }
 
-            Modules.LoadModules(config.ModuleConfigs);
             Modules.StartAllModules();
         }
     }
