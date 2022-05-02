@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Console.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\..\artifacts\ResourceClient\Proline.Resource.Console.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Logging.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\..\artifacts\ResourceClient\Proline.Resource.Logging.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

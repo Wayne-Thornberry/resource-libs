@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <UserSecretsId>7ec1ab9e-c95f-4c58-8983-65e23cc095ab</UserSecretsId>
+    <AssemblyName>Proline.Resource.File.Common</AssemblyName>
+  </PropertyGroup> 
+</Project>
+ 

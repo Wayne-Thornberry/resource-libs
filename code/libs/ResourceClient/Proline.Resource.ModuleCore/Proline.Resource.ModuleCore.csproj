@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <AssemblyName>Proline.Resource.ModuleCore.Client</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Proline.Resource.Common\Proline.Resource.Common.csproj" />
+    <ProjectReference Include="..\Proline.Resource.Console\Proline.Resource.Console.csproj" />
+    <ProjectReference Include="..\Proline.Resource.Logging\Proline.Resource.Logging.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

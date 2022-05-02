@@ -1,0 +1,2 @@
+liquibase update
+pause

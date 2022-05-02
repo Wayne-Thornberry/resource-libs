@@ -4,9 +4,8 @@ games { 'gta5' }
 author 'Wayno717'
 description 'Project Online Freemode Game'
 version '1.0.0.0'
-
-client_script 'Proline.Example.Client.net.dll'
-server_script 'Proline.Example.Server.net.dll'
+ 
+server_script 'Proline.ClassicOnline.Server.net.dll'
 files {
 '*.json',
 '*.dll',

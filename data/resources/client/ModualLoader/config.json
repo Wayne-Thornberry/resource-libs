@@ -1,0 +1,30 @@
+{
+    "ModuleConfigs" : [
+        {
+            "Name" : "MScripting",
+            "Assembly" : "Proline.ClassicOnline.MScripting",
+            "Data" : {
+                "LevelScriptAssemblies" : [
+                    "Proline.LevelScripts.Classic" 
+                ]
+            }
+            
+        }, 
+        {
+            "Name" : "MBrain",
+            "Assembly" : "Proline.ClassicOnline.MBrain",
+            "Data" : {
+                
+            }
+            
+        },
+        {
+            "Name" : "MWorld",
+            "Assembly" : "Proline.ClassicOnline.MWorld",
+            "Data" : {
+                
+            }
+            
+        }
+    ]
+}

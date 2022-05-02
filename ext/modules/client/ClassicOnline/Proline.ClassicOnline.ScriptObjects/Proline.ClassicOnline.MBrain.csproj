@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework> 
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Client" Version="1.0.5153" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Proline.ClassicComponents.Data\Proline.ClassicOnline.MData.csproj" />
+    <ProjectReference Include="..\Proline.ClassicOnline.LWScripting\Proline.ClassicOnline.MScripting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Console.Client">
+      <HintPath>..\..\..\..\..\artifacts\ResourceClient\Proline.Resource.Console.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Framework.Client">
+      <HintPath>..\..\..\..\..\artifacts\ResourceClient\Proline.Resource.Framework.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Logging.Client">
+      <HintPath>..\..\..\..\..\artifacts\ResourceClient\Proline.Resource.Logging.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.ModuleCore.Client">
+      <HintPath>..\..\..\..\..\artifacts\ResourceClient\Proline.Resource.ModuleCore.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Exports\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <AssemblyName>Proline.Resource.Framework.Client</AssemblyName>
+    <Platforms>AnyCPU</Platforms> 
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Client" Version="1.0.5153" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Proline.Resource.Common\Proline.Resource.Common.csproj" />
+    <ProjectReference Include="..\Proline.Resource.Console\Proline.Resource.Console.csproj" />
+    <ProjectReference Include="..\Proline.Resource.Logging\Proline.Resource.Logging.csproj" />
+    <ProjectReference Include="..\Proline.Resource.Networking\Proline.Resource.Networking.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Framework.Common">
+      <HintPath>..\..\..\..\artifacts\ResourceCommon\Proline.Resource.Framework.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+
+</Project>
+  

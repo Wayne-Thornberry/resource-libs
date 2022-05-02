@@ -10,7 +10,7 @@ var commonDir = "./../code/common";
 var resourceDir = "./../code/resources";
 var componentDir = "./../code/components";
 var libDir = "./../../../libs";
-var dataDir = "./../../../../data/resources";
+var dataDir = "./../../../../data/resources/server";
 var toolsDir = "./../code/tools";
 var resourceFramework = "ResourceFramework";
 
@@ -20,8 +20,8 @@ var deployDir = "E:/servers/Game_Servers/FiveM/core";
 var resourceOutputDir = $"{deployDir}/resources";
 var artificatsOutputDir = "./../../../../artifacts";
 
-Information("Dependent on ResourceFramework");
-CakeExecuteScript($"{libDir}/{resourceFramework}/build.cake"); 
+//Information("Dependent on ResourceFramework");
+//CakeExecuteScript($"{libDir}/{resourceFramework}/build.cake"); 
 
 
 class ProjectInformation
@@ -85,7 +85,7 @@ Task("Restore")
     .IsDependentOn("Clean")
     .Does(() =>
 {
-        DotNetRestore(resource.FullPath + "/src");
+        DotNetRestore(resource.FullPath);
 });
 
 Task("Build")
@@ -93,7 +93,7 @@ Task("Build")
     .ContinueOnError()
     .Does(() =>
 {
-        DotNetBuild(resource.FullPath + "/src", new DotNetBuildSettings
+        DotNetBuild(resource.FullPath, new DotNetBuildSettings
         {
             Configuration = configuration,  
             OutputDirectory = resource.OutputDir,
@@ -106,7 +106,7 @@ Task("Test")
     .IsDependentOn("Build")
     .Does(() =>
 {
-      DotNetTest(resource.FullPath + "/src", new DotNetTestSettings
+      DotNetTest(resource.FullPath, new DotNetTestSettings
         {
             Configuration = configuration,
             NoBuild = true,

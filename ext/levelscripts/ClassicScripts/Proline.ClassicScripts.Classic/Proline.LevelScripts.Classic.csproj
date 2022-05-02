@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Client" Version="1.0.5318" />
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.CFXExtended.Core.Client">
+      <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ClassicOnline.MBrain">
+      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MBrain.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ClassicOnline.MData">
+      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MData.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ClassicOnline.MDebug">
+      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MDebug.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ClassicOnline.MGame">
+      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MGame.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ClassicOnline.MRendering">
+      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MRendering.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ClassicOnline.MScreen">
+      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MScreen.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ClassicOnline.MScripting">
+      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MScripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ClassicOnline.MWorld">
+      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MWorld.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

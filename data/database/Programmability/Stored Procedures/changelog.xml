@@ -7,7 +7,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
     http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.6.xsd ">
  
-	<changeSet id="TestProcedure" author="Wayno717" runOnChange="true" >
+	<changeSet id="TestProcedure" author="wthornberry" runOnChange="true" >
 		<sqlFile path="Programmability\Stored Procedures\test\TestProcedure.sql"/>
 	</changeSet>
 </databaseChangeLog>

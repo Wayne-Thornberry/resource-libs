@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <AssemblyName>Proline.Resource.Networking.Server</AssemblyName> 
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Server" Version="1.0.5179" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Networking.Common">
+      <HintPath>..\..\..\..\artifacts\ResourceCommon\Proline.Resource.Networking.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ResourceLogging.Server">
+      <HintPath>..\..\..\..\artifacts\Logging\Proline.ResourceLogging.Server.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
