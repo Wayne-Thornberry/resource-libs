@@ -12,19 +12,16 @@ namespace Proline.ClassicOnline.MBrain.Events
     internal class OnEntityUntracked
     {
         private static Log _log = new Log();
-        public void OnEventInvoked(List<object> handles)
+        public void OnEventInvoked(int handles)
         {
             try
             {
                 var sm = ScriptObjectManager.GetInstance();
-                foreach (int handle in handles)
-                {
-                    if (API.DoesEntityExist(handle)) return;
-                    var modelHash = API.GetEntityModel(handle);
-                    if (!sm.ContainsKey(modelHash)) return;
-                    if (sm.ContainsKey(handle))
-                        sm.Remove(handle);
-                }
+                if (API.DoesEntityExist(handles)) return;
+                var modelHash = API.GetEntityModel(handles);
+                if (!sm.ContainsKey(modelHash)) return;
+                if (sm.ContainsKey(handles))
+                    sm.Remove(handles);
             }
             catch (Exception e)
             {

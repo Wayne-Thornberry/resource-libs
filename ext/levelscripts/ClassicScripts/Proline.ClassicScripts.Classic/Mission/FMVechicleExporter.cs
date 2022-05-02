@@ -38,7 +38,7 @@ namespace Proline.ClassicOnline.LevelScripts.Mission
                         _blip.Sprite = BlipSprite.PersonalVehicleCar;
                         _blip.IsFlashing = true;
                         Screen.DisplayHelpTextThisFrame("You can deliver this vehicle to the docks for some cash");
-                        UIMap.FlashBlip(_blip);
+                        MinimapAPI.FlashBlip(_blip);
                         _oneTime = true;
                     }
 

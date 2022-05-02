@@ -1,4 +1,23 @@
 {
+    "Resources":[
+        "Proline.Resource.Configuration.Client",
+        "Proline.Resource.Console.Client",
+        "Proline.Resource.File.Client",
+        "Proline.Resource.Framework.Client",
+        "Proline.Resource.Logging.Client",
+        "Proline.Resource.ModuleCore.Client",
+        "Proline.Resource.Networking.Client",
+        "Proline.ClassicOnline.MBrain",
+        "Proline.ClassicOnline.MData",
+        "Proline.ClassicOnline.MDebug",
+        "Proline.ClassicOnline.MGame",
+        "Proline.ClassicOnline.MRendering",
+        "Proline.ClassicOnline.MScreen",
+        "Proline.ClassicOnline.MScripting",
+        "Proline.ClassicOnline.MWorld"
+    ],
+
+
     "ModuleConfigs" : [
         {
             "Name" : "MScripting",

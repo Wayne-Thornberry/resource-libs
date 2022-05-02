@@ -51,6 +51,14 @@ ProjectInformation resourceLoaderPack;
 // SETUP / TEARDOWN
 ///////////////////////////////////////////////////////////////////////////////
 
+
+CakeExecuteScript($"./code/resources/client/ModualLoader/build.cake"); 
+CakeExecuteScript($"./ext/modules/client/ClassicOnline/build.cake"); 
+CakeExecuteScript($"./ext/levelscripts/ClassicScripts/build.cake"); 
+
+
+
+
 Setup(ctx =>
 {
 	// Executed BEFORE the first task.
@@ -58,8 +66,9 @@ Setup(ctx =>
 
     packageVersion = $"{version}{prerelease}"; 
     var dir = Context.Environment.WorkingDirectory;
-    outPutDir = $"{artificatsOutputDir}/"+dir.GetDirectoryName();
     resourceName = dir.GetDirectoryName();
+
+    outPutDir = $"{artificatsOutputDir}/"+dir.GetDirectoryName();
 
     var moduleLoader = resourceDir+"/ModualLoader";
     var classicOnline =  modulesDir+"/ClassicOnline";
@@ -69,9 +78,10 @@ Setup(ctx =>
     var dirPaht2 = new DirectoryPath(classicOnline);
     var dirPaht3 = new DirectoryPath(levelscripts);
 
+
     resourceLoaderPack = new ProjectInformation
     {
-        OutputDir = outPutDir,
+        OutputDir = $"{artificatsOutputDir}/"+dirPaht.GetDirectoryName(),
         Name = dirPaht.GetDirectoryName(),
         FullPath = moduleLoader,
         ProjectType = 2,
@@ -84,7 +94,7 @@ Setup(ctx =>
 
     modulesPack = new ProjectInformation
     {
-        OutputDir = outPutDir,
+        OutputDir = $"{artificatsOutputDir}/"+dirPaht2.GetDirectoryName(),
         Name = dirPaht2.GetDirectoryName(),
         FullPath = classicOnline,
         ProjectType = 2,
@@ -97,7 +107,7 @@ Setup(ctx =>
 
     levelScriptsPack = new ProjectInformation
     {
-        OutputDir = outPutDir,
+        OutputDir = $"{artificatsOutputDir}/"+dirPaht3.GetDirectoryName(),
         Name = dirPaht3.GetDirectoryName(),
         FullPath = levelscripts,
         ProjectType = 2,
@@ -109,16 +119,6 @@ Setup(ctx =>
     Information(levelScriptsPack.OutputDir);
     
 });
-
-Teardown(ctx =>
-{
-	// Executed AFTER the last task.
-	Information("Finished running tasks.");
-});
-
-//////////////////////////////////////////////////////////////////////
-// TASKS
-//////////////////////////////////////////////////////////////////////
  
 Task("Clean") 
     //.WithCriteria(c => HasArgument("rebuild"))
@@ -128,70 +128,35 @@ Task("Clean")
         CleanDirectory(outPutDir);
 });
 
-Task("Restore") 
-    .IsDependentOn("Clean")
-    .Does(() =>
-{
-        DotNetRestore(levelScriptsPack.FullPath);
-        DotNetRestore(modulesPack.FullPath);
-        DotNetRestore(resourceLoaderPack.FullPath);
-});
-
-Task("Build")
-    .IsDependentOn("Restore")
-    .ContinueOnError()
-    .Does(() =>
-{
-        DotNetBuild(levelScriptsPack.FullPath, new DotNetBuildSettings
-        {
-            Configuration = configuration,  
-            OutputDirectory = levelScriptsPack.OutputDir,
-            NoRestore = true
-        });
-        DotNetBuild(modulesPack.FullPath, new DotNetBuildSettings
-        {
-            Configuration = configuration,  
-            OutputDirectory = modulesPack.OutputDir,
-            NoRestore = true
-        });
-        DotNetBuild(resourceLoaderPack.FullPath, new DotNetBuildSettings
-        {
-            Configuration = configuration,  
-            OutputDirectory = resourceLoaderPack.OutputDir,
-            NoRestore = true
-        });
-})
-.DeferOnError();
-
-Task("Test")
-    .IsDependentOn("Build")
-    .Does(() =>
-{
-      DotNetTest(levelScriptsPack.FullPath, new DotNetTestSettings
-        {
-            Configuration = configuration,
-            NoBuild = true,
-        });
-    DotNetTest(modulesPack.FullPath, new DotNetTestSettings
-        {
-            Configuration = configuration,
-            NoBuild = true,
-        });
-    DotNetTest(resourceLoaderPack.FullPath, new DotNetTestSettings
-        {
-            Configuration = configuration,
-            NoBuild = true,
-        });
-});
-
 Task("Deploy")
-    .IsDependentOn("Build")
+    .IsDependentOn("Clean")
     .Does(() =>
 { 
             var resourceDeployDir = $"{resourceOutputDir}/{resourceName}";
             CleanDirectory(resourceDeployDir);
 	        Information("Cleaned " + resourceDeployDir);
  
+
+             // Copy any working data files to the resource, data should probably be its own repo
+            if(DirectoryExists($"{artificatsOutputDir}/{resourceLoaderPack.Name}"))
+            { 
+                CopyDirectory($"{artificatsOutputDir}/{resourceLoaderPack.Name}", resourceDeployDir); 
+                Information($"Copied {artificatsOutputDir}/{resourceLoaderPack.Name}" + " To " + resourceDeployDir); 
+            }
+
+             if(DirectoryExists($"{artificatsOutputDir}/{modulesPack.Name}"))
+            { 
+                CopyDirectory($"{artificatsOutputDir}/{modulesPack.Name}", resourceDeployDir); 
+                Information($"Copied {artificatsOutputDir}/{modulesPack.Name}" + " To " + resourceDeployDir); 
+            }
+
+             if(DirectoryExists($"{artificatsOutputDir}/{levelScriptsPack.Name}"))
+            { 
+                CopyDirectory($"{artificatsOutputDir}/{levelScriptsPack.Name}", resourceDeployDir); 
+                Information($"Copied {artificatsOutputDir}/{levelScriptsPack.Name}" + " To " + resourceDeployDir); 
+            }
+
+            
             // Copy any working data files to the resource, data should probably be its own repo
             if(DirectoryExists($"{resourceDataDir}/{resourceLoaderPack.Name}"))
             { 
@@ -211,16 +176,14 @@ Task("Deploy")
 	        //     Information($"Copied {dataDir}/{levelScriptsPack.Name}" + " To " + resourceDeployDir);
             // }
 
-            CopyDirectory($"{artificatsOutputDir}/{resourceName}", resourceDeployDir); 
-	        Information($"Copied {artificatsOutputDir}/{resourceName}" + " To " + resourceDeployDir); 
 
             // Delete this to avoid causing issues with loading and running the .net libraries
             DeleteFiles(resourceDeployDir + "/CitizenFX.Core.*.dll");
 	        Information($"Deleted " + resourceDeployDir + "/CitizenFX.Core.*.dll");
 });
 
-//////////////////////////////////////////////////////////////////////
-// EXECUTION
-//////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////
+// // EXECUTION
+// //////////////////////////////////////////////////////////////////////
 
 RunTarget(target);

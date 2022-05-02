@@ -10,13 +10,15 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MBrain.Scripts
 {
-    internal class ObjectTrackerScript : ModuleScript
+    internal class EntityProcesser : ModuleScript
     {
         private HashSet<int> _trackedHandles;
+        private HandleTracker _ht;
 
-        public ObjectTrackerScript()
+        public EntityProcesser()
         {
             _trackedHandles = new HashSet<int>();
+            _ht = HandleTracker.GetInstance();
         }
 
         public override async Task OnUpdate()
@@ -32,7 +34,7 @@ namespace Proline.ClassicOnline.MBrain.Scripts
                     continue;
                 _trackedHandles.Add(handle);
                 addedHandles.Add(handle);
-                // EventManager.InvokeEventV2("EntityHandleTracked", handle);
+                _ht.Add(handle); 
             }
 
             var combinedHandles = new Queue<int>(_trackedHandles);
@@ -43,10 +45,8 @@ namespace Proline.ClassicOnline.MBrain.Scripts
                     continue;
                 _trackedHandles.Remove(handle);
                 removedHanldes.Add(handle);
-                //EventManager.InvokeEventV2("EntityHandleUnTracked", handle);
+                _ht.Remove(handle); 
             }
-            TriggerEvent("EntityHandlesTracked", addedHandles);
-            TriggerEvent("EntityHandlesUnTracked", removedHanldes);
             await Delay(1000);
         }
     }

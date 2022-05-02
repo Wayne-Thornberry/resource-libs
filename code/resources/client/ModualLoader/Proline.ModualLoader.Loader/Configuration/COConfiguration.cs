@@ -9,6 +9,7 @@ namespace Proline.ResourceLoader.Main.Configuration
 {
     public class COConfiguration
     {
+        public string[] Resources { get; set; }
         public ModuleConfig[] ModuleConfigs { get; set; }
     }
 }

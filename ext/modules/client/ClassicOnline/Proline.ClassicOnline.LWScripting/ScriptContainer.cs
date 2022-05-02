@@ -1,4 +1,5 @@
-﻿using Proline.Resource.Logging;
+﻿using CitizenFX.Core;
+using Proline.Resource.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,12 +52,19 @@ namespace Proline.ClassicOnline.MScripting
             }
             if (_status == 1)
             {
-                _scriptTask = new Task(() =>
+                _scriptTask = new Task(async () =>
                 {
                     try
                     {
                         Resource.Console.Console.WriteLine(_log.Debug(string.Format("{0} Script Started", _name, _terminationCode)));
-                        _eMethod.Invoke(_instance, new object[] { _args, _token });
+                        var task = (Task) _eMethod.Invoke(_instance, new object[] { _args, _token });
+                        while (!task.IsCompleted)
+                            await BaseScript.Delay(0);
+
+                        if (task.Exception != null)
+                        {
+                            throw task.Exception;
+                        }
                         _terminationCode = 0;
                     }
                     catch (ScriptTerminatedException e)

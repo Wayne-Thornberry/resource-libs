@@ -9,6 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Proline.ClassicComponents.UI\Proline.ClassicOnline.MScreen.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Proline.Resource.ModuleCore">
       <HintPath>..\..\..\..\..\artifacts\ResourceClient\Proline.Resource.ModuleCore.dll</HintPath>
     </Reference>

@@ -15,7 +15,7 @@ namespace Proline.ClassicOnline.MScripting
             var sm = LWScriptManager.GetInstance();
             if (sm.DoesScriptExist(scriptName))
             {
-                var id = sm.StartNewScriptInstance(scriptName);
+                var id = sm.StartNewScriptInstance(scriptName, args);
                 return id;
             }
             _log.Debug($"Could not start {scriptName}");
@@ -24,7 +24,7 @@ namespace Proline.ClassicOnline.MScripting
 
         public static void MarkScriptAsNoLongerNeeded()
         {
-            throw new NotImplementedException();
+            throw new ScriptTerminatedException();
         }
     }
 }

@@ -12,9 +12,10 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MBrain.Scripts
 {
-    internal class ObjectProcesser : ModuleScript
+    internal class ScriptObjectProcesser : ModuleScript
     {
         private ScriptObjectManager _sm;
+        private HandleTracker _ht;
 
         public override async Task OnStart()
         {
@@ -22,8 +23,9 @@ namespace Proline.ClassicOnline.MBrain.Scripts
             var onNewHandlesFound = new OnNewHandlesFound();
             var onEntityUntracked = new OnEntityUntracked();
 
-            EventHandlers.Add("EntityHandlesTracked", new Action<List<object>>(onNewHandlesFound.OnEventInvoked));
-            EventHandlers.Add("EntityHandlesUnTracked", new Action<List<object>>(onEntityUntracked.OnEventInvoked));
+            _ht = HandleTracker.GetInstance();
+            _ht.EntityHandleTracked += onNewHandlesFound.OnEventInvoked;
+            _ht.EntityHandleUntracked += onEntityUntracked.OnEventInvoked; 
         }
 
         public override async Task OnUpdate()

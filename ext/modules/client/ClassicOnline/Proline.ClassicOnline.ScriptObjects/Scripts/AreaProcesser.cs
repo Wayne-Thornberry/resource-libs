@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MBrain.Scripts
 {
-    internal class ProcessScriptAreas : ModuleScript
+    internal class AreaProcesser : ModuleScript
     {
-        public ProcessScriptAreas()
+        public AreaProcesser()
         {
         }
 

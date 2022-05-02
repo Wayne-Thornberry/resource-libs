@@ -28,10 +28,10 @@ namespace Proline.ClassicOnline.LevelScripts
             Script.StartNewScript("UIPlayerSwitch");
             Script.StartNewScript("FMControls");
             Script.StartNewScript("UIMainMenu");
-            Script.StartNewScript("LSCustoms", new Vector3(
-            -339.84f,
-             -136.81f,
-             38.76f));
+            //Script.StartNewScript("LSCustoms", new Vector3(
+            //-339.84f,
+            // -136.81f,
+            // 38.76f));
 
 
             DebugConsole.LogDebug(ResourceFile.GetFileValue("data/character01.json", ""));

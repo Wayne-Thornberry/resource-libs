@@ -12,26 +12,22 @@ namespace Proline.ClassicOnline.MBrain.Events
     internal class OnNewHandlesFound
     {
         private static Log _log = new Log();
-        public void OnEventInvoked(List<object> handles)
+        public void OnEventInvoked(int handles)
         {
             try
             {
                 var sm = ScriptObjectManager.GetInstance();
-
-                foreach (int handle in handles)
+                if (!API.DoesEntityExist(handles)) return;
+                var modelHash = API.GetEntityModel(handles);
+                if (!sm.ContainsSO(handles) && sm.ContainsKey(modelHash))
                 {
-                    if (!API.DoesEntityExist(handle)) return;
-                    var modelHash = API.GetEntityModel(handle);
-                    if (!sm.ContainsSO(handle) && sm.ContainsKey(modelHash))
+                    _log.Debug(handles + " Oh boy, we found a matching script object with that model hash from that handle, time to track it");
+                    sm.AddSO(handles, new ScriptObject()
                     {
-                        _log.Debug(handle + " Oh boy, we found a matching script object with that model hash from that handle, time to track it");
-                        sm.AddSO(handle, new ScriptObject()
-                        {
-                            Data = sm.Get(modelHash),
-                            Handle = handle,
-                            State = 0,
-                        });
-                    }
+                        Data = sm.Get(modelHash),
+                        Handle = handles,
+                        State = 0,
+                    });
                 }
             }
             catch (Exception e)

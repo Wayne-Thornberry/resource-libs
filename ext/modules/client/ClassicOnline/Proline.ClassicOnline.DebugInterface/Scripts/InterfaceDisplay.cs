@@ -1,6 +1,7 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using Proline.ClassicOnline.MRendering;
+using Proline.ClassicOnline.MScreen;
 using Proline.Resource.ModuleCore;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Proline.ClassicOnline.MRendering.Scripts
                + Game.PlayerPed.Health + "\n"
                + Game.PlayerPed.Handle + "\n";
             //_handles.Count + " Entities in the world ";
-            DebugUtil.DrawDebugText2D(t, new PointF(0.1f, 0.05f), 0.3f, 0);
+            ScreenAPI.DrawDebugText2D(t, new PointF(0.1f, 0.05f), 0.3f, 0);
             //foreach (var handle in _handles)
             //{
             //    var entity = Entity.FromHandle(handle);

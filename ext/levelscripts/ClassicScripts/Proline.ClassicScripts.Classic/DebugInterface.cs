@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using Proline.ClassicOnline.MRendering;
 using Proline.ClassicOnline.MScreen;
 
 namespace Proline.ClassicOnline.LevelScripts
@@ -28,7 +29,7 @@ namespace Proline.ClassicOnline.LevelScripts
                    + CitizenFX.Core.Game.PlayerPed.Health + "\n"
                    + CitizenFX.Core.Game.PlayerPed.Handle + "\n" +
                    _handles.Count + " Entities in the world ";
-                DebugUtil.DrawDebugText2D(t, new PointF(0.01f, 0.05f), 0.3f, 0);
+                ScreenAPI.DrawDebugText2D(t, new PointF(0.01f, 0.05f), 0.3f, 0);
                 foreach (Entity entity in World.GetAllProps())
                 { 
                     //DebugConsole.LogDebug(API.GetEntityType(handle).ToString());
@@ -41,8 +42,8 @@ namespace Proline.ClassicOnline.LevelScripts
                         $"{Math.Round(entity.Heading, 2)}\n" +
                         $"{entity.Health}\n";// +
                                              //$"{ExampleAPI.IsEntityScripted(entity.Handle)}";
-                    DebugUtil.DrawEntityBoundingBox(entity.Handle, 125, 125, 125, 100);
-                    DebugUtil.DrawDebugText3D(x, d, 3f, 0);
+                    DebugAPI.DrawEntityBoundingBox(entity.Handle, 125, 125, 125, 100);
+                    DebugAPI.DrawDebugText3D(x, d, 3f, 0);
 
                 }
                 await BaseScript.Delay(0);

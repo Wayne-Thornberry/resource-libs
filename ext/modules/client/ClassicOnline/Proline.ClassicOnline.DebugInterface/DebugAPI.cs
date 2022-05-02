@@ -2,45 +2,12 @@
 using System.Drawing;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using Proline.ClassicOnline.MScreen;
 
-namespace Proline.ClassicOnline.MScreen
+namespace Proline.ClassicOnline.MRendering
 {
-    public static class DebugUtil
-    {
-        public static void Draw2DBox(float x, float y, float width, float heigth, Color color)
-        {
-            //NativeAPI.CallNativeAPI(Hash.DRAW_RECT, x, y, width, heigth, color.R, color.G, color.B, color.A);
-        }
-
-
-        public static void DrawDebug2DBox(PointF start, PointF end, Color color)
-        {
-            var width = Math.Abs(start.X - end.X);
-            var height = Math.Abs(start.Y - end.Y);
-
-            start = new PointF(Math.Abs(start.X + width / 2), Math.Abs(start.Y + height / 2));
-
-            Draw2DBox(start.X, start.Y, width, height, color);
-        }
-
-
-        public static void DrawDebugText2D(string text, PointF vector2, float scale, int font)
-        {
-            API.SetTextFont(font);
-            API.SetTextProportional(true);
-            API.SetTextScale(0.0f, scale);
-            API.SetTextColour(255, 255, 255, 255);
-            // NativeAPI.SetTextDropshadow(0, 0, 0, 0, 255);
-            // NativeAPI.SetTextEdge(1, 0, 0, 0, 255);
-            API.SetTextDropShadow();
-            API.SetTextOutline();
-            API.SetTextEntry("STRING");
-            API.SetTextCentre(false);
-            API.AddTextComponentString(text);
-            API.DrawText(vector2.X, vector2.Y);
-        }
-
-
+    public static class DebugAPI
+    {  
 
         public static void DrawDebugText3D(string text, Vector3 vector3, float scale2, int font)
         {
@@ -56,7 +23,7 @@ namespace Proline.ClassicOnline.MScreen
             var p = new PointF(x, y);//(x / 1280) * 1f, (y / 720) * 1f);
 
             if (p == PointF.Empty) return;
-            DrawDebugText2D(text, p, scale, font);
+            ScreenAPI.DrawDebugText2D(text, p, scale, font);
         }
 
         public static void DrawEntityBoundingBox(int ent, int r, int g, int b, int a)
@@ -365,13 +332,6 @@ namespace Proline.ClassicOnline.MScreen
 
                 // API.DrawLine(x1, y1, z1, x2, y2, z2, r, g, b, a);
             }
-        }
-        //public override void OnEngineEvent(string eventName, params object[] args)
-        //{
-        //    if (eventName.Equals("entitiesInWorld"))
-        //    {
-        //        _handles = (int[])args[0];
-        //    }
-        //}
+        } 
     }
 }
