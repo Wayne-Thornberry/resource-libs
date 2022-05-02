@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Proline.Resource.Console\Proline.Resource.Console.csproj" />
     <ProjectReference Include="..\Proline.Resource.File\Proline.Resource.File.csproj" />
-    <ProjectReference Include="..\Proline.Resource.Logging\Proline.Resource.Logging.csproj" />
   </ItemGroup>
 
   <ItemGroup>

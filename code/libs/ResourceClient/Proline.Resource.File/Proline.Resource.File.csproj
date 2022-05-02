@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Proline.Resource.Logging\Proline.Resource.Logging.csproj" />
+    <ProjectReference Include="..\Proline.Resource.Console\Proline.Resource.Console.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
