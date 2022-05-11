@@ -44,10 +44,4 @@
     </Reference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Events\" />
-    <Folder Include="Exports\" />
-    <Folder Include="Scripts\" />
-  </ItemGroup>
-
 </Project>

@@ -1,0 +1,15 @@
+#Network Endpoints
+{0}
+
+#Server Resources
+{1} 
+
+#Server Properties
+{2}
+
+#Admin Groups
+{3}
+
+#Admins
+{4}
+

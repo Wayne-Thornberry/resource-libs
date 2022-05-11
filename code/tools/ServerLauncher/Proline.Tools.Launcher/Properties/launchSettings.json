@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Proline.Tools.Launcher": {
+      "commandName": "Project",
+      "workingDirectory": "E:\\OneDrive\\Repo\\Project Online\\code\\tools\\Proline.ServerLauncher\\Proline.Tools.Launcher"
+    }
+  }
+}

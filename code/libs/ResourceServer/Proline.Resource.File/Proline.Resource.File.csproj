@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net452</TargetFramework>
-    <AssemblyName>Proline.ResourceFile.Server</AssemblyName>
+    <AssemblyName>Proline.Resource.File.Server</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
