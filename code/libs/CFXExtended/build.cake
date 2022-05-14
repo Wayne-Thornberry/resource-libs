@@ -78,7 +78,7 @@ Task("Restore")
     .IsDependentOn("Clean")
     .Does(() =>
 {
-        DotNetRestore(resource.FullPath + "/src");
+        DotNetRestore(resource.FullPath);
 });
 
 Task("Build")
@@ -86,7 +86,7 @@ Task("Build")
     .ContinueOnError()
     .Does(() =>
 {
-        DotNetBuild(resource.FullPath + "/src", new DotNetBuildSettings
+        DotNetBuild(resource.FullPath, new DotNetBuildSettings
         {
             Configuration = configuration,  
             OutputDirectory = resource.OutputDir,
@@ -99,7 +99,7 @@ Task("Test")
     .IsDependentOn("Build")
     .Does(() =>
 {
-      DotNetTest(resource.FullPath + "/src", new DotNetTestSettings
+      DotNetTest(resource.FullPath, new DotNetTestSettings
         {
             Configuration = configuration,
             NoBuild = true,

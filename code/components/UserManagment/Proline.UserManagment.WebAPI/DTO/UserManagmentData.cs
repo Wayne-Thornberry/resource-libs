@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.Online.Data
-{ 
+namespace Proline.DBAccess.WebService.DTO
+{
     public class LoginPlayerInParameter
-    { 
+    {
         public string Identifier { get; set; }
     }
 
@@ -32,7 +32,7 @@ namespace Proline.Online.Data
         public string Username { get; set; }
         public long PlayerId { get; set; }
         public int Priority { get; set; }
-    } 
+    }
 
     public class IdentifierCreateInParameter
     {
@@ -40,7 +40,7 @@ namespace Proline.Online.Data
         public long PlayerId { get; set; }
         public string Identifier { get; set; }
         public int IdentitierType { get; set; }
-    }  
+    }
 
     public class IdentityOutParameter
     {
@@ -61,7 +61,7 @@ namespace Proline.Online.Data
     {
         public long PlayerId { get; set; }
         public int Priority { get; set; }
-    } 
+    }
 
     public class UserAccountOutParameter
     {

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net452</TargetFramework>
@@ -15,6 +15,15 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Configuration.Common">
+      <HintPath>..\..\..\..\artifacts\ResourceCommon\Proline.Resource.Configuration.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.File.Common">
+      <HintPath>..\..\..\..\artifacts\ResourceCommon\Proline.Resource.File.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.ModuleCore.Common">
+      <HintPath>..\..\..\..\artifacts\ResourceCommon\Proline.Resource.ModuleCore.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
 

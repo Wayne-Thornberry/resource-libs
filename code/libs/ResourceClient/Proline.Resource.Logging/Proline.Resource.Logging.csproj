@@ -15,6 +15,9 @@
   </ItemGroup>
  
   <ItemGroup>
+    <Reference Include="Proline.Resource.Configuration.Common">
+      <HintPath>..\..\..\..\artifacts\ResourceCommon\Proline.Resource.Configuration.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />

@@ -4,7 +4,6 @@
     <TargetFramework>net452</TargetFramework>
     <AssemblyName>Proline.Resource.Configuration.Client</AssemblyName>
     <Platforms>AnyCPU</Platforms>
-    <RootNamespace>Proline.ResourceConfiguration</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +21,12 @@
     </Reference>
     <Reference Include="Proline.Common.Hashing">
       <HintPath>..\..\..\..\artifacts\Hashing\Proline.Common.Hashing.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Configuration.Common">
+      <HintPath>..\..\..\..\artifacts\ResourceCommon\Proline.Resource.Configuration.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.File.Common">
+      <HintPath>..\..\..\..\artifacts\ResourceCommon\Proline.Resource.File.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

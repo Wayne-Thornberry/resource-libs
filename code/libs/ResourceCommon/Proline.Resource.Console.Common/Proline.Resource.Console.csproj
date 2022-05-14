@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <AssemblyName>Proline.Resource.Console.Common</AssemblyName>
+  </PropertyGroup>
+
+</Project>

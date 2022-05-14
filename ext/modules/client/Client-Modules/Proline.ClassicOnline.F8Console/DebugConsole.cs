@@ -1,4 +1,5 @@
-﻿using Proline.Resource.Logging;
+﻿using Proline.Resource.Console;
+using Proline.Resource.Logging;
 using System;
 
 namespace Proline.ClassicOnline.MDebug
@@ -12,7 +13,7 @@ namespace Proline.ClassicOnline.MDebug
             // Log in memory
             var line = _log.Debug(data.ToString());
             // Output to console
-            Resource.Console.Console.WriteLine(line);
+            EConsole.WriteLine(line);
             // Duplciate to server
         }
 
@@ -21,7 +22,7 @@ namespace Proline.ClassicOnline.MDebug
             // Log in memory
             var line = _log.Debug(data);
             // Output to console
-            Resource.Console.Console.WriteLine(line);
+            EConsole.WriteLine(line);
             // Duplciate to server
 
         }
@@ -31,7 +32,7 @@ namespace Proline.ClassicOnline.MDebug
             // Log in memory
             var line = _log.Warn(data.ToString());
             // Output to console
-            Resource.Console.Console.WriteLine(line);
+            EConsole.WriteLine(line);
             // Duplciate to server
         }
 
@@ -40,7 +41,7 @@ namespace Proline.ClassicOnline.MDebug
             // Log in memory
             var line = _log.Info(data.ToString());
             // Output to console
-            Resource.Console.Console.WriteLine(line);
+            EConsole.WriteLine(line);
             // Duplciate to server
         }
 
@@ -49,7 +50,7 @@ namespace Proline.ClassicOnline.MDebug
             // Log in memory
             var line = _log.Error(data.ToString());
             // Output to console
-            Resource.Console.Console.WriteLine(line);
+            EConsole.WriteLine(line);
             // Duplciate to server
         }
 

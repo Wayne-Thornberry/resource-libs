@@ -1,24 +1,24 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Proline.Online.Data;
+using Proline.DBAccess.WebService.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Proline.Component.UserManagment.Web.Service.Controllers
+namespace Proline.DBAccess.WebService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class UserManagmentController : ControllerBase
     {
-       // private ProlineCentralContext _context;
+        // private ProlineCentralContext _context;
 
         public UserManagmentController()
         {
-           // _context = context;
+            // _context = context;
         }
 
 
@@ -42,7 +42,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
                 return BadRequest();
 
             try
-            { 
+            {
                 //var identity = _context.LinkedIdentity.FirstOrDefault(e => e.Identifier.Equals(inParameter.Identifier));
                 //if (identity == null)
                 //    return Ok(new EmptyResult());
@@ -92,7 +92,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
         {
 
             if (inParameter == null || inParameter.Identifiers == null || inParameter.Identifiers.Count == 0)
-               return BadRequest();
+                return BadRequest();
 
             try
             {
@@ -115,7 +115,7 @@ namespace Proline.Component.UserManagment.Web.Service.Controllers
                 //    GroupId = 0
                 //};
 
-              
+
                 //if (identity == null)
                 //{
                 //    var x = _context.LinkedIdentity.Where(e => identities.Select(x => x.Identifier).Contains(e.Identifier)).ToArray();

@@ -24,6 +24,9 @@
     <Reference Include="Proline.Resource.ModuleCore.Client">
       <HintPath>..\..\..\..\..\artifacts\ResourceClient\Proline.Resource.ModuleCore.Client.dll</HintPath>
     </Reference>
+    <Reference Include="Proline.Resource.ModuleCore.Common">
+      <HintPath>..\..\..\..\..\artifacts\ResourceCommon\Proline.Resource.ModuleCore.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

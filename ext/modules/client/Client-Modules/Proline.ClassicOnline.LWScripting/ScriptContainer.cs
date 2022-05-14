@@ -1,4 +1,5 @@
 ﻿using CitizenFX.Core;
+using Proline.Resource.Console;
 using Proline.Resource.Logging;
 using System;
 using System.Collections.Generic;
@@ -56,7 +57,7 @@ namespace Proline.ClassicOnline.MScripting
                 {
                     try
                     {
-                        Resource.Console.Console.WriteLine(_log.Debug(string.Format("{0} Script Started", _name, _terminationCode)));
+                        EConsole.WriteLine(_log.Debug(string.Format("{0} Script Started", _name, _terminationCode)));
                         var task = (Task) _eMethod.Invoke(_instance, new object[] { _args, _token });
                         while (!task.IsCompleted)
                             await BaseScript.Delay(0);
@@ -78,10 +79,14 @@ namespace Proline.ClassicOnline.MScripting
                     }
                     finally
                     {
-                        Resource.Console.Console.WriteLine(_log.Debug(string.Format("{0} Script Finished, Termination Code: {1}", _name, _terminationCode)));
+                        EConsole.WriteLine(_log.Debug(string.Format("{0} Script Finished, Termination Code: {1}", _name, _terminationCode)));
+                        BaseScript.TriggerEvent("ScriptTerminatedHandler", _type.Name);
+                        BaseScript.TriggerServerEvent("ScriptTerminatedHandler", _type.Name);
                     }
                 }, _token);
                 _scriptTask.Start();
+                BaseScript.TriggerEvent("ScriptStartedHandler", _type.Name);
+                BaseScript.TriggerServerEvent("ScriptStartedHandler", _type.Name);
                 _status = 2;
                 return _scriptTask.Id;
             }

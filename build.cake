@@ -27,7 +27,7 @@ var serverModuleDataDir = "./data/modules/server";
 
 // a full build would be to build the common first, libs second, resources third, components fourth, tools fifth
 
-var deployDir = "C:/Program Files/ProjectOnline";
+var deployDir = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),"/ProjectOnline");
 var resourceOutputDir = $"{deployDir}/resources";
 var toolsOutputDir = $"{deployDir}/tools";
 var artificatsOutputDir = "./artifacts";

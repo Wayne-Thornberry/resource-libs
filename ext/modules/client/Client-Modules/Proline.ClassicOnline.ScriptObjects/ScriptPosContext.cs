@@ -5,6 +5,7 @@ using Proline.Resource.Logging;
 using System;
 using System.Threading.Tasks;
 using Proline.ClassicOnline.MData;
+using Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MBrain
 {
@@ -20,7 +21,7 @@ namespace Proline.ClassicOnline.MBrain
         {
             var instance = ScriptPositionManager.GetInstance();
             var data = ResourceFile.LoadFile("data/scriptpositions.json");
-            Resource.Console.Console.WriteLine(data);
+            EConsole.WriteLine(data);
             var scriptPosition = JsonConvert.DeserializeObject<ScriptPositions>(data);
             instance.AddScriptPositionPairs(scriptPosition.scriptPositionPairs);
             PosBlacklist.Create();

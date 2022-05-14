@@ -1,20 +1,20 @@
-﻿using Proline.Resource.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
+using CitizenFX.Core;
+using Proline.Resource.Common;
+using Proline.Resource.Logging;
+
 
 namespace Proline.Resource.Framework
 {
-    public abstract class ResourceScript : IResourceScript
+    public abstract class ResourceScript : BaseScript, IScript
     {
         private int _state;
         private int _lastState;
         protected Log _log = new Log();
         public bool EnableFrameSync { get; set; }
         public bool HasStarted => State > 0;
-        public bool IsPaused => State == -1;
+        public bool IsPaused { get; set; }
 
         public int State
         {
@@ -29,24 +29,25 @@ namespace Proline.Resource.Framework
         }
 
         public ResourceScript()
-        {
-            _state = 0;
+        { 
+            _state = -1; 
         }
 
         public virtual async Task OnStart() { }
 
         public virtual async Task OnUpdate() { }
 
+        [Tick]
         public async Task OnTick()
         {
             try
             {
-                if (!IsPaused)
-                {
+                if(State > 0 && !IsPaused)
+                { 
                     if (!HasStarted)
                     {
                         await OnStart();
-                        State = 1;
+                        State = 2;
                     }
                     else
                     {
@@ -62,16 +63,6 @@ namespace Proline.Resource.Framework
             }
             //if (EnableFrameSync)
             //    await InternalManager.API.Delay(0);
-        }
-
-        internal void Disable()
-        {
-            State = -1;
-        }
-
-        internal void Enable()
-        {
-            State = _lastState;
         }
     }
 }

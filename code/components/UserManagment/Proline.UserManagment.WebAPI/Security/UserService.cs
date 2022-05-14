@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-namespace Proline.Component.UserManagment.Web.Service.Security
+namespace Proline.DBAccess.WebService.Security
 {
     public class UserService : IUserService
     {

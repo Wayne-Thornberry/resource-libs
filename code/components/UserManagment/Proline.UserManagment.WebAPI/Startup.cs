@@ -7,8 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;  
-using Proline.Component.UserManagment.Web.Service.Security;
+using Microsoft.OpenApi.Models;
+using Proline.DBAccess.WebService.Security;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +16,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Proline.Component.Web.Service
+namespace Proline.DBAccess.WebService
 {
     public class Startup
     {
@@ -34,8 +34,8 @@ namespace Proline.Component.Web.Service
             services.AddControllers();
             //services.AddDbContext<ProlineCentralContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProlineCentral")));
             services.AddSwaggerGen(c =>
-            { 
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "You api title", Version = "v1" }); 
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "You api title", Version = "v1" });
                 c.AddSecurityDefinition("basic", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
@@ -57,9 +57,9 @@ namespace Proline.Component.Web.Service
                             },
                             new string[] {}
                     }
-                }); 
+                });
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                if(File.Exists(Path.Combine(AppContext.BaseDirectory, xmlFilename)))
+                if (File.Exists(Path.Combine(AppContext.BaseDirectory, xmlFilename)))
                     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
@@ -73,8 +73,8 @@ namespace Proline.Component.Web.Service
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            { 
-                app.UseDeveloperExceptionPage(); 
+            {
+                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(options =>
                 {
@@ -84,7 +84,7 @@ namespace Proline.Component.Web.Service
             }
 
 
-           // app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

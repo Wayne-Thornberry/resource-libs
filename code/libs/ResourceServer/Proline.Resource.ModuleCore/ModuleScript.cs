@@ -56,7 +56,7 @@ namespace Proline.Resource.ModuleCore
             }
             catch (Exception e)
             {
-                Proline.Resource.Console.Console.WriteLine(_log.Error(e.ToString()));
+                Proline.Resource.Console.EConsole.WriteLine(_log.Error(e.ToString()));
                 State = -1;
                 // The buck stops here
             }

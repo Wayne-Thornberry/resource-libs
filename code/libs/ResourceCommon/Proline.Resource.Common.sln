@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.Resource.Framework"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.Resource.Networking", "Proline.Resource.Networking\Proline.Resource.Networking.csproj", "{AEB911BA-9BB7-49C3-BCE2-47432DF94FC8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.Resource.ModuleCore", "Proline.Resource.ModuleCore\Proline.Resource.ModuleCore.csproj", "{60EFA37C-CB15-49E3-89C1-260791E694C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proline.Resource.Console", "Proline.Resource.Console.Common\Proline.Resource.Console.csproj", "{1602B116-C249-450E-9421-8A622C72B904}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{AEB911BA-9BB7-49C3-BCE2-47432DF94FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEB911BA-9BB7-49C3-BCE2-47432DF94FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEB911BA-9BB7-49C3-BCE2-47432DF94FC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60EFA37C-CB15-49E3-89C1-260791E694C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60EFA37C-CB15-49E3-89C1-260791E694C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60EFA37C-CB15-49E3-89C1-260791E694C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60EFA37C-CB15-49E3-89C1-260791E694C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1602B116-C249-450E-9421-8A622C72B904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1602B116-C249-450E-9421-8A622C72B904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1602B116-C249-450E-9421-8A622C72B904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1602B116-C249-450E-9421-8A622C72B904}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

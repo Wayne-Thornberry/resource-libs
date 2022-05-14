@@ -10,7 +10,7 @@ var commonDir = "./../code/common";
 var resourceDir = "./../code/resources";
 var componentDir = "./../code/components";
 var libDir = "./../../../libs";
-var dataDir = "./../../../../data/resources/server";
+var dataDir = "./../../../../data/modules/client";
 var toolsDir = "./../code/tools";
 var resourceFramework = "ResourceFramework";
 
@@ -117,26 +117,26 @@ Task("Deploy")
     .IsDependentOn("Build")
     .Does(() =>
 { 
-    if(resource.ProjectType == 2)
-        { 
-            var resourceDeployDir = $"{resourceOutputDir}/{resource.Name}";
-            CleanDirectory(resourceDeployDir);
-	        Information("Cleaned " + resourceDeployDir);
+    // if(resource.ProjectType == 2)
+    //     { 
+    //         var resourceDeployDir = $"{resourceOutputDir}/{resource.Name}";
+    //         CleanDirectory(resourceDeployDir);
+	//         Information("Cleaned " + resourceDeployDir);
  
-            // Copy any working data files to the resource, data should probably be its own repo
-            if(DirectoryExists($"{dataDir}/{resource.Name}"))
-            { 
-                CopyDirectory($"{dataDir}/{resource.Name}", resourceDeployDir); 
-	            Information($"Copied {dataDir}/{resource.Name}" + " To " + resourceDeployDir);
-            }
+    //         // Copy any working data files to the resource, data should probably be its own repo
+    //         if(DirectoryExists($"{dataDir}/{resource.Name}"))
+    //         { 
+    //             CopyDirectory($"{dataDir}/{resource.Name}", resourceDeployDir); 
+	//             Information($"Copied {dataDir}/{resource.Name}" + " To " + resourceDeployDir);
+    //         }
 
-            CopyDirectory($"{artificatsOutputDir}/{resource.Name}", resourceDeployDir); 
-	        Information($"Copied {artificatsOutputDir}/{resource.Name}" + " To " + resourceDeployDir); 
+    //         CopyDirectory($"{artificatsOutputDir}/{resource.Name}", resourceDeployDir); 
+	//         Information($"Copied {artificatsOutputDir}/{resource.Name}" + " To " + resourceDeployDir); 
 
-            // Delete this to avoid causing issues with loading and running the .net libraries
-            DeleteFiles(resourceDeployDir + "/CitizenFX.Core.*.dll");
-	        Information($"Deleted " + resourceDeployDir + "/CitizenFX.Core.*.dll");
-        }
+    //         // Delete this to avoid causing issues with loading and running the .net libraries
+    //         DeleteFiles(resourceDeployDir + "/CitizenFX.Core.*.dll");
+	//         Information($"Deleted " + resourceDeployDir + "/CitizenFX.Core.*.dll");
+    //     }
 });
 
 //////////////////////////////////////////////////////////////////////

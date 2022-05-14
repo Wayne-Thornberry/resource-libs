@@ -17,28 +17,31 @@
       <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.Client.dll</HintPath>
     </Reference>
     <Reference Include="Proline.ClassicOnline.MBrain">
-      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MBrain.dll</HintPath>
+      <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MBrain.dll</HintPath>
     </Reference>
     <Reference Include="Proline.ClassicOnline.MData">
-      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MData.dll</HintPath>
+      <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MData.dll</HintPath>
     </Reference>
     <Reference Include="Proline.ClassicOnline.MDebug">
-      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MDebug.dll</HintPath>
+      <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MDebug.dll</HintPath>
     </Reference>
     <Reference Include="Proline.ClassicOnline.MGame">
-      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MGame.dll</HintPath>
+      <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MGame.dll</HintPath>
     </Reference>
     <Reference Include="Proline.ClassicOnline.MRendering">
-      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MRendering.dll</HintPath>
+      <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MRendering.dll</HintPath>
     </Reference>
     <Reference Include="Proline.ClassicOnline.MScreen">
-      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MScreen.dll</HintPath>
+      <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MScreen.dll</HintPath>
     </Reference>
     <Reference Include="Proline.ClassicOnline.MScripting">
-      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MScripting.dll</HintPath>
+      <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MScripting.dll</HintPath>
     </Reference>
     <Reference Include="Proline.ClassicOnline.MWorld">
-      <HintPath>..\..\..\..\artifacts\ClassicOnline\Proline.ClassicOnline.MWorld.dll</HintPath>
+      <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MWorld.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Console.Client">
+      <HintPath>..\..\..\..\artifacts\ResourceClient\Proline.Resource.Console.Client.dll</HintPath>
     </Reference>
   </ItemGroup>
 

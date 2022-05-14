@@ -40,7 +40,7 @@ namespace Proline.Resource.Framework
 
                 if (main == null)
                 {
-                    Console.Console.WriteLine(_log.Debug("A main method could not be found, Resource cannot be started properly")); 
+                    Console.EConsole.WriteLine(_log.Debug("A main method could not be found, Resource cannot be started properly")); 
                 }
                 else
                 {
@@ -50,7 +50,7 @@ namespace Proline.Resource.Framework
             }
             catch (Exception e)
             {
-                Console.Console.WriteLine(_log.Error(e.ToString()));
+                Console.EConsole.WriteLine(_log.Error(e.ToString()));
                 //throw;
             }
             finally
@@ -64,7 +64,7 @@ namespace Proline.Resource.Framework
             foreach (var item in _scripts)
             {
                 item.State = 0;
-                Console.Console.WriteLine(_log.Debug(item.GetType().Name));
+                Console.EConsole.WriteLine(_log.Debug(item.GetType().Name));
                 AddTick(item.OnTick);
             }
         }
@@ -74,7 +74,7 @@ namespace Proline.Resource.Framework
             var types = _sourcAssembly.GetTypes().Where(e=>e.BaseType == typeof(ResourceScript));
             foreach (var item in types)
             {
-                Console.Console.WriteLine(_log.Debug(item.Name));
+                Console.EConsole.WriteLine(_log.Debug(item.Name));
                 var instance = Activator.CreateInstance(item);
                 _scripts.Add((ResourceScript)instance);
             } 
@@ -85,7 +85,7 @@ namespace Proline.Resource.Framework
             var types = _sourcAssembly.GetTypes();
             foreach (var item in types)
             {
-                Console.Console.WriteLine(_log.Debug(item.Name)); 
+                Console.EConsole.WriteLine(_log.Debug(item.Name)); 
                 var method = (object) item.GetMethod("Main", BindingFlags.Public | BindingFlags.Static);
                 if (method == null) continue;
                 return (MethodInfo) method;

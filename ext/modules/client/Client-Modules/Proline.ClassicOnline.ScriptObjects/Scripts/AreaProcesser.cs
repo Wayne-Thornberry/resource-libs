@@ -1,6 +1,7 @@
 ﻿using CitizenFX.Core;
 using Proline.ClassicOnline.MBrain;
 using Proline.ClassicOnline.MScripting;
+using Proline.Resource.Console;
 using Proline.Resource.ModuleCore;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace Proline.ClassicOnline.MBrain.Scripts
                     var vector = new Vector3(positionsPair.X, positionsPair.Y, positionsPair.Z);
                     if (World.GetDistance(vector, Game.PlayerPed.Position) < 10f && !PosBlacklist.Contains(positionsPair))
                     {
-                        Resource.Console.Console.WriteLine(_log.Debug("In range"));
+                        EConsole.WriteLine(_log.Debug("In range"));
                         Script.StartNewScript(positionsPair.ScriptName, vector);
                         PosBlacklist.Add(positionsPair);
                     }

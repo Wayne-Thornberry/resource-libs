@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json;
-using Proline.Common.Logging; 
+﻿using CitizenFX.Core;
+using Newtonsoft.Json;
+using Proline.Resource.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,15 @@ using System.Threading.Tasks;
 
 namespace Proline.Resource.Networking
 {
-    public class EventClient
+    public class EventClient : BaseScript
     {
         private readonly int TIMEOUT_TICKS = 300000;
         public Log _log = new Log();
-        private string _endPoint;
-        private IBaseScriptMethods _api;
+        private string _endPoint; 
 
-        public EventClient(IBaseScriptMethods api)
-        {
-            _api = api;
+        internal EventClient()
+        { 
+
         }
 
         public async Task<EventResponse> SendAsync(string endPoint, object content = null)
@@ -28,10 +28,10 @@ namespace Proline.Resource.Networking
             // _log.Debug("created evenmt l;istener");
             eventListener.SetCallback(new Action<string>((responseString) =>
             {
-                // _log.Debug("Got Response Bakc");
+                _log.Debug("Got Response Bakc");
                 response = JsonConvert.DeserializeObject<EventResponse>(responseString);
             }));
-            _api.AddEventListener(eventListener.GUID, eventListener.Action);
+            EventHandlers.Add(eventListener.GUID, eventListener.Action);
             eventListener.BeginListening();
 
             EventRequest request = new EventRequest();
@@ -39,14 +39,14 @@ namespace Proline.Resource.Networking
             request.Content = content;
             var api = NetworkManager.EventMethods;
             var reqString = JsonConvert.SerializeObject(request);
-            //_log.Debug("herte");
+            _log.Debug("herte");
 
             api.TriggerServerEvent(endPoint, reqString);
 
             while (ticks <= TIMEOUT_TICKS && response == null)
             {
                 ticks++;
-                // _log.Debug("Waiting...");
+                _log.Debug("Waiting...");
                 await NetworkManager.TaskMethods.Delay(1);
             }
 
@@ -57,7 +57,7 @@ namespace Proline.Resource.Networking
             }
 
             eventListener.EndListening();
-            _api.RemoveEventListener(eventListener.GUID);
+            EventHandlers.Remove(eventListener.GUID);
             return response;
         }
     }

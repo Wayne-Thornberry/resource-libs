@@ -9,7 +9,7 @@ using Proline.Resource.Logging;
 
 namespace Proline.Resource.Framework
 {
-    public abstract class ResourceContext : BaseScript, IBaseScriptMethods
+    public abstract class ResourceContext : BaseScript
     {
         protected Log _log = new Log(); 
         private Assembly _sourcAssembly;
@@ -24,44 +24,9 @@ namespace Proline.Resource.Framework
             Tick += InternalOnTick;
         }
 
-         
-        public void RegisterExport(string eventName, Delegate callback)
-        {
-            Exports.Add(eventName, callback);
-        }
-
-        public void AddGlobal(string key, object value)
-        { 
-            GlobalState.Set(key, value, true);
-        }
-
-        public object GetGlobal(string key)
-        { 
-            return GlobalState.Get(key);
-        }
-        public dynamic GetResourceExport(string name)
-        {
-            return Exports[name];
-        }
-
         public void AddTick(Func<Task> x)
         {
             Tick += x;
-        }
-
-        public void RemoveTick(Func<Task> x)
-        {
-            Tick += x;
-        }
-
-        public void AddEventListener(string eventName, Delegate delegat)
-        {
-            EventHandlers.Add(eventName, delegat);
-        }
-
-        public void RemoveEventListener(string eventName)
-        { 
-            EventHandlers.Remove(eventName);
         }
 
         public async Task InternalOnTick()
@@ -70,22 +35,22 @@ namespace Proline.Resource.Framework
             {
                 var main = (object) GetMainMethod();
 
-                CreateScriptInstances();
+               // CreateScriptInstances();
 
 
                 if (main == null)
                 {
-                    Console.Console.WriteLine(_log.Debug("A main method could not be found, Resource cannot be started properly")); 
+                    Console.EConsole.WriteLine(_log.Debug("A main method could not be found, Resource cannot be started properly")); 
                 }
                 else
                 {
                     ((MethodInfo)main).Invoke(null, new object[] { new string[] { (ResourceType.CLIENT.ToString()) } }); 
-                    SubscribeScriptsToTick();
+                  //  SubscribeScriptsToTick();
                 }
             }
             catch (Exception e)
             {
-                Console.Console.WriteLine(_log.Error(e.ToString()));
+                Console.EConsole.WriteLine(_log.Error(e.ToString()));
                 //throw;
             }
             finally
@@ -99,7 +64,7 @@ namespace Proline.Resource.Framework
             foreach (var item in _scripts)
             {
                 item.State = 0;
-                Console.Console.WriteLine(_log.Debug(item.GetType().Name));
+                Console.EConsole.WriteLine(_log.Debug(item.GetType().Name));
                 AddTick(item.OnTick);
             }
         }
@@ -109,7 +74,7 @@ namespace Proline.Resource.Framework
             var types = _sourcAssembly.GetTypes().Where(e=>e.BaseType == typeof(ResourceScript));
             foreach (var item in types)
             {
-                Console.Console.WriteLine(_log.Debug(item.Name));
+                Console.EConsole.WriteLine(_log.Debug(item.Name));
                 var instance = Activator.CreateInstance(item);
                 _scripts.Add((ResourceScript)instance);
             } 
@@ -120,7 +85,7 @@ namespace Proline.Resource.Framework
             var types = _sourcAssembly.GetTypes();
             foreach (var item in types)
             {
-                Console.Console.WriteLine(_log.Debug(item.Name)); 
+                Console.EConsole.WriteLine(_log.Debug(item.Name)); 
                 var method = (object) item.GetMethod("Main", BindingFlags.Public | BindingFlags.Static);
                 if (method == null) continue;
                 return (MethodInfo) method;

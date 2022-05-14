@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ClassicOnline.PMGT", "Proline.ClassicOnline.PMGT\Proline.ClassicOnline.PMGT.csproj", "{B2E916C2-89D6-4623-BAFD-034E832159FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ClassicOnline.MPMGT", "Proline.ClassicOnline.PMGT\Proline.ClassicOnline.MPMGT.csproj", "{B2E916C2-89D6-4623-BAFD-034E832159FE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ClassicOnline.Resource", "Proline.ClassicOnline.Resource\Proline.ClassicOnline.Resource.csproj", "{B4B6C930-8723-4E32-97F8-C76B1EC0BABB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ClassicOnline.Saving", "Proline.ClassicOnline.Saving\Proline.ClassicOnline.Saving.csproj", "{A2CAF729-B9FC-4AE2-9ED0-78FE10465AF1}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{DFDA1BAA-0F35-4311-85A1-322632D6C2E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ClassicOnline.MScripting", "Proline.ClassicOnline.Saving\Proline.ClassicOnline.MScripting.csproj", "{A2CAF729-B9FC-4AE2-9ED0-78FE10465AF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +17,6 @@ Global
 		{B2E916C2-89D6-4623-BAFD-034E832159FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2E916C2-89D6-4623-BAFD-034E832159FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2E916C2-89D6-4623-BAFD-034E832159FE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B4B6C930-8723-4E32-97F8-C76B1EC0BABB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4B6C930-8723-4E32-97F8-C76B1EC0BABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4B6C930-8723-4E32-97F8-C76B1EC0BABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4B6C930-8723-4E32-97F8-C76B1EC0BABB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A2CAF729-B9FC-4AE2-9ED0-78FE10465AF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A2CAF729-B9FC-4AE2-9ED0-78FE10465AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2CAF729-B9FC-4AE2-9ED0-78FE10465AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -32,10 +24,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{B2E916C2-89D6-4623-BAFD-034E832159FE} = {DFDA1BAA-0F35-4311-85A1-322632D6C2E0}
-		{A2CAF729-B9FC-4AE2-9ED0-78FE10465AF1} = {DFDA1BAA-0F35-4311-85A1-322632D6C2E0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C2EDC16-681D-40A9-9168-7C35B4D4F23C}

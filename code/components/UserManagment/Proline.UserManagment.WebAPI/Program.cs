@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Proline.Component.Web.Service
+namespace Proline.DBAccess.WebService
 {
     public class Program
     {

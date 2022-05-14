@@ -22,6 +22,9 @@
     </Reference>
     <Reference Include="Proline.Resource.Configuration.Common">
       <HintPath>..\..\..\..\artifacts\ResourceCommon\Proline.Resource.Configuration.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.File.Common">
+      <HintPath>..\..\..\..\artifacts\ResourceCommon\Proline.Resource.File.Common.dll</HintPath>
     </Reference> 
   </ItemGroup>
 

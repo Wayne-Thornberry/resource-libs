@@ -1,3 +1,41 @@
 {
-  
+    "Sections" : [
+        "Resources",
+        "ModuleConfiguration"
+    ],
+
+    "Resources":[
+        "Proline.Resource.Configuration.Server",
+        "Proline.Resource.Console.Server",
+        "Proline.Resource.File.Server",
+        "Proline.Resource.Framework.Server",
+        "Proline.Resource.Logging.Server",
+        "Proline.Resource.ModuleCore.Server",
+        "Proline.Resource.Networking.Server"
+    ], 
+
+    "LoggingConfiguration": {
+
+    },
+
+    "ModuleConfiguration" : {
+        "Modules" :[
+            "MPMGT",
+            "MScripting"
+            ],
+        "MPMGT" :{ 
+            "Name" : "MScripting",
+            "Assembly" : "Proline.ClassicOnline.MPMGT",
+            "Data" : {
+                
+            }
+        },
+        "MScripting" :{ 
+            "Name" : "MScripting",
+            "Assembly" : "Proline.ClassicOnline.MScripting",
+            "Data" : {
+                
+            }
+        }
+    }
 }
