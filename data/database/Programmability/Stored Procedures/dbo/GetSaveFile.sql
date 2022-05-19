@@ -1,0 +1,12 @@
+IF OBJECT_ID('dbo.GetSaveFile') IS NOT NULL
+	DROP PROCEDURE dbo.GetSaveFile
+GO 
+
+CREATE PROCEDURE dbo.GetSaveFile
+	@id BIGINT
+AS
+
+SELECT TOP (1) * FROM dbo.SaveFile WHERE Id = @id
+
+RETURN 0
+GO

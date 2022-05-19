@@ -10,4 +10,10 @@
 	<changeSet id="TestProcedure" author="wthornberry" runOnChange="true" >
 		<sqlFile path="Programmability\Stored Procedures\test\TestProcedure.sql"/>
 	</changeSet>
+	<changeSet id="GetSaveFile" author="wthornberry" runOnChange="true" >
+		<sqlFile path="Programmability\Stored Procedures\dbo\GetSaveFile.sql"/>
+	</changeSet>
+	<changeSet id="InsertSaveFile" author="wthornberry" runOnChange="true" >
+		<sqlFile path="Programmability\Stored Procedures\dbo\InsertSaveFile.sql"/>
+	</changeSet>
 </databaseChangeLog>

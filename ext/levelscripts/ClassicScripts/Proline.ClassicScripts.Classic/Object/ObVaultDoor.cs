@@ -52,11 +52,11 @@ namespace Proline.ClassicOnline.LevelScripts.Object
                 Game.PlayerPed.Position.Y, Game.PlayerPed.Position.Z,
                 "dlc_heist_fleeca_bank_door_sounds", false, 0, false);
             await BaseScript.Delay(500);
-            DebugConsole.LogDebug("Checking if the animation is playing\n");
+            MDebugAPI.LogDebug("Checking if the animation is playing\n");
             while (API.IsEntityPlayingAnim(LocalEntity.Handle, "anim@heists@fleeca_bank@bank_vault_door",
                 "bank_vault_door_opens", 3))
             {
-                DebugConsole.LogDebug("Animation is playing\n");
+                MDebugAPI.LogDebug("Animation is playing\n");
                 if (API.GetEntityAnimCurrentTime(LocalEntity.Handle, "anim@heists@fleeca_bank@bank_vault_door",
                         "bank_vault_door_opens") >= 1f)
                 {
@@ -67,7 +67,7 @@ namespace Proline.ClassicOnline.LevelScripts.Object
                     API.SetEntityRotation(LocalEntity.Handle, test.X, test.Y, test.Z, 2, true);
                     API.ForceEntityAiAndAnimationUpdate(LocalEntity.Handle);
                     API.SetModelAsNoLongerNeeded((uint)API.GetHashKey("hei_prop_heist_sec_door"));
-                    DebugConsole.LogDebug("Finished");
+                    MDebugAPI.LogDebug("Finished");
                 }
 
                 await BaseScript.Delay(0);

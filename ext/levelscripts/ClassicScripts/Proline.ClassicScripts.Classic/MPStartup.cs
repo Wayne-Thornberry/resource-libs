@@ -19,14 +19,14 @@ namespace Proline.ClassicOnline.LevelScripts
             { 
                 //NativeAPI.CallNativeAPI(Hash.SET_PED_COMPONENT_VARIATION, Game.PlayerPed.Handle, i, 0, 0, 0 );
             }
-            DebugConsole.LogDebug("Testing Persistence: " + "");//Globals.Get("EnableSomething"));
+            MDebugAPI.LogDebug("Testing Persistence: " + "");//Globals.Get("EnableSomething"));
             var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
             var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
             stat.SetValue(0);
             stat2.SetValue(0);
-            DebugConsole.LogDebug(stat.GetValue());
-            DebugConsole.LogDebug(stat2.GetValue());
-            //DebugConsole.LogDebug(await ComponentAPI.TestNetworkAPI(1,1,1));
+            MDebugAPI.LogDebug(stat.GetValue());
+            MDebugAPI.LogDebug(stat2.GetValue());
+            //MDebugAPI.LogDebug(await ComponentAPI.TestNetworkAPI(1,1,1));
             //ComponentAPI.PlayerAPI(CitizenFX.Core.Game.Player.Name);
 
             //API.RequestIpl("");

@@ -40,9 +40,6 @@
     <Reference Include="Proline.ClassicOnline.MWorld">
       <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MWorld.dll</HintPath>
     </Reference>
-    <Reference Include="Proline.Resource.Console.Client">
-      <HintPath>..\..\..\..\artifacts\ResourceClient\Proline.Resource.Console.Client.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

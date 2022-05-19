@@ -1,5 +1,5 @@
 ﻿using CitizenFX.Core;
-using Proline.Proxies.UserManagment;
+using Proline.DBAccess.Proxies;
 using Proline.Resource.Console;
 using Proline.Resource.ModuleCore;
 using System;
@@ -19,10 +19,6 @@ namespace Proline.ClassicOnline.MScripting.Scripts
 
         private void OnScriptStart([FromSource] Player player, string scriptName)
         {
-            using (var x = new EngineClient())
-            {
-                x.LoginPlayer(new LoginPlayerInParameter() { Identifier = "ddasd"});
-            }
             EConsole.WriteLine(scriptName);
         }
 

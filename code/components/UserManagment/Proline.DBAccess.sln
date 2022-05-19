@@ -5,7 +5,13 @@ VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.DBAccess.WebService", "Proline.UserManagment.WebAPI\Proline.DBAccess.WebService.csproj", "{6D51D769-24EA-4B61-BBBF-0551C7C3A1E0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.UserManagment.Client", "Proline.UserManagment.Client\Proline.UserManagment.Client.csproj", "{04A8CCE3-0EC6-400E-B973-10AE1A8E7AEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.DBAccess.Proxies", "Proline.UserManagment.Client\Proline.DBAccess.Proxies.csproj", "{04A8CCE3-0EC6-400E-B973-10AE1A8E7AEA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.DBAccess.NUnit", "Proline.Tests.UserManagment\Proline.DBAccess.NUnit.csproj", "{EB29AF08-D34F-4866-9FE4-D36C6854678C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.DBAccess.MidLayer", "Proline.DBAccess.MidLayer\Proline.DBAccess.MidLayer.csproj", "{994FD7A4-AF84-4019-A08F-E70372DFE67C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proline.DBAccess.Data", "Proline.DBAccess.Data\Proline.DBAccess.Data.csproj", "{0BF15DB0-39B0-418F-982B-6A60F13646DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{04A8CCE3-0EC6-400E-B973-10AE1A8E7AEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04A8CCE3-0EC6-400E-B973-10AE1A8E7AEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04A8CCE3-0EC6-400E-B973-10AE1A8E7AEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB29AF08-D34F-4866-9FE4-D36C6854678C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB29AF08-D34F-4866-9FE4-D36C6854678C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB29AF08-D34F-4866-9FE4-D36C6854678C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB29AF08-D34F-4866-9FE4-D36C6854678C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{994FD7A4-AF84-4019-A08F-E70372DFE67C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{994FD7A4-AF84-4019-A08F-E70372DFE67C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{994FD7A4-AF84-4019-A08F-E70372DFE67C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{994FD7A4-AF84-4019-A08F-E70372DFE67C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BF15DB0-39B0-418F-982B-6A60F13646DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BF15DB0-39B0-418F-982B-6A60F13646DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BF15DB0-39B0-418F-982B-6A60F13646DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BF15DB0-39B0-418F-982B-6A60F13646DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

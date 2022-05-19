@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Proline.ClassicComponents.Data\Proline.ClassicOnline.MData.csproj" />
+    <ProjectReference Include="..\Proline.ClassicOnline.F8Console\Proline.ClassicOnline.MDebug.csproj" />
     <ProjectReference Include="..\Proline.ClassicOnline.LWScripting\Proline.ClassicOnline.MScripting.csproj" />
   </ItemGroup>
 

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+  </PropertyGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="CitizenFX.Core.Server" Version="1.0.5153" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>..\..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.DBAccess.Proxies">
+			<HintPath>..\..\..\..\..\artifacts\UserManagment\Proline.DBAccess.Proxies.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.ModuleCore.Common">
+			<HintPath>..\..\..\..\..\artifacts\ResourceServer\Proline.Resource.ModuleCore.Common.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.ModuleCore.Server">
+			<HintPath>..\..\..\..\..\artifacts\ResourceServer\Proline.Resource.ModuleCore.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Net.Http" />
+	</ItemGroup>
+</Project>

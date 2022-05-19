@@ -24,7 +24,7 @@ namespace Proline.ClassicOnline.LevelScripts.UI
                 await controller.Process();
                 if (!menu.Visible)
                 {
-                    Script.MarkScriptAsNoLongerNeeded();
+                    MScriptingAPI.MarkScriptAsNoLongerNeeded();
                 }
                 await BaseScript.Delay(0);
             }

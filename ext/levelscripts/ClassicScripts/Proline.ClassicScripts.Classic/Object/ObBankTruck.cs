@@ -20,13 +20,13 @@ namespace Proline.ClassicOnline.LevelScripts.Object
             if(args.Length > 0)
             {
                 var entityHandle = (int)args[0];
-                DebugConsole.LogDebug(entityHandle);
+                MDebugAPI.LogDebug(entityHandle);
                 var entity = Entity.FromHandle(entityHandle);
                 _blip = entity.AttachBlip();
                 var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
                 var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
-                DebugConsole.LogDebug(stat.GetValue());
-                DebugConsole.LogDebug(stat2.GetValue());
+                MDebugAPI.LogDebug(stat.GetValue());
+                MDebugAPI.LogDebug(stat2.GetValue());
                 while (true)
                 {
                     Screen.DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to recive money");

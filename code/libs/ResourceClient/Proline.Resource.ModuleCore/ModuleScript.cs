@@ -29,7 +29,7 @@ namespace Proline.Resource.ModuleCore
 
         public ModuleScript()
         { 
-            _state = -1;
+            _state = 0;
         }
 
         public virtual async Task OnStart() { }
@@ -41,12 +41,12 @@ namespace Proline.Resource.ModuleCore
         {
             try
             {
-                if(State > 0 && !IsPaused)
+                if(State >= 0 && !IsPaused)
                 { 
                     if (!HasStarted)
                     {
                         await OnStart();
-                        State = 2;
+                        State = 1;
                     }
                     else
                     {

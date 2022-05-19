@@ -1,6 +1,6 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
-using Proline.ClassicOnline.MBrain;
+using Proline.ClassicOnline.MBrain.Entity;
 using Proline.Resource.ModuleCore;
 using System;
 using System.Collections.Generic;

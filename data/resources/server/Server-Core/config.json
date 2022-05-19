@@ -11,7 +11,10 @@
         "Proline.Resource.Framework.Server",
         "Proline.Resource.Logging.Server",
         "Proline.Resource.ModuleCore.Server",
-        "Proline.Resource.Networking.Server"
+        "Proline.Resource.Networking.Server",
+        "Proline.ClassicOnline.MConnection",
+        "Proline.ClassicOnline.MData",
+        "Proline.ClassicOnline.MScripting"
     ], 
 
     "LoggingConfiguration": {
@@ -20,12 +23,20 @@
 
     "ModuleConfiguration" : {
         "Modules" :[
-            "MPMGT",
+            "MConnection",
+            "MData",
             "MScripting"
             ],
-        "MPMGT" :{ 
-            "Name" : "MScripting",
-            "Assembly" : "Proline.ClassicOnline.MPMGT",
+        "MConnection" :{ 
+            "Name" : "MConnection",
+            "Assembly" : "Proline.ClassicOnline.MConnection",
+            "Data" : {
+                
+            }
+        },
+        "MData" :{ 
+            "Name" : "MData",
+            "Assembly" : "Proline.ClassicOnline.MData",
             "Data" : {
                 
             }

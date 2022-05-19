@@ -17,8 +17,8 @@ namespace Proline.ClassicOnline.LevelScripts.Object
             //{
             //    if (LocalEntity.Model == API.GetHashKey("prop_till_01_dam"))
             //    {
-            //        DebugConsole.LogDebug(((uint) LocalEntity.Model.Hash).ToString());
-            //        DebugConsole.LogDebug(((uint) LocalEntity.Model.Hash).ToString());
+            //        MDebugAPI.LogDebug(((uint) LocalEntity.Model.Hash).ToString());
+            //        MDebugAPI.LogDebug(((uint) LocalEntity.Model.Hash).ToString());
             //    }
 
             //    if (!LocalEntity.HasBeenDamagedByAnyWeapon())

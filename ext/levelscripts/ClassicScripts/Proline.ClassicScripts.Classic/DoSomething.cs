@@ -16,7 +16,7 @@ namespace Proline.ClassicOnline.LevelScripts
             //ComponentAPI.AttachBlipsToGasStations();
            // EngineAPI.Script.StartNewScript("MPStartup", null);
             //Globals.Set("EnableSomething", false);
-            DebugConsole.LogDebug("Testing on another script: " + "");//Globals.Get("EnableSomething"));
+            MDebugAPI.LogDebug("Testing on another script: " + "");//Globals.Get("EnableSomething"));
            // EngineAPI.Script.StartNewScript("PlayerDeath", null);
             while (true)
             {

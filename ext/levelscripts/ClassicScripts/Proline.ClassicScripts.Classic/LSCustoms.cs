@@ -31,7 +31,7 @@ namespace Proline.ClassicOnline.LevelScripts
                 }
                 else
                 {
-                    Script.MarkScriptAsNoLongerNeeded();
+                    MScriptingAPI.MarkScriptAsNoLongerNeeded();
                 } 
                 await BaseScript.Delay(0);
             }

@@ -64,7 +64,7 @@ namespace Proline.ClassicOnline.LevelScripts
         private void ReviveSelf()
         {
             Game.PlayerPed.Position = Game.PlayerPed.Position;
-            DebugConsole.LogDebug("reviving");
+            MDebugAPI.LogDebug("reviving");
             API.NetworkRespawnCoords(Game.PlayerPed.Handle, Game.PlayerPed.Position.X, Game.PlayerPed.Position.Y,
                 Game.PlayerPed.Position.Z, false, false);
             API.ResurrectPed(Game.PlayerPed.Handle);
@@ -94,8 +94,8 @@ namespace Proline.ClassicOnline.LevelScripts
                         Game.DisableAllControlsThisFrame(0);
                         break;
                 }
-                //DebugConsole.LogDebug(Stage);
-                //DebugConsole.LogDebug(_timer);
+                //MDebugAPI.LogDebug(Stage);
+                //MDebugAPI.LogDebug(_timer);
                 await BaseScript.Delay(0);
             }
         }

@@ -64,7 +64,7 @@ namespace Proline.ClassicOnline.LevelScripts
                 }
                 else if (Game.IsControlJustReleased(0, Control.FrontendCancel))
                 {
-                    Script.MarkScriptAsNoLongerNeeded();
+                    MScriptingAPI.MarkScriptAsNoLongerNeeded();
                 }
                 else
                 {
@@ -211,8 +211,8 @@ namespace Proline.ClassicOnline.LevelScripts
                         if (PointInRectangle(_p[0], _p[1], _p[2], _p[3], new Vector2(position.X, position.Y)) && entity != Game.PlayerPed && !Exists(entity))
                         {
                             _garbage.Add(entity);
-                            DebugConsole.LogDebug(position);
-                            DebugConsole.LogDebug(item);
+                            MDebugAPI.LogDebug(position);
+                            MDebugAPI.LogDebug(item);
                         }
                     }
                 }
@@ -313,7 +313,7 @@ namespace Proline.ClassicOnline.LevelScripts
             x *= -1;
             y *= -1;
             var z = _cam.Rotation.X + y * _cameraSensitivity;
-            //DebugConsole.LogDebug(z);
+            //MDebugAPI.LogDebug(z);
             if (z > 89)
             {
                 z = 89;

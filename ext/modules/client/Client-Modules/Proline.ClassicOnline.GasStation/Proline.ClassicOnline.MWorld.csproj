@@ -13,9 +13,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Proline.Resource.ModuleCore">
-      <HintPath>..\..\..\..\..\artifacts\ResourceClient\Proline.Resource.ModuleCore.dll</HintPath>
-    </Reference>
     <Reference Include="Proline.Resource.ModuleCore.Client">
       <HintPath>..\..\..\..\..\artifacts\ResourceClient\Proline.Resource.ModuleCore.Client.dll</HintPath>
     </Reference>

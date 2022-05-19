@@ -17,7 +17,7 @@ namespace Proline.ClassicOnline.LevelScripts
             {
                 if(Game.IsControlJustReleased(0, Control.InteractionMenu))
                 {
-                    Script.StartNewScript("UIInteractionMenu");
+                    MScriptingAPI.StartNewScript("UIInteractionMenu");
                 }
                 await BaseScript.Delay(0);
             }

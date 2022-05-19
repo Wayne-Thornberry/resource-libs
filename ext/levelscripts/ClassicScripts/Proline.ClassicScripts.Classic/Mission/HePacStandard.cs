@@ -90,28 +90,28 @@ namespace Proline.ClassicOnline.LevelScripts.Mission
                 if (entity.Model == API.GetHashKey(_cameraNameHash))
                 {
                     _cameras.Add(entity);
-                    DebugConsole.LogDebug("Found the camera");
+                    MDebugAPI.LogDebug("Found the camera");
                     continue;
                 }
 
                 if (entity.Model == API.GetHashKey(_securityPanelNameHash))
                 {
                     _securityPanels.Add(entity);
-                    DebugConsole.LogDebug("Found the security panel");
+                    MDebugAPI.LogDebug("Found the security panel");
                     continue;
                 }
 
                 if (entity.Model == API.GetHashKey(_vaultNameHash))
                 {
                     _vaultDoor = entity;
-                    DebugConsole.LogDebug("Found the vault door");
+                    MDebugAPI.LogDebug("Found the vault door");
                 }
 
                 foreach (var doorNameHash in _doorNameHash)
                     if (entity.Model == API.GetHashKey(doorNameHash))
                     {
                         _bankDoors.Add(entity);
-                        DebugConsole.LogDebug("Found a door");
+                        MDebugAPI.LogDebug("Found a door");
                     }
             }
         }
@@ -153,7 +153,7 @@ namespace Proline.ClassicOnline.LevelScripts.Mission
             _vaultDoor.IsPositionFrozen = true;
             foreach (var door in _bankDoors)
             {
-                DebugConsole.LogDebug("Looping through detected door...");
+                MDebugAPI.LogDebug("Looping through detected door...");
                 door.IsPositionFrozen = true;
                 API.DoorControl((uint)door.Model.Hash, door.Position.X, door.Position.Y, door.Position.Z, true, 1f, 1f,
                     1f);

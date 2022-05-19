@@ -12,6 +12,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Proline.DBAccess.Proxies">
+      <HintPath>..\..\..\..\..\artifacts\UserManagment\Proline.DBAccess.Proxies.dll</HintPath>
+    </Reference>
     <Reference Include="Proline.Resource.Console.Server">
       <HintPath>..\..\..\..\..\artifacts\ResourceServer\Proline.Resource.Console.Server.dll</HintPath>
     </Reference>
@@ -20,9 +23,6 @@
     </Reference>
     <Reference Include="Proline.Resource.ModuleCore.Server">
       <HintPath>..\..\..\..\..\artifacts\ResourceServer\Proline.Resource.ModuleCore.Server.dll</HintPath>
-    </Reference>
-    <Reference Include="Proline.UserManagment.Client">
-      <HintPath>..\..\..\..\..\artifacts\UserManagment\Proline.UserManagment.Client.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
   </ItemGroup>

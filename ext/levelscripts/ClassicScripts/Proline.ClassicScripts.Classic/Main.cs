@@ -21,20 +21,20 @@ namespace Proline.ClassicOnline.LevelScripts
             API.SetRandomTrains(true);
 
 
-            Script.StartNewScript("DebugInterface");
-            Script.StartNewScript("ReArmouredTruck");
-            Script.StartNewScript("FMVechicleExporter");
-            Script.StartNewScript("PlayerDeath");
-            Script.StartNewScript("UIPlayerSwitch");
-            Script.StartNewScript("FMControls");
-            Script.StartNewScript("UIMainMenu");
+            MScriptingAPI.StartNewScript("DebugInterface");
+            MScriptingAPI.StartNewScript("ReArmouredTruck");
+            MScriptingAPI.StartNewScript("FMVechicleExporter");
+            MScriptingAPI.StartNewScript("PlayerDeath");
+            MScriptingAPI.StartNewScript("UIPlayerSwitch");
+            MScriptingAPI.StartNewScript("FMControls");
+            MScriptingAPI.StartNewScript("UIMainMenu");
             //Script.StartNewScript("LSCustoms", new Vector3(
             //-339.84f,
             // -136.81f,
             // 38.76f));
 
 
-            DebugConsole.LogDebug(ResourceFile.GetFileValue("data/character01.json", ""));
+            MDebugAPI.LogDebug(MDataAPI.GetFileValue("data/character01.json", ""));
 
             while (!token.IsCancellationRequested)
             {
@@ -72,11 +72,11 @@ namespace Proline.ClassicOnline.LevelScripts
                         await BaseScript.Delay(0);
                     }
 
-                    Script.MarkScriptAsNoLongerNeeded();
+                    MScriptingAPI.MarkScriptAsNoLongerNeeded();
                     //Script.StartNewScript("CharacterCreator");
                 }else if (Game.IsControlJustReleased(0, Control.PhoneUp))
                 {
-                    Script.StartNewScript("Test2");
+                    MScriptingAPI.StartNewScript("Test2");
                    // Script.StartNewScript("EditorScript");
                 }
                 await BaseScript.Delay(0);

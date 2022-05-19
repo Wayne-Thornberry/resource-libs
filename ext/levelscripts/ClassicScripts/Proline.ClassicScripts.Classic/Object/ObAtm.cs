@@ -73,7 +73,7 @@ namespace Proline.ClassicOnline.LevelScripts.Object
                             API.ShowCursorThisFrame();
                             //io.SetCursorState(1);
                             io.SetMouseInput(Game.GetControlNormal(0, Control.CursorX), Game.GetControlNormal(0, Control.CursorY));
-                            //DebugConsole.LogDebugLine(Game.GetControlNormal(0, Control.CursorX) + " " + Game.GetControlNormal(0, Control.CursorY));
+                            //MDebugAPI.LogDebugLine(Game.GetControlNormal(0, Control.CursorX) + " " + Game.GetControlNormal(0, Control.CursorY));
 
 
                             if (DisplayedView == 5)
@@ -94,8 +94,8 @@ namespace Proline.ClassicOnline.LevelScripts.Object
                                     getSelectionTask.Dispose();
                                     getSelectionTask = null;
 
-                                    //DebugConsole.LogDebug(DisplayedView.ToString());
-                                    //DebugConsole.LogDebug(SelectedOption.ToString());
+                                    //MDebugAPI.LogDebug(DisplayedView.ToString());
+                                    //MDebugAPI.LogDebug(SelectedOption.ToString());
 
                                     switch (DisplayedView)
                                     {
