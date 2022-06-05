@@ -1,41 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-	  <!--<TargetFramework>net452</TargetFramework>-->
-
-    <IsPackable>false</IsPackable>
+    <TargetFramework>netcoreapp3.1</TargetFramework> 
+    <IsPackable>false</IsPackable> 
+    <OutputType>Library</OutputType>
   </PropertyGroup>
+ 
 
   <ItemGroup>
-    <Compile Remove="Helpersold\**" />
-    <Compile Remove="Helpers\**" />
-    <Compile Remove="Testsold\**" />
-    <Compile Remove="Tests\**" />
-    <EmbeddedResource Remove="Helpersold\**" />
-    <EmbeddedResource Remove="Helpers\**" />
-    <EmbeddedResource Remove="Testsold\**" />
-    <EmbeddedResource Remove="Tests\**" />
-    <None Remove="Helpersold\**" />
-    <None Remove="Helpers\**" />
-    <None Remove="Testsold\**" />
-    <None Remove="Tests\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+	  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Proline.DBAccess.MidLayer\Proline.DBAccess.MidLayer.csproj" />
-    <ProjectReference Include="..\Proline.UserManagment.WebAPI\Proline.DBAccess.WebService.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.IdentityModel" />
-    <Reference Include="System.Net.Http" />
   </ItemGroup>
 
 </Project>

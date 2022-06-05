@@ -6,7 +6,10 @@ CREATE PROCEDURE dbo.GetSaveFile
 	@id BIGINT
 AS
 
-SELECT TOP (1) * FROM dbo.SaveFile WHERE Id = @id
+	IF NOT EXISTS(SELECT 1 FROM dbo.SaveFile WHERE Id = @id)
+		RETURN 1
+
+	SELECT TOP (1) [Value] FROM dbo.SaveFile WHERE Id = @id
 
 RETURN 0
 GO

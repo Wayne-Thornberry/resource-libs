@@ -6,11 +6,14 @@
 
 	<ItemGroup>
 
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+
 		<PackageReference Include="System.Data.SqlClient" Version="4.6.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Proline.DBAccess.Data\Proline.DBAccess.Data.csproj" />
+	  <ProjectReference Include="..\Proline.DBAccess.DBApi\Proline.DBAccess.DBApi.csproj" />
 	</ItemGroup>
 
 </Project>

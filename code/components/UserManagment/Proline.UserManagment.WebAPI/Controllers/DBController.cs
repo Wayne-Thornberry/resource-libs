@@ -15,23 +15,20 @@ namespace Proline.DBAccess.WebService.Controllers
     [ApiController]
     [Authorize]
     public class DBController : ControllerBase
-    {
-        // private ProlineCentralContext _context;
-
-        PlacePlayerDataRequest _inParameters;
+    { 
 
         public DBController()
         {
-            // _context = context;
+
         }
 
 
         [HttpPost]
-        [Route("SaveFile")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlacePlayerDataResponse))]
+        [Route("InsertSave")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(InsertSaveResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> SaveFile(PlacePlayerDataRequest inParameter)
+        public async Task<IActionResult> InsertSave(InsertSaveRequest inParameter)
         {
 
             if (inParameter == null || string.IsNullOrEmpty(inParameter.Data))
@@ -39,16 +36,12 @@ namespace Proline.DBAccess.WebService.Controllers
 
             try
             {
-                PlacePlayerDataResponse response = null;
+                InsertSaveResponse response = null;
                 using (var api = new DBAccessApi())
                 {
                     response = api.SaveFile(inParameter);
-                }
-
-
-                    _inParameters = inParameter;
-
-                return Ok();
+                }  
+                return Ok(response);
             }
             catch (Exception e)
             {
@@ -58,20 +51,23 @@ namespace Proline.DBAccess.WebService.Controllers
         }
 
         [HttpPost]
-        [Route("LoadFile")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetPlayerDataInParameters))]
+        [Route("GetSave")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetSaveResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> LoadFile(GetPlayerDataInParameters inParameter)
+        public async Task<IActionResult> GetSave(GetSaveRequest inParameter)
         {
 
-            if (inParameter == null || inParameter.Id == -1)
+            if (inParameter == null || inParameter.Id < -1)
                 return BadRequest();
 
             try
-            {
-                inParameter.Data = _inParameters.Data;
-
+            { 
+                GetSaveResponse response = null;
+                using (var api = new DBAccessApi())
+                {
+                    response = api.GetSave(inParameter);
+                }  
                 return Ok(inParameter);
             }
             catch (Exception e)

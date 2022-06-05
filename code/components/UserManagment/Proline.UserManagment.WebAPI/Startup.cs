@@ -31,7 +31,7 @@ namespace Proline.DBAccess.WebService
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers();   
             //services.AddDbContext<ProlineCentralContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProlineCentral")));
             services.AddSwaggerGen(c =>
             {
@@ -81,9 +81,8 @@ namespace Proline.DBAccess.WebService
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                     options.RoutePrefix = string.Empty;
                 });
-            }
-
-
+            } 
+          
             // app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();

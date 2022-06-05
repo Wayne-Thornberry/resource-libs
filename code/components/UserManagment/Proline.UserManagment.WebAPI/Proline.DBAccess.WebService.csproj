@@ -6,20 +6,6 @@
 	  <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Database\**" />
-    <Content Remove="Database\**" />
-    <EmbeddedResource Remove="Database\**" />
-    <None Remove="Database\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Controllers\LinkedIndentitiesController.cs" />
-    <Compile Remove="Controllers\PlayerAccountsController.cs" />
-    <Compile Remove="Controllers\SaveFilesController.cs" />
-    <Compile Remove="Controllers\UserAccountsController.cs" />
-    <Compile Remove="Controllers\UserDeniesController.cs" />
-  </ItemGroup>
 
   <ItemGroup>
 	  <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />

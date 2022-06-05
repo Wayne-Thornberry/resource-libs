@@ -7,6 +7,17 @@ CREATE TABLE dbo.[Player] (
 	[LastSeen] DATETIME2 NOT NULL,
 )
 
+CREATE TABLE dbo.[Instance](
+	[Id] BIGINT PRIMARY KEY IDENTITY,  
+)
+
+CREATE TABLE dbo.[InstanceSetting](
+	[SettingName] NVARCHAR(255) PRIMARY KEY,
+	[SettingValue] NVARCHAR(255) NOT NULL, 
+	[InstanceId] BIGINT NOT NULL,
+	FOREIGN KEY ([InstanceId]) REFERENCES dbo.[Instance](Id)
+)
+
 -- Identity has one identity type 1-1
 CREATE TABLE dbo.[IdentityType] (
 	[Id] INT PRIMARY KEY IDENTITY,
@@ -25,7 +36,7 @@ CREATE TABLE dbo.[Identity] (
 
 -- All players have a save file. 1 to 1
 CREATE TABLE dbo.[SaveFile] (
-	[Id] NVARCHAR(255) PRIMARY KEY ,
+	[Id] BIGINT PRIMARY KEY IDENTITY,
 	[Value] NVARCHAR(MAX) NOT NULL, 
 	[PlayerId] BIGINT NOT NULL,
 	FOREIGN KEY ([PlayerId]) REFERENCES dbo.[Player](Id)

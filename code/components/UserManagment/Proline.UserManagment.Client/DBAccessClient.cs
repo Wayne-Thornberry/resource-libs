@@ -23,16 +23,15 @@ namespace Proline.DBAccess.Proxies
             _client = new DBAccessApi("http://localhost:9703/", httpClient);
         }
 
-        public async Task SaveFile(PlacePlayerDataInParameters param)
+        public Task<InsertSaveResponse> SaveFile(InsertSaveRequest param)
         {
-            await _client.SaveFileAsync(param);
+            return _client.InsertSaveAsync(param);
         }
 
 
-        public async Task<GetPlayerDataInParameters> LoadFile(GetPlayerDataInParameters param)
+        public Task<GetSaveResponse> LoadFile(GetSaveRequest param)
         {
-            var x = await _client.LoadFileAsync(param);
-            return x;
+            return _client.GetSaveAsync(param); 
         }
 
         public void Dispose()

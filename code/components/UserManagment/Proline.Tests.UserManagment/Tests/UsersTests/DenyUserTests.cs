@@ -21,57 +21,57 @@ namespace Proline.DBAccess.NUnit.Tests.UsersTests
         [Test]
         public void CreateBasicUser()
         {
-            var username = Util.GenerateRandomString(15);
-            var identity1 = IdentityHelper.GenerateIdentifier(0);
-            var identity2 = IdentityHelper.GenerateIdentifier(1);
-            var identity3 = IdentityHelper.GenerateIdentifier(2);
-            var identity4 = IdentityHelper.GenerateIdentifier(3);
-            RegistrationPlayerOutParameter outParameter = null;
+            //var username = Util.GenerateRandomString(15);
+            //var identity1 = IdentityHelper.GenerateIdentifier(0);
+            //var identity2 = IdentityHelper.GenerateIdentifier(1);
+            //var identity3 = IdentityHelper.GenerateIdentifier(2);
+            //var identity4 = IdentityHelper.GenerateIdentifier(3);
+            //RegistrationPlayerOutParameter outParameter = null;
 
-            UserAccountOutParameter user = null;
+            //UserAccountOutParameter user = null;
 
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = _authHeader;
-                var userCleint = new Client("http://localhost:9703/", httpClient);
-                outParameter = userCleint.RegisterPlayerAsync(new RegistrationPlayerInParameter()
-                {
-                    Username = username,
-                    Identifiers = new List<IdentifierCreateInParameter>() {
-                        new IdentifierCreateInParameter()
-                        {
-                            Identifier = identity1,
-                            IdentitierType = 0,
-                        },
-                        new IdentifierCreateInParameter()
-                        {
-                            Identifier = identity2,
-                            IdentitierType = 1,
-                        },
-                        new IdentifierCreateInParameter()
-                        {
-                            Identifier = identity3,
-                            IdentitierType = 2,
-                        },
-                        new IdentifierCreateInParameter()
-                        {
-                            Identifier = identity4,
-                            IdentitierType = 3,
-                        }
+            //using (var httpClient = new HttpClient())
+            //{
+            //    httpClient.DefaultRequestHeaders.Authorization = _authHeader;
+            //    var userCleint = new Client("http://localhost:9703/", httpClient);
+            //    outParameter = userCleint.RegisterPlayerAsync(new RegistrationPlayerInParameter()
+            //    {
+            //        Username = username,
+            //        Identifiers = new List<IdentifierCreateInParameter>() {
+            //            new IdentifierCreateInParameter()
+            //            {
+            //                Identifier = identity1,
+            //                IdentitierType = 0,
+            //            },
+            //            new IdentifierCreateInParameter()
+            //            {
+            //                Identifier = identity2,
+            //                IdentitierType = 1,
+            //            },
+            //            new IdentifierCreateInParameter()
+            //            {
+            //                Identifier = identity3,
+            //                IdentitierType = 2,
+            //            },
+            //            new IdentifierCreateInParameter()
+            //            {
+            //                Identifier = identity4,
+            //                IdentitierType = 3,
+            //            }
 
-                    }
-                }).Result;
+            //        }
+            //    }).Result;
 
-                user = userCleint.GetUserAsync(outParameter.UserId).Result;
-            }
+            //    user = userCleint.GetUserAsync(outParameter.UserId).Result;
+            //}
 
-            Assert.NotNull(outParameter);
-            Assert.AreNotEqual(outParameter.PlayerId, 0);
-            Assert.AreEqual(outParameter.Username, username);
-            Assert.NotNull(user);
-            Assert.AreNotEqual(user.UserId, 0);
-            Assert.AreEqual(user.Players.Count, 1);
-            Assert.AreEqual(user.Identities.Count, 4);
+            //Assert.NotNull(outParameter);
+            //Assert.AreNotEqual(outParameter.PlayerId, 0);
+            //Assert.AreEqual(outParameter.Username, username);
+            //Assert.NotNull(user);
+            //Assert.AreNotEqual(user.UserId, 0);
+            //Assert.AreEqual(user.Players.Count, 1);
+            //Assert.AreEqual(user.Identities.Count, 4);
         }
     }
 }

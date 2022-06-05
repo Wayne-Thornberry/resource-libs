@@ -6,7 +6,7 @@ namespace Proline.DBAccess.MidLayer
     {
         public void Dispose()
         {
-            throw new NotImplementedException();
+
         }
     }
 }
