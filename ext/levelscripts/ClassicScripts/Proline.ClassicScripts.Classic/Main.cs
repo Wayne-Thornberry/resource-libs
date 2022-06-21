@@ -21,6 +21,7 @@ namespace Proline.ClassicOnline.LevelScripts
             API.SetRandomTrains(true);
 
 
+
             MScriptingAPI.StartNewScript("DebugInterface");
             MScriptingAPI.StartNewScript("ReArmouredTruck");
             MScriptingAPI.StartNewScript("FMVechicleExporter");
@@ -28,17 +29,20 @@ namespace Proline.ClassicOnline.LevelScripts
             MScriptingAPI.StartNewScript("UIPlayerSwitch");
             MScriptingAPI.StartNewScript("FMControls");
             MScriptingAPI.StartNewScript("UIMainMenu");
+            MScriptingAPI.StartNewScript("VehicleFuel");
+
+
             //Script.StartNewScript("LSCustoms", new Vector3(
             //-339.84f,
             // -136.81f,
             // 38.76f));
 
 
-            MDebugAPI.LogDebug(MDataAPI.GetFileValue("data/character01.json", ""));
+            // MDebugAPI.LogDebug(MDataAPI.GetFileValue("data/character01.json", ""));
 
             while (!token.IsCancellationRequested)
             {
-                API.SetInstancePriorityHint(4);
+                API.SetInstancePriorityHint(0);
 
 
                 if (Game.IsControlJustReleased(0, Control.MultiplayerInfo))
@@ -51,14 +55,13 @@ namespace Proline.ClassicOnline.LevelScripts
                     API.FreezeEntityPosition(Game.PlayerPed.Handle, true);
                     Game.PlayerPed.Position = new Vector3(0, 0, 70);
                     Screen.LoadingPrompt.Show("Loading Freemode...");
+                    MScriptingAPI.StartNewScript("PlayerLoading");
                     var ms = 0;
-                    while (ms < 500)
+                    while (ms < 500 && MScriptingAPI.GetInstanceCountOfScript("PlayerLoading") > 0)
                     {
                         ms++;
                         await BaseScript.Delay(1);
-                    }
-                     
-
+                    } 
                     Screen.LoadingPrompt.Hide();
                     API.ShutdownLoadingScreen();
                     API.SetNoLoadingScreen(true);
@@ -71,13 +74,8 @@ namespace Proline.ClassicOnline.LevelScripts
                     {
                         await BaseScript.Delay(0);
                     }
-
+                    MScriptingAPI.StartNewScript("PassiveSaving");
                     MScriptingAPI.MarkScriptAsNoLongerNeeded();
-                    //Script.StartNewScript("CharacterCreator");
-                }else if (Game.IsControlJustReleased(0, Control.PhoneUp))
-                {
-                    MScriptingAPI.StartNewScript("Test2");
-                   // Script.StartNewScript("EditorScript");
                 }
                 await BaseScript.Delay(0);
             }

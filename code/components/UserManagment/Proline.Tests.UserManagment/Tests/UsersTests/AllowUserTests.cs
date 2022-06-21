@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.CentralEngine.NUnit.Tests.UserTests
+namespace Proline.DBAccess.NUnit.Tests.UsersTests
 {
     [TestFixture]
     public class AllowUserTests

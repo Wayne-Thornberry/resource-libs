@@ -19,26 +19,71 @@
     <Reference Include="Proline.ClassicOnline.MBrain">
       <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MBrain.dll</HintPath>
     </Reference>
+    <Reference Include="Proline.ClassicOnline.MBrain.Client">
+      <HintPath>..\..\..\..\artifacts\ClassicModules\Client\Proline.ClassicOnline.MBrain.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Proline.ClassicOnline.MData">
       <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MData.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ClassicOnline.MData.Client">
+      <HintPath>..\..\..\..\artifacts\ClassicModules\Client\Proline.ClassicOnline.MData.Client.dll</HintPath>
     </Reference>
     <Reference Include="Proline.ClassicOnline.MDebug">
       <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MDebug.dll</HintPath>
     </Reference>
+    <Reference Include="Proline.ClassicOnline.MDebug.Client">
+      <HintPath>..\..\..\..\artifacts\ClassicModules\Client\Proline.ClassicOnline.MDebug.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Proline.ClassicOnline.MGame">
       <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MGame.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ClassicOnline.MGame.Client">
+      <HintPath>..\..\..\..\artifacts\ClassicModules\Client\Proline.ClassicOnline.MGame.Client.dll</HintPath>
     </Reference>
     <Reference Include="Proline.ClassicOnline.MRendering">
       <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MRendering.dll</HintPath>
     </Reference>
+    <Reference Include="Proline.ClassicOnline.MRendering.Client">
+      <HintPath>..\..\..\..\artifacts\ClassicModules\Client\Proline.ClassicOnline.MRendering.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Proline.ClassicOnline.MScreen">
       <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MScreen.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ClassicOnline.MScreen.Client">
+      <HintPath>..\..\..\..\artifacts\ClassicModules\Client\Proline.ClassicOnline.MScreen.Client.dll</HintPath>
     </Reference>
     <Reference Include="Proline.ClassicOnline.MScripting">
       <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MScripting.dll</HintPath>
     </Reference>
+    <Reference Include="Proline.ClassicOnline.MScripting.Client">
+      <HintPath>..\..\..\..\artifacts\ClassicModules\Client\Proline.ClassicOnline.MScripting.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Proline.ClassicOnline.MWorld">
       <HintPath>..\..\..\..\artifacts\Client-Modules\Proline.ClassicOnline.MWorld.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ClassicOnline.MWorld.Client">
+      <HintPath>..\..\..\..\artifacts\ClassicModules\Client\Proline.ClassicOnline.MWorld.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Modularization.Core.Client">
+      <HintPath>..\..\..\..\artifacts\ModuleFramework\Client\Proline.Modularization.Core.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Client">
+      <HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Configuration.Client">
+      <HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Configuration.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Framework.Client">
+      <HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Framework.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.IO.Client">
+      <HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.IO.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Logging.Client">
+      <HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Logging.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Scripting.Client">
+      <HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Scripting.Client.dll</HintPath>
     </Reference>
   </ItemGroup>
 

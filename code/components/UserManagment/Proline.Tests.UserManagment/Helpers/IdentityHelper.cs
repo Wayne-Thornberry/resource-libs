@@ -6,7 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.CentralEngine.NUnit.Helpers
+namespace Proline.DBAccess.NUnit.Helpers
 {
 
     public enum IdentifierType
@@ -30,7 +30,7 @@ namespace Proline.CentralEngine.NUnit.Helpers
         {
             if (identitifers.Length != identityType.Length)
                 return new string[0];
-            var identities = new string[identitifers.Length]; 
+            var identities = new string[identitifers.Length];
             for (int i = 0; i < identities.Length; i++)
             {
                 identities[i] = CreatePlayerIdentity(identitifers[i], identityType[i]);
@@ -55,11 +55,12 @@ namespace Proline.CentralEngine.NUnit.Helpers
             else if (t == IdentifierType.SOCIAL)
             {
                 return Util.GenerateRandomString(25);
-            }else if(t == IdentifierType.DISCORD)
+            }
+            else if (t == IdentifierType.DISCORD)
             {
                 var rng = new Random();
                 var x = "";
-                for (int i = 0; i < rng.Next(0,120); i++)
+                for (int i = 0; i < rng.Next(0, 120); i++)
                 {
                     x += rng.Next(0, 9);
                 };
@@ -76,7 +77,7 @@ namespace Proline.CentralEngine.NUnit.Helpers
             byte[] buffer = new byte[digits / 2];
             var rng = new Random();
             rng.NextBytes(buffer);
-            string result = String.Concat(buffer.Select(x => x.ToString("X2")).ToArray());
+            string result = string.Concat(buffer.Select(x => x.ToString("X2")).ToArray());
             if (digits % 2 == 0)
                 return result;
             return result + rng.Next(16).ToString("X");

@@ -28,6 +28,15 @@ namespace Proline.DBAccess.Proxies
             return _client.InsertSaveAsync(param);
         }
 
+        public Task<RegisterPlayerResponse> RegisterPlayer(RegisterPlayerRequest param)
+        {
+            return _client.RegisterPlayerAsync(param);
+        }
+
+        public Task<GetPlayerResponse> GetPlayer(GetPlayerRequest param)
+        {
+            return _client.GetPlayerAsync(param);
+        }
 
         public Task<GetSaveResponse> LoadFile(GetSaveRequest param)
         {

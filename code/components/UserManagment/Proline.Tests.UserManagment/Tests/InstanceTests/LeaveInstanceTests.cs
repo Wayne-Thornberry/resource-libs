@@ -1,12 +1,11 @@
-﻿using NUnit.Framework;
-using Proline.CentralEngine.NUnit.Helpers;
+﻿using NUnit.Framework; 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.CentralEngine.NUnit.Tests.InstanceTests
+namespace Proline.DBAccess.NUnit.Tests.InstanceTests
 {
     [TestFixture]
     public class LeaveInstanceTests

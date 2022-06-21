@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Proline.DBAccess.NUnit;
 
-namespace Proline.DBAccess.NUnit.Helpersold
+namespace Proline.DBAccess.NUnit.Helpers
 {
     public static class InstanceHelper
     {

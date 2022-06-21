@@ -1,0 +1,60 @@
+{
+    "Sections" : [
+        "Resources",
+        "ModuleConfiguration"
+    ],
+
+    "Resources":[
+        "Proline.Resource.Client",
+        "Proline.Resource.Configuration.Client",
+        "Proline.Resource.IO.Client",
+        "Proline.Resource.Framework.Client",
+        "Proline.Resource.Logging.Client",
+        "Proline.Modularization.Core.Client",
+        "Proline.ClassicOnline.MBrain.Client",
+        "Proline.ClassicOnline.MData.Client",
+        "Proline.ClassicOnline.MDebug.Client",
+        "Proline.ClassicOnline.MGame.Client",
+        "Proline.ClassicOnline.MRendering.Client",
+        "Proline.ClassicOnline.MScreen.Client",
+        "Proline.ClassicOnline.MScripting.Client",
+        "Proline.ClassicOnline.MWorld.Client",
+        "Proline.CFXExtended.Core.Client",
+        "Proline.LevelScripts.Classic"
+    ], 
+
+    "LoggingConfiguration": {
+
+    },
+
+    "ModuleConfiguration" : {
+        "Modules" :[
+            "MScripting",
+            "MBrain",
+            "MWorld"
+            ],
+        "MScripting" :{ 
+            "Name" : "MScripting",
+            "Assembly" : "Proline.ClassicOnline.MScripting",
+            "Data" : {
+                "LevelScriptAssemblies" : [
+                    "Proline.LevelScripts.Classic" 
+                ]
+            }
+        },
+        "MBrain" :{ 
+            "Name" : "MBrain",
+            "Assembly" : "Proline.ClassicOnline.MBrain",
+            "Data" : {
+                
+            }
+        },
+        "MWorld" : { 
+            "Name" : "MWorld",
+            "Assembly" : "Proline.ClassicOnline.MWorld",
+            "Data" : {
+                
+            }
+        } 
+    }
+}

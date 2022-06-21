@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.Modularization.Core", "Proline.Resource.ModuleCore\Proline.Modularization.Core.csproj", "{3E80AAD8-ED3E-4A09-B521-3BB8CF1AD89C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Client|Any CPU = Client|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Server|Any CPU = Server|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E80AAD8-ED3E-4A09-B521-3BB8CF1AD89C}.Client|Any CPU.ActiveCfg = Client|Any CPU
+		{3E80AAD8-ED3E-4A09-B521-3BB8CF1AD89C}.Client|Any CPU.Build.0 = Client|Any CPU
+		{3E80AAD8-ED3E-4A09-B521-3BB8CF1AD89C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E80AAD8-ED3E-4A09-B521-3BB8CF1AD89C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E80AAD8-ED3E-4A09-B521-3BB8CF1AD89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E80AAD8-ED3E-4A09-B521-3BB8CF1AD89C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E80AAD8-ED3E-4A09-B521-3BB8CF1AD89C}.Server|Any CPU.ActiveCfg = Server|Any CPU
+		{3E80AAD8-ED3E-4A09-B521-3BB8CF1AD89C}.Server|Any CPU.Build.0 = Server|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {59F95FAE-13AE-4844-A18F-20052F403922}
+	EndGlobalSection
+EndGlobal

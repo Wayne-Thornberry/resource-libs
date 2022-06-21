@@ -70,7 +70,7 @@ namespace Proline.ClassicOnline.LevelScripts.UI
                     API.SwitchOutPlayer(Game.PlayerPed.Handle, 1, 1);
                     await BaseScript.Delay(3000);
                     Game.PlayerPed.Position = new Vector3(x,y, World.GetGroundHeight(new Vector2(x, y)));
-                    await BaseScript.Delay(3000); 
+                    //await BaseScript.Delay(3000); 
                     switch (playId)
                     {
                         case 0:

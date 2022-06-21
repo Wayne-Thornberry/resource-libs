@@ -21,7 +21,7 @@ namespace Proline.DBAccess.DBApi
             this._sproc = procName;
             var x = ConfigurationManager.AppSettings;
             var settings = ConfigurationManager.ConnectionStrings;
-            _conString = settings["OnlineGameDB"].ConnectionString; 
+            _conString = settings["OnlineGameDB"].ConnectionString;     
             _parameters = new List<SqlParameter>();
         }
 
@@ -43,7 +43,7 @@ namespace Proline.DBAccess.DBApi
                     {
                         OnSqlReader(reader);
                     } 
-                    _apiReturnCode = int.Parse(_parameters[0].Value.ToString());
+                    _apiReturnCode = int.Parse(_parameters[_parameters.Count - 1].Value.ToString());
                 } 
             }
              

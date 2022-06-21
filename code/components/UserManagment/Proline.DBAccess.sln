@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.DBAccess.MidLayer",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.DBAccess.Data", "Proline.DBAccess.Data\Proline.DBAccess.Data.csproj", "{0BF15DB0-39B0-418F-982B-6A60F13646DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proline.DBAccess.DBApi", "Proline.DBAccess.DBApi\Proline.DBAccess.DBApi.csproj", "{C2C837E4-B371-4837-BA97-8DE2E13DD64A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.DBAccess.DBApi", "Proline.DBAccess.DBApi\Proline.DBAccess.DBApi.csproj", "{C2C837E4-B371-4837-BA97-8DE2E13DD64A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

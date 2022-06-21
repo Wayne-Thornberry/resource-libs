@@ -68,7 +68,61 @@ namespace Proline.DBAccess.WebService.Controllers
                 {
                     response = api.GetSave(inParameter);
                 }  
-                return Ok(inParameter);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                return Problem(e.ToString());
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [Route("RegisterPlayer")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RegisterPlayerResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> RegisterPlayer(RegisterPlayerRequest inParameter)
+        {
+
+            if (inParameter == null || string.IsNullOrEmpty(inParameter.Name))
+                return BadRequest();
+
+            try
+            {
+                RegisterPlayerResponse response = null;
+                using (var api = new DBAccessApi())
+                {
+                    response = api.RegisterPlayer(inParameter);
+                }
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                return Problem(e.ToString());
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [Route("GetPlayer")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetSaveResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetPlayer(GetPlayerRequest inParameter)
+        {
+
+            if (inParameter == null || string.IsNullOrEmpty(inParameter.Username))
+                return BadRequest();
+
+            try
+            {
+                GetPlayerResponse response = null;
+                using (var api = new DBAccessApi())
+                {
+                    response = api.GetPlayer(inParameter);
+                }
+                return Ok(response);
             }
             catch (Exception e)
             {

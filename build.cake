@@ -10,19 +10,12 @@ var commonDir = "./code/common";
 var libDir = "./code/libs";
 var componentDir = "./code/components";
 var toolsDir = "./code/tools";
-
-var clientResourcePath = "./code/resources/client";
-var serverResourcePath = "./code/resources/server";
-
-var clientModulesPath = "./ext/modules/client";
-var serverModulesPath = "./ext/modules/server";
-
+var resourcePath = "./code/resources"; 
+var modulesPath = "./ext/modules";
 var levelscriptDir = "./ext/levelscripts";
 
-var clientResourceDataDir = "./data/resources/client";
-var serverResourceDataDir = "./data/resources/server";
-var clientModuleDataDir = "./data/modules/client";
-var serverModuleDataDir = "./data/modules/server";
+var resourceDataDir = "./data/resources"; 
+var moduleDataDir = "./data/modules"; 
 
 
 // a full build would be to build the common first, libs second, resources third, components fourth, tools fifth
@@ -50,25 +43,28 @@ string outPutDir;
 string resourceName;
 
 ProjectInformation serverLauncher;
-ProjectInformation clientModulesPack;
-ProjectInformation serverModulesPack;
+ProjectInformation modulesPack; 
 ProjectInformation levelScriptsPack;
-ProjectInformation clientCore;
-ProjectInformation serverCore;
+ProjectInformation core; 
 
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
 ///////////////////////////////////////////////////////////////////////////////
 
+var serverArgs = new Dictionary<string,string>();
+serverArgs.Add("configuration", "Server") ;
+var clientArgs = new Dictionary<string,string>();
+clientArgs.Add("configuration", "Client") ;
 
-CakeExecuteScript($"./code/libs/ResourceCommon/build.cake"); 
-CakeExecuteScript($"./code/libs/ResourceClient/build.cake"); 
-CakeExecuteScript($"./code/libs/ResourceServer/build.cake"); 
+CakeExecuteScript($"./code/libs/ResourceLibs/build.cake", new CakeSettings(){ Arguments = clientArgs}); 
+CakeExecuteScript($"./code/libs/ResourceLibs/build.cake", new CakeSettings(){ Arguments = serverArgs}); 
+CakeExecuteScript($"./code/libs/ModuleFramework/build.cake",  new CakeSettings(){ Arguments = clientArgs}); 
+CakeExecuteScript($"./code/libs/ModuleFramework/build.cake",  new CakeSettings(){ Arguments = serverArgs}); 
 CakeExecuteScript($"./code/tools/ServerLauncher/build.cake"); 
-CakeExecuteScript($"./code/resources/client/Client-Core/build.cake"); 
-CakeExecuteScript($"./code/resources/server/Server-Core/build.cake"); 
-CakeExecuteScript($"./ext/modules/client/Client-Modules/build.cake"); // a script should exist here to build and compile all modules into one package
-CakeExecuteScript($"./ext/modules/server/Server-Modules/build.cake"); // a script should exist here to build and compile all modules into one package
+CakeExecuteScript($"./code/resources/ProlineCore/build.cake",  new CakeSettings(){ Arguments = clientArgs});  
+CakeExecuteScript($"./code/resources/ProlineCore/build.cake",  new CakeSettings(){ Arguments = serverArgs});  
+CakeExecuteScript($"./ext/modules/ClassicModules/build.cake",  new CakeSettings(){ Arguments = clientArgs}); // a script should exist here to build and compile all modules into one package 
+//CakeExecuteScript($"./ext/modules/ClassicModules/build.cake",  new CakeSettings(){ Arguments = serverArgs}); // a script should exist here to build and compile all modules into one package 
 CakeExecuteScript($"./ext/levelscripts/ClassicScripts/build.cake");  // a script should exist here to build and compile all modules into one package
 
 
@@ -86,25 +82,15 @@ Setup(ctx =>
     outPutDir = $"{artificatsOutputDir}/"+dir.GetDirectoryName();
 
     
-    var serverLauncherPath = toolsDir+"/ServerLauncher";
-
-    var clientCorePath = clientResourcePath+"/Client-Core";
-    var serverCorePath = serverResourcePath+"/Server-Core";
-
-    var clientModulesCPath =  clientModulesPath+"/Client-Modules";
-    var serverModulesCPath =  serverModulesPath+"/Server-Modules";
-
+    var serverLauncherPath = toolsDir+"/ServerLauncher"; 
+    var corePath = resourcePath+"/ProlineCore";  
+    var modulesCPath =  modulesPath+"/ClassicModules";  
     var levelscripts = levelscriptDir+"/ClassicScripts";
 
     
     var serverLauncherDirPath = new DirectoryPath(serverLauncherPath);
-
-    var clientCoreDirPath = new DirectoryPath(clientCorePath);
-    var serverCoreDirPath = new DirectoryPath(serverCorePath);
-    
-    var clientModulesDirPath = new DirectoryPath(clientModulesCPath);
-    var serverModulesDirPath = new DirectoryPath(serverModulesCPath);
- 
+    var coreDirPath = new DirectoryPath(corePath); 
+    var modulesDirPath = new DirectoryPath(modulesCPath);  
     var levelScriptDirPath = new DirectoryPath(levelscripts);
 
         // We need to deploy the core parts of PO, server and client first
@@ -122,58 +108,32 @@ Setup(ctx =>
     Information(serverLauncher.OutputDir);
 
     // We need to deploy the core parts of PO, server and client first
-    clientCore = new ProjectInformation
+    core = new ProjectInformation
     {
-        OutputDir = $"{artificatsOutputDir}/"+clientCoreDirPath.GetDirectoryName(),
-        Name = clientCoreDirPath.GetDirectoryName(),
-        FullPath = clientCorePath,
+        OutputDir = $"{artificatsOutputDir}/"+coreDirPath.GetDirectoryName(),
+        Name = coreDirPath.GetDirectoryName(),
+        FullPath = corePath,
         ProjectType = 2,
         //IsTestProject = p.GetFilenameWithoutExtension().ToString().EndsWith("Tests")
     };
 
-    Information(clientCore.Name);
-    Information(clientCore.FullPath);
-    Information(clientCore.OutputDir);
-
-    serverCore = new ProjectInformation
-    {
-        OutputDir = $"{artificatsOutputDir}/"+serverCoreDirPath.GetDirectoryName(),
-        Name = serverCoreDirPath.GetDirectoryName(),
-        FullPath = serverCorePath,
-        ProjectType = 2,
-        //IsTestProject = p.GetFilenameWithoutExtension().ToString().EndsWith("Tests")
-    };
-
-    Information(serverCore.Name);
-    Information(serverCore.FullPath);
-    Information(serverCore.OutputDir);
+    Information(core.Name);
+    Information(core.FullPath);
+    Information(core.OutputDir);
 
     // We can then deploy the modules
-    clientModulesPack = new ProjectInformation
+    modulesPack = new ProjectInformation
     {
-        OutputDir = $"{artificatsOutputDir}/"+clientModulesDirPath.GetDirectoryName(),
-        Name = clientModulesDirPath.GetDirectoryName(),
-        FullPath = clientModulesCPath,
+        OutputDir = $"{artificatsOutputDir}/"+modulesDirPath.GetDirectoryName(),
+        Name = modulesDirPath.GetDirectoryName(),
+        FullPath = modulesCPath,
         ProjectType = 2,
         //IsTestProject = p.GetFilenameWithoutExtension().ToString().EndsWith("Tests")
     };
 
-    Information(clientModulesPack.Name);
-    Information(clientModulesPack.FullPath);
-    Information(clientModulesPack.OutputDir);
-
-    serverModulesPack = new ProjectInformation
-    {
-        OutputDir = $"{artificatsOutputDir}/"+serverModulesDirPath.GetDirectoryName(),
-        Name = serverModulesDirPath.GetDirectoryName(),
-        FullPath = serverModulesCPath,
-        ProjectType = 2,
-        //IsTestProject = p.GetFilenameWithoutExtension().ToString().EndsWith("Tests")
-    };
-
-    Information(serverModulesPack.Name);
-    Information(serverModulesPack.FullPath);
-    Information(serverModulesPack.OutputDir);
+    Information(modulesPack.Name);
+    Information(modulesPack.FullPath);
+    Information(modulesPack.OutputDir); 
 
     levelScriptsPack = new ProjectInformation
     {
@@ -214,26 +174,26 @@ Task("Deploy")
             }
 
              // Copy any working data files to the resource, data should probably be its own repo
-            if(DirectoryExists($"{artificatsOutputDir}/{clientCore.Name}"))
+            if(DirectoryExists($"{artificatsOutputDir}/{core.Name}/client"))
             { 
-                CopyDirectory($"{artificatsOutputDir}/{clientCore.Name}", clientResourceDeployDir); 
-                Information($"Copied {artificatsOutputDir}/{clientCore.Name}" + " To " + clientResourceDeployDir); 
+                CopyDirectory($"{artificatsOutputDir}/{core.Name}/client", clientResourceDeployDir); 
+                Information($"Copied {artificatsOutputDir}/{core.Name}/client" + " To " + clientResourceDeployDir); 
             }
-            if(DirectoryExists($"{artificatsOutputDir}/{serverCore.Name}"))
+            if(DirectoryExists($"{artificatsOutputDir}/{core.Name}/server"))
             { 
-                CopyDirectory($"{artificatsOutputDir}/{serverCore.Name}", serverResourceDeployDir); 
-                Information($"Copied {artificatsOutputDir}/{serverCore.Name}" + " To " + serverResourceDeployDir); 
+                CopyDirectory($"{artificatsOutputDir}/{core.Name}/server", serverResourceDeployDir); 
+                Information($"Copied {artificatsOutputDir}/{core.Name}/server" + " To " + serverResourceDeployDir); 
             }
 
-             if(DirectoryExists($"{artificatsOutputDir}/{clientModulesPack.Name}"))
+             if(DirectoryExists($"{artificatsOutputDir}/{modulesPack.Name}/client"))
             { 
-                CopyDirectory($"{artificatsOutputDir}/{clientModulesPack.Name}", clientResourceDeployDir); 
-                Information($"Copied {artificatsOutputDir}/{clientModulesPack.Name}" + " To " + clientResourceDeployDir); 
+                CopyDirectory($"{artificatsOutputDir}/{modulesPack.Name}/client", clientResourceDeployDir); 
+                Information($"Copied {artificatsOutputDir}/{modulesPack.Name}/client" + " To " + clientResourceDeployDir); 
             }
-              if(DirectoryExists($"{artificatsOutputDir}/{serverModulesPack.Name}"))
+            if(DirectoryExists($"{artificatsOutputDir}/{modulesPack.Name}/server"))
             { 
-                CopyDirectory($"{artificatsOutputDir}/{serverModulesPack.Name}", serverResourceDeployDir); 
-                Information($"Copied {artificatsOutputDir}/{serverModulesPack.Name}" + " To " + serverResourceDeployDir); 
+                CopyDirectory($"{artificatsOutputDir}/{modulesPack.Name}/server", serverResourceDeployDir); 
+                Information($"Copied {artificatsOutputDir}/{modulesPack.Name}/server" + " To " + serverResourceDeployDir); 
             }
 
 
@@ -245,26 +205,26 @@ Task("Deploy")
 
             
             // Copy any working data files to the resource, data should probably be its own repo
-            if(DirectoryExists($"{clientResourceDataDir}/{clientCore.Name}"))
+            if(DirectoryExists($"{resourceDataDir}/{core.Name}/client"))
             { 
-                CopyDirectory($"{clientResourceDataDir}/{clientCore.Name}", clientResourceDeployDir); 
-	            Information($"Copied {clientResourceDataDir}/{clientCore.Name}" + " To " + clientResourceDeployDir);
+                CopyDirectory($"{resourceDataDir}/{core.Name}/client", clientResourceDeployDir); 
+	            Information($"Copied {resourceDataDir}/{core.Name}/client" + " To " + clientResourceDeployDir);
             }
-            if(DirectoryExists($"{serverResourceDataDir}/{serverCore.Name}"))
+            if(DirectoryExists($"{resourceDataDir}/{core.Name}/server"))
             { 
-                CopyDirectory($"{serverResourceDataDir}/{serverCore.Name}", serverResourceDeployDir); 
-	            Information($"Copied {serverResourceDataDir}/{serverCore.Name}" + " To " + serverResourceDeployDir);
+                CopyDirectory($"{resourceDataDir}/{core.Name}/server", serverResourceDeployDir); 
+	            Information($"Copied {resourceDataDir}/{core.Name}/server" + " To " + serverResourceDeployDir);
             }
 
-             if(DirectoryExists($"{clientModuleDataDir}/{clientModulesPack.Name}"))
+             if(DirectoryExists($"{moduleDataDir}/{modulesPack.Name}/client"))
             { 
-                CopyDirectory($"{clientModuleDataDir}/{clientModulesPack.Name}", clientResourceDeployDir); 
-	            Information($"Copied {clientModuleDataDir}/{clientModulesPack.Name}" + " To " + clientResourceDeployDir);
+                CopyDirectory($"{moduleDataDir}/{modulesPack.Name}/client", clientResourceDeployDir); 
+	            Information($"Copied {moduleDataDir}/{modulesPack.Name}/client" + " To " + clientResourceDeployDir);
             }
-             if(DirectoryExists($"{serverModuleDataDir}/{serverModulesPack.Name}"))
+             if(DirectoryExists($"{moduleDataDir}/{modulesPack.Name}/server"))
             { 
-                CopyDirectory($"{serverModuleDataDir}/{serverModulesPack.Name}", serverResourceDeployDir); 
-	            Information($"Copied {serverModuleDataDir}/{serverModulesPack.Name}" + " To " + serverResourceDeployDir);
+                CopyDirectory($"{moduleDataDir}/{modulesPack.Name}/server", serverResourceDeployDir); 
+	            Information($"Copied {moduleDataDir}/{modulesPack.Name}/server" + " To " + serverResourceDeployDir);
             }
  
             // Delete this to avoid causing issues with loading and running the .net libraries

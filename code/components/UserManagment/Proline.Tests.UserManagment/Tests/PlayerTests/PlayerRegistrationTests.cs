@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using Proline.DBAccess.Data;
+using Proline.DBAccess.MidLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +13,60 @@ namespace Proline.DBAccess.NUnit.Tests.PlayerTests
 {
     public class PlayerRegistrationTests
     {
-        private AuthenticationHeaderValue _authHeader;
+        //private AuthenticationHeaderValue _authHeader;
 
         [SetUp]
         public void Setup()
         {
-            _authHeader = new AuthenticationHeaderValue("Basic", "YWRtaW46UGEkJFdvUmQ=");
+            //_authHeader = new AuthenticationHeaderValue("Basic", "YWRtaW46UGEkJFdvUmQ=");
         }
 
         [Test]
-        public void RegisterPlayerNewUserSuccess()
+        public void BasicPlayerRegistrationSuccess()
         {
+
+            var request = new RegisterPlayerRequest();
+            request.Name = Guid.NewGuid().ToString();
+            RegisterPlayerResponse response = null;
+            using (var api = new DBAccessApi())
+            {
+                response = api.RegisterPlayer(request);
+            }
+
+            Assert.IsNotNull(response);
+            Assert.AreEqual(0, response.ReturnCode);
+            Assert.Greater(response.Id, 0);
+        }
+
+        [Test]
+        public void BasicPlayerAlreadyRegisteredSystemError()
+        {
+
+            var request = new RegisterPlayerRequest();
+            request.Name = Guid.NewGuid().ToString();
+            var username = request.Name;
+            RegisterPlayerResponse response = null;
+            using (var api = new DBAccessApi())
+            {
+                response = api.RegisterPlayer(request);
+            }
+
+            Assert.IsNotNull(response);
+            Assert.AreEqual(0, response.ReturnCode);
+            Assert.Greater(response.Id, 0);
+
+            request = new RegisterPlayerRequest();
+            request.Name = username;
+            response = null;
+            using (var api = new DBAccessApi())
+            {
+                response = api.RegisterPlayer(request);
+            }
+
+            Assert.IsNotNull(response);
+            Assert.AreEqual(1, response.ReturnCode); 
+
+
             //var username = Util.GenerateRandomString(15);
             //var identity1 = IdentityHelper.GenerateIdentifier(0);
             //var identity2 = IdentityHelper.GenerateIdentifier(1);

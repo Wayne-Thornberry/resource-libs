@@ -10,10 +10,16 @@
 	<changeSet id="TestProcedure" author="wthornberry" runOnChange="true" >
 		<sqlFile path="Programmability\Stored Procedures\test\TestProcedure.sql"/>
 	</changeSet>
+	<changeSet id="GetPlayer" author="wthornberry" runOnChange="true" >
+		<sqlFile path="Programmability\Stored Procedures\dbo\GetPlayer.sql"/>
+	</changeSet>
 	<changeSet id="GetSaveFile" author="wthornberry" runOnChange="true" >
 		<sqlFile path="Programmability\Stored Procedures\dbo\GetSaveFile.sql"/>
 	</changeSet>
 	<changeSet id="InsertSaveFile" author="wthornberry" runOnChange="true" >
 		<sqlFile path="Programmability\Stored Procedures\dbo\InsertSaveFile.sql"/>
+	</changeSet>
+	<changeSet id="RegisterPlayer" author="wthornberry" runOnChange="true" >
+		<sqlFile path="Programmability\Stored Procedures\dbo\RegisterPlayer.sql"/>
 	</changeSet>
 </databaseChangeLog>
