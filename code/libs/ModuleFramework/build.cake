@@ -78,7 +78,7 @@ Task("Restore")
     .IsDependentOn("Clean")
     .Does(() =>
 {
-       // DotNetRestore(resource.FullPath);
+       //DotNetRestore(resource.FullPath);
 });
 
 Task("Build")
@@ -89,8 +89,7 @@ Task("Build")
         DotNetBuild(resource.FullPath, new DotNetBuildSettings
         {
             Configuration = configuration,  
-            OutputDirectory = outputDir,
-            NoRestore = true
+            OutputDirectory = outputDir
         });
 })
 .DeferOnError();

@@ -1,12 +1,17 @@
 ﻿using CitizenFX.Core;
-using Proline.Resource.ModuleCore;
+using Proline.Modularization.Core;
 using System;
+using System.Reflection;
 
 namespace Proline.ClassicOnline.PMGT
 {
-    public class MConnectionContext : ModuleContext
+    public class MConnectionContext : ModuleScript
     {
+        public MConnectionContext(Assembly source) : base(source)
+        {
+        }
 
+#if SERVER
         [EventHandler("playerConnecting")]
         public void OnPlayerConnecting([FromSource] Player player, string playerName, object setKickReason, dynamic deferrals)
         {
@@ -58,5 +63,6 @@ namespace Proline.ClassicOnline.PMGT
             //} 
             //TriggerEvent("playerConnectedHandler", player.Handle);
         }
+#endif
     }
 }

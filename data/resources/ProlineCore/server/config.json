@@ -1,52 +1,24 @@
 {
-    "Sections" : [
-        "Resources",
-        "ModuleConfiguration"
-    ],
+	"Sections": [
+		"Resources",
+		"moduleConfigSection"
+	],
 
-    "Resources":[
-        "Proline.Resource.Configuration.Server",
-        "Proline.Resource.Console.Server",
-        "Proline.Resource.File.Server",
-        "Proline.Resource.Framework.Server",
-        "Proline.Resource.Logging.Server",
-        "Proline.Resource.ModuleCore.Server",
-        "Proline.Resource.Networking.Server",
-        "Proline.ClassicOnline.MConnection",
-        "Proline.ClassicOnline.MData",
-        "Proline.ClassicOnline.MScripting"
-    ], 
+	"Resources": [
+		"Proline.Resource.Server",
+		"Proline.Resource.Configuration.Server",
+		"Proline.Resource.IO.Server",
+		"Proline.Resource.Framework.Server",
+		"Proline.Resource.Logging.Server",
+		"Proline.Modularization.Core.Server",
+		"Proline.ClassicOnline.MData.Server",
+		"Proline.ClassicOnline.MDebug.Server"
+	],
 
-    "LoggingConfiguration": {
-
-    },
-
-    "ModuleConfiguration" : {
-        "Modules" :[
-            "MConnection",
-            "MData",
-            "MScripting"
-            ],
-        "MConnection" :{ 
-            "Name" : "MConnection",
-            "Assembly" : "Proline.ClassicOnline.MConnection",
-            "Data" : {
-                
-            }
-        },
-        "MData" :{ 
-            "Name" : "MData",
-            "Assembly" : "Proline.ClassicOnline.MData",
-            "Data" : {
-                
-            }
-        },
-        "MScripting" :{ 
-            "Name" : "MScripting",
-            "Assembly" : "Proline.ClassicOnline.MScripting",
-            "Data" : {
-                
-            }
-        }
-    }
+	"moduleConfigSection": {
+		"moduleCollection": [{
+			"Name": "MData",
+			"Assembly": "Proline.ClassicOnline.MData.Server"
+		}]
+	}
 }

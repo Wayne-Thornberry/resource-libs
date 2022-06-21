@@ -12,6 +12,7 @@ namespace Proline.ClassicOnline.MData
     public static class MDataAPI
     {
 
+#if CLIENT
         public static void CreateFile()
         {
             var fm = FileManager.GetInstance();
@@ -86,5 +87,6 @@ namespace Proline.ClassicOnline.MData
         {
             return API.LoadResourceFile(API.GetCurrentResourceName(), v);
         }
+#endif
     }
 }

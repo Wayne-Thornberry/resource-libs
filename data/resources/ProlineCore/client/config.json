@@ -1,7 +1,10 @@
 {
     "Sections" : [
         "Resources",
-        "ModuleConfiguration"
+        "moduleConfigSection",
+        "scriptingConfigSection",
+        "moduleBrainSection",
+        "moduleWorldSection",
     ],
 
     "Resources":[
@@ -27,34 +30,27 @@
 
     },
 
-    "ModuleConfiguration" : {
-        "Modules" :[
-            "MScripting",
-            "MBrain",
-            "MWorld"
-            ],
-        "MScripting" :{ 
-            "Name" : "MScripting",
-            "Assembly" : "Proline.ClassicOnline.MScripting",
-            "Data" : {
-                "LevelScriptAssemblies" : [
-                    "Proline.LevelScripts.Classic" 
-                ]
-            }
-        },
-        "MBrain" :{ 
-            "Name" : "MBrain",
-            "Assembly" : "Proline.ClassicOnline.MBrain",
-            "Data" : {
+    "moduleConfigSection" : {
+        "moduleCollection" :[
+			{"Name" : 'MScripting', "Assembly" : 'Proline.ClassicOnline.MScripting.Client'},
+			{"Name" : 'MBrain', "Assembly" : 'Proline.ClassicOnline.MBrain.Client'},
+			{"Name" : 'MWorld', "Assembly" : 'Proline.ClassicOnline.MWorld.Client'}
+        ]
+    },
+	
+	"scriptingConfigSection" :{ 
+        "levelScriptAssemblies" : [
+			"Proline.LevelScripts.Classic" 
+		]
+    },
+	"moduleBrainSection" :{ 
+		"Data" : {
                 
-            }
-        },
-        "MWorld" : { 
-            "Name" : "MWorld",
-            "Assembly" : "Proline.ClassicOnline.MWorld",
-            "Data" : {
+		}
+    },
+    "moduleWorldSection" : { 
+		"Data" : {
                 
-            }
-        } 
-    }
+		}
+    } 
 }

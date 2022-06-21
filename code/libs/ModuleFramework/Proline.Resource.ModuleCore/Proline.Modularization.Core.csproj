@@ -1,20 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Server|AnyCPU'">
-		<DefineConstants>TRACE;SERVER;DEBUG;RELEASE;NET452</DefineConstants>
-	</PropertyGroup>
-
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Client|AnyCPU'"> 
-		<DefineConstants>TRACE;CLIENT;DEBUG;RELEASE;NET452</DefineConstants>
-	</PropertyGroup>
+ 
 
 	<PropertyGroup>
 		<TargetFramework>net452</TargetFramework>
 		<Platforms>AnyCPU</Platforms>
 		<Configurations>Debug;Release;Client;Server</Configurations>
 		<AssemblyName>$(MSBuildProjectName).$(Configuration)</AssemblyName>
+		<DefineConstants Condition="'$(Configuration)|$(Platform)'=='Server|AnyCPU'">TRACE;SERVER;DEBUG;RELEASE;NET452</DefineConstants>
+		<DefineConstants Condition="'$(Configuration)|$(Platform)'=='Client|AnyCPU'">TRACE;CLIENT;DEBUG;RELEASE;NET452</DefineConstants>
 	</PropertyGroup>
  
 	<ItemGroup>

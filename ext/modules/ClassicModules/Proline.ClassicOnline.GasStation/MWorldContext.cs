@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using Proline.Modularization.Core;
-using Proline.Modularization.Core;
 
 namespace Proline.ClassicOnline.MWorld
 {

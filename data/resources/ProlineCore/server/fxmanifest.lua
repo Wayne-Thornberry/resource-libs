@@ -5,7 +5,7 @@ author 'Wayno717'
 description 'Project Online Freemode Game'
 version '1.0.0.0'
  
-server_script 'ProlineServer.net.dll'
+server_script 'ProlineCore.Server.net.dll'
 files {
 '*.json',
 '*.dll',
