@@ -1,13 +1,20 @@
-resource_manifest_version '05cfa83c-a124-4cfa-a768-c24a5811d8f9'
+resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
 fx_version 'cerulean'
 games { 'gta5' }
 author 'Wayno717'
 description 'Project Online Freemode Game'
 version '1.0.0.0'
 
-client_script 'ProlineClient.net.dll'
+client_script 'ProlineCore.Client.net.dll'
 files {
 '*.json',
 '*.dll',
 'data/*',
+'html/*',
+'sounds/*',
+'sounds/demo.ogg',
+'html/index.html',
+'html/sounds/demo.ogg',
 }
+
+ui_page 'html/index.html'

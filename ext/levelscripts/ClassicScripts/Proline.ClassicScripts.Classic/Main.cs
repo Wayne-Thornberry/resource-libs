@@ -3,9 +3,11 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
+using Newtonsoft.Json;
 using Proline.ClassicOnline.MData;
 using Proline.ClassicOnline.MDebug;
 using Proline.ClassicOnline.MScripting;
+using Proline.Resource;
 
 namespace Proline.ClassicOnline.LevelScripts
 {
@@ -36,6 +38,7 @@ namespace Proline.ClassicOnline.LevelScripts
             //-339.84f,
             // -136.81f,
             // 38.76f));
+
 
 
             // MDebugAPI.LogDebug(MDataAPI.GetFileValue("data/character01.json", ""));
@@ -75,7 +78,25 @@ namespace Proline.ClassicOnline.LevelScripts
                         await BaseScript.Delay(0);
                     }
                     MScriptingAPI.StartNewScript("PassiveSaving");
-                    MScriptingAPI.MarkScriptAsNoLongerNeeded();
+
+                    // var json = JsonConvert.SerializeObject(new
+                    // {
+                        // transactionType = "playSound",
+                        // transactionFile = "demo",
+                        // transactionVolume = 0.2f
+                    // });
+                    // Game.PlayerPed.Weapons.Give(WeaponHash.Parachute, 0, true, true);
+                    // Game.PlayerPed.Position = new Vector3(0, 0, 1800);
+                   // Game.PlayerPed.HasGravity = true;
+                    // API.SetGravityLevel(2);
+                    // Console.WriteLine(json);
+                    // API.SendNuiMessage(json);
+
+                    //MScriptingAPI.MarkScriptAsNoLongerNeeded();
+                }
+                else if (Game.IsControlJustPressed(0, Control.PhoneUp))
+                {
+                   
                 }
                 await BaseScript.Delay(0);
             }

@@ -29,8 +29,7 @@ namespace Proline.Modularization.Core
                 // could look for commands
             }
             catch (Exception)
-            {
-
+            { 
                 throw;
             }
             finally

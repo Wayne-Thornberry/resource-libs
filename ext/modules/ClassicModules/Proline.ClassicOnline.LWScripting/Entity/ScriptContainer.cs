@@ -84,15 +84,15 @@ namespace Proline.ClassicOnline.MScripting
                     finally
                     {
                         MDebug.MDebugAPI.LogDebug(_log.Debug(string.Format("{0} Script Finished, Termination Code: {1}", _name, _terminationCode)));
-                        BaseScript.TriggerEvent("ScriptTerminatedHandler", _type.Name);
-                        BaseScript.TriggerServerEvent("ScriptTerminatedHandler", _type.Name);
+                        BaseScript.TriggerEvent(EventHandlerNames.ScriptTerminatedHandler, _type.Name);
+                        BaseScript.TriggerServerEvent(EventHandlerNames.ScriptTerminatedHandler, _type.Name);
                         var sm = LWScriptManager.GetInstance();
                         sm.RemoveScript(this);
                     }
                 }, _token);
                 _scriptTask.Start();
-                BaseScript.TriggerEvent("ScriptStartedHandler", _type.Name);
-                BaseScript.TriggerServerEvent("ScriptStartedHandler", _type.Name);
+                BaseScript.TriggerEvent(EventHandlerNames.ScriptStartedHandler, _type.Name);
+                BaseScript.TriggerServerEvent(EventHandlerNames.ScriptStartedHandler, _type.Name);
                 _status = 2;
                 return _scriptTask.Id;
             }

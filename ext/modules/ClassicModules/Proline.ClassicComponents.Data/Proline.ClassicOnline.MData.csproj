@@ -24,7 +24,7 @@
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
 		</Reference>
-		<PackageReference Include="CitizenFX.Core.$(Configuration)" Version="1.0.5179" />
+		<PackageReference Include="CitizenFX.Core.$(Configuration)" Version="1.0.5667" />
 		<Reference Include="Proline.Modularization.Core.$(Configuration)">
 		  <HintPath>..\..\..\..\artifacts\ModuleFramework\$(Configuration)\Proline.Modularization.Core.$(Configuration).dll</HintPath>
 		</Reference>

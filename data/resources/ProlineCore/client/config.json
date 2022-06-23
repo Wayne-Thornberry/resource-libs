@@ -34,6 +34,7 @@
         "moduleCollection" :[
 			{"Name" : 'MScripting', "Assembly" : 'Proline.ClassicOnline.MScripting.Client'},
 			{"Name" : 'MBrain', "Assembly" : 'Proline.ClassicOnline.MBrain.Client'},
+			{"Name" : 'MData', "Assembly" : 'Proline.ClassicOnline.MData.Client'},
 			{"Name" : 'MWorld', "Assembly" : 'Proline.ClassicOnline.MWorld.Client'}
         ]
     },

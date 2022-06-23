@@ -14,36 +14,45 @@ namespace Proline.ClassicOnline.LevelScripts
     {
 
         public async Task Execute(object[] args, CancellationToken token)
-        {
-            //   MGameAPI.SaveCurrentCar();
-            var nextSaveTime = DateTime.UtcNow.AddMinutes(1);
-            var saveInProgress = false;
+        { 
+            var nextSaveTime = DateTime.UtcNow.AddMinutes(1); 
+            var state = 0;
+            var ticks = 0;
             while (true)
-            { 
-
-                if (DateTime.UtcNow > nextSaveTime && !MDataAPI.IsSaveInProgress())
+            {
+                switch (state)
                 {
-                    Screen.LoadingPrompt.Show("Saving...", LoadingSpinnerType.SocialClubSaving);
-                    MDataAPI.CreateFile();
-                    MDataAPI.AddFileValue("PlayerHealth", Game.PlayerPed.Health);
-                    MDataAPI.AddFileValue("PlayerPosition", JsonConvert.SerializeObject(Game.PlayerPed.Position));
-                    MDataAPI.SaveFile();
-                    saveInProgress = true;
-                    nextSaveTime = DateTime.UtcNow.AddMinutes(1);
-                }
-                else
-                { 
-                    if (!MDataAPI.IsSaveInProgress() && saveInProgress)
-                    {
-                        switch (MDataAPI.GetSaveState())
+                    case 0:
+                        if (DateTime.UtcNow > nextSaveTime)
                         {
-                            case 0: Screen.LoadingPrompt.Show("Save complete"); break;
-                            case 1: Screen.LoadingPrompt.Show("Save failed... "); break;
+                            MDataAPI.CreateFile();
+                            MDataAPI.AddFileValue("PlayerHealth", Game.PlayerPed.Health);
+                            MDataAPI.AddFileValue("PlayerPosition", JsonConvert.SerializeObject(Game.PlayerPed.Position));
+                            MDataAPI.SaveFile();
+                            nextSaveTime = DateTime.UtcNow.AddMinutes(1);
+                            Screen.LoadingPrompt.Show("Saving...", LoadingSpinnerType.SocialClubSaving);
+                            state = 1;
+                        }break;
+                    case 1:
+                        if (!MDataAPI.IsSaveInProgress())
+                        {
+                            switch (MDataAPI.GetSaveState())
+                            {
+                                case 0: Screen.LoadingPrompt.Show("Save complete"); break;
+                                case 1: Screen.LoadingPrompt.Show("Save failed... "); break;
+                            }
+                            ticks = 0;
+                            state = 2;
+                        }break;
+                    case 2:
+                        if (Screen.LoadingPrompt.IsActive && ticks > 1000)
+                        {
+                            Screen.LoadingPrompt.Hide();
+                            state = 0;
                         }
-                        saveInProgress = false;
-                    }
-                }
-
+                        ticks++;
+                        break;
+                }  
                 await BaseScript.Delay(0);
             } 
 

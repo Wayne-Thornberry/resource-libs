@@ -14,14 +14,17 @@ namespace Proline.LevelScripts.Classic
         public async Task Execute(object[] args, CancellationToken token)
         {
 
-            MDataAPI.LoadFile(16); // Sends a load request to the server
-            MDebugAPI.LogDebug("Load Request put in");
-            while (!MDataAPI.IsFileLoaded())
+            if (!MDataAPI.IsSaveInProgress())
             {
-                await BaseScript.Delay(0);
-            } 
-            Game.PlayerPed.Health = MDataAPI.GetFileValue<int>("PlayerHealth");
-            Game.PlayerPed.Position = MDataAPI.GetFileValue<Vector3>("PlayerPosition");
+                MDataAPI.LoadFile(16); // Sends a load request to the server
+                MDebugAPI.LogDebug("Load Request put in");
+                while (!MDataAPI.IsFileLoaded())
+                {
+                    await BaseScript.Delay(0);
+                }
+                Game.PlayerPed.Health = MDataAPI.GetFileValue<int>("PlayerHealth");
+                Game.PlayerPed.Position = MDataAPI.GetFileValue<Vector3>("PlayerPosition");
+            }
 
         }
     }

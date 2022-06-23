@@ -24,7 +24,7 @@ namespace Proline.ClassicOnline.MData
             var fm = FileManager.GetInstance();
             var json = JsonConvert.SerializeObject(fm.GetCurrentSaveFile());
             MDebug.MDebugAPI.LogDebug($"Saving file... {json}");
-            BaseScript.TriggerServerEvent("SaveFileHandler", json);
+            BaseScript.TriggerServerEvent(EventHandlerNames.SAVEFILEHANDLER, json);
             fm.IsSaveInProgress = true;
         }
 
@@ -34,16 +34,16 @@ namespace Proline.ClassicOnline.MData
             return fm.IsSaveInProgress;
         }
 
-        public static int GetSaveState()
+        public static int? GetSaveState()
         {
             var fm = FileManager.GetInstance();
-            if (fm.LastSaveResult >= 0)
+            if (fm.LastSaveResult != null)
             {
                 var state = fm.LastSaveResult;
-                fm.LastSaveResult = -1;
-                return state;
+                fm.LastSaveResult = null;
+                return state.Value;
             } 
-            return -1;
+            return null;
         }
 
         public static void AddFileValue(string key, object value)
@@ -74,7 +74,7 @@ namespace Proline.ClassicOnline.MData
 
         public static void LoadFile(long id)
         { 
-            BaseScript.TriggerServerEvent("LoadFileHandler", id); 
+            BaseScript.TriggerServerEvent(EventHandlerNames.LOADFILEHANDLER, id); 
         }
 
         public static bool IsFileLoaded()

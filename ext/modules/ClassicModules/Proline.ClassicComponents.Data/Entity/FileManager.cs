@@ -12,7 +12,7 @@ namespace Proline.ClassicOnline.MData.Entity
         private static FileManager _instance;
         private Dictionary<string, object> _file; 
         public bool IsSaveInProgress { get; internal set; } 
-        public int LastSaveResult { get; internal set; }
+        public int? LastSaveResult { get; internal set; }
 
         public static FileManager GetInstance()
         {

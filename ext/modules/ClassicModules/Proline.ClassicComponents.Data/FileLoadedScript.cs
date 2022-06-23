@@ -19,11 +19,11 @@ namespace Proline.ClassicOnline.MData.Scripts
         public FileLoadedScript(Assembly source) : base(source)
         {
 #if CLIENT
-            EventHandlers.Add("FileLoadedHandler", new Action<string>(OnFileLoaded));
-            EventHandlers.Add("SaveFileResponseHandler", new Action<int>(OnSaveFileResponse));
+            EventHandlers.Add(EventHandlerNames.FILELOADEDHANDLER, new Action<string>(OnFileLoaded));
+            EventHandlers.Add(EventHandlerNames.FILESAVEDHANDLER, new Action<int>(OnFileSaved));
 #elif SERVER
-            EventHandlers.Add("SaveFileHandler", new Action<Player, string>(OnFileSave));
-            EventHandlers.Add("LoadFileHandler", new Action<Player, long>(OnFileLoad));
+            EventHandlers.Add(EventHandlerNames.SAVEFILEHANDLER, new Action<Player, string>(OnFileSave));
+            EventHandlers.Add(EventHandlerNames.LOADFILEHANDLER, new Action<Player, long>(OnFileLoad));
 #endif
         }
 
@@ -50,10 +50,8 @@ namespace Proline.ClassicOnline.MData.Scripts
                         id = getPlayerResponse.PlayerId;
                     } 
                     var response2 = await x.SaveFile(new InsertSaveRequest() { PlayerId = id, Data = arg2 });
-                    if (response2.ReturnCode == 0)
-                        player.TriggerEvent("SaveFileResponseHandler", 0);
-                    else
-                        player.TriggerEvent("SaveFileResponseHandler", 1);
+                    Debug.WriteLine(EventHandlerNames.FILESAVEDHANDLER);
+                    player.TriggerEvent(EventHandlerNames.FILESAVEDHANDLER, response2.ReturnCode);
                 }
             }
             catch (Exception e)
@@ -71,12 +69,15 @@ namespace Proline.ClassicOnline.MData.Scripts
         {
             try
             {
+                Console.WriteLine("Load Request Recived " + arg2);
                 var data = "";
                 using (var x = new DBAccessClient())
                 {
                     data = (await x.LoadFile(new GetSaveRequest() { Id = arg2 })).Data;
                 }
-                arg1.TriggerEvent("FileLoadedHandler", data);
+                Console.WriteLine("data got " + data);
+                Debug.WriteLine(EventHandlerNames.FILELOADEDHANDLER);
+                arg1.TriggerEvent(EventHandlerNames.FILELOADEDHANDLER, data);
             }
             catch (Exception e)
             {
@@ -85,22 +86,18 @@ namespace Proline.ClassicOnline.MData.Scripts
         }
 #elif CLIENT
 
-        //public FileLoadedScript()
-        //{
-        //    EventHandlers.Add("FileLoadedHandler", new Action<string>(OnFileLoaded)); 
-        //    EventHandlers.Add("SaveFileResponseHandler", new Action<int>(OnSaveFileResponse)); 
-        //}
 
-        private void OnSaveFileResponse(int obj)
+        public void OnFileSaved(int obj)
         {
             var fm = FileManager.GetInstance();
             fm.IsSaveInProgress = false;
             fm.LastSaveResult = obj;
         }
 
-        private void OnFileLoaded(string obj)
+        public void OnFileLoaded(string obj)
         {
             var instance = FileManager.GetInstance();
+            Console.WriteLine("data got " + obj);
             instance.PutFileIntoMemory(obj);
         }
 #endif
