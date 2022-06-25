@@ -19,7 +19,7 @@ namespace Proline.Resource.Configuration
             {
                 //   _log.Debug($"Attempting to load config.json in {key}");
                 var file = ResourceFile.LoadResourceFile(resourceName, "config.json");
-                Console.WriteLine(file.GetData());
+               // Console.WriteLine(file.GetData());
                 if (file == null)
                     throw new FileNotFoundException("Config file was not found");
                 var cp = new ConfigProcessor();
@@ -47,7 +47,7 @@ namespace Proline.Resource.Configuration
             {
                 //   _log.Debug($"Attempting to load config.json in {key}");
                 var file = ResourceFile.LoadResourceFile(API.GetCurrentResourceName(), "config.json");
-                Console.WriteLine(file.GetData());
+                //Console.WriteLine(file.GetData());
                 if (file == null)
                     throw new FileNotFoundException("Config file was not found");
                 var cp = new ConfigProcessor();

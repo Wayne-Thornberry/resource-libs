@@ -19,12 +19,25 @@
 		</Reference> 
 	</ItemGroup>
 
+
+	<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Server|AnyCPU'">
+		<Compile Remove="Client\**" />
+		<EmbeddedResource Remove="Client\**" />
+		<None Remove="Client\**" />
+	</ItemGroup>
+	
+	<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Client|AnyCPU'">
+	  <Compile Remove="Server\**" />
+	  <EmbeddedResource Remove="Server\**" />
+	  <None Remove="Server\**" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
 		</Reference>
-		<PackageReference Include="CitizenFX.Core.$(Configuration)" Version="1.0.5667" />
+		<PackageReference Include="CitizenFX.Core.$(Configuration)" Version="1.0.5179" />
 		<Reference Include="Proline.Modularization.Core.$(Configuration)">
 		  <HintPath>..\..\..\..\artifacts\ModuleFramework\$(Configuration)\Proline.Modularization.Core.$(Configuration).dll</HintPath>
 		</Reference>
@@ -33,6 +46,9 @@
 		</Reference>
 		<Reference Include="Proline.Resource.Configuration.$(Configuration)">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Configuration.$(Configuration).dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Eventing.$(Configuration)">
+		  <HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Eventing.$(Configuration).dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.Framework.$(Configuration)">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Framework.$(Configuration).dll</HintPath>
@@ -47,10 +63,5 @@
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Scripting.$(Configuration).dll</HintPath>
 		</Reference>
 	</ItemGroup>
- 
-
-  <ItemGroup>
-    <Folder Include="APIs\" />
-  </ItemGroup>
 
 </Project>

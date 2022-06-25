@@ -1,0 +1,1 @@
+APIs should always be wrapped in a try catch block, apis should never return an exception and should always handle it there

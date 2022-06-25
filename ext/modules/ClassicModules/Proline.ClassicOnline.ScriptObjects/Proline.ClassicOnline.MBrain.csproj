@@ -14,6 +14,7 @@
 	</ItemGroup> 
 
   <ItemGroup>
+    <ProjectReference Include="..\Proline.ClassicComponents.Character\Proline.ClassicOnline.MGame.csproj" />
     <ProjectReference Include="..\Proline.ClassicComponents.Data\Proline.ClassicOnline.MData.csproj" />
     <ProjectReference Include="..\Proline.ClassicOnline.F8Console\Proline.ClassicOnline.MDebug.csproj" />
     <ProjectReference Include="..\Proline.ClassicOnline.LWScripting\Proline.ClassicOnline.MScripting.csproj" />
@@ -22,6 +23,9 @@
 	<ItemGroup>
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.CFXExtended.Core.Client">
+		  <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.Client.dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Modularization.Core.$(Configuration)">
 			<HintPath>..\..\..\..\artifacts\ModuleFramework\$(Configuration)\Proline.Modularization.Core.$(Configuration).dll</HintPath>
@@ -45,6 +49,10 @@
 		<Reference Include="Proline.Resource.Scripting.$(Configuration)">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Scripting.$(Configuration).dll</HintPath>
 		</Reference>
+	</ItemGroup> 
+
+	<ItemGroup>
+	  <Folder Include="Events\" />
 	</ItemGroup>
 
 </Project>

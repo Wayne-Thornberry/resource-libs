@@ -13,7 +13,10 @@ using Console = Proline.Resource.Console;
 namespace Proline.ClassicOnline.MData.Scripts
 {
     public partial class FileLoadedScript : ModuleScript
-    { 
+    {
+        public FileLoadedScript(Assembly source) : base(source)
+        {
 
+        } 
     }
-}
+} 

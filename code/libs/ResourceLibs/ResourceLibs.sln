@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.Resource.Logging", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.Resource.Scripting", "Proline.Resource.Scripting\Proline.Resource.Scripting.csproj", "{9589782F-7541-4035-8109-D8086C5C57D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proline.Resource.Eventing", "Proline.Resource.Eventing\Proline.Resource.Eventing.csproj", "{D97C31AC-F3F8-4EBB-9F64-1A888C97006D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Client|Any CPU = Client|Any CPU
@@ -71,6 +73,14 @@ Global
 		{9589782F-7541-4035-8109-D8086C5C57D2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9589782F-7541-4035-8109-D8086C5C57D2}.Server|Any CPU.ActiveCfg = Server|Any CPU
 		{9589782F-7541-4035-8109-D8086C5C57D2}.Server|Any CPU.Build.0 = Server|Any CPU
+		{D97C31AC-F3F8-4EBB-9F64-1A888C97006D}.Client|Any CPU.ActiveCfg = Client|Any CPU
+		{D97C31AC-F3F8-4EBB-9F64-1A888C97006D}.Client|Any CPU.Build.0 = Client|Any CPU
+		{D97C31AC-F3F8-4EBB-9F64-1A888C97006D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D97C31AC-F3F8-4EBB-9F64-1A888C97006D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D97C31AC-F3F8-4EBB-9F64-1A888C97006D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D97C31AC-F3F8-4EBB-9F64-1A888C97006D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D97C31AC-F3F8-4EBB-9F64-1A888C97006D}.Server|Any CPU.ActiveCfg = Server|Any CPU
+		{D97C31AC-F3F8-4EBB-9F64-1A888C97006D}.Server|Any CPU.Build.0 = Server|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.UI;
+using Proline.CFXExtended.Core;
 using Proline.ClassicOnline.MScripting;
 
 namespace Proline.ClassicOnline.LevelScripts
@@ -26,6 +27,9 @@ namespace Proline.ClassicOnline.LevelScripts
                         if (Game.IsControlJustPressed(0, Control.Context))
                         {
                             Game.PlayerPed.CurrentVehicle.Repair();
+                            var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
+                            var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
+                            stat.SetValue(stat.GetValue() - 250);
                         }
                     }
                 }

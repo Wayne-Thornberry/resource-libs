@@ -14,11 +14,11 @@ namespace Proline.ClassicOnline.LevelScripts
 
         public async Task Execute(object[] args, CancellationToken token)
         {
-            await Game.Player.ChangeModel(new Model(1885233650));
-            for (int i = 0; i < 12; i++)
-            { 
-                //NativeAPI.CallNativeAPI(Hash.SET_PED_COMPONENT_VARIATION, Game.PlayerPed.Handle, i, 0, 0, 0 );
-            }
+            //await Game.Player.ChangeModel(new Model(1885233650));
+            //for (int i = 0; i < 12; i++)
+            //{ 
+            //    //NativeAPI.CallNativeAPI(Hash.SET_PED_COMPONENT_VARIATION, Game.PlayerPed.Handle, i, 0, 0, 0 );
+            //}
             MDebugAPI.LogDebug("Testing Persistence: " + "");//Globals.Get("EnableSomething"));
             var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
             var stat2 = MPStat.GetStat<long>("BANK_BALANCE");

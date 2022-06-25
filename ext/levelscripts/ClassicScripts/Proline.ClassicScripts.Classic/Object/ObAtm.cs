@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using Proline.CFXExtended.Core;
 using Proline.CFXExtended.Core.Scaleforms;
 
 namespace Proline.ClassicOnline.LevelScripts.Object
@@ -18,6 +19,9 @@ namespace Proline.ClassicOnline.LevelScripts.Object
 
         public static Entity NearestEntity { get; set; }
         public string[] ValidModels { get; set; }
+
+        private MPStat<long> _stat;
+
         public Atm Display { get; set; }
         public int SelectedAmount { get; set; }
         public int DisplayedView { get; set; }
@@ -25,6 +29,11 @@ namespace Proline.ClassicOnline.LevelScripts.Object
         public int ScriptStage { get; set; }
         public int CashMultiplier { get; set; }
         public int SelectedOption { get; private set; }
+
+        private MPStat<long> _stat2;
+        private int selectedAmount;
+        private const int MAX_LIMIT = 10000;
+
         public int[] CashAmounts { get; set; }
 
         public async Task Execute(object[] args, CancellationToken token)
@@ -32,7 +41,9 @@ namespace Proline.ClassicOnline.LevelScripts.Object
             var entityHandle = (int)args[0];
             var entity = Entity.FromHandle(entityHandle);
             ValidModels = new[] { "prop_atm_01", "prop_atm_02", "prop_atm_03", "prop_fleeca_atm" };
-            CashAmounts = new[] { 100, 200, 500, 1000, 5000, 10000 };
+            _stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
+            _stat2 = MPStat.GetStat<long>("BANK_BALANCE");
+            CashAmounts = new[] { 100, 200, 500, 1000, 5000, MAX_LIMIT };
             DisplayedView = 0;
             ScriptStage = 9;
 
@@ -58,7 +69,7 @@ namespace Proline.ClassicOnline.LevelScripts.Object
                             {
                                 io.DisplayBalance(Game.Player.Name,
                                     "Account Balance: ",
-                                    0);
+                                   (int) _stat2.GetValue());
                                 RenderMainPage();
                             }
 
@@ -119,7 +130,7 @@ namespace Proline.ClassicOnline.LevelScripts.Object
                                             break;
                                         // Cash Selection
                                         case 1:
-                                            var selectedAmount = 0;
+                                            selectedAmount = 0;
                                             switch (SelectedOption)
                                             {
                                                 case 1:
@@ -197,7 +208,7 @@ namespace Proline.ClassicOnline.LevelScripts.Object
                                     io.SetInputSelect();
                                     io.DisplayBalance(Game.Player.Name,
                                         "Account Balance: ",
-                                        0);
+                                         (int)_stat2.GetValue());
                                     getSelectionTask = io.GetCurrentSelection();
                                 }
                                 else if (Game.IsControlJustPressed(0, Control.FrontendCancel))
@@ -259,6 +270,7 @@ namespace Proline.ClassicOnline.LevelScripts.Object
 
         private void RenderTransactionComplete()
         {
+
             DisplayedView = 6;
             io.SetDataSlotEmpty();
             io.SetDataSlot(0, "Done");
@@ -272,6 +284,16 @@ namespace Proline.ClassicOnline.LevelScripts.Object
             ticks = 0;
             io.SetDataSlotEmpty();
             io.SetDataSlot(0, "Processing Amount");
+            if (IsDepositing)
+            {
+                _stat2.SetValue(_stat2.GetValue() + selectedAmount);
+                _stat.SetValue(0);
+            }
+            else
+            { 
+                _stat.SetValue(_stat2.GetValue() + selectedAmount);
+                _stat2.SetValue(0);
+            }
             io.DisplayMessage();
         }
 
@@ -314,6 +336,8 @@ namespace Proline.ClassicOnline.LevelScripts.Object
         private void RenderCashPage(string title, int[] cashAmounts)
         {
             DisplayedView = 1;
+            var max = (IsDepositing ? _stat.GetValue() : MAX_LIMIT);
+            cashAmounts[5] = (int) (max > MAX_LIMIT ? MAX_LIMIT : max);
             io.DisplayBalance(Game.Player.Name, "Account Balance:",
                 0);
             io.SetDataSlotEmpty();

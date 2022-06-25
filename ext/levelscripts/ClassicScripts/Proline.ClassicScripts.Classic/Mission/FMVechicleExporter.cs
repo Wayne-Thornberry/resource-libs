@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.UI;
+using Proline.CFXExtended.Core;
 using Proline.ClassicOnline.MScreen;
 
 namespace Proline.ClassicOnline.LevelScripts.Mission
@@ -67,6 +68,9 @@ namespace Proline.ClassicOnline.LevelScripts.Mission
                             {
                                 _targetVehicle.Delete();
                                 _targetVehicle = null;
+                                var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
+                                var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
+                                stat.SetValue(stat.GetValue() + 1500);
                             }
                             else
                             { 
@@ -78,6 +82,7 @@ namespace Proline.ClassicOnline.LevelScripts.Mission
                                 _targetVehicle = null;
                                 _oneTime = false;
                             }
+                            //stat2.SetValue(stat2.GetValue() + 1500);
                         }
                     }
                     else

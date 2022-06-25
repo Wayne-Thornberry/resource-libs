@@ -62,7 +62,7 @@ namespace Proline.ClassicOnline.MScripting
                     try
                     {
                         MDebug.MDebugAPI.LogDebug(_log.Debug(string.Format("{0} Script Started", _name, _terminationCode)));
-                        var task = (Task) _eMethod.Invoke(_instance, new object[] { _args, _token });
+                        var task = (Task) _eMethod.Invoke(_instance, new object[] { _args, _token }); 
                         while (!task.IsCompleted)
                             await BaseScript.Delay(0);
 
@@ -72,7 +72,7 @@ namespace Proline.ClassicOnline.MScripting
                         }
                         _terminationCode = 0;
                     }
-                    catch (ScriptTerminatedException e)
+                    catch (AggregateException e)
                     {
                         _terminationCode = 2;
                     }

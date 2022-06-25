@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MData.Entity
 {
-    public class FileManager
+    public class SaveFileManager
     {
-        private static FileManager _instance;
+        private static SaveFileManager _instance;
         private Dictionary<string, object> _file; 
         public bool IsSaveInProgress { get; internal set; } 
         public int? LastSaveResult { get; internal set; }
 
-        public static FileManager GetInstance()
+        public static SaveFileManager GetInstance()
         {
             if(_instance == null)
-                _instance = new FileManager();
+                _instance = new SaveFileManager();
             return _instance;
         }
 

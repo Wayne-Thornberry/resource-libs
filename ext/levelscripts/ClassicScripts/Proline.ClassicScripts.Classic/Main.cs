@@ -1,11 +1,16 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Newtonsoft.Json;
+using Proline.CFXExtended.Core;
 using Proline.ClassicOnline.MData;
 using Proline.ClassicOnline.MDebug;
+using Proline.ClassicOnline.MGame;
+using Proline.ClassicOnline.MGame.Data;
 using Proline.ClassicOnline.MScripting;
 using Proline.Resource;
 
@@ -58,13 +63,36 @@ namespace Proline.ClassicOnline.LevelScripts
                     API.FreezeEntityPosition(Game.PlayerPed.Handle, true);
                     Game.PlayerPed.Position = new Vector3(0, 0, 70);
                     Screen.LoadingPrompt.Show("Loading Freemode...");
+                    await Game.Player.ChangeModel(new Model(1885233650));
+
+                   
+                    PedOutfit _characterPedOutfitM = CreateDefaultOutfit();
+                    if (!MDataAPI.IsFileLoaded())
+                    {
+                        var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
+                        var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
+                        stat.SetValue(0);
+                        stat2.SetValue(0);
+                        MDataAPI.AddFileValue("MP0_WALLET_BALANCE", stat.GetValue());
+                        MDataAPI.AddFileValue("BANK_BALANCE", stat.GetValue());
+
+                    }
+
                     MScriptingAPI.StartNewScript("PlayerLoading");
                     var ms = 0;
                     while (ms < 500 && MScriptingAPI.GetInstanceCountOfScript("PlayerLoading") > 0)
                     {
                         ms++;
                         await BaseScript.Delay(1);
-                    } 
+                    }
+                    var components = _characterPedOutfitM.Components;
+                    for (int i = 0; i < components.Length; i++)
+                    {
+                        var component = components[i];
+                        API.SetPedComponentVariation(Game.PlayerPed.Handle, i, component.ComponentIndex, component.ComponentTexture, component.ComponentPallet); 
+                    }
+
+
                     Screen.LoadingPrompt.Hide();
                     API.ShutdownLoadingScreen();
                     API.SetNoLoadingScreen(true);
@@ -77,29 +105,195 @@ namespace Proline.ClassicOnline.LevelScripts
                     {
                         await BaseScript.Delay(0);
                     }
-                    MScriptingAPI.StartNewScript("PassiveSaving");
+                    if(MScriptingAPI.GetInstanceCountOfScript("PassiveSaving") == 0)
+                        MScriptingAPI.StartNewScript("PassiveSaving");
 
                     // var json = JsonConvert.SerializeObject(new
                     // {
-                        // transactionType = "playSound",
-                        // transactionFile = "demo",
-                        // transactionVolume = 0.2f
+                    // transactionType = "playSound",
+                    // transactionFile = "demo",
+                    // transactionVolume = 0.2f
                     // });
                     // Game.PlayerPed.Weapons.Give(WeaponHash.Parachute, 0, true, true);
                     // Game.PlayerPed.Position = new Vector3(0, 0, 1800);
-                   // Game.PlayerPed.HasGravity = true;
+                    // Game.PlayerPed.HasGravity = true;
                     // API.SetGravityLevel(2);
                     // Console.WriteLine(json);
                     // API.SendNuiMessage(json);
 
                     //MScriptingAPI.MarkScriptAsNoLongerNeeded();
                 }
-                else if (Game.IsControlJustPressed(0, Control.PhoneUp))
-                {
-                   
-                }
                 await BaseScript.Delay(0);
             }
+        }
+
+        private static PedOutfit CreateDefaultOutfitF()
+        {
+            var _characterPedOutfitF = new PedOutfit
+            {
+                OutfitName = "",
+                Components = new[]
+                {
+                new OutfitComponent
+                {
+                    ComponentIndex = 21,
+                    ComponentPallet = 0,
+                    ComponentTexture = 0
+                },
+                new OutfitComponent
+                {
+                    ComponentIndex = 0,
+                    ComponentPallet = 0,
+                    ComponentTexture = 0
+                },
+                new OutfitComponent
+                {
+                    ComponentIndex = 6,
+                    ComponentPallet = 0,
+                    ComponentTexture = 1
+                },
+                new OutfitComponent
+                {
+                    ComponentIndex = 0,
+                    ComponentPallet = 0,
+                    ComponentTexture = 0
+                },
+                new OutfitComponent
+                {
+                    ComponentIndex = 0,
+                    ComponentPallet = 0,
+                    ComponentTexture = 0
+                },
+                new OutfitComponent
+                {
+                    ComponentIndex = 0,
+                    ComponentPallet = 0,
+                    ComponentTexture = 0
+                },
+                new OutfitComponent
+                {
+                    ComponentIndex = 0,
+                    ComponentPallet = 0,
+                    ComponentTexture = 0
+                },
+                new OutfitComponent
+                {
+                    ComponentIndex = 0,
+                    ComponentPallet = 0,
+                    ComponentTexture = 0
+                },
+                new OutfitComponent
+                {
+                    ComponentIndex = 2,
+                    ComponentPallet = 0,
+                    ComponentTexture = 0
+                },
+                new OutfitComponent
+                {
+                    ComponentIndex = 0,
+                    ComponentPallet = 0,
+                    ComponentTexture = 0
+                },
+                new OutfitComponent
+                {
+                    ComponentIndex = 0,
+                    ComponentPallet = 0,
+                    ComponentTexture = 0
+                },
+                new OutfitComponent
+                {
+                    ComponentIndex = 0,
+                    ComponentPallet = 0,
+                    ComponentTexture = 1
+                }
+            }
+            };
+
+            return _characterPedOutfitF;
+
+        }
+
+        private static PedOutfit CreateDefaultOutfit()
+        {
+            return new PedOutfit
+            {
+                OutfitName = "",
+                Components = new[]
+   {
+                    new OutfitComponent
+                    {
+                        ComponentIndex = 0,
+                        ComponentPallet = 0,
+                        ComponentTexture = 0
+                    },
+                    new OutfitComponent
+                    {
+                        ComponentIndex = 0,
+                        ComponentPallet = 0,
+                        ComponentTexture = 0
+                    },
+                    new OutfitComponent
+                    {
+                        ComponentIndex = 1,
+                        ComponentPallet = 0,
+                        ComponentTexture = 1
+                    },
+                    new OutfitComponent
+                    {
+                        ComponentIndex = 0,
+                        ComponentPallet = 0,
+                        ComponentTexture = 0
+                    },
+                    new OutfitComponent
+                    {
+                        ComponentIndex = 0,
+                        ComponentPallet = 0,
+                        ComponentTexture = 0
+                    },
+                    new OutfitComponent
+                    {
+                        ComponentIndex = 0,
+                        ComponentPallet = 0,
+                        ComponentTexture = 0
+                    },
+                    new OutfitComponent
+                    {
+                        ComponentIndex = 1,
+                        ComponentPallet = 0,
+                        ComponentTexture = 0
+                    },
+                    new OutfitComponent
+                    {
+                        ComponentIndex = 0,
+                        ComponentPallet = 0,
+                        ComponentTexture = 0
+                    },
+                    new OutfitComponent
+                    {
+                        ComponentIndex = 0,
+                        ComponentPallet = 0,
+                        ComponentTexture = 0
+                    },
+                    new OutfitComponent
+                    {
+                        ComponentIndex = 0,
+                        ComponentPallet = 0,
+                        ComponentTexture = 0
+                    },
+                    new OutfitComponent
+                    {
+                        ComponentIndex = 0,
+                        ComponentPallet = 0,
+                        ComponentTexture = 0
+                    },
+                    new OutfitComponent
+                    {
+                        ComponentIndex = 0,
+                        ComponentPallet = 0,
+                        ComponentTexture = 1
+                    }
+                }
+            };
         }
     }
 }

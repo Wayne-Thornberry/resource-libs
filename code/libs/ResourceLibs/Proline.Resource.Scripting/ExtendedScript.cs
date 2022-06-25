@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Proline.Resource.Eventing;
 
 namespace Proline.Resource.Scripting
 {
@@ -14,6 +15,8 @@ namespace Proline.Resource.Scripting
         private int _lastState;
         private bool _isPaused;
         protected Log _log;
+        private EventSubscriber _subscriber;
+
         public bool HasNoFlags => Flags == ScriptFlag.None;
         public bool EnableFrameSync { get; set; }
         public bool IsAutoStartEnabled { get; }
@@ -40,6 +43,8 @@ namespace Proline.Resource.Scripting
         {
             IsAutoStartEnabled = autoStart;
             _log = new Log();
+            var manager = EventDictionaryManager.GetInstance();
+            manager.SetEventHandlerDictionary(EventHandlers); 
         }
 
         public virtual async Task OnLoad() { }
