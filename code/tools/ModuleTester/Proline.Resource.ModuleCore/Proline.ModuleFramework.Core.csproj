@@ -6,9 +6,6 @@
 	<ItemGroup>
 		<PackageReference Include="CitizenFX.Core.Client" Version="1.0.5153" />
 	</ItemGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\Proline.ExtendedScripting.Core\Proline.ExtendedScripting.Core.csproj" />
-	</ItemGroup>
 
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

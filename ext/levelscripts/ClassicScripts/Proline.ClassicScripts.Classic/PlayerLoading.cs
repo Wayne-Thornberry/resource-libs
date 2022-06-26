@@ -20,7 +20,7 @@ namespace Proline.LevelScripts.Classic
 
             if (!MDataAPI.IsSaveInProgress())
             {
-               await MDataAPI.LoadFile(16); // Sends a load request to the server
+                await MDataAPI.LoadFile(16); // Sends a load request to the server
                 MDebugAPI.LogDebug("Load Request put in");
                 var ticks = 0;
                 while (!MDataAPI.IsFileLoaded() && ticks < 500)

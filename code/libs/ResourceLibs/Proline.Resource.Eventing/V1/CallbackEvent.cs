@@ -5,6 +5,47 @@ using Newtonsoft.Json;
 
 namespace Proline.Resource.Eventing
 {
+    public class Example : BasescriptEvent
+    {
+        public Example(string eventName) : base(eventName)
+        {
+        }
+
+        public static void DoX()
+        { 
+            //var test = new Example("ARANDOMEVENT");
+            //test += new Example("");
+            //test.Invoke();
+        }
+
+        public static void OnTest()
+        {
+            //BaseScript.TriggerServerEvent("", new Action<object>(e => { 
+            //    //// so this will be called back?
+            //    /// ok lets see
+            
+            //}));
+        }
+    }
+
+    public abstract class BasescriptEvent : EventSubscriber
+    {
+        protected BasescriptEvent(string eventName) : base(eventName)
+        {
+        }
+
+        public void Invoke(params object[] args)
+        {
+
+        }
+
+
+
+        public static BasescriptEvent operator +(BasescriptEvent a) => a;
+        public static BasescriptEvent operator -(BasescriptEvent a) => a;
+    }
+
+
     public abstract class CallbackEvent : EventSubscriber
     {
         private string _eventName;

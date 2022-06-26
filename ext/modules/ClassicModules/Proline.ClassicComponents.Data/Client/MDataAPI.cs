@@ -7,6 +7,8 @@ using CitizenFX.Core.Native;
 using Newtonsoft.Json;
 using Proline.ClassicOnline.MData.Entity;
 using Proline.ClassicOnline.MData.Events;
+using Proline.ClassicOnline.MDebug;
+using Proline.Resource.Eventing.Apoc;
 
 namespace Proline.ClassicOnline.MData
 {
@@ -32,7 +34,7 @@ namespace Proline.ClassicOnline.MData
             {
                 var fm = SaveFileManager.GetInstance();
                 var json = JsonConvert.SerializeObject(fm.GetCurrentSaveFile());
-                MDebug.MDebugAPI.LogDebug($"Saving file... {json}");
+                MDebugAPI.LogDebug($"Saving file... {json}");
                 await SaveFileEvent.Execute(json); 
                 fm.IsSaveInProgress = true;
             }
@@ -153,8 +155,14 @@ namespace Proline.ClassicOnline.MData
         public static async Task LoadFile(long id)
         {
             try
-            { 
-               await LoadFileEvent.Execute(id);
+            {
+                    await EventHandlerNames.LoadFileEvent(id);
+                int ticks = 0;
+                while (!IsFileLoaded() && ticks < 500)
+                {
+                    ticks++;
+                    await BaseScript.Delay(0);
+                }
             }
             catch (Exception)
             {

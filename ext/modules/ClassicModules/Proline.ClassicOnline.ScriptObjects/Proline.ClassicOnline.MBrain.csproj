@@ -11,7 +11,21 @@
 
 	<ItemGroup>
 		<PackageReference Include="CitizenFX.Core.$(Configuration)" Version="1.0.5179" />
-	</ItemGroup> 
+	</ItemGroup>
+
+
+
+	<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Server|AnyCPU'">
+		<Compile Remove="Client\**" />
+		<EmbeddedResource Remove="Client\**" />
+		<None Remove="Client\**" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Client|AnyCPU'">
+		<Compile Remove="Server\**" />
+		<EmbeddedResource Remove="Server\**" />
+		<None Remove="Server\**" />
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Proline.ClassicComponents.Character\Proline.ClassicOnline.MGame.csproj" />
@@ -52,7 +66,7 @@
 	</ItemGroup> 
 
 	<ItemGroup>
-	  <Folder Include="Events\" />
+	  <Folder Include="Client\Events\" />
 	</ItemGroup>
 
 </Project>

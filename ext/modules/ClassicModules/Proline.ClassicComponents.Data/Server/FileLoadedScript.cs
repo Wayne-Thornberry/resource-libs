@@ -18,15 +18,16 @@ namespace Proline.ClassicOnline.MData.Scripts
 {
     public partial class FileLoadedScript : ModuleScript
     {
-        private EventSubscriber _saveFileHandlerSubscriber;
-        private EventSubscriber _loadFileHandlerSubscriber;
+        private LoadFileNetworkEvent _loadFileNetwork;
+
+        //private EventSubscriber _saveFileHandlerSubscriber;
+        //private EventSubscriber _loadFileHandlerSubscriber;
 
         public FileLoadedScript(Assembly source) : base(source)
-        {
-            _saveFileHandlerSubscriber = new SaveFileSubscriber();
-            _saveFileHandlerSubscriber.Subscribe();
-            _loadFileHandlerSubscriber = new LoadFileSubscriber();
-            _loadFileHandlerSubscriber.Subscribe();
-        } 
+        { 
+            _loadFileNetwork = new LoadFileNetworkEvent();
+            _loadFileNetwork.Subscribe();
+        }
+
     }
 } 

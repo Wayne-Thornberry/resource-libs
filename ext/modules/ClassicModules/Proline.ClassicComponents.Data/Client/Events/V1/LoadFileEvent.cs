@@ -7,6 +7,7 @@ using Proline.ClassicOnline.MData.Entity;
 using Proline.Resource.Eventing;
 using Console = Proline.Resource.Console;
 using Newtonsoft.Json;
+using CitizenFX.Core.Native;
 
 namespace Proline.ClassicOnline.MData.Events
 { 
@@ -18,7 +19,7 @@ namespace Proline.ClassicOnline.MData.Events
         }
 
         public override object OnEventCallback(params object[] args)
-        {
+        { 
             var obj = args[0].ToString();
             if (string.IsNullOrEmpty(obj)) return null;
             var instance = SaveFileManager.GetInstance();

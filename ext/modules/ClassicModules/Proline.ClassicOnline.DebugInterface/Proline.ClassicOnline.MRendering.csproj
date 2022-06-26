@@ -16,6 +16,18 @@
     <ProjectReference Include="..\Proline.ClassicComponents.UI\Proline.ClassicOnline.MScreen.csproj" />
   </ItemGroup>
 
+	<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Server|AnyCPU'">
+		<Compile Remove="Client\**" />
+		<EmbeddedResource Remove="Client\**" />
+		<None Remove="Client\**" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Client|AnyCPU'">
+		<Compile Remove="Server\**" />
+		<EmbeddedResource Remove="Server\**" />
+		<None Remove="Server\**" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="Newtonsoft.Json">
