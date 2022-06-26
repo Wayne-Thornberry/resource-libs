@@ -17,16 +17,12 @@ using Proline.ClassicOnline.MData.Events;
 namespace Proline.ClassicOnline.MData.Scripts
 {
     public partial class FileLoadedScript : ModuleScript
-    {
-        private LoadFileNetworkEvent _loadFileNetwork;
-
-        //private EventSubscriber _saveFileHandlerSubscriber;
-        //private EventSubscriber _loadFileHandlerSubscriber;
+    { 
 
         public FileLoadedScript(Assembly source) : base(source)
-        { 
-            _loadFileNetwork = new LoadFileNetworkEvent();
-            _loadFileNetwork.Subscribe();
+        {
+            LoadFileNetworkEvent.SubscribeEvent(); 
+            SaveFileNetworkEvent.SubscribeEvent(); 
         }
 
     }

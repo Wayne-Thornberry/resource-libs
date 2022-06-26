@@ -38,7 +38,7 @@
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
 		</Reference>
-		<Reference Include="Proline.CFXExtended.Core.Client">
+		<Reference Include="Proline.CFXExtended.Core.Client"  Condition="'$(Configuration)|$(Platform)'=='Client|AnyCPU'">
 		  <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.Client.dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Modularization.Core.$(Configuration)">

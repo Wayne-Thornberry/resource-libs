@@ -2,7 +2,8 @@
 {
     public class EventTriggered
     {
-        public string CallBackEvent { get; set; }
+        public bool IsCallback { get; set; }
+        public bool HasCallback { get; set; } 
         public object[] Args { get; set; }
     }
 }

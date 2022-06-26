@@ -20,14 +20,8 @@ namespace Proline.LevelScripts.Classic
 
             if (!MDataAPI.IsSaveInProgress())
             {
-                await MDataAPI.LoadFile(16); // Sends a load request to the server
                 MDebugAPI.LogDebug("Load Request put in");
-                var ticks = 0;
-                while (!MDataAPI.IsFileLoaded() && ticks < 500)
-                {
-                    ticks++;
-                    await BaseScript.Delay(0);
-                }
+                await MDataAPI.LoadFile(16); // Sends a load request to the server
                 if (MDataAPI.IsFileLoaded())
                 { 
                     Game.PlayerPed.Health = MDataAPI.GetFileValue<int>("PlayerHealth");

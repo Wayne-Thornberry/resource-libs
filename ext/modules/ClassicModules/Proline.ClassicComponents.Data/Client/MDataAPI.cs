@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 using Proline.ClassicOnline.MData.Entity;
 using Proline.ClassicOnline.MData.Events;
 using Proline.ClassicOnline.MDebug;
-using Proline.Resource.Eventing.Apoc;
 
 namespace Proline.ClassicOnline.MData
 {
@@ -35,8 +34,10 @@ namespace Proline.ClassicOnline.MData
                 var fm = SaveFileManager.GetInstance();
                 var json = JsonConvert.SerializeObject(fm.GetCurrentSaveFile());
                 MDebugAPI.LogDebug($"Saving file... {json}");
-                await SaveFileEvent.Execute(json); 
+                var sfEvent = SaveFileNetworkEvent.TriggerEvent(json);
                 fm.IsSaveInProgress = true;
+                await sfEvent.WaitForCallback();
+                fm.IsSaveInProgress = false;
             }
             catch (Exception)
             {
@@ -156,13 +157,14 @@ namespace Proline.ClassicOnline.MData
         {
             try
             {
-                    await EventHandlerNames.LoadFileEvent(id);
-                int ticks = 0;
-                while (!IsFileLoaded() && ticks < 500)
-                {
-                    ticks++;
-                    await BaseScript.Delay(0);
-                }
+                MDebugAPI.LogDebug("Load Request put in");
+                var lfEvent = LoadFileNetworkEvent.TriggerEvent(id);
+                MDebugAPI.LogInfo("Waiting for callback to be completed...");
+                var result = await lfEvent.WaitForCallback();
+                if(result == 0)
+                    MDebugAPI.LogInfo("Callback has completed");
+                else if (result == 1)
+                    MDebugAPI.LogInfo("Callback has timed out");
             }
             catch (Exception)
             {

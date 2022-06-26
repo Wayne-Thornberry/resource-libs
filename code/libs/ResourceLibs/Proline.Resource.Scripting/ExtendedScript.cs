@@ -15,7 +15,6 @@ namespace Proline.Resource.Scripting
         private int _lastState;
         private bool _isPaused;
         protected Log _log;
-        private EventSubscriber _subscriber;
 
         public bool HasNoFlags => Flags == ScriptFlag.None;
         public bool EnableFrameSync { get; set; }

@@ -1,26 +1,23 @@
 ﻿using CitizenFX.Core;
 using Proline.DBAccess.Proxies;
-using Proline.Resource.Eventing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MData.Events
 {
-    internal class SaveFileSubscriber : EventSubscriber
+    public partial class SaveFileNetworkEvent
     {
-        public SaveFileSubscriber() : base(EventHandlerNames.SAVEFILEHANDLER)
-        {
-        }
 
-        public override object OnEventTriggered(Player player, params object[] args)
+        protected override object OnEventTriggered(Player player, params object[] args)
         {
             string arg2 = args[0].ToString();
             return SaveFileAsync(player, arg2).Result;
-        } 
+        }
 
         private static async Task<int> SaveFileAsync(Player player, string arg2)
         {
@@ -39,7 +36,7 @@ namespace Proline.ClassicOnline.MData.Events
                         Debug.WriteLine(String.Format("Getting Player {0}, id {1}", getPlayerResponse.ReturnCode, getPlayerResponse.PlayerId));
                         id = getPlayerResponse.PlayerId;
                     }
-                    var response2 = await x.SaveFile(new InsertSaveRequest() { PlayerId = id, Data = arg2 }); 
+                    var response2 = await x.SaveFile(new InsertSaveRequest() { PlayerId = id, Data = arg2 });
                 }
             }
             catch (SocketException e)
@@ -48,11 +45,11 @@ namespace Proline.ClassicOnline.MData.Events
             }
             catch (Exception e)
             {
-                //Console.WriteLine(e.ToString());
+                Console.WriteLine(e.ToString());
             }
             finally
             {
-                Debug.WriteLine(EventHandlerNames.FILESAVEDHANDLER);
+                //Debug.WriteLine(EventHandlerNames.FILESAVEDHANDLER);
             }
             return responseCode;
         }

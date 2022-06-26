@@ -7,23 +7,22 @@ using System.Threading.Tasks;
 using Proline.DBAccess.Proxies;
 using System.Net.Sockets;
 using CitizenFX.Core;
+using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MData
 {
     public partial class LoadFileNetworkEvent : ExtendedEvent
     {
-        protected override object OnEventTriggered(bool isCallbackExecution, params object[] args)
+        public LoadFileNetworkEvent() : base(LOADFILEHANDLER)
         {
-            if (isCallbackExecution)
-            { 
-            }
-            else
-            { 
-                // Needs to support callback and calling code  
-                long arg2 = long.Parse(args[0].ToString());
-                return LoadFileAsync(arg2).Result; 
-            }
-            return null;
+
+        }
+
+        protected override object OnEventTriggered(Player player, params object[] args)
+        {
+            // Needs to support callback and calling code  
+            long arg2 = long.Parse(args[0].ToString());
+            return LoadFileAsync(arg2).Result;
         }
 
 
@@ -49,7 +48,7 @@ namespace Proline.ClassicOnline.MData
             }
             finally
             {
-                Debug.WriteLine(EventHandlerNames.FILELOADEDHANDLER);
+               // Debug.WriteLine(MDataEvents.LOADFILEHANDLER);
             }
             return data;
         }
