@@ -1,12 +1,7 @@
 ﻿using NUnit.Framework;
 using Proline.DBAccess.Data;
-using Proline.DBAccess.MidLayer; 
+using Proline.DBAccess.MidLayer;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Proline.DBAccess.NUnit.Tests.SaveTests
 {
@@ -19,6 +14,7 @@ namespace Proline.DBAccess.NUnit.Tests.SaveTests
 
             InsertSaveResponse response = null;
             var request = new InsertSaveRequest();
+            request.Identity = Guid.NewGuid().ToString();
             request.PlayerId = 1;
             request.Data = "{}";
 
@@ -32,7 +28,7 @@ namespace Proline.DBAccess.NUnit.Tests.SaveTests
 
             Assert.IsNotNull(response);
             Assert.AreEqual(0, response.ReturnCode);
-            Assert.Greater(response.Id, 0);
+            Assert.IsNotNull(response.Identity);
         }
 
         [Test]
@@ -47,10 +43,12 @@ namespace Proline.DBAccess.NUnit.Tests.SaveTests
             GetSaveRequest request3 = new GetSaveRequest();
             GetSaveResponse response3 = null;
 
+            request.Identity = Guid.NewGuid().ToString();
             request.PlayerId = 1;
             request.Data = "{}";
 
             request2 = new InsertSaveRequest();
+            request2.Identity = request.Identity;
             request2.PlayerId = 1;
             request2.Data = "{ 'TestData' : 'Wow' }";
 
@@ -64,7 +62,7 @@ namespace Proline.DBAccess.NUnit.Tests.SaveTests
 
                 response = api.SaveFile(request);
                 response2 = api.SaveFile(request2);
-                request3.Id = response2.Id;
+                request3.Identity = response2.Identity;
                 response3 = api.GetSave(request3);
             }
 
@@ -72,15 +70,17 @@ namespace Proline.DBAccess.NUnit.Tests.SaveTests
 
             Assert.IsNotNull(response);
             Assert.AreEqual(0, response.ReturnCode);
-            Assert.Greater(response.Id, 0);
+            Assert.IsNotNull(response.Identity);
 
             Assert.IsNotNull(response2);
             Assert.AreEqual(0, response2.ReturnCode);
-            Assert.Greater(response2.Id, 0);
+            Assert.IsNotNull(response2.Identity);
 
             Assert.IsNotNull(response3);
             Assert.AreEqual(0, response3.ReturnCode);
-            Assert.AreEqual(request2.Data, response3.Data);
+            Assert.Greater(response3.SaveFiles.Length, 0);
+            var saveFile = response3.SaveFiles[0];
+            Assert.AreEqual(request2.Data, saveFile.Data);
         }
     }
 }

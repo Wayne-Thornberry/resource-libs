@@ -14,9 +14,6 @@ namespace Proline.ClassicOnline.MData.Events
 
         public const string SAVEFILEHANDLER = "SaveFileHandler";
 
-        public SaveFileNetworkEvent() : base(SAVEFILEHANDLER)
-        {
-        }
         public static SaveFileNetworkEvent SubscribeEvent()
         {
             if (_event == null)

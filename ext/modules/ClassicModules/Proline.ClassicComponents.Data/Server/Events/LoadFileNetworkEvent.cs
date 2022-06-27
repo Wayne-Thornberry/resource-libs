@@ -8,6 +8,7 @@ using Proline.DBAccess.Proxies;
 using System.Net.Sockets;
 using CitizenFX.Core;
 using Console = Proline.Resource.Console;
+using Newtonsoft.Json;
 
 namespace Proline.ClassicOnline.MData
 {
@@ -15,28 +16,47 @@ namespace Proline.ClassicOnline.MData
     {
         public LoadFileNetworkEvent() : base(LOADFILEHANDLER)
         {
-
+            DisableAutoCallback = true;
         }
 
         protected override object OnEventTriggered(Player player, params object[] args)
         {
-            // Needs to support callback and calling code  
-            long arg2 = long.Parse(args[0].ToString());
-            return LoadFileAsync(arg2).Result;
+            // old way via getting id
+            if(args.Length > 0)
+            {
+
+                string arg2 = args[0].ToString();
+                LoadFileAsync(player, arg2);
+                return null;
+            }
+            else
+            {
+                Console.WriteLine("Argument count does not match expected count");
+                return null;
+            }
         }
 
-
-        private static async Task<string> LoadFileAsync(long arg2)
+        private async Task LoadFileAsync(Player player, string arg2)
         {
-            var data = "";
+            List<SaveFile> data = new List<SaveFile>();
             try
             {
                 Console.WriteLine("Load Request Recived " + arg2);
                 using (var x = new DBAccessClient())
                 {
-                    data = (await x.LoadFile(new GetSaveRequest() { Id = arg2 })).Data;
+                    var response = await x.LoadFile(new GetSaveRequest() { Username = arg2 });
+                    var saveFiles = response.SaveFiles;
+                    foreach (var item in saveFiles)
+                    {
+                        data.Add(new SaveFile()
+                        { 
+                            Identifier = item.Identity,
+                            Properties = JsonConvert.DeserializeObject<Dictionary<string,object>>(item.Data),
+                        });
+                        Console.WriteLine("data got " + item.Data);
+                    }
                 }
-                Console.WriteLine("data got " + data);
+                Console.WriteLine("Load Request  " + data.Count);
             }
             catch (SocketException e)
             {
@@ -44,13 +64,13 @@ namespace Proline.ClassicOnline.MData
             }
             catch (Exception e)
             {
-                //Console.WriteLine(e.ToString());
+                Console.WriteLine(e.ToString());
             }
             finally
             {
-               // Debug.WriteLine(MDataEvents.LOADFILEHANDLER);
+                ExternalInvokeCallback(player, data);
             }
-            return data;
+
         }
     }
 }

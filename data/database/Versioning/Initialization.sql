@@ -34,12 +34,20 @@ CREATE TABLE dbo.[Identity] (
 	FOREIGN KEY ([PlayerId]) REFERENCES dbo.[Player](Id)
 )
 
--- All players have a save file. 1 to 1
-CREATE TABLE dbo.[SaveFile] (
-	[Id] BIGINT PRIMARY KEY IDENTITY,
-	[Value] NVARCHAR(MAX) NOT NULL, 
+-- All players have a save. 1 to 1
+CREATE TABLE dbo.[Save] (
+	[Id] BIGINT PRIMARY KEY IDENTITY, 
 	[PlayerId] BIGINT NOT NULL,
 	FOREIGN KEY ([PlayerId]) REFERENCES dbo.[Player](Id)
+)
+
+-- A save has multiple save files. 1 to *
+CREATE TABLE dbo.[SaveFile] (
+	[Id] BIGINT PRIMARY KEY IDENTITY,
+	[Identity] NVARCHAR(255),
+	[Value] NVARCHAR(MAX) NOT NULL, 
+	[SaveId] BIGINT NOT NULL,
+	FOREIGN KEY ([SaveId]) REFERENCES dbo.[Save](Id)
 )
 
 -- Table in which contains players who are banned from the instance. Players here will not be allowed on the server unless DISABLE_BLACKLIST = true

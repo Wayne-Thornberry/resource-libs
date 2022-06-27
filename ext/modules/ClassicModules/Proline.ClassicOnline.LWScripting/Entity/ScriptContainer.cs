@@ -75,6 +75,7 @@ namespace Proline.ClassicOnline.MScripting
                     catch (AggregateException e)
                     {
                         _terminationCode = 2;
+                        MDebug.MDebugAPI.LogDebug(e.ToString());
                     }
                     catch (Exception e)
                     {

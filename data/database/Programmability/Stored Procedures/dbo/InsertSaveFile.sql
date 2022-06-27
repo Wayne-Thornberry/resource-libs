@@ -3,31 +3,42 @@ IF OBJECT_ID('dbo.InsertSaveFile') IS NOT NULL
 GO 
 
 CREATE PROCEDURE dbo.InsertSaveFile
-	@data NVARCHAR(MAX),
-	@playerId BIGINT
+	@id NVARCHAR(255),
+	@data NVARCHAR(MAX), 
+	@playerId BIGINT = NULL
 AS
 
 BEGIN TRAN
+	DECLARE @saveId BIGINT 
 
-	IF EXISTS( SELECT 1 FROM dbo.SaveFile WHERE PlayerId = @playerId)
+	IF EXISTS( SELECT 1 FROM dbo.[SaveFile] WHERE [Identity] = @id)
 		BEGIN
-			UPDATE dbo.SaveFile SET [Value] = @data WHERE PlayerId = @playerId
+			UPDATE dbo.SaveFile SET [Value] = @data WHERE [Identity] = @id
 		END
 	ELSE 
+	BEGIN
+		IF NOT EXISTS( SELECT 1 FROM dbo.[Save] WHERE PlayerId = @playerId)
 		BEGIN
-			INSERT INTO dbo.SaveFile
+			EXEC dbo.InsertSave @playerId = @playerId -- bigint 
+		END
+		
+		SELECT @saveId = Id FROM dbo.[Save] WHERE [PlayerId] = @playerId
+	
+		INSERT INTO dbo.SaveFile
 			(
+				[Identity],
 				[Value],
-				[PlayerId]
+				[SaveId]
 			)
 		VALUES
 		( -- SaveID - bigint
+		    @id,
 			@data, -- SaveData - nvarchar(max)
-			@playerId
+			@saveId
 		) 
 	END
 
-	SELECT Id FROM dbo.SaveFile WHERE PlayerId = @playerId
+	SELECT TOP(1) [Identity], [SaveId] FROM dbo.SaveFile WHERE [Identity] = @id
 
 COMMIT TRAN
 

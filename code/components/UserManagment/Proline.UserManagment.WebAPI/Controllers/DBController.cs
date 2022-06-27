@@ -58,7 +58,7 @@ namespace Proline.DBAccess.WebService.Controllers
         public async Task<IActionResult> GetSave(GetSaveRequest inParameter)
         {
 
-            if (inParameter == null || inParameter.Id < -1)
+            if (inParameter == null || string.IsNullOrEmpty(inParameter.Username))
                 return BadRequest();
 
             try
@@ -106,7 +106,7 @@ namespace Proline.DBAccess.WebService.Controllers
 
         [HttpPost]
         [Route("GetPlayer")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetSaveResponse))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetPlayerResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetPlayer(GetPlayerRequest inParameter)

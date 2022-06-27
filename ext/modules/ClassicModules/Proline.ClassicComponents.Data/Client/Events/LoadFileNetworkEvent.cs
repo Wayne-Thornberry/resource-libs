@@ -1,4 +1,5 @@
-﻿using Proline.ClassicOnline.MData.Entity;
+﻿using Newtonsoft.Json;
+using Proline.ClassicOnline.MData.Entity;
 using Proline.Resource.Eventing;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,29 @@ namespace Proline.ClassicOnline.MData
         }
 
         protected override void OnEventCallback(params object[] args)
-        { 
-            var obj = args[0].ToString();
-            if (string.IsNullOrEmpty(obj)) return;
-            var instance = SaveFileManager.GetInstance();
-            Console.WriteLine("data got " + obj);
-            instance.PutFileIntoMemory(obj); 
+        {
+            var instance = SaveManager.GetInstance();
+            if (args == null) return;
+            if(args.Length > 0)
+            {
+                if (args[0] == null) return;
+                List<SaveFile> saveFiles = JsonConvert.DeserializeObject<List<SaveFile>>(args[0].ToString());
+                Console.WriteLine("data got " + args[0]);
+                foreach (var item in saveFiles)
+                { 
+                    var saveFile = instance.GetSaveFile(item.Identifier); 
+                    if (saveFile != null)
+                    {
+                        instance.OverrightSaveFile(item);
+                    }
+                    else
+                    {
+                        instance.InsertSaveFile(item);
+                    } 
+                }
+                instance.HasLoadedFromNet = true;
+            }
+            
         }
     }
 }

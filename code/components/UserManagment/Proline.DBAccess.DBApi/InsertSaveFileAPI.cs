@@ -18,6 +18,7 @@ namespace Proline.DBAccess.DBApi
         {
             var api = new InsertSaveFileAPI();
 
+            api.AddInputParameter("@id", SqlDbType.NVarChar, inParameter.Identity);
             api.AddInputParameter("@data", SqlDbType.NVarChar, inParameter.Data); 
             api.AddInputParameter("@playerId", SqlDbType.BigInt, inParameter.PlayerId);
 
@@ -31,7 +32,8 @@ namespace Proline.DBAccess.DBApi
             response = new InsertSaveResponse();
             while (reader.Read())
             {
-                response.Id = reader.GetInt64(reader.GetOrdinal("Id"));
+                response.Identity = reader.GetString(reader.GetOrdinal("Identity"));
+                response.SaveId = reader.GetInt64(reader.GetOrdinal("SaveId"));
             }
         }
     }

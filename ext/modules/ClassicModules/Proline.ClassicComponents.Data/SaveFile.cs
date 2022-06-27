@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MData
 {
-    public class SaveFile
+    public class SaveFile 
     {
+        public string Identifier { get; set; }
+        public Dictionary<string, object> Properties { get; set; }
     }
 }

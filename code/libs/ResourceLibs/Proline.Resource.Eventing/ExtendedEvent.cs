@@ -49,6 +49,9 @@ namespace Proline.Resource.Eventing
         private bool _hasCallback;
         private bool _awaitingCallback;
         private bool _altEventName;
+        private EventTriggered _lastEventTriggered;
+
+        protected bool DisableAutoCallback { get; set; }
 
         public ExtendedEvent(string eventName, bool hasCallback = false)
         {
@@ -80,6 +83,7 @@ namespace Proline.Resource.Eventing
         {
             Console.WriteLine(String.Format("Event {0} called from SERVER passing data {1}",_eventName, json));
             var eventTriggered = DeserailizeJson(json);
+            _lastEventTriggered = eventTriggered;
             var isCallbackExecution = eventTriggered.IsCallback;
             var args = eventTriggered.Args;
             object returnData = null;
@@ -88,20 +92,25 @@ namespace Proline.Resource.Eventing
                 Console.WriteLine("Calling event callback");
                 OnEventCallback(args);
                 _awaitingCallback = false;
+                Unsubscribe(_lastEventTriggered.CallbackEventName);
             }
             else
             {
                 Console.WriteLine("Calling event triggered");
                 returnData = OnEventTriggered(args);
-                InvokeCallback(returnData);
+                if(!DisableAutoCallback)
+                    InvokeCallback(eventTriggered.CallbackEventName, returnData);
             }
         }
 
-        private void InvokeCallback(params object[] args)
+        private void InvokeCallback(string eventName, params object[] args)
         {
-            var callbackEventRequest = new EventTriggered() { Args = args, IsCallback = true };
-            var json = JsonConvert.SerializeObject(callbackEventRequest);
-            BaseScript.TriggerServerEvent(_eventName, json);
+            if (!string.IsNullOrEmpty(eventName))
+            {
+                var callbackEventRequest = new EventTriggered() { Args = args, IsCallback = true, CallbackEventName = eventName };
+                var json = JsonConvert.SerializeObject(callbackEventRequest);
+                BaseScript.TriggerServerEvent(eventName, json);
+            }
         }
 
         public void Invoke(params object[] args)
@@ -110,11 +119,17 @@ namespace Proline.Resource.Eventing
             if (_hasCallback)
             {
                 callbackEventRequest.HasCallback = true;
-                _awaitingCallback = true; 
-                Subscribe();
+                callbackEventRequest.CallbackEventName = string.Format("{0}:Callback:{1}", _eventName, Guid.NewGuid().ToString());
+                _awaitingCallback = true;
+                Subscribe(callbackEventRequest.CallbackEventName);
             }
             var json = JsonConvert.SerializeObject(callbackEventRequest);
             BaseScript.TriggerServerEvent(_eventName, json); 
+        }
+        protected void ExternalInvokeCallback(params object[] args)
+        {
+            if(DisableAutoCallback)
+                InvokeCallback(_lastEventTriggered.CallbackEventName, args);
         }
 
         protected virtual void OnEventCallback(params object[] args) { }
@@ -125,6 +140,7 @@ namespace Proline.Resource.Eventing
         {
             Console.WriteLine(String.Format("Event {0} called from {1} passing data {2}",_eventName, player.Name, json));
             var eventTriggered = DeserailizeJson(json);
+            _lastEventTriggered = eventTriggered;
             var isCallbackExecution = eventTriggered.IsCallback;
             var args = eventTriggered.Args;
             Console.WriteLine(json);
@@ -134,20 +150,32 @@ namespace Proline.Resource.Eventing
                 Console.WriteLine("Calling event callback");
                 OnEventCallback(player, args);
                 _awaitingCallback = false;
+                Unsubscribe(_lastEventTriggered.CallbackEventName);
             }
             else
             {
                 Console.WriteLine("Calling event triggered");
                 returnData = OnEventTriggered(player, args);
-                InvokeCallback(player, returnData);
+                if (!DisableAutoCallback)
+                    InvokeCallback(player, _lastEventTriggered.CallbackEventName, returnData);
             }
         }
 
-        private void InvokeCallback(Player player, params object[] args)
+        private void InvokeCallback(Player player, string eventName, params object[] args)
         {
-            var callbackEventRequest = new EventTriggered() { Args = args, IsCallback = true };
-            var json = JsonConvert.SerializeObject(callbackEventRequest);
-            player.TriggerEvent(_eventName, json);
+            if (!string.IsNullOrEmpty(eventName))
+            {
+                var callbackEventRequest = new EventTriggered() { Args = args, IsCallback = true, CallbackEventName = eventName };
+                var json = JsonConvert.SerializeObject(callbackEventRequest);
+                Console.WriteLine("Sending Data... " + json);
+                player.TriggerEvent(eventName, json); 
+            }
+        }
+
+        protected void ExternalInvokeCallback(Player player, params object[] args)
+        {
+            if(DisableAutoCallback)
+                InvokeCallback(player, _lastEventTriggered.CallbackEventName, args);
         }
 
         public void Invoke(Player player, params object[] args)
@@ -156,8 +184,9 @@ namespace Proline.Resource.Eventing
             if (_hasCallback)
             {
                 callbackEventRequest.HasCallback = true;
-                Subscribe();
+                callbackEventRequest.CallbackEventName = string.Format("{0}:Callback:{1}", _eventName, Guid.NewGuid().ToString());
                 _awaitingCallback = true;
+                Subscribe(callbackEventRequest.CallbackEventName);
             }
             var json = JsonConvert.SerializeObject(callbackEventRequest);
             player.TriggerEvent(_eventName, json); 
@@ -166,11 +195,10 @@ namespace Proline.Resource.Eventing
         protected virtual void OnEventCallback(Player player, params object[] args) { }
         protected virtual object OnEventTriggered(Player player, params object[] args) { return null; }  
 #endif
-
         public async Task<int> WaitForCallback()
         {
             var timeoutTicks = 0;
-            while(_awaitingCallback && timeoutTicks <= 10000)
+            while(_awaitingCallback && timeoutTicks <= 1000)
             {
                 timeoutTicks++;
                 await BaseScript.Delay(0);
@@ -186,11 +214,13 @@ namespace Proline.Resource.Eventing
             return JsonConvert.DeserializeObject<EventTriggered>(json);
         }
 
-        public void Unsubscribe()
+        public void Unsubscribe(string eventNameOverride = null)
         {
             var instance = EventDictionaryManager.GetInstance();
             var dictionary = instance.GetEventHandlerDictionary();
-            dictionary.Remove(_eventName);
+            var eventName = string.IsNullOrEmpty(eventNameOverride) ? _eventName : eventNameOverride;
+            Console.WriteLine("Unsubscribed " + eventName);
+            dictionary.Remove(eventName);
         } 
         public void Dispose()
         {

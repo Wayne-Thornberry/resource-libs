@@ -43,13 +43,13 @@ namespace Proline.ClassicOnline.MBrain
 
         public override async Task OnStart()
         {
-            var data = MDataAPI.LoadResourceFile("data/scriptpositions.json");
+            var data = MData.API.LoadResourceFile("data/scriptpositions.json");
             MDebugAPI.LogDebug(data);
             _scriptPosition = JsonConvert.DeserializeObject<ScriptPositions>(data);
             _instance.AddScriptPositionPairs(_scriptPosition.scriptPositionPairs);
             PosBlacklist.Create();
 
-            var data2 = MDataAPI.LoadResourceFile("data/scriptobjects.json");
+            var data2 = MData.API.LoadResourceFile("data/scriptobjects.json");
             MDebugAPI.LogDebug(data2);
             _objs = JsonConvert.DeserializeObject<ScriptObjectData[]>(data2);
             var sm = ScriptObjectManager.GetInstance();
@@ -60,7 +60,7 @@ namespace Proline.ClassicOnline.MBrain
 
             foreach (var item in _objs)
             {
-                var hash = string.IsNullOrEmpty(item.ModelHash) ? item.ModelName : API.GetHashKey(item.ModelHash);
+                var hash = string.IsNullOrEmpty(item.ModelHash) ? item.ModelName : CitizenFX.Core.Native.API.GetHashKey(item.ModelHash);
                 if (!_sm.ContainsKey(hash))
                     _sm.Add(hash, new List<ScriptObjectData>());
                 _sm.Get(hash).Add(item);
@@ -79,8 +79,8 @@ namespace Proline.ClassicOnline.MBrain
                 addedHandles.Add(handle);
                 _ht.Add(handle);
 
-                if (!API.DoesEntityExist(handle)) continue;
-                var modelHash = API.GetEntityModel(handle);
+                if (!CitizenFX.Core.Native.API.DoesEntityExist(handle)) continue;
+                var modelHash = CitizenFX.Core.Native.API.GetEntityModel(handle);
                 if (!_sm.ContainsSO(handle) && _sm.ContainsKey(modelHash))
                 {
                     _log.Debug(handle + " Oh boy, we found a matching script object with that model hash from that handle, time to track it");
@@ -97,14 +97,14 @@ namespace Proline.ClassicOnline.MBrain
             while (combinedHandles.Count > 0)
             {
                 var handle = combinedHandles.Dequeue();
-                if (API.DoesEntityExist(handle))
+                if (CitizenFX.Core.Native.API.DoesEntityExist(handle))
                     continue;
                 _trackedHandles.Remove(handle);
                 removedHanldes.Add(handle);
                 _ht.Remove(handle);
 
-                if (API.DoesEntityExist(handle)) continue;
-                var modelHash = API.GetEntityModel(handle);
+                if (CitizenFX.Core.Native.API.DoesEntityExist(handle)) continue;
+                var modelHash = CitizenFX.Core.Native.API.GetEntityModel(handle);
                 if (!_sm.ContainsKey(modelHash)) continue;
                 if (_sm.ContainsKey(handle))
                     _sm.Remove(handle);
@@ -144,7 +144,7 @@ namespace Proline.ClassicOnline.MBrain
                 pv.ModelHash = cv.Model.Hash;
                 pv.LastPosition = cv.Position;
                 var json = JsonConvert.SerializeObject(pv);
-                MDataAPI.AddFileValue("PersonalVehicle", json);
+                MData.API.AddDataFileValue("PersonalVehicle", json);
             }
         }
 
@@ -164,12 +164,12 @@ namespace Proline.ClassicOnline.MBrain
                 pw.Hash = (uint)weaponHash;
                 Game.PlayerPed.Weapons.Give(weaponHash, pw.AmmoCount, true, true);
                 var list = new List<PersonalWeapon>();
-                if (MDataAPI.DoesValueExist("PersonalWeapons"))
+                if (MData.API.DoesDataFileValueExist("PersonalWeapons"))
                 {
-                    list = MData.MDataAPI.GetFileValue<List<PersonalWeapon>>("PersonalWeapons");
+                    list = MData.API.GetDataFileValue<List<PersonalWeapon>>("PersonalWeapons");
                 }
                 list.Add(pw);
-                MDataAPI.AddFileValue("PersonalWeapons", JsonConvert.SerializeObject(list));
+                MData.API.AddDataFileValue("PersonalWeapons", JsonConvert.SerializeObject(list));
                 stat.SetValue(stat.GetValue() - 250);
 
             }
@@ -191,7 +191,7 @@ namespace Proline.ClassicOnline.MBrain
 
         private void ProcessScriptObject(ScriptObject so)
         {
-            if (!API.DoesEntityExist(so.Handle))
+            if (!CitizenFX.Core.Native.API.DoesEntityExist(so.Handle))
             {
                 _sm.Remove(so.Handle);
                 return;
@@ -215,7 +215,7 @@ namespace Proline.ClassicOnline.MBrain
         {
             var pos = Game.PlayerPed.Position;
             var pos2 = entity.Position;
-            return API.Vdist2(pos.X, pos.Y, pos.Z, pos2.X, pos2.Y, pos2.Z) <= activationRange;
+            return CitizenFX.Core.Native.API.Vdist2(pos.X, pos.Y, pos.Z, pos2.X, pos2.Y, pos2.Z) <= activationRange;
         }
 
 

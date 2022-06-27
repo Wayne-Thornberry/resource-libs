@@ -34,6 +34,13 @@ namespace Proline.ClassicOnline.MData
             return x;
         }
 
+        public static LoadFileNetworkEvent TriggerEvent(string username)
+        {
+            var x = CreateEvent();
+            x.Invoke(username);
+            return x;
+        }
+
 #elif SERVER
         public static LoadFileNetworkEvent TriggerEvent(Player player, long id)
         {

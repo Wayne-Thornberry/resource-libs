@@ -9,7 +9,7 @@ using Proline.ClassicOnline.MData.Entity;
 
 namespace Proline.ClassicOnline.MData
 {
-    public static partial class MDataAPI
+    public static partial class API
     {
 
     }

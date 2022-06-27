@@ -1,4 +1,5 @@
 ﻿using CitizenFX.Core;
+using Newtonsoft.Json;
 using Proline.DBAccess.Proxies;
 using System;
 using System.Collections.Generic;
@@ -12,19 +13,34 @@ namespace Proline.ClassicOnline.MData.Events
 {
     public partial class SaveFileNetworkEvent
     {
+        public SaveFileNetworkEvent() : base(SAVEFILEHANDLER)
+        {
+            DisableAutoCallback = true;
+        }
 
         protected override object OnEventTriggered(Player player, params object[] args)
         {
-            string arg2 = args[0].ToString();
-            return SaveFileAsync(player, arg2).Result;
+            if (args.Length > 0)
+            {
+
+                var data = args[0].ToString();
+                //Debug.WriteLine(data);
+                var saveFile = JsonConvert.DeserializeObject<SaveFile>(data);
+                SaveFileAsync(player, saveFile);
+                return null;
+            }
+            else
+            { 
+                Console.WriteLine("Argument count does not match expected count");
+                return null;
+            }
         }
 
-        private static async Task<int> SaveFileAsync(Player player, string arg2)
+        private async Task SaveFileAsync(Player player, SaveFile saveFile)
         {
             var responseCode = -1;
             try
             {
-                Debug.WriteLine(arg2);
                 using (var x = new DBAccessClient())
                 {
                     var response = await x.RegisterPlayer(new RegisterPlayerRequest() { Name = player.Name });
@@ -35,8 +51,9 @@ namespace Proline.ClassicOnline.MData.Events
                         var getPlayerResponse = await x.GetPlayer(new GetPlayerRequest() { Username = player.Name });
                         Debug.WriteLine(String.Format("Getting Player {0}, id {1}", getPlayerResponse.ReturnCode, getPlayerResponse.PlayerId));
                         id = getPlayerResponse.PlayerId;
-                    }
-                    var response2 = await x.SaveFile(new InsertSaveRequest() { PlayerId = id, Data = arg2 });
+                    } 
+                    var response2 = await x.SaveFile(new InsertSaveRequest() { PlayerId = id, Identity = saveFile.Identifier, Data = JsonConvert.SerializeObject(saveFile.Properties)});
+                    responseCode = response2.ReturnCode;
                 }
             }
             catch (SocketException e)
@@ -49,9 +66,8 @@ namespace Proline.ClassicOnline.MData.Events
             }
             finally
             {
-                //Debug.WriteLine(EventHandlerNames.FILESAVEDHANDLER);
-            }
-            return responseCode;
+                ExternalInvokeCallback(player, responseCode);
+            } 
         }
     }
 }

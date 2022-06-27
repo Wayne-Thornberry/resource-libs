@@ -56,10 +56,70 @@ namespace Proline.ClassicOnline.LevelScripts
         public int DeathCost { get; set; }
         public SpawnType RespawnType { get; set; }
 
-        private void PlayerDied()
+        public async Task Execute(object[] args, CancellationToken token)
         {
-            SetDeathStage(1);
+            while (!token.IsCancellationRequested)
+            {   
+                if(_deathStage > 0) 
+                    Game.DisableAllControlsThisFrame(0); 
+
+                if (_timer > 0)
+                {
+                    _timer -= Game.LastFrameTime;
+                    await BaseScript.Delay(0);
+                    continue;
+                } 
+
+                switch (_deathStage)
+                {
+                    case 0:
+                        if (Game.PlayerPed.IsDead)
+                            _deathStage++;
+                        break;
+                    case 1:
+                        _timer = ConvertMsToFloat(DelayedRespawnTime);
+                        PlayWastedEffect(); 
+                        _deathStage++;
+                        break;
+                    case 2:
+                        _timer = ConvertMsToFloat(WastedTime);
+                        _deathStage++;
+                        break;
+                    case 3:
+                        if (EnableTransition)
+                        {
+                            _timer = ConvertMsToFloat(TransitionTime);
+                            Screen.Fading.FadeOut(TransitionTime);
+                        }
+                        _deathStage++;
+                        break;
+                    case 4:
+                        _timer = ConvertMsToFloat(FadeHoldTime);
+                        RespawnPlayer(GetPlayerRespawnLocation());
+                        if (EnableInvincibility)
+                            Game.PlayerPed.IsInvincible = true;
+                        _deathStage++;
+                        break;
+                    case 5:
+                        if (EnableTransition)
+                        {
+                            _timer = ConvertMsToFloat(TransitionTime);
+                            Screen.Fading.FadeIn(TransitionTime);
+                        } 
+                        StopWastedEffect();
+                        _deathStage++;
+                        break;
+                    case 6:
+                        Game.PlayerPed.IsInvincible = false;
+                        _deathStage = 0;
+                        break;
+                }
+                //MDebugAPI.LogDebug(Stage);
+                //MDebugAPI.LogDebug(_timer);
+                await BaseScript.Delay(0);
+            }
         }
+
 
         private void ReviveSelf()
         {
@@ -69,91 +129,6 @@ namespace Proline.ClassicOnline.LevelScripts
                 Game.PlayerPed.Position.Z, false, false);
             API.ResurrectPed(Game.PlayerPed.Handle);
             Game.PlayerPed.Health = 100;
-        }
-
-        public async Task Execute(object[] args, CancellationToken token)
-        {
-            while (!token.IsCancellationRequested)
-            {  
-                if (_deathStage == 0 && Game.PlayerPed.IsDead) PlayerDied();
-
-                switch (_deathStage)
-                {
-                    case 0:
-
-                        break;
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                        if (_timer > 0)
-                            _timer -= Game.LastFrameTime;
-                        else
-                            SetDeathStage(_deathStage + 1);
-                        Game.DisableAllControlsThisFrame(0);
-                        break;
-                }
-                //MDebugAPI.LogDebug(Stage);
-                //MDebugAPI.LogDebug(_timer);
-                await BaseScript.Delay(0);
-            }
-        }
-
-        private void SetDeathStage(int stage)
-        {
-            _deathStage = stage;
-            switch (_deathStage)
-            {
-                case 0:
-                    Game.EnableAllControlsThisFrame(0);
-                    break;
-                case 1:
-                    if (DelayedRespawn)
-                        _timer = ConvertMsToFloat(DelayedRespawnTime);
-                    else
-                        _timer = 0;
-                    break;
-                case 2:
-                    _timer = ConvertMsToFloat(WastedTime);
-                    PlayWastedEffect();
-                    break;
-                case 3:
-                    if (EnableTransition)
-                    {
-                        _timer = ConvertMsToFloat(TransitionTime);
-                        Screen.Fading.FadeOut(TransitionTime);
-                    }
-
-                    break;
-                case 4:
-                    _timer = ConvertMsToFloat(FadeHoldTime);
-                    RespawnPlayer(GetPlayerRespawnLocation());
-                    if (EnableInvincibility)
-                        Game.PlayerPed.IsInvincible = true;
-                    break;
-                case 5:
-                    if (EnableTransition)
-                    {
-                        _timer = ConvertMsToFloat(TransitionTime);
-                        Screen.Fading.FadeIn(TransitionTime);
-                    }
-
-                    StopWastedEffect();
-                    break;
-                case 6:
-                    if (EnableInvincibility)
-                        _timer = ConvertMsToFloat(InvincibilityDuration);
-                    else
-                        SetDeathStage(0);
-                    //if (EnableCost) Cash.RemoveBankCash(DeathCost);
-                    //BaseScript.TriggerEvent("PlayerRespawned");
-                    break;
-                case 7:
-                    SetDeathStage(0);
-                    Game.PlayerPed.IsInvincible = false;
-                    break;
-            }
         }
 
         private void RespawnPlayer(Vector3 position)
@@ -195,13 +170,7 @@ namespace Proline.ClassicOnline.LevelScripts
         {
             Screen.Effects.Start(ScreenEffect.DeathFailMpIn);
             GameplayCamera.Shake(CameraShake.DeathFail, 1f);
-        }
-
-        private void KillSelf()
-        {
-            Game.PlayerPed.Kill();
-        }
-
+        } 
 
         public float ConvertMsToFloat(int time)
         {
