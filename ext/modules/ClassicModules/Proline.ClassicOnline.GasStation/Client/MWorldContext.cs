@@ -10,7 +10,7 @@ namespace Proline.ClassicOnline.MWorld
     {
 
 
-        public override async Task OnStart()
+        public override async Task OnExecute()
         {
             //EnableControllers();
             // var data = ResourceFile.Load(// API.GetCurrentResourceName(), "data/gasstations.json"); 
@@ -20,9 +20,6 @@ namespace Proline.ClassicOnline.MWorld
 
         private List<Blip> _blips = new List<Blip>();
         private GasStation[] _x = new GasStation[0];
-
-        public MWorldContext(Assembly source) : base(source)
-        {
-        }
+         
     }
 }

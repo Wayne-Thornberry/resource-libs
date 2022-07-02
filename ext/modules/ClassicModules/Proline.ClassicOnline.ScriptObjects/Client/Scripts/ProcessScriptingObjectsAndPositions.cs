@@ -21,11 +21,11 @@ using Proline.ClassicOnline.MGame.Data;
 
 namespace Proline.ClassicOnline.MBrain
 {
-    public class MBrainContext : ModuleScript
+    public class ProcessScriptingObjectsAndPositions : ModuleScript
     {
         private static Log _log = new Log();
 
-        public MBrainContext(Assembly source) : base(source)
+        public ProcessScriptingObjectsAndPositions( ) : base(true)
         {
             _trackedHandles = new HashSet<int>();
             _ht = HandleTracker.GetInstance();
@@ -41,22 +41,25 @@ namespace Proline.ClassicOnline.MBrain
         private ScriptObjectData[] _objs;
         private ScriptPositionManager _instance;
 
-        public override async Task OnStart()
-        {
-            var data = MData.API.LoadResourceFile("data/scriptpositions.json");
-            MDebugAPI.LogDebug(data);
-            _scriptPosition = JsonConvert.DeserializeObject<ScriptPositions>(data);
-            _instance.AddScriptPositionPairs(_scriptPosition.scriptPositionPairs);
-            PosBlacklist.Create();
+        public bool HasLoaded { get; private set; }
 
-            var data2 = MData.API.LoadResourceFile("data/scriptobjects.json");
-            MDebugAPI.LogDebug(data2);
-            _objs = JsonConvert.DeserializeObject<ScriptObjectData[]>(data2);
-            var sm = ScriptObjectManager.GetInstance();
-        }
-
-        public override async Task OnUpdate()
+        public override async Task OnExecute()
         {
+
+            if (!HasLoaded)
+            { 
+                var data = MData.API.LoadResourceFile("data/scriptpositions.json");
+                MDebugAPI.LogDebug(data);
+                _scriptPosition = JsonConvert.DeserializeObject<ScriptPositions>(data);
+                _instance.AddScriptPositionPairs(_scriptPosition.scriptPositionPairs);
+                PosBlacklist.Create();
+
+                var data2 = MData.API.LoadResourceFile("data/scriptobjects.json");
+                MDebugAPI.LogDebug(data2);
+                _objs = JsonConvert.DeserializeObject<ScriptObjectData[]>(data2);
+                var sm = ScriptObjectManager.GetInstance();
+                HasLoaded = true;
+            }
 
             foreach (var item in _objs)
             {
@@ -129,51 +132,9 @@ namespace Proline.ClassicOnline.MBrain
                         PosBlacklist.Remove(positionsPair);
                     };
                 }
-            }
-            await Delay(1000);
+            } 
         }
 
-
-        [Command("SaveCurrentVehicle")]
-        public void SaveCurrentVehicle()
-        {
-            if (Game.PlayerPed.IsInVehicle())
-            {
-                var pv = new PersonalVehicle();
-                var cv = Game.PlayerPed.CurrentVehicle;
-                pv.ModelHash = cv.Model.Hash;
-                pv.LastPosition = cv.Position;
-                var json = JsonConvert.SerializeObject(pv);
-                MData.API.AddDataFileValue("PersonalVehicle", json);
-            }
-        }
-
-        [Command("BuyRandomWeapon")]
-        public void BuyRandomWeapon()
-        {
-            var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
-            var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
-
-            if (stat.GetValue() > 250)
-            {
-                Array values = Enum.GetValues(typeof(WeaponHash));
-                Random random = new Random();
-                WeaponHash weaponHash = (WeaponHash)values.GetValue(random.Next(values.Length));
-                var pw = new PersonalWeapon();
-                pw.AmmoCount = random.Next(1, 100);
-                pw.Hash = (uint)weaponHash;
-                Game.PlayerPed.Weapons.Give(weaponHash, pw.AmmoCount, true, true);
-                var list = new List<PersonalWeapon>();
-                if (MData.API.DoesDataFileValueExist("PersonalWeapons"))
-                {
-                    list = MData.API.GetDataFileValue<List<PersonalWeapon>>("PersonalWeapons");
-                }
-                list.Add(pw);
-                MData.API.AddDataFileValue("PersonalWeapons", JsonConvert.SerializeObject(list));
-                stat.SetValue(stat.GetValue() - 250);
-
-            }
-        }
 
 
         private void ProcessScriptObjects()

@@ -20,14 +20,14 @@ namespace Proline.Modularization.Core
             return _instance;
         }
 
-        private Dictionary<string, ModuleScript> _modules;
+        private Dictionary<string, ModuleContainer> _modules;
 
         private ModuleManager()
         {
-            _modules = new Dictionary<string, ModuleScript>();
+            _modules = new Dictionary<string, ModuleContainer>();
         }
 
-        public static ModuleScript GetModule(string v)
+        public static ModuleContainer GetModule(string v)
         {
             var mm = GetInstance();
             if (mm._modules.ContainsKey(v))
@@ -48,7 +48,30 @@ namespace Proline.Modularization.Core
             var mm = GetInstance();
             if (mm._modules.ContainsKey(module))
             {
-                mm._modules[module].Enable();
+               // mm._modules[module].Enable();
+            }
+        }
+
+        public static void ProcessModules()
+        {
+            var mm = GetInstance();
+            foreach (var item in mm._modules.Values)
+            {
+                for (int i = 0; i < item.TaskManager.Count; i++)
+                {
+                    var task = item.TaskManager[i];
+                    if(task.IsCompleted || task.IsFaulted || task.IsCanceled)
+                        item.TaskManager.Remove(task);
+                }
+                 
+                foreach (var script in item.Scripts)
+                {
+                    if (!script.IsFinished)
+                    { 
+                        var task = script.Execute();
+                        item.TaskManager.Add(task);
+                    }
+                }
             }
         }
 
@@ -61,13 +84,13 @@ namespace Proline.Modularization.Core
             }
         }
 
-        public static void RegisterModule(string name, ModuleScript module)
+        public static void RegisterModule(string name, ModuleContainer module)
         {
             var mm = GetInstance();
             mm._modules.Add(name, module);
         }
 
-        public static ModuleScript LoadModule(string moduleName)
+        public static ModuleContainer LoadModule(string moduleName)
         {
             var config = ModuleConfigSection.ModuleConfig;
             ModuleInstanceElement id = null;
@@ -86,22 +109,21 @@ namespace Proline.Modularization.Core
             OutputToConsole($"Loading {assemblyString}");
             var assembly = Assembly.Load(assemblyString);
             OutputToConsole($"Succesfully Loaded {assembly.FullName}");
-            var types = assembly.GetTypes().Where(e => e.BaseType == typeof(ModuleScript)).ToArray();
-            if (types.Length > 1)
-            {
-                throw new Exception(String.Format("Detected more than 1 module script in the following assembly {0} Only 1 module script can exist per module", moduleName));
-            }
+            var scriptTypes = assembly.GetTypes().Where(e => e.BaseType == typeof(ModuleScript)).ToArray();
             OutputToConsole($"Getting object from assembly {assembly.FullName}");
-            var type = types[0];
-            ModuleScript instance = (ModuleScript)Activator.CreateInstance(type, assembly);
-            if (type == null)
+            var scripts = new List<ModuleScript>();
+            foreach (var item in scriptTypes)
             {
-                OutputToConsole($"No modual start found in {assembly.FullName}");
-            }
+                scripts.Add((ModuleScript)Activator.CreateInstance(item)); 
+            } 
             OutputToConsole($"Inserted {assembly.GetName().Name} into memory");
-            // instance.OnLoad();
-            RegisterModule(assembly.GetName().Name, instance);
-            return instance;
+
+            var container = new ModuleContainer();
+            container.Name = assembly.GetName();
+            container.Scripts = scripts;
+            container.Assembly = assembly;
+            RegisterModule(assembly.GetName().Name, container);
+            return container;
         }
 
 

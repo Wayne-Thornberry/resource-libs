@@ -1,4 +1,5 @@
-﻿using Proline.Modularization.Core;
+﻿using CitizenFX.Core;
+using Proline.Modularization.Core;
 using Proline.Resource;
 using Proline.Resource.Configuration;
 using Proline.Resource.Framework;
@@ -22,6 +23,12 @@ namespace ProlineServer
         public override async Task OnStart()
         { 
             ModuleManager.StartAllModules();
+        }
+
+        public override async Task OnUpdate()
+        {
+            ModuleManager.ProcessModules();
+            await BaseScript.Delay(10000);
         }
 
         private void LoadResources()

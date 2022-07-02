@@ -64,7 +64,8 @@ namespace Proline.ClassicOnline.LevelScripts
                 }
                 else if (Game.IsControlJustReleased(0, Control.FrontendCancel))
                 {
-                    MScriptingAPI.MarkScriptAsNoLongerNeeded();
+                    break;
+                    //MScriptingAPI.MarkScriptAsNoLongerNeeded();
                 }
                 else
                 {

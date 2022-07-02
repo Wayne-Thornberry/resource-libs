@@ -14,10 +14,7 @@ namespace Proline.ClassicOnline.MRendering
         //private CEvent _entityHandleTrackedHandler;
         //private CEvent _entityHandleUnTrackedHandler;
         private List<int> _handles;
-
-        public MRenderingContext(Assembly source) : base(source)
-        {
-        }
+         
 
         //public MRenderingContext()
         //{
@@ -28,7 +25,7 @@ namespace Proline.ClassicOnline.MRendering
         //    //EventHandlers.Add("EntityHandleUnTracked", new Action<int>(OnEntityUntracked));
         //}
 
-        public override async Task OnStart()
+        public override async Task OnExecute()
         { 
             // _handles = (List<int>)MemoryCache.Retrive("TrackedHandles");
             //_entityHandleTrackedHandler = EventManager.RegisterEvent("EntityHandleTracked");

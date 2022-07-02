@@ -10,7 +10,7 @@ namespace Proline.ClassicOnline.MConnection
     {
         internal PlayerManager _manager;
 
-        public ConnectionContext(Assembly source) : base(source)
+        public ConnectionContext() 
         {
             _manager = PlayerManager.GetInstance();
         }

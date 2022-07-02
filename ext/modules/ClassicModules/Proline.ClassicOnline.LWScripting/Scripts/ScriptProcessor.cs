@@ -13,16 +13,12 @@ using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MScripting
 {
-    public class MScriptingContext : ModuleScript
+    public class ScriptProcessor : ModuleScript
     {
         private Log _log => new Log();
-        private LWScriptManager _lwScriptManager;
+        private LWScriptManager _lwScriptManager; 
 
-        public MScriptingContext(Assembly source) : base(source)
-        {
-        }
-
-        public override async Task OnStart()
+        public override async Task OnExecute()
         {
             var name = ModuleManager.GetCurrentModuleName();
             var lsAssembly = ScriptingConfigSection.ModuleConfig;

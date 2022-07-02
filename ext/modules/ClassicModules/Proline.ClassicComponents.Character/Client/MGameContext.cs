@@ -8,15 +8,9 @@ namespace Proline.ClassicOnline.MGame
 {
     public class MGameContext : ModuleScript
     {
-        public MGameContext(Assembly source) : base(source)
+        public MGameContext()
         {
         }
-
-        public override async Task OnLoad()
-        {
-            //EventManager.InvokeEventV2("playerJoinedSessionHandler");
-            //EventManager.InvokeEventV2("playerJoinedSession");
-
-        }
+         
     }
 }

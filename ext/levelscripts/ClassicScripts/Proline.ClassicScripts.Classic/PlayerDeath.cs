@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
+using Proline.CFXExtended.Core;
 using Proline.ClassicOnline.MDebug;
 
 namespace Proline.ClassicOnline.LevelScripts
@@ -139,6 +140,9 @@ namespace Proline.ClassicOnline.LevelScripts
             Game.PlayerPed.ResetVisibleDamage();
             Game.PlayerPed.Position =
                 new Vector3(position.X, position.Y, World.GetGroundHeight(position));
+            var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
+            var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
+            stat.SetValue(stat.GetValue() - 500);
             Game.PlaySound("WEAPON_PURCHASE", "HUD_AMMO_SHOP_SOUNDSET");
         }
 

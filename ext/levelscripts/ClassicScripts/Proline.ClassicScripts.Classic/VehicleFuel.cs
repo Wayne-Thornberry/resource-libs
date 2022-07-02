@@ -22,7 +22,7 @@ namespace Proline.ClassicOnline.LevelScripts
 
         public async Task Execute(object[] args, CancellationToken token)
         {
-            while (Stage != -1)
+            while (!token.IsCancellationRequested)
             {
                 if (!Game.PlayerPed.IsInVehicle()) return;
                 if (!(Game.PlayerPed.CurrentVehicle.CurrentRPM > DeadZone ||
