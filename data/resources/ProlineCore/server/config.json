@@ -1,7 +1,8 @@
 {
 	"Sections": [
 		"Resources",
-		"moduleConfigSection"
+		"moduleConfigSection",
+        "scriptingConfigSection"
 	],
 
 	"Resources": [
@@ -12,13 +13,20 @@
 		"Proline.Resource.Logging.Server",
 		"Proline.Modularization.Core.Server",
 		"Proline.ClassicOnline.MData.Server",
+		"Proline.ClassicOnline.MConnection.Server",
+        "Proline.ClassicOnline.MScripting.Server",
 		"Proline.ClassicOnline.MDebug.Server"
 	],
 
+	"scriptingConfigSection" :{ 
+		
+    },
+
 	"moduleConfigSection": {
-		"moduleCollection": [{
-			"Name": "MData",
-			"Assembly": "Proline.ClassicOnline.MData.Server"
-		}]
+		"moduleCollection": [
+			{"Name": "MData","Assembly": "Proline.ClassicOnline.MData.Server"},
+			{"Name": "MScripting","Assembly": "Proline.ClassicOnline.MScripting.Server"},
+			{"Name": "MConnection", "Assembly" : "Proline.ClassicOnline.MConnection.Server"}
+		]
 	}
 }

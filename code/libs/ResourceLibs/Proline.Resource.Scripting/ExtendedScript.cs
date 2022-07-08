@@ -43,7 +43,8 @@ namespace Proline.Resource.Scripting
             IsAutoStartEnabled = autoStart;
             _log = new Log();
             var manager = EventDictionaryManager.GetInstance();
-            manager.SetEventHandlerDictionary(EventHandlers); 
+            manager.SetEventHandlerDictionary(EventHandlers);
+            manager.PlayerList = Players;
         }
 
         public virtual async Task OnLoad() { }

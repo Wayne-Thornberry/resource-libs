@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CitizenFX.Core;
+using Newtonsoft.Json;
 using Proline.ClassicOnline.MData.Entity;
 using Proline.ClassicOnline.MData.Events;
 using Proline.ClassicOnline.MDebug;
@@ -18,10 +19,10 @@ namespace Proline.ClassicOnline.MData
         {
             try
             {
-                var fm = SaveManager.GetInstance();
+                var fm = DataFileManager.GetInstance();
                 MDebugAPI.LogDebug($"Saving save file...");
                 fm.IsSaveInProgress = true;
-                foreach (var item in fm.GetSaveFiles())
+                foreach (var item in fm.GetSave(Game.Player).GetSaveFiles())
                 {
                     try
                     { 
@@ -52,7 +53,7 @@ namespace Proline.ClassicOnline.MData
         {
             try
             {
-                var fm = SaveManager.GetInstance();
+                var fm = DataFileManager.GetInstance();
                 return fm.IsSaveInProgress;
             }
             catch (Exception e)
@@ -66,7 +67,7 @@ namespace Proline.ClassicOnline.MData
         {
             try
             {
-                var fm = SaveManager.GetInstance();
+                var fm = DataFileManager.GetInstance();
                 if (fm.LastSaveResult != null)
                 {
                     var state = fm.LastSaveResult;
@@ -86,7 +87,7 @@ namespace Proline.ClassicOnline.MData
             try
             {
                 MDebugAPI.LogDebug("Load Request put in");
-                var fm = SaveManager.GetInstance();
+                var fm = DataFileManager.GetInstance();
                 int result = 0;
                 using (var lfEvent = LoadFileNetworkEvent.TriggerEvent(id))
                 { 
@@ -109,7 +110,7 @@ namespace Proline.ClassicOnline.MData
         {
             try
             {
-                var fm = SaveManager.GetInstance(); 
+                var fm = DataFileManager.GetInstance(); 
                 return fm.HasLoadedFromNet;
             }
             catch (Exception e)
@@ -138,38 +139,6 @@ namespace Proline.ClassicOnline.MData
                 MDebugAPI.LogDebug(e.ToString());
             }
         }
-
-        public static async Task PullSaveFromCloud()
-        {
-            try
-            {
-                var fm = SaveManager.GetInstance();
-                //MDebugAPI.LogDebug($"Saving save file...");
-                //fm.IsSaveInProgress = true;
-                //foreach (var item in fm.GetSaveFiles())
-                //{
-                //    try
-                //    {
-                //        if (item == null)
-                //        {
-                //            throw new Exception($"Cannot save file, current save file is null");
-                //        };
-                //        var json = JsonConvert.SerializeObject(item);
-                //        MDebugAPI.LogDebug($"Saving file... {json}");
-                //        var sfEvent = SaveFileNetworkEvent.TriggerEvent(json);
-                //        await sfEvent.WaitForCallback();
-                //    }
-                //    catch (Exception e)
-                //    {
-                //        MDebugAPI.LogDebug(e.ToString());
-                //    }
-                //}
-                //fm.IsSaveInProgress = false;
-            }
-            catch (Exception e)
-            {
-                MDebugAPI.LogDebug(e.ToString());
-            }
-        }
+         
     }
 }

@@ -35,6 +35,9 @@
 		<Reference Include="Proline.Resource.$(Configuration)">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.$(Configuration).dll</HintPath>
 		</Reference>
+		<Reference Include="Proline.Resource.Eventing.$(Configuration)">
+			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Eventing.$(Configuration).dll</HintPath>
+		</Reference>
 		<Reference Include="Proline.Resource.Configuration.$(Configuration)">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Configuration.$(Configuration).dll</HintPath>
 		</Reference>
@@ -59,8 +62,8 @@
 
 
 	<ItemGroup>
-	  <Folder Include="Client\" />
-	  <Folder Include="Server\" />
+	  <Folder Include="Scripts\" />
+	  <Folder Include="Server\Events\" />
 	</ItemGroup>
 
 </Project>

@@ -19,6 +19,7 @@
         "Proline.ClassicOnline.MDebug.Client",
         "Proline.ClassicOnline.MGame.Client",
         "Proline.ClassicOnline.MRendering.Client",
+        "Proline.ClassicOnline.MConnection.Client",
         "Proline.ClassicOnline.MScreen.Client",
         "Proline.ClassicOnline.MScripting.Client",
         "Proline.ClassicOnline.MWorld.Client",
@@ -35,6 +36,7 @@
 			{"Name" : 'MScripting', "Assembly" : 'Proline.ClassicOnline.MScripting.Client'},
 			{"Name" : 'MBrain', "Assembly" : 'Proline.ClassicOnline.MBrain.Client'},
 			{"Name" : 'MData', "Assembly" : 'Proline.ClassicOnline.MData.Client'},
+			{"Name" : 'MConnection', "Assembly" : 'Proline.ClassicOnline.MConnection.Client'},
 			{"Name" : 'MWorld', "Assembly" : 'Proline.ClassicOnline.MWorld.Client'}
         ]
     },

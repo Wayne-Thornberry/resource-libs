@@ -31,6 +31,7 @@ namespace Proline.Resource.Eventing
     {
         public EampleEvent() : base("DOX")
         {
+
         }
         protected override void OnEventCallback(Player player, params object[] args)
         {
@@ -43,157 +44,132 @@ namespace Proline.Resource.Eventing
         }
     }
 #endif
-    public abstract class ExtendedEvent : IDisposable
-    {
-        private string _eventName;
+    /// <summary>
+    /// A callback event that triggers from the client/server and comes back when the called enviorment has a result
+    /// </summary>
+    public abstract class ExtendedEvent : AbstractEvent, IDisposable
+    { 
         private bool _hasCallback;
         private bool _awaitingCallback;
-        private bool _altEventName;
-        private EventTriggered _lastEventTriggered;
-
+        internal string CallbackValue { get; set; }
         protected bool DisableAutoCallback { get; set; }
 
-        public ExtendedEvent(string eventName, bool hasCallback = false)
-        {
-            _eventName = eventName;
+        public ExtendedEvent(string eventName, bool hasCallback = false) : base(eventName)
+        { 
             _hasCallback = hasCallback;
         }
 
-        public void Subscribe(string eventNameOverride = null)
-        {
-            var instance = EventDictionaryManager.GetInstance();
-            var dictionary = instance.GetEventHandlerDictionary();
-            var eventName = string.IsNullOrEmpty(eventNameOverride) ? _eventName : eventNameOverride;
-            if (!dictionary.ContainsKey(eventName))
-            {
 #if CLIENT
-            dictionary.Add(eventName, new Action<string>(OnEventTriggered));
-#elif SERVER
-                dictionary.Add(eventName, new Action<Player, string>(OnEventTriggered));
-#endif
-                Console.WriteLine("Subscribed handler");
-            }
-            else
-            {
-                Console.WriteLine("Cannot subscribe a handler to this event, this event already has a handler, pharaps being used by another instance?");
-            }
-        }
-#if CLIENT
-        private void OnEventTriggered(string json)
-        {
-            Console.WriteLine(String.Format("Event {0} called from SERVER passing data {1}",_eventName, json));
-            var eventTriggered = DeserailizeJson(json);
-            _lastEventTriggered = eventTriggered;
-            var isCallbackExecution = eventTriggered.IsCallback;
-            var args = eventTriggered.Args;
+        internal override void OnEventTriggered(EventTriggered data)
+        { 
+            EventTriggeredData = data;
+            var isCallbackExecution = data.IsCallback;
+            var args = data.Args;
             object returnData = null;
-            if (isCallbackExecution)
+            if (isCallbackExecution && data.CallbackEventName.Equals(CallbackValue))
             {
                 Console.WriteLine("Calling event callback");
                 OnEventCallback(args);
                 _awaitingCallback = false;
-                Unsubscribe(_lastEventTriggered.CallbackEventName);
+                Unsubscribe();
             }
             else
             {
                 Console.WriteLine("Calling event triggered");
                 returnData = OnEventTriggered(args);
                 if(!DisableAutoCallback)
-                    InvokeCallback(eventTriggered.CallbackEventName, returnData);
+                    InvokeCallback(data.CallbackEventName, returnData);
             }
         }
 
-        private void InvokeCallback(string eventName, params object[] args)
+        private void InvokeCallback(string callbackName, params object[] args)
         {
-            if (!string.IsNullOrEmpty(eventName))
+            if (!string.IsNullOrEmpty(callbackName))
             {
-                var callbackEventRequest = new EventTriggered() { Args = args, IsCallback = true, CallbackEventName = eventName };
+                var callbackEventRequest = new EventTriggered() { EventName = EventName,Args = args, IsCallback = true, CallbackEventName = callbackName };
                 var json = JsonConvert.SerializeObject(callbackEventRequest);
-                BaseScript.TriggerServerEvent(eventName, json);
+                Console.WriteLine("Sending Data... " + json);
+                BaseScript.TriggerServerEvent(EventDictionaryManager.Key, json);
             }
         }
 
-        public void Invoke(params object[] args)
+        public override void Invoke(params object[] args)
         {
-            var callbackEventRequest = new EventTriggered() { Args = args };
+            var callbackEventRequest = new EventTriggered() { EventName = EventName, Args = args };
             if (_hasCallback)
             {
                 callbackEventRequest.HasCallback = true;
-                callbackEventRequest.CallbackEventName = string.Format("{0}:Callback:{1}", _eventName, Guid.NewGuid().ToString());
+                callbackEventRequest.CallbackEventName = string.Format("{0}:Callback:{1}", EventName, Guid.NewGuid().ToString());
+                CallbackValue = callbackEventRequest.CallbackEventName;
                 _awaitingCallback = true;
-                Subscribe(callbackEventRequest.CallbackEventName);
+                Subscribe();
             }
             var json = JsonConvert.SerializeObject(callbackEventRequest);
-            BaseScript.TriggerServerEvent(_eventName, json); 
+            BaseScript.TriggerServerEvent(EventDictionaryManager.Key, json); 
         }
         protected void ExternalInvokeCallback(params object[] args)
         {
             if(DisableAutoCallback)
-                InvokeCallback(_lastEventTriggered.CallbackEventName, args);
+                InvokeCallback(EventTriggeredData.CallbackEventName, args);
         }
 
         protected virtual void OnEventCallback(params object[] args) { }
-        protected virtual object OnEventTriggered(params object[] args) { return null; }
 
 #elif SERVER
-        private void OnEventTriggered([FromSource] Player player, string json)
-        {
-            Console.WriteLine(String.Format("Event {0} called from {1} passing data {2}",_eventName, player.Name, json));
-            var eventTriggered = DeserailizeJson(json);
-            _lastEventTriggered = eventTriggered;
-            var isCallbackExecution = eventTriggered.IsCallback;
-            var args = eventTriggered.Args;
-            Console.WriteLine(json);
+        internal override void OnEventTriggered([FromSource] Player player, EventTriggered data)
+        { 
+            EventTriggeredData = data;
+            var isCallbackExecution = data.IsCallback;
+            var args = data.Args; 
             object returnData = null;
-            if (isCallbackExecution)
+            if (isCallbackExecution && data.CallbackEventName.Equals(CallbackValue))
             {
                 Console.WriteLine("Calling event callback");
                 OnEventCallback(player, args);
                 _awaitingCallback = false;
-                Unsubscribe(_lastEventTriggered.CallbackEventName);
+                Unsubscribe();
             }
             else
             {
                 Console.WriteLine("Calling event triggered");
                 returnData = OnEventTriggered(player, args);
                 if (!DisableAutoCallback)
-                    InvokeCallback(player, _lastEventTriggered.CallbackEventName, returnData);
+                    InvokeCallback(player, data.CallbackEventName, returnData);
             }
         }
 
-        private void InvokeCallback(Player player, string eventName, params object[] args)
+        private void InvokeCallback(Player player, string callbackName, params object[] args)
         {
-            if (!string.IsNullOrEmpty(eventName))
+            if (!string.IsNullOrEmpty(callbackName))
             {
-                var callbackEventRequest = new EventTriggered() { Args = args, IsCallback = true, CallbackEventName = eventName };
-                var json = JsonConvert.SerializeObject(callbackEventRequest);
+                var eventTriggered = new EventTriggered() { EventName = EventName,Args = args, IsCallback = true, CallbackEventName = callbackName };
+                var json = JsonConvert.SerializeObject(eventTriggered);
                 Console.WriteLine("Sending Data... " + json);
-                player.TriggerEvent(eventName, json); 
+                player.TriggerEvent(EventDictionaryManager.Key, json); 
             }
         }
 
         protected void ExternalInvokeCallback(Player player, params object[] args)
         {
             if(DisableAutoCallback)
-                InvokeCallback(player, _lastEventTriggered.CallbackEventName, args);
+                InvokeCallback(player, EventTriggeredData.CallbackEventName, args);
         }
 
-        public void Invoke(Player player, params object[] args)
+        public override void Invoke(Player player, params object[] args)
         {
             var callbackEventRequest = new EventTriggered() { Args = args };
             if (_hasCallback)
             {
                 callbackEventRequest.HasCallback = true;
-                callbackEventRequest.CallbackEventName = string.Format("{0}:Callback:{1}", _eventName, Guid.NewGuid().ToString());
+                callbackEventRequest.CallbackEventName = string.Format("{0}:Callback:{1}", EventName, Guid.NewGuid().ToString());
                 _awaitingCallback = true;
-                Subscribe(callbackEventRequest.CallbackEventName);
+                Subscribe();
             }
             var json = JsonConvert.SerializeObject(callbackEventRequest);
-            player.TriggerEvent(_eventName, json); 
+            player.TriggerEvent(EventDictionaryManager.Key, json); 
         }
 
         protected virtual void OnEventCallback(Player player, params object[] args) { }
-        protected virtual object OnEventTriggered(Player player, params object[] args) { return null; }  
 #endif
         public async Task<int> WaitForCallback()
         {
@@ -209,19 +185,7 @@ namespace Proline.Resource.Eventing
             return 1;// wait has timed out
         }
 
-        private EventTriggered DeserailizeJson(string json)
-        {
-            return JsonConvert.DeserializeObject<EventTriggered>(json);
-        }
 
-        public void Unsubscribe(string eventNameOverride = null)
-        {
-            var instance = EventDictionaryManager.GetInstance();
-            var dictionary = instance.GetEventHandlerDictionary();
-            var eventName = string.IsNullOrEmpty(eventNameOverride) ? _eventName : eventNameOverride;
-            Console.WriteLine("Unsubscribed " + eventName);
-            dictionary.Remove(eventName);
-        } 
         public void Dispose()
         {
             Unsubscribe();

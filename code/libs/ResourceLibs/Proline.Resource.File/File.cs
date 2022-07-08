@@ -19,7 +19,7 @@ namespace Proline.Resource.IO
             _resource = resource;
         }
 
-        public void Load()
+        public string Load()
         {
             try
             {
@@ -37,6 +37,7 @@ namespace Proline.Resource.IO
             {
 
             }
+            return _data;
         }
 
         public string GetData()

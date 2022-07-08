@@ -22,10 +22,16 @@ namespace Proline.ClassicOnline.LevelScripts
         {
 
             var state = 0;
+            // Setup the world
+            API.SetInstancePriorityMode(true);
+            API.SetInstancePriorityHint(3);
+            // Enable Trains
+            API.SwitchTrainTrack(0, true);
+            API.SwitchTrainTrack(3, true);
+            API.SetTrainTrackSpawnFrequency(0, 120000);
+            API.SetRandomTrains(true);
             while (!token.IsCancellationRequested)
-            {
-                API.SetInstancePriorityHint(0);
-
+            { 
                 switch (state)
                 {
                     case 0:
@@ -38,15 +44,16 @@ namespace Proline.ClassicOnline.LevelScripts
                             Game.PlayerPed.Position = new Vector3(0, 0, 70);
                             Screen.LoadingPrompt.Show("Loading Freemode..."); 
                             await BaseScript.Delay(5000); 
-                            Screen.LoadingPrompt.Hide();
-                            API.ShutdownLoadingScreen();
-                            API.SetNoLoadingScreen(true);
-                            API.DoScreenFadeIn(500); 
                             state = 1;
                         }
                         break;
                     case 1:
                         {
+                            Screen.LoadingPrompt.Hide();
+                            API.ShutdownLoadingScreen();
+                            API.SetNoLoadingScreen(true);
+                            API.DoScreenFadeIn(500);
+
                             MScriptingAPI.StartNewScript("UIMainMenu");
                             while (MScriptingAPI.GetInstanceCountOfScript("UIMainMenu") > 0)
                             {
@@ -68,65 +75,15 @@ namespace Proline.ClassicOnline.LevelScripts
                         break;
                     case 2:
                         {
-                            // Enable Trains
-                            API.SwitchTrainTrack(0, true);
-                            API.SwitchTrainTrack(3, true);
-                            API.SetTrainTrackSpawnFrequency(0, 120000);
-                            API.SetRandomTrains(true);
 
-                            MScriptingAPI.StartNewScript("DebugInterface");
+                          //  MScriptingAPI.StartNewScript("DebugInterface");
                             MScriptingAPI.StartNewScript("ReArmouredTruck");
                             MScriptingAPI.StartNewScript("FMVechicleExporter");
                             MScriptingAPI.StartNewScript("PlayerDeath");
                             MScriptingAPI.StartNewScript("UIPlayerSwitch");
                             MScriptingAPI.StartNewScript("FMControls");
                             MScriptingAPI.StartNewScript("VehicleFuel"); 
-                            MScriptingAPI.StartNewScript("PassiveSaving"); 
-
-                            //World.CreateBlip(new Vector3(-1662.98f, 5917.54f, -51f));
-                            //World.CreateBlip(new Vector3(-466f, -688.9f, 100f));
-                            //World.CreateBlip(new Vector3(1207.67f, -454.74f, 65.69f));
-                            //World.CreateBlip(new Vector3(-1007.973f, -487.1707f, 38.9745f));
-                            //World.CreateBlip(new Vector3(-143.7216f, 229.9331f, 93.9431f));
-                            //World.CreateBlip(new Vector3(-1010.027f, -479.242f, 49.025f));
-                            //World.CreateBlip(new Vector3(130.1238f, -1300.266f, 28.2811f));
-                            //World.CreateBlip(new Vector3(130.1238f, -1300.266f, 28.2811f));
-                            //World.CreateBlip(new Vector3(959.3535f, -2994.553f, -39.9685f));
-                            //World.CreateBlip(new Vector3(-1662.98f, 5917.54f, -51f));
-                            //World.CreateBlip(new Vector3(-466f, -688.9f, 100f));
-
-
-                            //World.CreateBlip(new Vector3(1719.613f, 4780.799f, 47.016f));
-                            //World.CreateBlip(new Vector3(1856.554f, 3790.708f, 35.685f));
-                            //World.CreateBlip(new Vector3(1119.367f, 2688.088f, 37.503f));
-                            //World.CreateBlip(new Vector3(1504.917f, 3641.313f, 33.909f));
-                            //World.CreateBlip(new Vector3(-76.144f, 6499.662f, 30.491f));
-                            //World.CreateBlip(new Vector3(-263.768f, 6264.983f, 30.359f));
-                            //World.CreateBlip(new Vector3(-3235.225f, 1069.281f, 16.902f));
-                            //World.CreateBlip(new Vector3(459.142f, 2656.295f, 42.441f));
-                            //World.CreateBlip(new Vector3(-3010.025f, 490.341f, 11.458f));
-                            //World.CreateBlip(new Vector3(1568.543f, 6403.176f, 23.896f));
-                            //World.CreateBlip(new Vector3(1432.17f, 1129.087f, 113.296f));
-                            //World.CreateBlip(new Vector3(1287.894f, -1657.979f, 48.546f));
-                            //World.CreateBlip(new Vector3(1135.572f, -450.011f, 76.279f));
-                            //World.CreateBlip(new Vector3(-1279.644f, -1410.419f, 6.535f));
-                            //World.CreateBlip(new Vector3(-1758.007f, -1141.903f, 12.115f));
-                            //World.CreateBlip(new Vector3(-2269.288f, 289.867f, 173.568f));
-                            //World.CreateBlip(new Vector3(-1107.278f, -505.527f, 34.335f));
-                            //World.CreateBlip(new Vector3(205.832f, -933.469f, 29.692f));
-                            //World.CreateBlip(new Vector3(207.991f, 213.379f, 104.605f));
-                            //World.CreateBlip(new Vector3(-742.511f, 43.149f, 45.473f));
-                            //World.CreateBlip(new Vector3(-742.511f, 43.149f, 45.473f));
-
-                            //for (int i = 0; i < 20; i++)
-                            //{
-                            //    World.CreateBlip(func2364(i)); 
-                            //}
-
-                            for (int i = 747; i < 792; i++)
-                            {
-                                World.CreateBlip(func7199(i));
-                            }
+                            MScriptingAPI.StartNewScript("PassiveSaving");  
 
 
                         }
@@ -146,11 +103,22 @@ namespace Proline.ClassicOnline.LevelScripts
                         }else if(Game.IsControlJustPressed(0, Control.MultiplayerInfo))
                         {
                             MScriptingAPI.StartNewScript("EditorScript");
+                            state = 4;
                         }
-                        state = 4;
+                        else if (Game.IsControlJustPressed(0, Control.FrontendAccept))
+                        {
+                            MScriptingAPI.StartNewScript("StartIntro");
+                        }
                         break;
                     case 4: 
                         while (MScriptingAPI.GetInstanceCountOfScript("EditorScript") > 0)
+                        {
+                            await BaseScript.Delay(1);
+                        }
+                        state = 3;
+                        break;
+                    case 5:
+                        while (MScriptingAPI.GetInstanceCountOfScript("StartIntro") > 0)
                         {
                             await BaseScript.Delay(1);
                         }

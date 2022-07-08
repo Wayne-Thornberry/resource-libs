@@ -10,14 +10,13 @@ using System.Threading.Tasks;
 using Proline.ClassicOnline.MBrain.Data;
 using Proline.ClassicOnline.MData;
 using Proline.ClassicOnline.MBrain.Entity;
-#if CLIENT
 using Proline.CFXExtended.Core;
-#endif
 using Proline.Resource;
 using Proline.ClassicOnline.MDebug;
 using System.Reflection;
 using Proline.ClassicOnline.MScripting;
 using Proline.ClassicOnline.MGame.Data;
+using Proline.Resource.IO;
 
 namespace Proline.ClassicOnline.MBrain
 {
@@ -48,15 +47,15 @@ namespace Proline.ClassicOnline.MBrain
 
             if (!HasLoaded)
             { 
-                var data = MData.API.LoadResourceFile("data/scriptpositions.json");
+                var data = ResourceFile.Load("data/scriptpositions.json");
                 MDebugAPI.LogDebug(data);
-                _scriptPosition = JsonConvert.DeserializeObject<ScriptPositions>(data);
+                _scriptPosition = JsonConvert.DeserializeObject<ScriptPositions>(data.Load());
                 _instance.AddScriptPositionPairs(_scriptPosition.scriptPositionPairs);
                 PosBlacklist.Create();
 
-                var data2 = MData.API.LoadResourceFile("data/scriptobjects.json");
+                var data2 = ResourceFile.Load("data/scriptobjects.json");
                 MDebugAPI.LogDebug(data2);
-                _objs = JsonConvert.DeserializeObject<ScriptObjectData[]>(data2);
+                _objs = JsonConvert.DeserializeObject<ScriptObjectData[]>(data2.Load());
                 var sm = ScriptObjectManager.GetInstance();
                 HasLoaded = true;
             }

@@ -14,9 +14,14 @@ namespace Proline.Modularization.Core
             TaskManager = new List<Task>();
         }
 
+        public bool HasStarted { get; internal set; }
+        public bool IsStarted => !IsStartingUp && HasStarted;
+        public List<ModuleCommand> Commands { get; set; }
         public List<ModuleScript> Scripts { get; internal set; }
         public AssemblyName Name { get; internal set; }
         public Assembly Assembly { get; internal set; }
         public List<Task> TaskManager { get; internal set; }
+        public bool IsStartingUp => StartupScript != null ? !StartupScript.IsFinished : false; 
+        public ModuleScript StartupScript { get; internal set; }
     }
 }

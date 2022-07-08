@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CitizenFX.Core;
+using Newtonsoft.Json;
 using Proline.ClassicOnline.MData.Entity;
 using Proline.ClassicOnline.MDebug;
 using System;
@@ -24,9 +25,12 @@ namespace Proline.ClassicOnline.MData
         {
             try
             {
-                var fm = SaveManager.GetInstance();
-                var saveFile = fm.CreateTempSaveFile();
-                fm.TargetSaveFile(saveFile); 
+                var fm = DataFileManager.GetInstance(); 
+                var saveFile = new SaveFile();
+                saveFile.Identifier = "Tempname";
+                saveFile.Properties = new Dictionary<string, object>();
+                fm.TempFile = saveFile; 
+                fm.ActiveFile = saveFile;
             }
             catch (Exception e)
             {
@@ -43,8 +47,15 @@ namespace Proline.ClassicOnline.MData
                     throw new ArgumentException("Identitier argument cannot be null or empty");
                 } 
 
-                var fm = SaveManager.GetInstance();
-                fm.SaveTempSaveFile(identifier);
+                var fm = DataFileManager.GetInstance();  
+                var id = identifier;//string.IsNullOrEmpty(identifier) ? "SaveFile" + index : identifier;
+                var tempFile = fm.TempFile;
+                tempFile.Identifier = id; 
+                if(fm.TempFile != null)
+                { 
+                    fm.GetSave(Game.Player).InsertSaveFile(fm.TempFile);
+                    fm.ClearTempFile();
+                } 
             }
             catch (Exception e)
             {
@@ -55,9 +66,12 @@ namespace Proline.ClassicOnline.MData
         {
             try
             {
-                var fm = SaveManager.GetInstance();
-                var saveFiles = fm.GetSaveFiles();
-                fm.TargetSaveFile(identifier);
+                var fm = DataFileManager.GetInstance();
+                var save = fm.GetSave(Game.Player);
+                var dataFile = save.GetSaveFile(identifier);
+                if (dataFile == null)
+                    throw new Exception("Could not target a save file, save file does not exist " + identifier);
+                fm.ActiveFile = dataFile;
             }
             catch (Exception e)
             {
@@ -68,8 +82,8 @@ namespace Proline.ClassicOnline.MData
         {
             try
             {
-                var fm = SaveManager.GetInstance();
-                var saveFile = fm.GetTargetSaveFile();
+                var fm = DataFileManager.GetInstance();
+                var saveFile = fm.ActiveFile;
                 var dictionary = saveFile.Properties;
                 if (saveFile != null && dictionary != null)
                 {
@@ -86,8 +100,8 @@ namespace Proline.ClassicOnline.MData
         {
             try
             {
-                var fm = SaveManager.GetInstance();
-                var saveFile = fm.GetTargetSaveFile();
+                var fm = DataFileManager.GetInstance();
+                var saveFile = fm.ActiveFile;
                 if (saveFile == null) return;
                 var dictionary = saveFile.Properties;
                 if (dictionary == null)
@@ -104,8 +118,8 @@ namespace Proline.ClassicOnline.MData
         {
             try
             {
-                var fm = SaveManager.GetInstance();
-                var saveFile = fm.GetTargetSaveFile();
+                var fm = DataFileManager.GetInstance();
+                var saveFile = fm.ActiveFile;
                 if (saveFile == null) 
                     throw new Exception("No save file has been targed");
                 var dictionary = saveFile.Properties;
@@ -135,8 +149,8 @@ namespace Proline.ClassicOnline.MData
         {
             try
             {
-                var fm = SaveManager.GetInstance();
-                var saveFile = fm.GetTargetSaveFile();
+                var fm = DataFileManager.GetInstance();
+                var saveFile = fm.ActiveFile;
                 if (saveFile == null) 
                         throw new Exception("No save file has been targed");
                 var dictionary = saveFile.Properties;

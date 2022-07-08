@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CitizenFX.Core;
+using Newtonsoft.Json;
 using Proline.Modularization.Core.Config;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Console = Proline.Resource.Console;
 
 namespace Proline.Modularization.Core
 {
@@ -43,33 +45,51 @@ namespace Proline.Modularization.Core
         }
 
 
-        public static void StartModule(string module)
+        public static void StartModule(string moduleName)
         {
             var mm = GetInstance();
-            if (mm._modules.ContainsKey(module))
+            if (mm._modules.ContainsKey(moduleName))
             {
-               // mm._modules[module].Enable();
+                var module = mm._modules[moduleName];
+                if(module.Scripts != null)
+                {
+                    module.StartupScript = module.Scripts.FirstOrDefault(e => e.GetType().Name.Equals("Startup"));
+                    if (module.StartupScript != null)
+                        module.StartupScript.Execute();
+                }
+
+                foreach (var item in mm._modules[moduleName].Commands)
+                {
+                    item.RegisterCommand();
+                } ;
+                module.HasStarted = true;
             }
         }
+
+        public static bool HasAllModulesStarted()
+        {
+            var mm = GetInstance();
+            foreach (var item in mm._modules)
+            {
+                if (!item.Value.IsStarted)
+                {
+                    Console.WriteLine(String.Format("{0} Module has not started yet", item.Value.Name)); 
+                    return false;
+                }
+            }
+            return true;
+        } 
 
         public static void ProcessModules()
         {
             var mm = GetInstance();
             foreach (var item in mm._modules.Values)
             {
-                for (int i = 0; i < item.TaskManager.Count; i++)
-                {
-                    var task = item.TaskManager[i];
-                    if(task.IsCompleted || task.IsFaulted || task.IsCanceled)
-                        item.TaskManager.Remove(task);
-                }
-                 
-                foreach (var script in item.Scripts)
-                {
-                    if (!script.IsFinished)
-                    { 
-                        var task = script.Execute();
-                        item.TaskManager.Add(task);
+                if (item.IsStarted)
+                {  
+                    foreach (var script in item.Scripts)
+                    {
+                        script.Execute();
                     }
                 }
             }
@@ -88,6 +108,7 @@ namespace Proline.Modularization.Core
         {
             var mm = GetInstance();
             mm._modules.Add(name, module);
+            //BaseScript.RegisterScript(module);
         }
 
         public static ModuleContainer LoadModule(string moduleName)
@@ -110,18 +131,26 @@ namespace Proline.Modularization.Core
             var assembly = Assembly.Load(assemblyString);
             OutputToConsole($"Succesfully Loaded {assembly.FullName}");
             var scriptTypes = assembly.GetTypes().Where(e => e.BaseType == typeof(ModuleScript)).ToArray();
+            var commandTypes = assembly.GetTypes().Where(e => e.BaseType == typeof(ModuleCommand)).ToArray();
             OutputToConsole($"Getting object from assembly {assembly.FullName}");
             var scripts = new List<ModuleScript>();
+            var commands = new List<ModuleCommand>();
             foreach (var item in scriptTypes)
             {
                 scripts.Add((ModuleScript)Activator.CreateInstance(item)); 
-            } 
+            }
+
+            foreach (var item in commandTypes)
+            {
+                commands.Add((ModuleCommand)Activator.CreateInstance(item));
+            }
             OutputToConsole($"Inserted {assembly.GetName().Name} into memory");
 
             var container = new ModuleContainer();
             container.Name = assembly.GetName();
             container.Scripts = scripts;
             container.Assembly = assembly;
+            container.Commands = commands;
             RegisterModule(assembly.GetName().Name, container);
             return container;
         }

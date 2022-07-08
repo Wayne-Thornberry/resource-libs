@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CitizenFX.Core;
+using Newtonsoft.Json;
 using Proline.ClassicOnline.MData.Entity;
 using Proline.Resource.Eventing;
 using System;
@@ -20,7 +21,7 @@ namespace Proline.ClassicOnline.MData
 
         protected override void OnEventCallback(params object[] args)
         {
-            var instance = SaveManager.GetInstance();
+            var instance = DataFileManager.GetInstance();
             if (args == null) return;
             if(args.Length > 0)
             {
@@ -28,20 +29,26 @@ namespace Proline.ClassicOnline.MData
                 List<SaveFile> saveFiles = JsonConvert.DeserializeObject<List<SaveFile>>(args[0].ToString());
                 Console.WriteLine("data got " + args[0]);
                 foreach (var item in saveFiles)
-                { 
-                    var saveFile = instance.GetSaveFile(item.Identifier); 
-                    if (saveFile != null)
-                    {
-                        instance.OverrightSaveFile(item);
-                    }
-                    else
-                    {
-                        instance.InsertSaveFile(item);
-                    } 
+                {  
+                    instance.GetSave(Game.Player).InsertSaveFile(item); 
                 }
                 instance.HasLoadedFromNet = true;
             }
             
+        }
+         
+        public static LoadFileNetworkEvent TriggerEvent(long id)
+        {
+            var x = new LoadFileNetworkEvent();
+            x.Invoke(id);
+            return x;
+        }
+
+        public static LoadFileNetworkEvent TriggerEvent(string username)
+        {
+            var x = new LoadFileNetworkEvent();
+            x.Invoke(username);
+            return x;
         }
     }
 }

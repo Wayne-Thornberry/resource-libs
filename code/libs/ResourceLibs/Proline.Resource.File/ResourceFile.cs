@@ -12,7 +12,7 @@ namespace Proline.Resource.IO
         }
 
         // private static Log _log = new Log();
-        public static ResourceFile LoadResourceFile(string resourceName, string fileName)
+        public static ResourceFile Load(string resourceName, string fileName)
         {
             try
             {
@@ -32,13 +32,13 @@ namespace Proline.Resource.IO
             return null;
         }
 
-        public static ResourceFile LoadCurrentResourceFile(string fileName)
+        public static ResourceFile Load(string fileName)
         {
             try
             {
                 // _log.Debug("Loading file " + fileName + " from resource " + resourceName);
                 var resourceName = API.GetCurrentResourceName();
-                return LoadResourceFile(resourceName, fileName);
+                return Load(resourceName, fileName);
             }
             catch (FileNotFoundException)
             {

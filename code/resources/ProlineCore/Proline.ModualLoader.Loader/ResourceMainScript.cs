@@ -23,12 +23,15 @@ namespace ProlineServer
         public override async Task OnStart()
         { 
             ModuleManager.StartAllModules();
+            while (!ModuleManager.HasAllModulesStarted())
+            {
+                await Delay(0);
+            }
         }
 
         public override async Task OnUpdate()
-        {
-            ModuleManager.ProcessModules();
-            await BaseScript.Delay(10000);
+        { 
+            ModuleManager.ProcessModules();  
         }
 
         private void LoadResources()
