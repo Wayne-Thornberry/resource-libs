@@ -34,8 +34,10 @@ namespace Proline.ClassicOnline.MScripting
 
         public void Terminate()
         {
-            if(!IsCompleted)
+            if (!IsCompleted)
+            { 
                 CancelToken.Cancel();
+            }
         }
 
         internal async Task Execute(CancellationTokenSource source, object instance, params object[] args)

@@ -51,8 +51,8 @@ namespace Proline.ClassicOnline.MScripting
                 var sim = ScriptInstanceManager.GetInstance();
                 foreach (var instance in instances)
                 {
-                    stm.Remove(instance.Instance);
                     sttm.Remove(instance.ExecutionTask);
+                    stm.Remove(instance.Instance);
                     sim.Remove(instance.InstanceId);
                     var instanceCount = sm.Remove(instance);
                     count++;
