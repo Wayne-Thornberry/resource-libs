@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Proline.Resource.Eventing;
+using Proline.Resource.Globals;
 
 namespace Proline.Resource.Scripting
 {
@@ -42,8 +43,10 @@ namespace Proline.Resource.Scripting
         {
             IsAutoStartEnabled = autoStart;
             _log = new Log();
+            var globalManager = GlobalsManager.GetInstance();
             var manager = EventDictionaryManager.GetInstance();
             manager.SetEventHandlerDictionary(EventHandlers);
+            globalManager.GlobalProperties = GlobalState;
             manager.PlayerList = Players;
         }
 
