@@ -1,1 +1,1 @@
-dotnet cake
+dotnet cake --configuration client

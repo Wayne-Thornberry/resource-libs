@@ -64,10 +64,10 @@ CakeExecuteScript($"./code/tools/ServerLauncher/build.cake");
 CakeExecuteScript($"./code/resources/ProlineCore/build.cake",  new CakeSettings(){ Arguments = clientArgs});  
 CakeExecuteScript($"./code/resources/ProlineCore/build.cake",  new CakeSettings(){ Arguments = serverArgs});  
 
-CakeExecuteScript($"./ext/modules/ClassicModules/build.cake",  new CakeSettings(){ Arguments = clientArgs}); // a script should exist here to build and compile all modules into one package 
 CakeExecuteScript($"./ext/modules/ClassicModules/build.cake",  new CakeSettings(){ Arguments = serverArgs}); // a script should exist here to build and compile all modules into one package 
-CakeExecuteScript($"./ext/levelscripts/ClassicScripts/build.cake");  // a script should exist here to build and compile all modules into one package
-CakeExecuteScript($"./ext/globals/ClassicGlobals/build.cake");  // 
+
+// Building the game here
+CakeExecuteScript($"./ext/build.cake",  new CakeSettings(){ Arguments = clientArgs}); // a script should exist here to build and compile all modules into one package  
 
 
 
