@@ -7,6 +7,10 @@
   <ItemGroup>
     <PackageReference Include="CitizenFX.Core.Client" Version="1.0.5318" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\globals\ClassicGlobals\Proline.ClassicGlobals.Globals\Proline.ClassicOnline.GScripting.csproj" />
+  </ItemGroup>
  
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />

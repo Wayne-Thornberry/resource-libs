@@ -1,0 +1,1 @@
+Powershell.exe -executionpolicy remotesigned -File  %~dp0\update-client.ps1

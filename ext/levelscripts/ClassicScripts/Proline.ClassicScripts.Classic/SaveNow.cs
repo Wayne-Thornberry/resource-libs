@@ -52,6 +52,19 @@ namespace Proline.ClassicOnline.LevelScripts
             ClassicOnline.MData.API.AddDataFileValue("BANK_BALANCE", stat2.GetValue());
             ClassicOnline.MData.API.SaveDataFile(id);
 
+            //ClassicOnline.MData.API.DoesDataFileExist("PlayerVehicle");
+            //if (ClassicOnline.MData.API.DoesDataFileValueExist("VehicleHash"))
+            //{
+            //    var pv = (VehicleHash)ClassicOnline.MData.API.GetDataFileValue<uint>("VehicleHash");
+            //    var position = ClassicOnline.MData.API.GetDataFileValue<Vector3>("VehiclePosition");
+            //    var vehicle = await World.CreateVehicle(new Model(pv), position);
+            //    vehicle.PlaceOnNextStreet();
+            //    vehicle.IsPersistent = true;
+            //    if (vehicle.AttachedBlips.Length == 0)
+            //        vehicle.AttachBlip();
+            //    //blip.IsFlashing = true;
+            //}
+
             await MData.API.SendSaveToCloud();
             Screen.LoadingPrompt.Hide();  
         }

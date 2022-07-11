@@ -9,6 +9,7 @@ using CitizenFX.Core.Native;
 using Proline.ClassicOnline.MGame.Data;
 using Proline.Resource;
 using Proline.CFXExtended.Core;
+using Proline.ClassicOnline.GScripting;
 
 namespace Proline.LevelScripts.Classic
 {
@@ -46,25 +47,29 @@ namespace Proline.LevelScripts.Classic
                         API.SetPedComponentVariation(Game.PlayerPed.Handle, i, component.ComponentIndex, component.ComponentTexture, component.ComponentPallet);
 
                     }
-                    if (ClassicOnline.MData.API.DoesDataFileValueExist("PersonalVehicle"))
+
+                    ClassicOnline.MData.API.SelectDataFile("PlayerVehicle");
+                    if (ClassicOnline.MData.API.DoesDataFileValueExist("VehicleHash"))
                     {
-                        var pv = ClassicOnline.MData.API.GetDataFileValue<PersonalVehicle>("PersonalVehicle");
-                        var vehicle = await World.CreateVehicle(pv.ModelHash, pv.LastPosition);
+                        var pv = (VehicleHash) ClassicOnline.MData.API.GetDataFileValue<uint>("VehicleHash");
+                        var position = ClassicOnline.MData.API.GetDataFileValue<Vector3>("VehiclePosition");
+                        var vehicle = await World.CreateVehicle(new Model(pv), Game.PlayerPed.Position);
                         vehicle.PlaceOnNextStreet();
-                        var blip = vehicle.AttachBlip();
+                        vehicle.IsPersistent = true;
+                        if(vehicle.AttachedBlips.Length == 0)
+                            vehicle.AttachBlip();
                         //blip.IsFlashing = true;
                     }
 
-
-                    if (ClassicOnline.MData.API.DoesDataFileValueExist("PersonalWeapons"))
+                    ClassicOnline.MData.API.SelectDataFile("PlayerWeapon"); 
+                    if (ClassicOnline.MData.API.DoesDataFileValueExist("WeaponHash"))
                     {
-                        var list = ClassicOnline.MData.API.GetDataFileValue<List<PersonalWeapon>>("PersonalWeapons");
-                        foreach (var item in list)
-                        {
-                            Console.WriteLine(item.Hash);
-                            Game.PlayerPed.Weapons.Give((WeaponHash)item.Hash, item.AmmoCount, true, true);
-                        }
+                        var hash = (WeaponHash) ClassicOnline.MData.API.GetDataFileValue<uint>("WeaponHash");
+                        var ammo = ClassicOnline.MData.API.GetDataFileValue<int>("WeaponAmmo");
+                        Game.PlayerPed.Weapons.Give((WeaponHash)hash, ammo, true, true);
                     }
+
+                    Console.WriteLine(ScriptingGlobals.Testing);
                 }
                 else
                 { 

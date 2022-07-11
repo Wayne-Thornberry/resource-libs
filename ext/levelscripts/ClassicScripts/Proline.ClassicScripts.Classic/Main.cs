@@ -7,6 +7,7 @@ using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Newtonsoft.Json;
 using Proline.CFXExtended.Core;
+using Proline.ClassicOnline.GScripting;
 using Proline.ClassicOnline.MDebug;
 using Proline.ClassicOnline.MGame;
 using Proline.ClassicOnline.MGame.Data;
@@ -21,11 +22,14 @@ namespace Proline.ClassicOnline.LevelScripts
         public async Task Execute(object[] args, CancellationToken token)
         {
 
+
             var state = 0;
             // Setup the world
             API.SetInstancePriorityMode(true);
             API.SetInstancePriorityHint(3);
             // Enable Trains
+            ScriptingGlobals.Testing = 2f;
+
             API.SwitchTrainTrack(0, true);
             API.SwitchTrainTrack(3, true);
             API.SetTrainTrackSpawnFrequency(0, 120000);

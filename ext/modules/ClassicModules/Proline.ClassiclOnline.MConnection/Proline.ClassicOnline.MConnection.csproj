@@ -33,6 +33,9 @@
 		</Reference>
 		<PackageReference Include="CitizenFX.Core.$(Configuration)" Version="1.0.5179" />
 		<ProjectReference Include="..\Proline.ClassicComponents.Data\Proline.ClassicOnline.MData.csproj" />
+		<Reference Include="Proline.CFXExtended.Core.Client">
+		  <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.Client.dll</HintPath>
+		</Reference>
 		<Reference Include="Proline.Modularization.Core.$(Configuration)">
 			<HintPath>..\..\..\..\artifacts\ModuleFramework\$(Configuration)\Proline.Modularization.Core.$(Configuration).dll</HintPath>
 		</Reference>

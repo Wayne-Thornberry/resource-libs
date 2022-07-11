@@ -31,22 +31,22 @@ namespace Proline.ClassicOnline.LevelScripts
                    + CitizenFX.Core.Game.PlayerPed.Handle + "\n" +
                    _handles.Count + " Entities in the world ";
                 ScreenAPI.DrawDebugText2D(t, new PointF(0.01f, 0.05f), 0.3f, 0);
-                foreach (Entity entity in World.GetAllProps())
-                { 
-                    //MDebugAPI.LogDebug(API.GetEntityType(handle).ToString());
-                    if (entity == null) continue;
-                    if (!API.IsEntityVisible(entity.Handle) || World.GetDistance(entity.Position, CitizenFX.Core.Game.PlayerPed.Position) > 10f) continue;
-                    // var pos = entity.Model.GetDimensions();
-                    var d = entity.Position + new Vector3(0, 0, (entity.Model.GetDimensions().Z * 0.8f));
-                    var x = $"{entity.Handle}\n" +
-                        $"{entity.Model.Hash}\n" +
-                        $"{Math.Round(entity.Heading, 2)}\n" +
-                        $"{entity.Health}\n";// +
-                                             //$"{ExampleAPI.IsEntityScripted(entity.Handle)}";
-                    MRenderingAPI.DrawEntityBoundingBox(entity.Handle, 125, 125, 125, 100);
-                    MRenderingAPI.DrawDebugText3D(x, d, 3f, 0);
+                //foreach (Entity entity in World.GetAllProps())
+                //{ 
+                //    //MDebugAPI.LogDebug(API.GetEntityType(handle).ToString());
+                //    if (entity == null) continue;
+                //    if (!API.IsEntityVisible(entity.Handle) || World.GetDistance(entity.Position, CitizenFX.Core.Game.PlayerPed.Position) > 10f) continue;
+                //    // var pos = entity.Model.GetDimensions();
+                //    var d = entity.Position + new Vector3(0, 0, (entity.Model.GetDimensions().Z * 0.8f));
+                //    var x = $"{entity.Handle}\n" +
+                //        $"{entity.Model.Hash}\n" +
+                //        $"{Math.Round(entity.Heading, 2)}\n" +
+                //        $"{entity.Health}\n";// +
+                //                             //$"{ExampleAPI.IsEntityScripted(entity.Handle)}";
+                //    //MRenderingAPI.DrawEntityBoundingBox(entity.Handle, 125, 125, 125, 100);
+                //    //MRenderingAPI.DrawDebugText3D(x, d, 3f, 0);
 
-                }
+                //}
                 await BaseScript.Delay(0);
             }
         }

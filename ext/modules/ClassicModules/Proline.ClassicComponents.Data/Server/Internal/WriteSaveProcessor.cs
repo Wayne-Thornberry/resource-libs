@@ -24,9 +24,10 @@ namespace Proline.ClassicOnline.MData.Server.Internal
                 var playerPath = Path.Combine(LocalPath, "ProjectOnline", "Saves", player.Identifiers["license"]);
                 if (!Directory.Exists(playerPath))
                     Directory.CreateDirectory(playerPath);
-                Console.WriteLine(playerPath);
+                var path = Path.Combine(playerPath, String.Format("{0}.json", item.Identifier));
+                Console.WriteLine(path);
                 var json = JsonConvert.SerializeObject(item.Properties, Formatting.Indented);
-                File.WriteAllText(Path.Combine(playerPath, String.Format("{0}.json", item.Identifier)), json);
+                File.WriteAllText(path, json);
             }
         }
 
