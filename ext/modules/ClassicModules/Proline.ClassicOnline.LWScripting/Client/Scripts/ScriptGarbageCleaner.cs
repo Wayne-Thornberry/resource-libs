@@ -1,6 +1,7 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using Proline.ClassicOnline.MScripting.Config;
+using Proline.ClassicOnline.MScripting.Internal;
 using Proline.Modularization.Core;
 using Proline.Resource.Configuration;
 using Proline.Resource.Logging;
@@ -45,8 +46,14 @@ namespace Proline.ClassicOnline.MScripting
                 if (instances.Count() > 0)
                     Console.WriteLine(String.Format("Removing {0} script instances that have been completed", instances.Count()));
                 int count = 0;
+                var sttm = ScriptTaskTokenManager.GetInstance();
+                var stm = ScriptTaskManager.GetInstance();
+                var sim = ScriptInstanceManager.GetInstance();
                 foreach (var instance in instances)
                 {
+                    stm.Remove(instance.Instance);
+                    sttm.Remove(instance.ExecutionTask);
+                    sim.Remove(instance.InstanceId);
                     var instanceCount = sm.Remove(instance);
                     count++;
                     Console.WriteLine(String.Format("{0} Removed {1} instances", instance.Name, 1));

@@ -18,7 +18,7 @@ namespace Proline.ClassicOnline.LevelScripts
         public async Task Execute(object[] args, CancellationToken token)
         { 
             var nextSaveTime = DateTime.UtcNow.AddMinutes(1);  
-            while (true)
+            while (!token.IsCancellationRequested)
             {
                 if (DateTime.UtcNow > nextSaveTime)
                 {
