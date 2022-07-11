@@ -34,16 +34,18 @@ namespace Proline.ClassicOnline.MScripting
 
         public void Terminate()
         {
-            CancelToken.Cancel();
+            if(!IsCompleted)
+                CancelToken.Cancel();
         }
 
         internal async Task Execute(CancellationTokenSource source, object instance, params object[] args)
         { 
             var terminationCode = 0;
-            var name = Instance.GetType().Name; 
+            var type = instance.GetType();
+            var name = type.Name; 
             try
             {
-                var method = instance.GetType().GetMethod("Execute");
+                var method = type.GetMethod("Execute");
                 Console.WriteLine(string.Format("{0} Script Started", name, terminationCode));
                 var invokationTask = (Task)method.Invoke(instance, new object[] { args, source.Token });
                 while (!invokationTask.IsCompleted && !source.IsCancellationRequested)
