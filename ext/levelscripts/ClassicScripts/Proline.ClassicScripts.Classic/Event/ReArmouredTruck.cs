@@ -103,7 +103,8 @@ namespace Proline.ClassicOnline.LevelScripts.Event
                 }
                 else
                 {
-                    MScriptingAPI.MarkScriptAsNoLongerNeeded();
+                    MScriptingAPI.MarkScriptAsNoLongerNeeded(this);
+                    MScriptingAPI.TerminateScriptInstance(this);
                 }
                 await BaseScript.Delay(0);
             }

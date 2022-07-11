@@ -1,4 +1,5 @@
 ﻿using Proline.ClassicOnline.MScripting.Config;
+using Proline.ClassicOnline.MScripting.Internal;
 using Proline.Modularization.Core;
 using Proline.Resource.Eventing;
 using Proline.Resource.Logging;
@@ -12,8 +13,7 @@ using Console = Proline.Resource.Console;
 namespace Proline.ClassicOnline.MScripting
 {
     internal partial class PlayerReadyEvent : LoudEvent
-    {
-        private Log _log => new Log();
+    { 
 
         public static void InvokeEvent(string username)
         {  
@@ -21,20 +21,19 @@ namespace Proline.ClassicOnline.MScripting
         }
 
         protected override object OnEventTriggered(params object[] args)
-        {
-            var name = ModuleManager.GetCurrentModuleName();
+        { 
             var lsAssembly = ScriptingConfigSection.ModuleConfig;
             Console.WriteLine("Retrived config section");
-            var _lwScriptManager = LWScriptManager.GetInstance();
+            var _lwScriptManager = ScriptTypeLibrary.GetInstance();
 
             if (lsAssembly != null)
             {
-                Console.WriteLine(_log.Debug($"Loading level scripts. from {lsAssembly.LevelScriptAssemblies.Count()} assemblies"));
+                Console.WriteLine($"Loading level scripts. from {lsAssembly.LevelScriptAssemblies.Count()} assemblies");
                 foreach (var item in lsAssembly.LevelScriptAssemblies)
                 {
-                    _lwScriptManager.ProcessAssembly(item);
-
+                    _lwScriptManager.ProcessAssembly(item); 
                 }
+                ScriptTypeLibrary.HasLoadedScripts = true;
             }
 
 

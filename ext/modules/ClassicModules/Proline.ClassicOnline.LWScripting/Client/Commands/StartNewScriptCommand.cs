@@ -15,14 +15,14 @@ namespace Proline.ClassicOnline.MScripting.Commands
         {
         }
 
-        protected override Delegate GetCommandHandler()
+        protected override void OnCommandExecute(params object[] args)
         {
-            return new Action<string>(OnStartNewScript);
-        }
-
-        private void OnStartNewScript(string scriptName)
-        {
+            if (args.Count() == 0)
+            {
+                return;
+            }
+            var scriptName = args[0].ToString();
             MScriptingAPI.StartNewScript(scriptName);
-        }
+        } 
     }
 }
