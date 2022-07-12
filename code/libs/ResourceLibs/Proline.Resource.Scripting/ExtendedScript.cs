@@ -46,7 +46,7 @@ namespace Proline.Resource.Scripting
             var globalManager = GlobalsManager.GetInstance();
             var manager = EventDictionaryManager.GetInstance();
             manager.SetEventHandlerDictionary(EventHandlers);
-            globalManager.GlobalProperties = GlobalState;
+            globalManager.NetworkedProperties = GlobalState;
             manager.PlayerList = Players;
         }
 

@@ -12,11 +12,12 @@ namespace Proline.ClassicOnline.GScripting
         public static float Testing { 
             get {
                 var instance = GlobalsManager.GetInstance();
-                return instance.GlobalProperties["Testing"];
+                return instance.GetGlobal<float>("Testing", false);
             } 
             set { 
                 var instance = GlobalsManager.GetInstance();
-                instance.GlobalProperties["Testing"] = value;
-            } }
+                instance.SetGlobal("Testing", value, false);
+            } 
+        }
     }
 }
