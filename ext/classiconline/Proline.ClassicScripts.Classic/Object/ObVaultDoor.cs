@@ -23,7 +23,7 @@ namespace Proline.ClassicOnline.SClassic.Object
             //API.DoorControl((uint)LocalEntity.Model.Hash, LocalEntity.Position.X, LocalEntity.Position.Y, LocalEntity.Position.Z, true,
             //    1f, 1f, 1f);
 
-            while (token.IsCancellationRequested)
+            while (!token.IsCancellationRequested)
             {
                 Screen.DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to open the vault door");
 

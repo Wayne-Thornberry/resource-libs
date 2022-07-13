@@ -46,44 +46,46 @@ namespace Proline.CFXExtended.Core.Scaleforms
         protected void CallFunction(string function, params object[] arguments)
         {
             API.BeginScaleformMovieMethod(Handle, function);
-            foreach (var argument in arguments)
+            if(arguments.Length > 0 && arguments != null)
             {
-                if (argument is int)
+                foreach (var argument in arguments)
                 {
-                    API.PushScaleformMovieMethodParameterInt((int)argument);
+                    if (argument is int)
+                    {
+                        API.PushScaleformMovieMethodParameterInt((int)argument);
+                    }
+                    else if (argument is string)
+                    {
+                        API.PushScaleformMovieMethodParameterString((string)argument);
+                    }
+                    else if (argument is char)
+                    {
+                        API.PushScaleformMovieMethodParameterString(argument.ToString());
+                    }
+                    else if (argument is float)
+                    {
+                        API.PushScaleformMovieMethodParameterFloat((float)argument);
+                    }
+                    else if (argument is double)
+                    {
+                        API.PushScaleformMovieMethodParameterFloat((float)(double)argument);
+                    }
+                    else if (argument is bool)
+                    {
+                        API.PushScaleformMovieMethodParameterBool((bool)argument);
+                    }
+                    else if (argument is ScaleformArgumentTXD)
+                    {
+                        API.PushScaleformMovieMethodParameterString(((ScaleformArgumentTXD)argument)._txd);
+                    }
+                    else
+                    {
+                        throw new ArgumentException(
+                            string.Format("Unknown argument type {0} passed to scaleform with handle {1}.",
+                                argument.GetType().Name, Handle), "arguments");
+                    }
                 }
-                else if (argument is string)
-                {
-                    API.PushScaleformMovieMethodParameterString((string)argument);
-                }
-                else if (argument is char)
-                {
-                    API.PushScaleformMovieMethodParameterString(argument.ToString());
-                }
-                else if (argument is float)
-                {
-                    API.PushScaleformMovieMethodParameterFloat((float)argument);
-                }
-                else if (argument is double)
-                {
-                    API.PushScaleformMovieMethodParameterFloat((float)(double)argument);
-                }
-                else if (argument is bool)
-                {
-                    API.PushScaleformMovieMethodParameterBool((bool)argument);
-                }
-                else if (argument is ScaleformArgumentTXD)
-                {
-                    API.PushScaleformMovieMethodParameterString(((ScaleformArgumentTXD)argument)._txd);
-                }
-                else
-                {
-                    throw new ArgumentException(
-                        string.Format("Unknown argument type {0} passed to scaleform with handle {1}.",
-                            argument.GetType().Name, Handle), "arguments");
-                }
-            }
-
+            }  
             API.EndScaleformMovieMethod();
         }
 

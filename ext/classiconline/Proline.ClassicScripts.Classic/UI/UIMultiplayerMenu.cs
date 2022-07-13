@@ -9,21 +9,21 @@ using Proline.CFXExtended.Core.Scaleforms;
 
 namespace Proline.ClassicOnline.SClassic.UI
 {
-    public struct MultiplayerMenuSlot
-    {
-        public string Username;
-        public string CrewTag;
-        public int Rank;
-        public int Points;
+    //public struct MultiplayerMenuSlot
+    //{
+    //    public string Username;
+    //    public string CrewTag;
+    //    public int Rank;
+    //    public int Points;
 
-        public MultiplayerMenuSlot(string name, string tag, int rank, int points)
-        {
-            Username = name;
-            CrewTag = tag;
-            Rank = rank;
-            Points = points;
-        }
-    }
+    //    public MultiplayerMenuSlot(string name, string tag, int rank, int points)
+    //    {
+    //        Username = name;
+    //        CrewTag = tag;
+    //        Rank = rank;
+    //        Points = points;
+    //    }
+    //}
 
     public class UIMultiplayerMenu
     {

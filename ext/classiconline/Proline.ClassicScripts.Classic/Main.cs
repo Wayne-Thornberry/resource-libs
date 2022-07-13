@@ -80,13 +80,14 @@ namespace Proline.ClassicOnline.SClassic
                         {
 
                             //  MScriptingAPI.StartNewScript("DebugInterface");
-                            MScriptingAPI.StartNewScript("ReArmouredTruck");
+                            //MScriptingAPI.StartNewScript("ReArmouredTruck");
                             MScriptingAPI.StartNewScript("FMVechicleExporter");
                             MScriptingAPI.StartNewScript("PlayerDeath");
                             MScriptingAPI.StartNewScript("UIPlayerSwitch");
                             MScriptingAPI.StartNewScript("FMControls");
                             MScriptingAPI.StartNewScript("VehicleFuel");
                             MScriptingAPI.StartNewScript("PassiveSaving");
+                            MScriptingAPI.StartNewScript("UIFreemodeHUD");
 
 
                         }
