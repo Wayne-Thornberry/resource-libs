@@ -1,11 +1,13 @@
-﻿using Proline.Resource.Eventing;
+﻿using CitizenFX.Core;
+using Proline.Resource.Eventing;
+using ProlineCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.ClassicOnline.MData
+namespace ProlineCore.Events
 {
     internal partial class PlayerJoinedEvent : LoudEvent
     {
@@ -33,8 +35,16 @@ namespace Proline.ClassicOnline.MData
                 _event = null;
             }
         }
-        protected override object OnEventTriggered(params object[] args)
+        protected override object OnEventTriggered(Player player, params object[] args)
         {
+            var sm = DataFileManager.GetInstance();
+            if (!sm.DoesPlayerHaveSave(player))
+            {
+                API.PullSaveFromLocal(player);
+            }
+
+            var dq = DownloadQueue.GetInstance();
+            dq.Enqueue(player);
             return null;
         }
     }

@@ -38,7 +38,7 @@ namespace Proline.Resource.Eventing
 
         public void Subscribe()
         {
-            var instance = EventDictionaryManager.GetInstance();  
+            var instance = EventManager.GetInstance();  
             Players = instance.PlayerList;
             instance.AddEvent(this);
             IsSubscribed = true;
@@ -46,7 +46,7 @@ namespace Proline.Resource.Eventing
 
         public void Unsubscribe()
         {
-            var instance = EventDictionaryManager.GetInstance();  
+            var instance = EventManager.GetInstance();  
             Players = null;
             instance.RemoveEvent(this);
             IsSubscribed = false;

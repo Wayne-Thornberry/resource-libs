@@ -2,7 +2,8 @@
 
 	<PropertyGroup>
 		<TargetFramework>net452</TargetFramework>
-		<Platforms>AnyCPU</Platforms> 
+		<Platforms>AnyCPU</Platforms>
+		<Configurations>Debug;Release;Server;Client</Configurations> 
 	</PropertyGroup>
   
 	<ItemGroup>

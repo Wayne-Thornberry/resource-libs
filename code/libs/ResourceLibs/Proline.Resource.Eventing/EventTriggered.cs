@@ -8,6 +8,7 @@
         public bool IsCallback { get; set; }
         public bool HasCallback { get; set; }
         public string CallbackEventName { get; set; }
+        public int EventType { get; set; }
         public object[] Args { get; set; }
     }
 }

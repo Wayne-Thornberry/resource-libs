@@ -44,7 +44,7 @@ namespace Proline.Resource.Scripting
             IsAutoStartEnabled = autoStart;
             _log = new Log();
             var globalManager = GlobalsManager.GetInstance();
-            var manager = EventDictionaryManager.GetInstance();
+            var manager = EventManager.GetInstance();
             manager.SetEventHandlerDictionary(EventHandlers);
             globalManager.NetworkedProperties = GlobalState;
             manager.PlayerList = Players;

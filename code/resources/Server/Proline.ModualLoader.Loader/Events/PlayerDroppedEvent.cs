@@ -5,25 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.ClassicOnline.MData
+namespace ProlineCore.Events
 {
-    internal partial class PlayerJoinedEvent : LoudEvent
+    internal partial class PlayerDroppedEvent : LoudEvent
     {
-        public PlayerJoinedEvent() : base(PLAYERJOINEDHANDLER)
+        public PlayerDroppedEvent() : base(PLAYERDROPPEDHANDLER)
         {
         }
 
-        private static PlayerJoinedEvent _event;
-        public const string PLAYERJOINEDHANDLER = "PlayerJoinedHandler";
+        private static PlayerDroppedEvent _event;
+        public const string PLAYERDROPPEDHANDLER = "PlayerDroppedHandler";
 
         public static void SubscribeEvent()
         {
             if (_event == null)
             {
-                _event = new PlayerJoinedEvent();
+                _event = new PlayerDroppedEvent();
                 _event.Subscribe();
             }
         }
+
 
         public static void UnsubscribeEvent()
         {
@@ -33,9 +34,11 @@ namespace Proline.ClassicOnline.MData
                 _event = null;
             }
         }
-        protected override object OnEventTriggered(params object[] args)
+        public static void InvokeEvent(string username)
         {
-            return null;
+            var events = new PlayerDroppedEvent();
+            events.Invoke(null, username);
         }
+
     }
 }

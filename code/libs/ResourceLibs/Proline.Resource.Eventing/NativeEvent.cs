@@ -18,7 +18,7 @@ namespace Proline.Resource.Eventing
 
         public void Subscribe(Delegate action, string eventNameOverride = null)
         {
-            var instance = EventDictionaryManager.GetInstance();
+            var instance = EventManager.GetInstance();
             var dictionary = instance.GetEventHandlerDictionary();
             var eventName = string.IsNullOrEmpty(eventNameOverride) ? EventName : eventNameOverride;
             if (!dictionary.ContainsKey(eventName))
@@ -35,7 +35,7 @@ namespace Proline.Resource.Eventing
 
         public void Unsubscribe(string eventNameOverride = null)
         {
-            var instance = EventDictionaryManager.GetInstance();
+            var instance = EventManager.GetInstance();
             var dictionary = instance.GetEventHandlerDictionary();
             var eventName = string.IsNullOrEmpty(eventNameOverride) ? EventName : eventNameOverride;
             Console.WriteLine("Unsubscribed " + eventName); 

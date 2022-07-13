@@ -145,7 +145,7 @@ namespace Proline.Resource.Eventing
                 var eventTriggered = new EventTriggered() { EventName = EventName,Args = args, IsCallback = true, CallbackEventName = callbackName };
                 var json = JsonConvert.SerializeObject(eventTriggered);
                 Console.WriteLine("Sending Data... " + json);
-                player.TriggerEvent(EventDictionaryManager.Key, json); 
+                player.TriggerEvent(EventManager.Key, json); 
             }
         }
 
@@ -166,7 +166,7 @@ namespace Proline.Resource.Eventing
                 Subscribe();
             }
             var json = JsonConvert.SerializeObject(callbackEventRequest);
-            player.TriggerEvent(EventDictionaryManager.Key, json); 
+            player.TriggerEvent(EventManager.Key, json); 
         }
 
         protected virtual void OnEventCallback(Player player, params object[] args) { }

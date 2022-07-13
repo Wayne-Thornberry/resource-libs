@@ -39,7 +39,7 @@ namespace Proline.Resource.Eventing
         {
             var callbackEventRequest = new EventTriggered() { EventName = EventName, Args = args }; 
             var json = JsonConvert.SerializeObject(callbackEventRequest);
-            BaseScript.TriggerEvent(EventDictionaryManager.Key, json); 
+            BaseScript.TriggerEvent(EventManager.Key, json); 
         } 
 
         internal override void OnEventTriggered([FromSource] Player player, EventTriggered data)
@@ -48,7 +48,6 @@ namespace Proline.Resource.Eventing
             var args = data.Args; 
             Console.WriteLine("Calling event triggered");
             var returnData = OnEventTriggered(player, args);
-            BaseScript.TriggerClientEvent(EventDictionaryManager.Key, JsonConvert.SerializeObject(data)); 
         } 
 #endif
     }

@@ -4,32 +4,67 @@ using Proline.Resource;
 using Proline.Resource.Configuration;
 using Proline.Resource.Framework;
 using Proline.Resource.Logging;
+using Proline.ServerCore.IO.Actions;
+using ProlineCore.Events;
+using ProlineCore.Events.Special;
+using ProlineCore.Internal;
 using System.Reflection;
 using System.Threading.Tasks;
 using Console = Proline.Resource.Console;
 
-namespace ProlineServer
+namespace ProlineCore
 {
     public class ResourceMainScript : ResourceScript
-    { 
+    {
         public override async Task OnLoad()
-        { 
+        {
+            ReadFileAction.SubscribeEvent();
+            WriteFileAction.SubscribeEvent();
+            SpecialPlayerConnectingEvent.SubscribeEvent();
+            SpecialPlayerDroppedEvent.SubscribeEvent();
+            PlayerJoinedEvent.SubscribeEvent();
+            PlayerConnectedEvent.SubscribeEvent();
             LoadResources();
-            ModuleManager.LoadModules();
         }
 
         public override async Task OnStart()
-        { 
-            ModuleManager.StartAllModules();
-            while (!ModuleManager.HasAllModulesStarted())
-            {
-                await Delay(0);
-            }
+        {
+
         }
 
         public override async Task OnUpdate()
-        { 
-            ModuleManager.ProcessModules();  
+        {
+            var instance = ConnectionQueue.GetInstance();
+            while (instance.Count > 0)
+            {
+                var connection = instance.Dequeue();
+                PlayerConnectingEvent.InvokeEvent(connection.Player.Name);
+                connection.Defferal.done();
+                PlayerConnectedEvent.InvokeEvent(connection.Player.Name);
+            }
+
+
+            var disconnectionQueue = DisconnectionQueue.GetInstance();
+            while (disconnectionQueue.Count > 0)
+            {
+                var connection = disconnectionQueue.Dequeue();
+                PlayerDroppedEvent.InvokeEvent(connection.Player.Name);
+            }
+
+            var dq = DownloadQueue.GetInstance();
+            while (dq.Count > 0)
+            {
+                var player = dq.Dequeue();
+                await API.PullSaveFromCloudAsync(player, player.Name);
+                PlayerReadyEvent.InvokeEvent();
+            }
+
+            var uq = UploadQueue.GetInstance();
+            while (uq.Count > 0)
+            {
+                var save = uq.Dequeue();
+                await API.SendSaveToCloudAsync(save.Owner, save);
+            }
         }
 
         private void LoadResources()
