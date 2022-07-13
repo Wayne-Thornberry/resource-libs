@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using Proline.CFXExtended.Core.Scaleforms;
+using Proline.ClassicOnline.MScripting;
 
 namespace Proline.ClassicOnline.SClassic.UI
 {
@@ -60,6 +61,7 @@ namespace Proline.ClassicOnline.SClassic.UI
                     SelectedItem = Items[SelectedIndex - 1];
                     Game.PlaySound("NAV_UP_DOWN", "HUD_FREEMODE_SOUNDSET");
                     Scaleform.SetSelectedIndex(SelectedIndex);
+                    MDebug.MDebugAPI.LogDebug(SelectedIndex);
                 }
                 else if (Game.IsControlJustPressed(0, Control.FrontendDown))
                 {
@@ -68,16 +70,37 @@ namespace Proline.ClassicOnline.SClassic.UI
                     SelectedItem = Items[SelectedIndex - 1];
                     Game.PlaySound("NAV_UP_DOWN", "HUD_FREEMODE_SOUNDSET");
                     Scaleform.SetSelectedIndex(SelectedIndex);
+                    MDebug.MDebugAPI.LogDebug(SelectedIndex);
                 }
                 else if (Game.IsControlJustPressed(0, Control.FrontendAccept))
                 {
                     Game.PlaySound("SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET");
+                    switch (SelectedIndex)
+                    {
+                        case 1:
+                            { 
+                                MScriptingAPI.StartNewScript("PlayerLoading");
+                                Stage = -1;
+                                Hide();
+                            }
+                            break;
+                    }
+                    MDebug.MDebugAPI.LogDebug(SelectedIndex);
                 }
                 else if (Game.IsControlJustPressed(0, Control.FrontendCancel))
                 {
-                    Game.PlaySound("SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET");
-                    Stage = -1;
-                    Hide();
+                    switch (Stage)
+                    {
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                            Stage = 1;
+                            break;
+                    }
+                    //Game.PlaySound("SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET");
+                    //Stage = -1;
+                    //Hide();
                 }
                 Scaleform.Render2D();
                 await BaseScript.Delay(0);

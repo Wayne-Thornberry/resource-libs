@@ -50,7 +50,7 @@ namespace Proline.ClassicOnline.MScripting.Internal
             var method = InstanceType.GetMethod("Execute");
             Console.WriteLine(string.Format("{0} Script Started", Name));
             _executionTask = (Task)method.Invoke(_instance, new object[] { args, _tokenSource.Token });
-            Console.WriteLine(string.Format("{0} Completed", Name));
+            Console.WriteLine(string.Format("{0} Executed Succesfully, Running", Name));
         }
     }
 }

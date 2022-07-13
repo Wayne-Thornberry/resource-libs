@@ -24,11 +24,19 @@ namespace Proline.ClassicOnline.SClassic
         {
             while (!token.IsCancellationRequested)
             {
-                if (!Game.PlayerPed.IsInVehicle()) return;
-                if (!(Game.PlayerPed.CurrentVehicle.CurrentRPM > DeadZone ||
-                      Game.PlayerPed.CurrentVehicle.CurrentRPM < -DeadZone)) return;
-                Game.PlayerPed.CurrentVehicle.FuelLevel -= Game.PlayerPed.CurrentVehicle.CurrentRPM / ConsumptionRate * Game.LastFrameTime;
-                if (Game.PlayerPed.CurrentVehicle.FuelLevel < DetectionLevel) Game.PlayerPed.CurrentVehicle.FuelLevel = 0f;
+                if (Game.PlayerPed.IsInVehicle())
+                {
+                    if (!(Game.PlayerPed.CurrentVehicle.CurrentRPM > DeadZone ||
+      Game.PlayerPed.CurrentVehicle.CurrentRPM < -DeadZone))
+                    {
+                        await BaseScript.Delay(0);
+                        continue;
+                    }
+                    Game.PlayerPed.CurrentVehicle.FuelLevel -= Game.PlayerPed.CurrentVehicle.CurrentRPM / ConsumptionRate * Game.LastFrameTime;
+                    if (Game.PlayerPed.CurrentVehicle.FuelLevel < DetectionLevel) 
+                        Game.PlayerPed.CurrentVehicle.FuelLevel = 0f;
+
+                }
                 await BaseScript.Delay(0);
             }
         }
