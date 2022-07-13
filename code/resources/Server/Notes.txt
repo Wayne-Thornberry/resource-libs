@@ -1,0 +1,10 @@
+As it is right now, the server and client both act the same way. They both need to seperate
+
+The server needs to act like a relay to other clients while the client does the heavy load of managing the modules
+
+I would need to write a seperate server instance and provide access libraries that use callback events.
+
+Server APIs would be:
+WriteLocal
+ReadLocal
+CallAPI - Web proxies

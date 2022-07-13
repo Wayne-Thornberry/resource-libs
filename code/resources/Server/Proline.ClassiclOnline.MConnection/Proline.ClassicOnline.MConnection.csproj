@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net452</TargetFramework>
+		<Platforms>AnyCPU</Platforms> 
+	</PropertyGroup> 
+	<ItemGroup>
+		<Reference Include="Proline.DBAccess.Proxies">
+			<HintPath>..\..\..\..\artifacts\UserManagment\Proline.DBAccess.Proxies.dll</HintPath>
+		</Reference>
+		<Reference Include="Microsoft.CSharp" />
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
+		</Reference>
+		<PackageReference Include="CitizenFX.Core.Server" Version="1.0.5179" />
+		<ProjectReference Include="..\Proline.ClassicComponents.Data\Proline.ClassicOnline.MData.csproj" />
+		<Reference Include="Proline.CFXExtended.Core.Client">
+		  <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.Client.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Modularization.Core.Server">
+			<HintPath>..\..\..\..\artifacts\ModuleFramework\Server\Proline.Modularization.Core.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Server">
+			<HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Configuration.Server">
+			<HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.Configuration.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Eventing.Server">
+		  <HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.Eventing.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Framework.Server">
+			<HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.Framework.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.IO.Server">
+			<HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.IO.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Logging.Server">
+			<HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.Logging.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Scripting.Server">
+			<HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.Scripting.Server.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+</Project>
