@@ -9,26 +9,26 @@ using Proline.ClassicOnline.MDebug;
 using Proline.ClassicOnline.MRendering;
 using Proline.ClassicOnline.MScreen;
 
-namespace Proline.ClassicOnline.LevelScripts
+namespace Proline.ClassicOnline.SClassic
 {
-    public class DebugInterface 
-    { 
+    public class DebugInterface
+    {
         private List<int> _handles;
 
         public DebugInterface()
-        { 
-            _handles = new List<int>(); 
+        {
+            _handles = new List<int>();
         }
-          
+
 
         public async Task Execute(object[] args, CancellationToken token)
         {
             while (!token.IsCancellationRequested)
-            { 
-                var t = CitizenFX.Core.Game.PlayerPed.Position.ToString() + "H:" + CitizenFX.Core.Game.PlayerPed.Heading + "\n"
-                   + CitizenFX.Core.Game.PlayerPed.Model.Hash + "\n"
-                   + CitizenFX.Core.Game.PlayerPed.Health + "\n"
-                   + CitizenFX.Core.Game.PlayerPed.Handle + "\n" +
+            {
+                var t = Game.PlayerPed.Position.ToString() + "H:" + Game.PlayerPed.Heading + "\n"
+                   + Game.PlayerPed.Model.Hash + "\n"
+                   + Game.PlayerPed.Health + "\n"
+                   + Game.PlayerPed.Handle + "\n" +
                    _handles.Count + " Entities in the world ";
                 ScreenAPI.DrawDebugText2D(t, new PointF(0.01f, 0.05f), 0.3f, 0);
                 //foreach (Entity entity in World.GetAllProps())

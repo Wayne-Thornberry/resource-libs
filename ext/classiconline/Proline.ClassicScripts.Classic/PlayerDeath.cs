@@ -6,9 +6,9 @@ using CitizenFX.Core.UI;
 using Proline.CFXExtended.Core;
 using Proline.ClassicOnline.MDebug;
 
-namespace Proline.ClassicOnline.LevelScripts
+namespace Proline.ClassicOnline.SClassic
 {
-    public class PlayerDeath 
+    public class PlayerDeath
     {
         public enum SpawnType
         {
@@ -60,16 +60,16 @@ namespace Proline.ClassicOnline.LevelScripts
         public async Task Execute(object[] args, CancellationToken token)
         {
             while (!token.IsCancellationRequested)
-            {   
-                if(_deathStage > 0) 
-                    Game.DisableAllControlsThisFrame(0); 
+            {
+                if (_deathStage > 0)
+                    Game.DisableAllControlsThisFrame(0);
 
                 if (_timer > 0)
                 {
                     _timer -= Game.LastFrameTime;
                     await BaseScript.Delay(0);
                     continue;
-                } 
+                }
 
                 switch (_deathStage)
                 {
@@ -79,7 +79,7 @@ namespace Proline.ClassicOnline.LevelScripts
                         break;
                     case 1:
                         _timer = ConvertMsToFloat(DelayedRespawnTime);
-                        PlayWastedEffect(); 
+                        PlayWastedEffect();
                         _deathStage++;
                         break;
                     case 2:
@@ -106,7 +106,7 @@ namespace Proline.ClassicOnline.LevelScripts
                         {
                             _timer = ConvertMsToFloat(TransitionTime);
                             Screen.Fading.FadeIn(TransitionTime);
-                        } 
+                        }
                         StopWastedEffect();
                         _deathStage++;
                         break;
@@ -174,7 +174,7 @@ namespace Proline.ClassicOnline.LevelScripts
         {
             Screen.Effects.Start(ScreenEffect.DeathFailMpIn);
             GameplayCamera.Shake(CameraShake.DeathFail, 1f);
-        } 
+        }
 
         public float ConvertMsToFloat(int time)
         {

@@ -1,4 +1,4 @@
-using Proline.ClassicOnline.MScreen.MenuItems;
+using Proline.ClassicOnline.MScreen.Menus.MenuItems;
 
 namespace Proline.ClassicOnline.MScreen.Menus
 {

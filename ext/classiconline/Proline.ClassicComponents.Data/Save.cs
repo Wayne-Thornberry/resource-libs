@@ -1,8 +1,8 @@
 ﻿using CitizenFX.Core;
 using Newtonsoft.Json;
-using Proline.ClassicOnline.MData.Entity;
+using Proline.ClassicOnline.MData.Internal;
 using Proline.ClassicOnline.MDebug;
-using Proline.ServerAccess.IO; 
+using Proline.ServerAccess.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;

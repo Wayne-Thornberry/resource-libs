@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.ClassicOnline.MScripting.Commands
+namespace Proline.ClassicOnline.MBrain.Commands
 {
     public class MBrainCommands
     {

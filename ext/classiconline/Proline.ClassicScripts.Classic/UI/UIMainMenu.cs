@@ -5,9 +5,9 @@ using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using Proline.CFXExtended.Core.Scaleforms;
 
-namespace Proline.ClassicOnline.LevelScripts.UI
+namespace Proline.ClassicOnline.SClassic.UI
 {
-    public class UIMainMenu 
+    public class UIMainMenu
     {
         public UIMainMenu()
         {

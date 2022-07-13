@@ -2,9 +2,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using CitizenFX.Core;
 
-namespace Proline.ClassicOnline.LevelScripts
+namespace Proline.ClassicOnline.SClassic
 {
-    public class VehicleFuel 
+    public class VehicleFuel
     {
         public VehicleFuel()
         {

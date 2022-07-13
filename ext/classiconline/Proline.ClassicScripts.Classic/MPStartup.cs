@@ -4,9 +4,9 @@ using CitizenFX.Core;
 using Proline.CFXExtended.Core;
 using Proline.ClassicOnline.MDebug;
 
-namespace Proline.ClassicOnline.LevelScripts
+namespace Proline.ClassicOnline.SClassic
 {
-    public class MPStartup 
+    public class MPStartup
     {
         public MPStartup()
         {

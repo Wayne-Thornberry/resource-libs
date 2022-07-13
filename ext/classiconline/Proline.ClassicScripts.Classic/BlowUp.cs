@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using CitizenFX.Core;
 
-namespace Proline.ClassicOnline.LevelScripts
+namespace Proline.ClassicOnline.SClassic
 {
-    public class BlowUp 
+    public class BlowUp
     {
         public BlowUp()
         {
@@ -12,7 +12,7 @@ namespace Proline.ClassicOnline.LevelScripts
 
         public async Task Execute(object[] args, CancellationToken token)
         {
-            if(args.Length > 0)
+            if (args.Length > 0)
             {
                 var handle = (int)args[0];
                 var entity = Entity.FromHandle(handle);

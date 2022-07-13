@@ -1,8 +1,8 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
-using Proline.ClassicOnline.MScreen;
+using Proline.ClassicOnline.MScreen.Menus;
 
-namespace Proline.ClassicOnline.MScreen.MenuItems
+namespace Proline.ClassicOnline.MScreen.Menus.MenuItems
 {
     public class MenuCheckboxItem : MenuItem
     {

@@ -8,8 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Proline.CFXExtended.Core;
 using CitizenFX.Core.Native;
+using Proline.ClassicOnline.MGame.Data;
 
-namespace Proline.ClassicOnline.LevelScripts
+namespace Proline.ClassicOnline.SClassic
 {
     public class SaveNow
     {
@@ -34,23 +35,23 @@ namespace Proline.ClassicOnline.LevelScripts
             outfit.Components = list;
             var json = JsonConvert.SerializeObject(outfit);
             var id = "PlayerInfo";
-            ClassicOnline.MData.API.CreateDataFile();
-            ClassicOnline.MData.API.AddDataFileValue("PlayerHealth", Game.PlayerPed.Health);
-            ClassicOnline.MData.API.AddDataFileValue("PlayerPosition", JsonConvert.SerializeObject(Game.PlayerPed.Position));
-            ClassicOnline.MData.API.SaveDataFile(id);
+            MData.API.CreateDataFile();
+            MData.API.AddDataFileValue("PlayerHealth", Game.PlayerPed.Health);
+            MData.API.AddDataFileValue("PlayerPosition", JsonConvert.SerializeObject(Game.PlayerPed.Position));
+            MData.API.SaveDataFile(id);
 
 
             id = "PlayerOutfit";
-            ClassicOnline.MData.API.CreateDataFile();
-            ClassicOnline.MData.API.AddDataFileValue("CharacterOutfit", json);
-            ClassicOnline.MData.API.SaveDataFile(id);
+            MData.API.CreateDataFile();
+            MData.API.AddDataFileValue("CharacterOutfit", json);
+            MData.API.SaveDataFile(id);
 
 
             id = "PlayerStats";
-            ClassicOnline.MData.API.CreateDataFile();
-            ClassicOnline.MData.API.AddDataFileValue("MP0_WALLET_BALANCE", stat.GetValue());
-            ClassicOnline.MData.API.AddDataFileValue("BANK_BALANCE", stat2.GetValue());
-            ClassicOnline.MData.API.SaveDataFile(id);
+            MData.API.CreateDataFile();
+            MData.API.AddDataFileValue("MP0_WALLET_BALANCE", stat.GetValue());
+            MData.API.AddDataFileValue("BANK_BALANCE", stat2.GetValue());
+            MData.API.SaveDataFile(id);
 
             //ClassicOnline.MData.API.DoesDataFileExist("PlayerVehicle");
             //if (ClassicOnline.MData.API.DoesDataFileValueExist("VehicleHash"))
@@ -67,7 +68,7 @@ namespace Proline.ClassicOnline.LevelScripts
 
             await MData.API.SendSaveToCloud();
             await BaseScript.Delay(1000);
-            Screen.LoadingPrompt.Hide();  
+            Screen.LoadingPrompt.Hide();
         }
     }
 }

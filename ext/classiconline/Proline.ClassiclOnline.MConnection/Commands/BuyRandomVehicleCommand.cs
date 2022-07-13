@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Console = Proline.Resource.Console;
 
-namespace Proline.ClassicOnline.MConnection.Client.Commands
+namespace Proline.ClassicOnline.MConnection.Commands
 {
     public class BuyRandomVehicleCommand : ModuleCommand
     {
@@ -18,11 +18,11 @@ namespace Proline.ClassicOnline.MConnection.Client.Commands
         }
 
         protected override void OnCommandExecute(params object[] args)
-        { 
+        {
             var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
             var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
 
-            if(stat2.GetValue() > 250)
+            if (stat2.GetValue() > 250)
             {
                 stat2.SetValue(stat2.GetValue() - 250);
 
@@ -35,15 +35,15 @@ namespace Proline.ClassicOnline.MConnection.Client.Commands
                 {
                     var vehicle = e.Result;
                     var id = "PlayerVehicle";
-                    ClassicOnline.MData.API.CreateDataFile();
-                    ClassicOnline.MData.API.AddDataFileValue("VehicleHash", randomBar);
-                    ClassicOnline.MData.API.AddDataFileValue("VehiclePosition", JsonConvert.SerializeObject(vehicle.Position));
+                    MData.API.CreateDataFile();
+                    MData.API.AddDataFileValue("VehicleHash", randomBar);
+                    MData.API.AddDataFileValue("VehiclePosition", JsonConvert.SerializeObject(vehicle.Position));
                     vehicle.IsPersistent = true;
                     if (vehicle.AttachedBlips.Length == 0)
                         vehicle.AttachBlip();
-                    ClassicOnline.MData.API.SaveDataFile(id); 
+                    MData.API.SaveDataFile(id);
                 });
             }
-        } 
+        }
     }
 }

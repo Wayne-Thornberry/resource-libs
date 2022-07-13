@@ -8,9 +8,9 @@ using CitizenFX.Core.UI;
 using Proline.CFXExtended.Core.Scaleforms;
 using Proline.ClassicOnline.MDebug;
 
-namespace Proline.ClassicOnline.LevelScripts.UI
+namespace Proline.ClassicOnline.SClassic.UI
 {
-    public class UIPlayerSwitch 
+    public class UIPlayerSwitch
     {
         private PlayerSwitch plySwitch;
         private int sel;
@@ -36,8 +36,8 @@ namespace Proline.ClassicOnline.LevelScripts.UI
                         plySwitch.SetSwitchVisible(true);
                         for (int i = 0; i < 4; i++)
                         {
-                           // var txt = new PedHeadshot(Game.PlayerPed.Handle);
-                           // await txt.LoadHeadShot();
+                            // var txt = new PedHeadshot(Game.PlayerPed.Handle);
+                            // await txt.LoadHeadShot();
                             plySwitch.SetSwitchSlot(i, 1, i, i == sel, "");
                         }
                     }
@@ -69,7 +69,7 @@ namespace Proline.ClassicOnline.LevelScripts.UI
 
                     API.SwitchOutPlayer(Game.PlayerPed.Handle, 1, 1);
                     await BaseScript.Delay(3000);
-                    Game.PlayerPed.Position = new Vector3(x,y, World.GetGroundHeight(new Vector2(x, y)));
+                    Game.PlayerPed.Position = new Vector3(x, y, World.GetGroundHeight(new Vector2(x, y)));
                     //await BaseScript.Delay(3000); 
                     switch (playId)
                     {
@@ -119,8 +119,8 @@ namespace Proline.ClassicOnline.LevelScripts.UI
                         plySwitch.SetPlayerSelected(sel);
                         Game.PlaySound("Apt_Style_Purchase", "DLC_APT_Apartment_SoundSet");
                     }
-                    if(plySwitch.IsLoaded)
-                        plySwitch.Render2DScreenSpace(new PointF(70f - (API.GetSafeZoneSize() - 0.89f) / 0.11f * 78f, (Screen.Height - 150f) - (API.GetSafeZoneSize() - 0.89f) / 0.11f * 78f), new PointF(150f, 150f));
+                    if (plySwitch.IsLoaded)
+                        plySwitch.Render2DScreenSpace(new PointF(70f - (API.GetSafeZoneSize() - 0.89f) / 0.11f * 78f, Screen.Height - 150f - (API.GetSafeZoneSize() - 0.89f) / 0.11f * 78f), new PointF(150f, 150f));
                     //new PointF(50f - (API.GetSafeZoneSize() - 0.89f) / 0.11f * 78f,
                     //50f - (API.GetSafeZoneSize() - 0.89f) / 0.11f * 50f)
                 }

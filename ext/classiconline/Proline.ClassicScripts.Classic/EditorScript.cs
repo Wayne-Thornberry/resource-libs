@@ -9,12 +9,12 @@ using CitizenFX.Core.UI;
 using Proline.ClassicOnline.MDebug;
 using Proline.ClassicOnline.MScripting;
 
-namespace Proline.ClassicOnline.LevelScripts
+namespace Proline.ClassicOnline.SClassic
 {
-    public class EditorScript 
+    public class EditorScript
     {
         private Camera _cam;
-        private RaycastResult _raycastResult; 
+        private RaycastResult _raycastResult;
         private float _cameraSensitivity;
         private float _movementSpeed;
         private PointF _st;
@@ -50,7 +50,7 @@ namespace Proline.ClassicOnline.LevelScripts
 
             while (!token.IsCancellationRequested)
             {
-                Game.PlayerPed.Position = _cam.Position; 
+                Game.PlayerPed.Position = _cam.Position;
 
                 EditorControls();
                 if (Game.IsControlPressed(0, Control.Aim))
@@ -92,7 +92,7 @@ namespace Proline.ClassicOnline.LevelScripts
                        $"{item.Model.Hash}\n" +
                        $"{item.Health}\n" +
                        $"{item.Position.ToString()}";
-                    var d = item.Position + new Vector3(0, 0, (item.Model.GetDimensions().Z * 0.8f));
+                    var d = item.Position + new Vector3(0, 0, item.Model.GetDimensions().Z * 0.8f);
                     World.DrawMarker(MarkerType.DebugSphere, item.Position, new Vector3(0, 0, 0),
                         new Vector3(0, 0, 0), new Vector3(0.2f, 0.2f, 0.2f), Color.FromArgb(150, 255, 0, 0));
                     //ComponentAPI.DrawEntityBoundingBox(item.Handle, 125, 0, 0, 100);
@@ -148,7 +148,7 @@ namespace Proline.ClassicOnline.LevelScripts
                 han.AddRange(null);
 
 
-                if(!Game.IsControlPressed(0, Control.VehicleFlyThrottleUp))
+                if (!Game.IsControlPressed(0, Control.VehicleFlyThrottleUp))
                     Reset();
                 if (!_multiSelectEnabled)
                 {
@@ -165,10 +165,10 @@ namespace Proline.ClassicOnline.LevelScripts
                         else
                         {
                             //Reset();
-                            var entityes = han.Select(e => Entity.FromHandle(e)).Where(e=>e != null).ToArray();
+                            var entityes = han.Select(e => Entity.FromHandle(e)).Where(e => e != null).ToArray();
                             var closest = World.GetClosest(_raycastResult.HitPosition, entityes);
-                            if(closest != null)
-                            { 
+                            if (closest != null)
+                            {
                                 if (World.GetDistance(_raycastResult.HitPosition, closest.Position) < 1f)
                                 {
                                     if (!Exists(_raycastResult.HitEntity))
@@ -176,7 +176,7 @@ namespace Proline.ClassicOnline.LevelScripts
                                         _garbage.Add(_raycastResult.HitEntity);
                                     }
                                 }
-                            } 
+                            }
                         }
                     }
                 }
@@ -224,7 +224,7 @@ namespace Proline.ClassicOnline.LevelScripts
             else if (Game.IsControlPressed(0, Control.Attack))
             {
                 _buttonHeld2++;
-                if(_buttonHeld2 > 10)
+                if (_buttonHeld2 > 10)
                 {
                     //ComponentAPI.DrawDebug2DBox(_st, new PointF(_cx, _cy), Color.FromArgb(100, 100, 100, 100));
                     _multiSelectEnabled = true;
@@ -232,7 +232,7 @@ namespace Proline.ClassicOnline.LevelScripts
             }
 
             if (Game.IsControlJustPressed(0, Control.Context))
-            {  
+            {
                 foreach (var item in _garbage)
                 {
                     //EngineAPI.Script.StartNewScript("BlowUp", item.Handle);
@@ -270,13 +270,13 @@ namespace Proline.ClassicOnline.LevelScripts
         }
 
         private bool P(Vector2 p, Vector2 a, Vector2 b, Vector2 c, Vector2 d)
-        { 
+        {
             var apd = a + p + d;
             var dpc = d + p + c;
             var cpb = c + p + b;
             var pba = p + b + a;
 
-            return (p.X > a.X && p.X < d.X && p.Y > a.Y && p.Y < d.Y);
+            return p.X > a.X && p.X < d.X && p.Y > a.Y && p.Y < d.Y;
         }
 
         private bool P(Vector2 a, Vector2 b, Vector2 m)
@@ -289,11 +289,11 @@ namespace Proline.ClassicOnline.LevelScripts
 
         float isLeft(Vector2 P0, Vector2 P1, Vector2 P2)
         {
-            return ((P1.X - P0.X) * (P2.Y - P0.Y) - (P2.X - P0.X) * (P1.Y - P0.Y));
+            return (P1.X - P0.X) * (P2.Y - P0.Y) - (P2.X - P0.X) * (P1.Y - P0.Y);
         }
         bool PointInRectangle(Vector2 X, Vector2 Y, Vector2 Z, Vector2 W, Vector2 P)
         {
-            return (isLeft(X, Y, P) > 0 && isLeft(Y, Z, P) > 0 && isLeft(Z, W, P) > 0 && isLeft(W, X, P) > 0);
+            return isLeft(X, Y, P) > 0 && isLeft(Y, Z, P) > 0 && isLeft(Z, W, P) > 0 && isLeft(W, X, P) > 0;
         }
 
         private bool isInsideRect(Vector2 x1, Vector2 x2, Vector2 px)
@@ -353,9 +353,9 @@ namespace Proline.ClassicOnline.LevelScripts
 
             // Forward and Back
             if (Game.IsControlPressed(0, Control.MoveUpOnly))
-                    _cam.Position += _cam.UpVector * Game.LastFrameTime * _movementSpeed;
-                else if (Game.IsControlPressed(0, Control.MoveDown))
-                    _cam.Position -= _cam.UpVector * Game.LastFrameTime * _movementSpeed;
+                _cam.Position += _cam.UpVector * Game.LastFrameTime * _movementSpeed;
+            else if (Game.IsControlPressed(0, Control.MoveDown))
+                _cam.Position -= _cam.UpVector * Game.LastFrameTime * _movementSpeed;
 
             // Left and Right
             if (Game.IsControlPressed(0, Control.MoveRight))

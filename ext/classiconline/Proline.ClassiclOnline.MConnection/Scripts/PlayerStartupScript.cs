@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CitizenFX.Core;
+using Proline.ClassicOnline.MConnection.Events;
 using Proline.Modularization.Core;
 
-namespace Proline.ClassicOnline.MConnection
+namespace Proline.ClassicOnline.MConnection.Scripts
 {
     public partial class PlayerStartupScript : ModuleScript
     {
 
         public override async Task OnExecute()
         {
-            PlayerJoinedEvent.InvokeEvent(Game.Player.Name); 
+            PlayerJoinedEvent.InvokeEvent(Game.Player.Name);
         }
     }
-} 
+}

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Console = Proline.Resource.Console;
 
-namespace Proline.ClassicOnline.MConnection.Client.Commands
+namespace Proline.ClassicOnline.MConnection.Commands
 {
     public class BuyRandomWeaponCommand : ModuleCommand
     {
@@ -17,11 +17,11 @@ namespace Proline.ClassicOnline.MConnection.Client.Commands
         }
 
         protected override void OnCommandExecute(params object[] args)
-        { 
+        {
             var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
             var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
 
-            if(stat2.GetValue() > 250)
+            if (stat2.GetValue() > 250)
             {
                 stat2.SetValue(stat2.GetValue() - 250);
 
@@ -33,11 +33,11 @@ namespace Proline.ClassicOnline.MConnection.Client.Commands
                 Game.PlayerPed.Weapons.Give(randomBar, ammo, true, true);
 
                 var id = "PlayerWeapon";
-                ClassicOnline.MData.API.CreateDataFile();
-                ClassicOnline.MData.API.AddDataFileValue("WeaponHash", randomBar);
-                ClassicOnline.MData.API.AddDataFileValue("WeaponAmmo", ammo); 
-                ClassicOnline.MData.API.SaveDataFile(id);
+                MData.API.CreateDataFile();
+                MData.API.AddDataFileValue("WeaponHash", randomBar);
+                MData.API.AddDataFileValue("WeaponAmmo", ammo);
+                MData.API.SaveDataFile(id);
             }
-        } 
+        }
     }
 }

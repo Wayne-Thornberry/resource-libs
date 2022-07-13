@@ -18,13 +18,13 @@ using Proline.ClassicOnline.MScripting;
 using Proline.ClassicOnline.MGame.Data;
 using Proline.Resource.IO;
 
-namespace Proline.ClassicOnline.MBrain
+namespace Proline.ClassicOnline.MBrain.Scripts
 {
     public class ProcessScriptingObjectsAndPositions : ModuleScript
     {
         private static Log _log = new Log();
 
-        public ProcessScriptingObjectsAndPositions( ) : base(true)
+        public ProcessScriptingObjectsAndPositions() : base(true)
         {
             _trackedHandles = new HashSet<int>();
             _ht = HandleTracker.GetInstance();
@@ -46,7 +46,7 @@ namespace Proline.ClassicOnline.MBrain
         {
 
             if (!HasLoaded)
-            { 
+            {
                 var data = ResourceFile.Load("data/scriptpositions.json");
                 MDebugAPI.LogDebug(data);
                 _scriptPosition = JsonConvert.DeserializeObject<ScriptPositions>(data.Load());
@@ -131,7 +131,7 @@ namespace Proline.ClassicOnline.MBrain
                         PosBlacklist.Remove(positionsPair);
                     };
                 }
-            } 
+            }
         }
 
 

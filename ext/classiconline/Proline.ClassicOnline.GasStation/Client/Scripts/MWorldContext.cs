@@ -2,9 +2,10 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using CitizenFX.Core;
+using Proline.ClassicOnline.MWorld.Client.Data;
 using Proline.Modularization.Core;
 
-namespace Proline.ClassicOnline.MWorld
+namespace Proline.ClassicOnline.MWorld.Client.Scripts
 {
     public class MWorldContext : ModuleScript
     {
@@ -16,10 +17,10 @@ namespace Proline.ClassicOnline.MWorld
             // var data = ResourceFile.Load(// API.GetCurrentResourceName(), "data/gasstations.json"); 
             //var _x = JsonConvert.DeserializeObject<GasStation[]>(data);
         }
-         
+
 
         private List<Blip> _blips = new List<Blip>();
         private GasStation[] _x = new GasStation[0];
-         
+
     }
 }

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CitizenFX.Core;
+using Proline.ClassicOnline.MConnection.Events;
 using Proline.Modularization.Core;
 
-namespace Proline.ClassicOnline.MConnection
+namespace Proline.ClassicOnline.MConnection.Scripts
 {
     public partial class EventSetupScript : ModuleScript
     {
@@ -17,7 +18,7 @@ namespace Proline.ClassicOnline.MConnection
 
         public override async Task OnExecute()
         {
-            PlayerJoinedEvent.SubscribeEvent(); 
+            PlayerJoinedEvent.SubscribeEvent();
         }
     }
-} 
+}

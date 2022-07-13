@@ -5,9 +5,8 @@ using System.Linq;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
-using Proline.ClassicOnline.MScreen;
 
-namespace Proline.ClassicOnline.MScreen.MenuItems
+namespace Proline.ClassicOnline.MScreen.Menus.MenuItems
 {
     public class Menu
     {

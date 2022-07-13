@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.ClassicOnline.MWorld.Controllers
+namespace Proline.ClassicOnline.MWorld.Client.Controllers
 {
     //[ExportController]
     public class GasStationController

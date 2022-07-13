@@ -1,9 +1,9 @@
 ﻿using CitizenFX.Core;
 
-namespace Proline.ClassicOnline.MConnection
+namespace Proline.ClassicOnline.MConnection.Internal
 {
     internal class PlayerConnection
-    {  
+    {
         public Player Player { get; set; }
         public string PlayerName { get; set; }
         public object KickReason { get; set; }

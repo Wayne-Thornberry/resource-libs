@@ -1,4 +1,4 @@
-﻿namespace Proline.ClassicOnline.MScreen.MenuItems
+﻿namespace Proline.ClassicOnline.MScreen.Menus.MenuItems
 {
     public class MenuDynamicListItem : MenuItem
     {

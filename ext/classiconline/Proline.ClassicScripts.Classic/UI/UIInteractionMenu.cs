@@ -1,13 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using CitizenFX.Core;
-using Proline.ClassicOnline.MScreen;
-using Proline.ClassicOnline.MScripting;
-using Proline.ClassicOnline.MScreen.MenuItems;
+using Proline.ClassicOnline.MScripting; 
+using Proline.ClassicOnline.MScreen.Menus;
+using Proline.ClassicOnline.MScreen.Menus.MenuItems;
 
-namespace Proline.ClassicOnline.LevelScripts.UI
+namespace Proline.ClassicOnline.SClassic.UI
 {
-    public class UIInteractionMenu 
+    public class UIInteractionMenu
     {
         public UIInteractionMenu()
         {

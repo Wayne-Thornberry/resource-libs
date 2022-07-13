@@ -1,6 +1,6 @@
 ﻿using CitizenFX.Core;
 using Newtonsoft.Json;
-using Proline.ClassicOnline.MData.Entity;
+using Proline.ClassicOnline.MData.Internal;
 using Proline.Modularization.Core;
 using System;
 using System.Collections.Generic;

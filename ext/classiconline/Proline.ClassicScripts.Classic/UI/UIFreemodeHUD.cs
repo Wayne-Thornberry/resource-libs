@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using Proline.CFXExtended.Core.Scaleforms;
 
-namespace Proline.ClassicOnline.LevelScripts.UI
+namespace Proline.ClassicOnline.SClassic.UI
 {
-    public class UIFreemodeHUD 
+    public class UIFreemodeHUD
     {
         public UIFreemodeHUD()
         {
@@ -18,7 +18,7 @@ namespace Proline.ClassicOnline.LevelScripts.UI
         public int ScriptState { get; set; }
         public ScaleformHud RankBar { get; set; }
 
-        public async Task Execute(object[] args, CancellationToken token) 
+        public async Task Execute(object[] args, CancellationToken token)
         {
             //if (GameplayController.ActiveGamemode != null)
             //{

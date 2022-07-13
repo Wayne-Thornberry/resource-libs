@@ -1,4 +1,4 @@
-namespace Proline.ClassicOnline.MGame
+namespace Proline.ClassicOnline.MGame.Data
 {
     public struct OutfitComponent
     {

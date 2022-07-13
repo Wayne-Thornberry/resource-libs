@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
-using Proline.ClassicOnline.MGame;
+using Proline.ClassicOnline.MGame.Data;
 
-namespace Proline.ClassicOnline.LevelScripts
+namespace Proline.ClassicOnline.SClassic
 {
-    public class CharacterCreator 
-    { 
+    public class CharacterCreator
+    {
         public async Task Execute(object[] args, CancellationToken token)
         {
 
@@ -375,23 +375,23 @@ namespace Proline.ClassicOnline.LevelScripts
         private PedOutfit _characterPedOutfitF;
         private PedOutfit _characterPedOutfitM;
         private CharacterStats _characterStats;
-         
-       // public CharacterMenu CharacterMenu { get; set; }
-        public Dictionary<string, int> Parents { get; set;  }
+
+        // public CharacterMenu CharacterMenu { get; set; }
+        public Dictionary<string, int> Parents { get; set; }
         public int ScriptStage { get; private set; }
 
 
         public void Enter()
         {
             RefreshCharacter('m');
-           // CharacterMenu.OpenMenu();
+            // CharacterMenu.OpenMenu();
         }
 
         public void RefreshCharacter(char gender)
         {
             _character.Ped.Gender = gender;
             _character.Ped.Outfit = gender == 'm' ? _characterPedOutfitM : _characterPedOutfitF;
-          //  ConnectionController.LoadCharacter(_character);
+            //  ConnectionController.LoadCharacter(_character);
             //OnGenderChange?.Invoke(gender);
         }
 
@@ -401,14 +401,14 @@ namespace Proline.ClassicOnline.LevelScripts
             _character.Ped.Looks.Father = Parents[heritage.Father];
             _character.Ped.Looks.Resemblence = heritage.Resemblance * 0.1f;
             _character.Ped.Looks.SkinTone = heritage.Skin * 0.1f;
-           // ConnectionController.LoadLooks(_character.Ped.Looks);
+            // ConnectionController.LoadLooks(_character.Ped.Looks);
         }
 
         public void UpdateAppearance(Appearance appearance)
         {
             //_character.Ped.Outfit.Components[2].ComponentIndex = DataController.ShopData.Hairstyles
             //    .First(i => i.Name == appearance.Hair).Index;
-           // ConnectionController.LoadOutfit(_character.Ped.Outfit);
+            // ConnectionController.LoadOutfit(_character.Ped.Outfit);
         }
     }
 }

@@ -5,9 +5,9 @@ using CitizenFX.Core.UI;
 using Proline.CFXExtended.Core;
 using Proline.ClassicOnline.MScripting;
 
-namespace Proline.ClassicOnline.LevelScripts
+namespace Proline.ClassicOnline.SClassic
 {
-    public class LSCustoms 
+    public class LSCustoms
     {
         public LSCustoms()
         {
@@ -36,7 +36,7 @@ namespace Proline.ClassicOnline.LevelScripts
                 else
                 {
                     MScriptingAPI.MarkScriptAsNoLongerNeeded(this);
-                } 
+                }
                 await BaseScript.Delay(0);
             }
             blip.Delete();

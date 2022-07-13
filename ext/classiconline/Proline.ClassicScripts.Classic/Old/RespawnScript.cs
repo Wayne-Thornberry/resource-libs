@@ -4,9 +4,9 @@ using CitizenFX.Core;
 using CitizenFX.Core.UI;
 using Proline.CFXExtended.Core.Scaleforms;
 
-namespace Proline.ClassicOnline.LevelScripts
+namespace Proline.ClassicOnline.SClassic.Old
 {
-    public class RespawnScript 
+    public class RespawnScript
     {
         public enum SpawnType
         {

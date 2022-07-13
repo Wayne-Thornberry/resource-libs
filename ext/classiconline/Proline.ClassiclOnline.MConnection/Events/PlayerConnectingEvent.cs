@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.ClassicOnline.MConnection
+namespace Proline.ClassicOnline.MConnection.Events
 {
     internal partial class PlayerConnectingEvent : LoudEvent
     {
@@ -16,7 +16,7 @@ namespace Proline.ClassicOnline.MConnection
 
         private static PlayerConnectingEvent _event;
         public const string PLAYERCONNECTINGHANDLER = "PlayerConnectingHandler";
-         
+
         public static void SubscribeEvent()
         {
             if (_event == null)
@@ -34,6 +34,6 @@ namespace Proline.ClassicOnline.MConnection
                 _event.Unsubscribe();
                 _event = null;
             }
-        } 
+        }
     }
 }

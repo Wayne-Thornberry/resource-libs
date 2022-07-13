@@ -7,7 +7,7 @@ using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using Proline.CFXExtended.Core.Scaleforms;
 
-namespace Proline.ClassicOnline.LevelScripts.UI
+namespace Proline.ClassicOnline.SClassic.UI
 {
     public struct MultiplayerMenuSlot
     {
@@ -25,11 +25,11 @@ namespace Proline.ClassicOnline.LevelScripts.UI
         }
     }
 
-    public class UIMultiplayerMenu 
+    public class UIMultiplayerMenu
     {
         private int tick;
         private MPMMFreemodeMenu freemodeMenu;
-         
+
         public PointF Position { get; set; }
         public PointF Size { get; set; }
         public Player[] Players = new Player[32];

@@ -1,13 +1,13 @@
 ﻿using CitizenFX.Core;
 using Proline.ClassicOnline.MData;
-using Proline.ClassicOnline.MData.Entity;
+using Proline.ClassicOnline.MData.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.ClassicOnline.MConnection
+namespace Proline.ClassicOnline.MConnection.Internal
 {
     internal class ExtendedPlayer
     {
@@ -40,7 +40,7 @@ namespace Proline.ClassicOnline.MConnection
 
         internal ExtendedPlayer GetPlayer(long playerId)
         {
-            return  _playerDictionary.FirstOrDefault(e=>e.PlayerId == playerId);
+            return _playerDictionary.FirstOrDefault(e => e.PlayerId == playerId);
         }
 
         internal void RemovePlayer(ExtendedPlayer player)

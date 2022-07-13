@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.UI;
 using Proline.CFXExtended.Core;
-using Proline.ClassicOnline.MScreen;
+using Proline.ClassicOnline.MScreen.Minimap;
 
-namespace Proline.ClassicOnline.LevelScripts.Mission
+namespace Proline.ClassicOnline.SClassic.Mission
 {
-    public class FMVechicleExporter 
+    public class FMVechicleExporter
     {
         private Vector3 _deliveryPoint;
         private Blip _blip;
@@ -51,19 +51,19 @@ namespace Proline.ClassicOnline.LevelScripts.Mission
                         {
                             Game.PlayerPed.Task.LeaveVehicle();
                             _targetVehicle.LockStatus = VehicleLockStatus.Locked;
-                        } 
-                    } 
+                        }
+                    }
                 }
                 else
                 {
-                    if(_targetVehicle != null)
+                    if (_targetVehicle != null)
                     {
-                        if(World.GetDistance(Game.PlayerPed.Position, _deliveryPoint) < 25f)
-                        { 
+                        if (World.GetDistance(Game.PlayerPed.Position, _deliveryPoint) < 25f)
+                        {
                             Screen.DisplayHelpTextThisFrame("Please leave the area");
                         }
                         else
-                        { 
+                        {
                             if (World.GetDistance(_targetVehicle.Position, _deliveryPoint) < 2f)
                             {
                                 _targetVehicle.Delete();
@@ -73,7 +73,7 @@ namespace Proline.ClassicOnline.LevelScripts.Mission
                                 stat.SetValue(stat.GetValue() + 1500);
                             }
                             else
-                            { 
+                            {
                                 if (_blip != null)
                                 {
                                     _blip.Delete();
@@ -87,8 +87,8 @@ namespace Proline.ClassicOnline.LevelScripts.Mission
                     }
                     else
                     {
-                        if(_blip != null)
-                        { 
+                        if (_blip != null)
+                        {
                             _blip.Delete();
                             _blip = null;
                         }

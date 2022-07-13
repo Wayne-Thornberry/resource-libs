@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Proline.LevelScripts.Classic
+namespace Proline.ClassicOnline.SClassic
 {
     public class StartIntro
     {
@@ -191,56 +191,59 @@ namespace Proline.LevelScripts.Classic
                 API.ClearPedProp(ped, 7);
                 API.ClearPedProp(ped, 8);
             }
-            }
+        }
 
         public async Task Execute(object[] args, CancellationToken token)
         {
-			API.PrepareMusicEvent("FM_INTRO_START");//FM_INTRO_START
-			API.TriggerMusicEvent("FM_INTRO_START");//FM_INTRO_START
-			var plyrId = API.PlayerPedId();// PLAYER ID
-				 
-			if(IsMale(plyrId)) {
-				API.RequestCutsceneWithPlaybackList("MP_INTRO_CONCAT", 31, 1);
-			}
-			else {
-				API.RequestCutsceneWithPlaybackList("MP_INTRO_CONCAT", 103, 1);
-			}
+            API.PrepareMusicEvent("FM_INTRO_START");//FM_INTRO_START
+            API.TriggerMusicEvent("FM_INTRO_START");//FM_INTRO_START
+            var plyrId = API.PlayerPedId();// PLAYER ID
 
-			while (!API.HasCutsceneLoaded())
-				await BaseScript.Delay(10);// - waiting for the cutscene to load
+            if (IsMale(plyrId))
+            {
+                API.RequestCutsceneWithPlaybackList("MP_INTRO_CONCAT", 31, 1);
+            }
+            else
+            {
+                API.RequestCutsceneWithPlaybackList("MP_INTRO_CONCAT", 103, 1);
+            }
 
-			if (IsMale(plyrId))
-			{
-				API.RegisterEntityForCutscene(0, "MP_Male_Character", 3,(uint) API.GetEntityModel(Game.PlayerPed.Model.Hash), 0);
-				API.RegisterEntityForCutscene(API.PlayerPedId(), "MP_Male_Character", 0, 0, 0);
-				API.SetCutsceneEntityStreamingFlags("MP_Male_Character", 0, 1);
-				API.RegisterEntityForCutscene(0, "MP_Female_Character", 3, 0, 64);
-				API.NetworkSetEntityInvisibleToNetwork(Game.PlayerPed.Handle, true);
-			}
-			else
-			{
-				API.RegisterEntityForCutscene(0, "MP_Female_Character", 3, (uint)API.GetEntityModel(API.PlayerPedId()), 0);
-				API.RegisterEntityForCutscene(API.PlayerPedId(), "MP_Female_Character", 0, 0, 0);
-				API.SetCutsceneEntityStreamingFlags("MP_Female_Character", 0, 1);
-				API.RegisterEntityForCutscene(0, "MP_Male_Character", 3, 0, 64);
-				API.NetworkSetEntityInvisibleToNetwork(Game.PlayerPed.Handle, true);
-			}
+            while (!API.HasCutsceneLoaded())
+                await BaseScript.Delay(10);// - waiting for the cutscene to load
 
-			var ped = new int[10];
-			for (int i = 0; i < 6; i++){
+            if (IsMale(plyrId))
+            {
+                API.RegisterEntityForCutscene(0, "MP_Male_Character", 3, (uint)API.GetEntityModel(Game.PlayerPed.Model.Hash), 0);
+                API.RegisterEntityForCutscene(API.PlayerPedId(), "MP_Male_Character", 0, 0, 0);
+                API.SetCutsceneEntityStreamingFlags("MP_Male_Character", 0, 1);
+                API.RegisterEntityForCutscene(0, "MP_Female_Character", 3, 0, 64);
+                API.NetworkSetEntityInvisibleToNetwork(Game.PlayerPed.Handle, true);
+            }
+            else
+            {
+                API.RegisterEntityForCutscene(0, "MP_Female_Character", 3, (uint)API.GetEntityModel(API.PlayerPedId()), 0);
+                API.RegisterEntityForCutscene(API.PlayerPedId(), "MP_Female_Character", 0, 0, 0);
+                API.SetCutsceneEntityStreamingFlags("MP_Female_Character", 0, 1);
+                API.RegisterEntityForCutscene(0, "MP_Male_Character", 3, 0, 64);
+                API.NetworkSetEntityInvisibleToNetwork(Game.PlayerPed.Handle, true);
+            }
 
-				if (i == 1 || i == 2 || i == 4 || i == 6)
-				{
-					ped[i] = API.CreatePed(26, (uint)API.GetHashKey("mp_f_freemode_01"), -1117.77783203125f, -1557.6248779296875f, 3.3819f, 0.0f, false, false);
-				}
+            var ped = new int[10];
+            for (int i = 0; i < 6; i++)
+            {
 
-				else
-				{
-					ped[i] = API.CreatePed(26, (uint)API.GetHashKey("mp_m_freemode_01"), -1117.77783203125f, -1557.6248779296875f, 3.3819f, 0.0f, false, false);
+                if (i == 1 || i == 2 || i == 4 || i == 6)
+                {
+                    ped[i] = API.CreatePed(26, (uint)API.GetHashKey("mp_f_freemode_01"), -1117.77783203125f, -1557.6248779296875f, 3.3819f, 0.0f, false, false);
+                }
+
+                else
+                {
+                    ped[i] = API.CreatePed(26, (uint)API.GetHashKey("mp_m_freemode_01"), -1117.77783203125f, -1557.6248779296875f, 3.3819f, 0.0f, false, false);
                 }
 
                 if (!API.IsEntityDead(ped[i]))
-                { 
+                {
                     sub_b747(ped[i], i);
 
                     API.FinalizeHeadBlend(ped[i]);
@@ -251,29 +254,30 @@ namespace Proline.LevelScripts.Classic
             }
 
 
-			API.NewLoadSceneStartSphere(-1212.79f, -1673.52f, 7, 1000, 0);//// - avoid texture bugs
+            API.NewLoadSceneStartSphere(-1212.79f, -1673.52f, 7, 1000, 0);//// - avoid texture bugs
 
-			//////////////////////////////////////////////-
-			API.SetWeatherTypeNow("EXTRASUNNY");//// SUN TIME
+            //////////////////////////////////////////////-
+            API.SetWeatherTypeNow("EXTRASUNNY");//// SUN TIME
 
-			API.StartCutscene(4);// - START the custscene 
+            API.StartCutscene(4);// - START the custscene 
 
-			await BaseScript.Delay(31520);// - custscene time
-			for (int i = 0; i < 6; i++) { 
-				API.DeleteEntity(ref ped[i]); 
-			}
+            await BaseScript.Delay(31520);// - custscene time
+            for (int i = 0; i < 6; i++)
+            {
+                API.DeleteEntity(ref ped[i]);
+            }
 
-			API.PrepareMusicEvent("AC_STOP");
-			API.TriggerMusicEvent("AC_STOP");
+            API.PrepareMusicEvent("AC_STOP");
+            API.TriggerMusicEvent("AC_STOP");
 
-		}
+        }
 
 
-		public bool IsMale(int pedIOd)
+        public bool IsMale(int pedIOd)
         {
-			return API.IsPedModel(pedIOd,(uint) API.GetHashKey("mp_m_freemode_01"));
+            return API.IsPedModel(pedIOd, (uint)API.GetHashKey("mp_m_freemode_01"));
 
-		} 
+        }
 
-	}
+    }
 }

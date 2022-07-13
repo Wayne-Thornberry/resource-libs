@@ -1,4 +1,5 @@
-﻿using Proline.Modularization.Core;
+﻿using Proline.ClassicOnline.MScripting.Events;
+using Proline.Modularization.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;

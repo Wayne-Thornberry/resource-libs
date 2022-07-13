@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.ClassicOnline.MScripting.Config
+namespace Proline.ClassicOnline.MScripting.Internal
 {
     internal class ScriptingConfigSection
     {
-        internal static ScriptingConfigSection ModuleConfig => Configuration.GetSection<ScriptingConfigSection>("scriptingConfigSection"); 
+        internal static ScriptingConfigSection ModuleConfig => Configuration.GetSection<ScriptingConfigSection>("scriptingConfigSection");
         public List<string> LevelScriptAssemblies { get; set; }
     }
 }

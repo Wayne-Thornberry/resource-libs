@@ -7,11 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Console = Proline.Resource.Console;
 
-namespace Proline.ClassicOnline.MData.Entity
+namespace Proline.ClassicOnline.MData.Internal
 {
     public class DataFile
     {
-        public string Identifier { get; set; } 
+        public string Identifier { get; set; }
         public Dictionary<string, object> Properties { get; set; }
 
         internal string GetRawData()
@@ -53,7 +53,7 @@ namespace Proline.ClassicOnline.MData.Entity
                 }
             }
             else
-            { 
+            {
                 for (int i = 0; i < _saveFiles.Length; i++)
                 {
                     if (_saveFiles[i] == null)
@@ -65,7 +65,7 @@ namespace Proline.ClassicOnline.MData.Entity
                     }
                 }
                 throw new Exception("Unable to save file, no save file slots avalible");
-            } 
+            }
         }
 
         public void DeleteSaveFile(string identifier)
@@ -126,7 +126,7 @@ namespace Proline.ClassicOnline.MData.Entity
     public class DataFileManager
     {
         private static DataFileManager _instance;
-        private List<Save> _saves; 
+        private List<Save> _saves;
         internal DataFile TempFile { get; set; }
         internal DataFile ActiveFile { get; set; }
         internal bool IsSaveInProgress { get; set; }
@@ -135,15 +135,15 @@ namespace Proline.ClassicOnline.MData.Entity
 
         private DataFileManager()
         {
-            _saves = new List<Save>(); 
+            _saves = new List<Save>();
         }
-         
+
 
         public Save GetSave(Player player)
-        { 
+        {
             if (_saves.Count() == 0)
                 CreateSave(player);
-            return _saves[0];  
+            return _saves[0];
         }
         internal Save CreateSave(Player player)
         {
@@ -156,16 +156,16 @@ namespace Proline.ClassicOnline.MData.Entity
 
         internal bool DoesPlayerHaveSave(Player player)
         {
-            var save = _saves.FirstOrDefault(e => e.Owner == player); 
+            var save = _saves.FirstOrDefault(e => e.Owner == player);
             return save != null;
         }
 
         internal static DataFileManager GetInstance()
         {
-            if(_instance == null)
+            if (_instance == null)
                 _instance = new DataFileManager();
             return _instance;
-        }  
+        }
 
         internal void ClearTempFile()
         {
@@ -173,7 +173,7 @@ namespace Proline.ClassicOnline.MData.Entity
         }
 
         internal void InsertSave(Save save)
-        { 
+        {
             _saves.Add(save);
         }
     }

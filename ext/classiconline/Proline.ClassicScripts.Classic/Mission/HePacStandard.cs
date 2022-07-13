@@ -6,9 +6,9 @@ using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Proline.ClassicOnline.MDebug;
 
-namespace Proline.ClassicOnline.LevelScripts.Mission
+namespace Proline.ClassicOnline.SClassic.Mission
 {
-    public class HePacStandard 
+    public class HePacStandard
     {
         private readonly List<Entity> _bankDoors;
         private readonly string _cameraNameHash;

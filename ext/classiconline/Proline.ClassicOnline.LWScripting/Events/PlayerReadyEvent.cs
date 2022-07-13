@@ -1,5 +1,4 @@
-﻿using Proline.ClassicOnline.MScripting.Config;
-using Proline.ClassicOnline.MScripting.Internal;
+﻿using Proline.ClassicOnline.MScripting.Internal;
 using Proline.Resource.Eventing;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.ClassicOnline.MScripting
+namespace Proline.ClassicOnline.MScripting.Events
 {
     internal partial class PlayerReadyEvent : LoudEvent
     {

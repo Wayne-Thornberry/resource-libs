@@ -6,9 +6,9 @@ using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Proline.ClassicOnline.MScripting;
 
-namespace Proline.ClassicOnline.LevelScripts.Event
+namespace Proline.ClassicOnline.SClassic.Event
 {
-    public class ReArmouredTruck 
+    public class ReArmouredTruck
     {
         private readonly Vector3 _endLocal;
         private readonly int _maxReward;

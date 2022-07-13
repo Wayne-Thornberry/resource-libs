@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using Proline.ClassicOnline.MScripting;
 
-namespace Proline.ClassicOnline.LevelScripts
+namespace Proline.ClassicOnline.SClassic
 {
-    public class FMControls 
+    public class FMControls
     {
         public FMControls()
         {
@@ -15,7 +15,7 @@ namespace Proline.ClassicOnline.LevelScripts
         {
             while (!token.IsCancellationRequested)
             {
-                if(Game.IsControlJustReleased(0, Control.InteractionMenu))
+                if (Game.IsControlJustReleased(0, Control.InteractionMenu))
                 {
                     MScriptingAPI.StartNewScript("UIInteractionMenu");
                 }

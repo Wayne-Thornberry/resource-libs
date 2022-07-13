@@ -1,6 +1,5 @@
 ﻿using CitizenFX.Core;
 using Newtonsoft.Json;
-using Proline.ClassicOnline.MGame;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,35 +10,35 @@ using Proline.Resource;
 using Proline.CFXExtended.Core;
 using Proline.ClassicOnline.GScripting;
 
-namespace Proline.LevelScripts.Classic
+namespace Proline.ClassicOnline.SClassic
 {
     internal class PlayerLoading
     {
         public async Task Execute(object[] args, CancellationToken token)
         {
 
-            if (!ClassicOnline.MData.API.IsSaveInProgress())
+            if (!MData.API.IsSaveInProgress())
             {
                 // attempt to get the player id
                 // fish for the save files from the player id
                 await LoadDefaultOnlinePlayer();
-                await ClassicOnline.MData.API.PullSaveFromCloud(); // Sends a load request to the server
-                if (ClassicOnline.MData.API.HasSaveLoaded())
+                await MData.API.PullSaveFromCloud(); // Sends a load request to the server
+                if (MData.API.HasSaveLoaded())
                 {
-                    ClassicOnline.MData.API.SelectDataFile("PlayerInfo");
-                    Game.PlayerPed.Health = ClassicOnline.MData.API.GetDataFileValue<int>("PlayerHealth");
-                    Game.PlayerPed.Position = ClassicOnline.MData.API.GetDataFileValue<Vector3>("PlayerPosition");
+                    MData.API.SelectDataFile("PlayerInfo");
+                    Game.PlayerPed.Health = MData.API.GetDataFileValue<int>("PlayerHealth");
+                    Game.PlayerPed.Position = MData.API.GetDataFileValue<Vector3>("PlayerPosition");
 
-                    ClassicOnline.MData.API.SelectDataFile("PlayerStats");
-                    var x = ClassicOnline.MData.API.GetDataFileValue<int>("MP0_WALLET_BALANCE");
-                    var y = ClassicOnline.MData.API.GetDataFileValue<int>("BANK_BALANCE");
+                    MData.API.SelectDataFile("PlayerStats");
+                    var x = MData.API.GetDataFileValue<int>("MP0_WALLET_BALANCE");
+                    var y = MData.API.GetDataFileValue<int>("BANK_BALANCE");
                     var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
                     var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
                     stat.SetValue(x);
                     stat2.SetValue(y);
 
-                    ClassicOnline.MData.API.SelectDataFile("PlayerOutfit");
-                    var outfit = ClassicOnline.MData.API.GetDataFileValue<PedOutfit>("CharacterOutfit");
+                    MData.API.SelectDataFile("PlayerOutfit");
+                    var outfit = MData.API.GetDataFileValue<PedOutfit>("CharacterOutfit");
                     var components = outfit.Components;
                     for (int i = 0; i < components.Length; i++)
                     {
@@ -48,31 +47,31 @@ namespace Proline.LevelScripts.Classic
 
                     }
 
-                    ClassicOnline.MData.API.SelectDataFile("PlayerVehicle");
-                    if (ClassicOnline.MData.API.DoesDataFileValueExist("VehicleHash"))
+                    MData.API.SelectDataFile("PlayerVehicle");
+                    if (MData.API.DoesDataFileValueExist("VehicleHash"))
                     {
-                        var pv = (VehicleHash) ClassicOnline.MData.API.GetDataFileValue<uint>("VehicleHash");
-                        var position = ClassicOnline.MData.API.GetDataFileValue<Vector3>("VehiclePosition");
+                        var pv = (VehicleHash)MData.API.GetDataFileValue<uint>("VehicleHash");
+                        var position = MData.API.GetDataFileValue<Vector3>("VehiclePosition");
                         var vehicle = await World.CreateVehicle(new Model(pv), Game.PlayerPed.Position);
                         vehicle.PlaceOnNextStreet();
                         vehicle.IsPersistent = true;
-                        if(vehicle.AttachedBlips.Length == 0)
+                        if (vehicle.AttachedBlips.Length == 0)
                             vehicle.AttachBlip();
                         //blip.IsFlashing = true;
                     }
 
-                    ClassicOnline.MData.API.SelectDataFile("PlayerWeapon"); 
-                    if (ClassicOnline.MData.API.DoesDataFileValueExist("WeaponHash"))
+                    MData.API.SelectDataFile("PlayerWeapon");
+                    if (MData.API.DoesDataFileValueExist("WeaponHash"))
                     {
-                        var hash = (WeaponHash) ClassicOnline.MData.API.GetDataFileValue<uint>("WeaponHash");
-                        var ammo = ClassicOnline.MData.API.GetDataFileValue<int>("WeaponAmmo");
-                        Game.PlayerPed.Weapons.Give((WeaponHash)hash, ammo, true, true);
+                        var hash = (WeaponHash)MData.API.GetDataFileValue<uint>("WeaponHash");
+                        var ammo = MData.API.GetDataFileValue<int>("WeaponAmmo");
+                        Game.PlayerPed.Weapons.Give(hash, ammo, true, true);
                     }
 
                     Console.WriteLine(ScriptingGlobals.Testing);
                 }
                 else
-                { 
+                {
                     MDebugAPI.LogDebug("No save file to load from");
                 }
 
@@ -83,14 +82,14 @@ namespace Proline.LevelScripts.Classic
         {
             await Game.Player.ChangeModel(new Model(1885233650));
             PedOutfit _characterPedOutfitM = CreateDefaultOutfit();
-            if (!ClassicOnline.MData.API.HasSaveLoaded())
+            if (!MData.API.HasSaveLoaded())
             {
                 var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
                 var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
                 stat.SetValue(0);
                 stat2.SetValue(0);
-                ClassicOnline.MData.API.AddDataFileValue("MP0_WALLET_BALANCE", stat.GetValue());
-                ClassicOnline.MData.API.AddDataFileValue("BANK_BALANCE", stat.GetValue());
+                MData.API.AddDataFileValue("MP0_WALLET_BALANCE", stat.GetValue());
+                MData.API.AddDataFileValue("BANK_BALANCE", stat.GetValue());
 
             }
 

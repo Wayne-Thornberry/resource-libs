@@ -3,9 +3,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using CitizenFX.Core;
 
-namespace Proline.ClassicOnline.LevelScripts
+namespace Proline.ClassicOnline.SClassic
 {
-    public class VehicleJacking 
+    public class VehicleJacking
     {
         public VehicleJacking()
         {
