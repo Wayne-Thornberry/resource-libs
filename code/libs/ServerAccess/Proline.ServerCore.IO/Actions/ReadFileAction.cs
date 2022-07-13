@@ -9,19 +9,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Console = Proline.Resource.Console;
 
-namespace Proline.ServerCore.IO.Actions
+namespace Proline.ServerAccess.IO.Actions
 {
     public class ReadFileAction : ExtendedEvent
     {
         private static ReadFileAction _event;
 
-        private static string LocalPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        public string DEFAULT_PATH = Path.Combine(LocalPath, "ProjectOnline");
-
         public const string LOADFILEHANDLER = "LoadFileHandler";
         public string Data { get; set; }
 
-        public ReadFileAction() : base(LOADFILEHANDLER, true)
+        internal ReadFileAction() : base(LOADFILEHANDLER, true)
         {
 
         }
@@ -55,8 +52,13 @@ namespace Proline.ServerCore.IO.Actions
             // old way via getting id
             if (args.Length > 0)
             {
-                var argPath = args[0].ToString(); 
-                var data = File.ReadAllText(argPath);  
+
+
+                var LocalPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                var DEFAULT_PATH = Path.Combine(LocalPath, "ProjectOnline");
+
+                var argPath = args[0].ToString();
+                var data = File.ReadAllText(Path.Combine(DEFAULT_PATH, argPath));
                 return data;
             }
             else

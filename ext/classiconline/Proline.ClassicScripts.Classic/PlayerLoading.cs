@@ -23,7 +23,7 @@ namespace Proline.LevelScripts.Classic
                 // attempt to get the player id
                 // fish for the save files from the player id
                 await LoadDefaultOnlinePlayer();
-                await ClassicOnline.MData.API.PullSaveFromCloud(Game.Player.Name); // Sends a load request to the server
+                await ClassicOnline.MData.API.PullSaveFromCloud(); // Sends a load request to the server
                 if (ClassicOnline.MData.API.HasSaveLoaded())
                 {
                     ClassicOnline.MData.API.SelectDataFile("PlayerInfo");

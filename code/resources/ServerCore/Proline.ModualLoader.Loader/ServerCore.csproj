@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net452</TargetFramework>
-		<Platforms>AnyCPU</Platforms>
-		<Configurations>Debug;Release;Server;Client</Configurations> 
+		<Platforms>AnyCPU</Platforms> 
+		<AssemblyName>$(MSBuildProjectName).net</AssemblyName>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -16,9 +16,6 @@
     </Reference>
     <Reference Include="Proline.DBAccess.Proxies">
       <HintPath>..\..\..\..\artifacts\UserManagment\Proline.DBAccess.Proxies.dll</HintPath>
-    </Reference>
-    <Reference Include="Proline.Modularization.Core.Server">
-      <HintPath>..\..\..\..\artifacts\ModuleFramework\Server\Proline.Modularization.Core.Server.dll</HintPath>
     </Reference>
     <Reference Include="Proline.Resource.Eventing.Server">
       <HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.Eventing.Server.dll</HintPath>
@@ -41,8 +38,8 @@
     <Reference Include="Proline.Resource.Scripting.Server">
       <HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.Scripting.Server.dll</HintPath>
     </Reference>
-    <Reference Include="Proline.ServerCore.IO.Server">
-      <HintPath>..\..\..\..\artifacts\ServerCore\server\Proline.ServerCore.IO.Server.dll</HintPath>
+    <Reference Include="Proline.ServerAccess.IO.Server">
+      <HintPath>..\..\..\..\artifacts\ServerAccess\server\Proline.ServerAccess.IO.Server.dll</HintPath>
     </Reference>
   </ItemGroup>
 

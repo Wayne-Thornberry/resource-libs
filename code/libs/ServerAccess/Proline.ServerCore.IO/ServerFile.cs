@@ -1,13 +1,14 @@
-﻿using Proline.ServerCore.IO.Actions;
+﻿
+using Proline.ServerAccess.IO.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.ServerCore.IO
+namespace Proline.ServerAccess.IO
 {
-    internal static class ServerFile
+    public static class ServerFile
     {
 #if CLIENT
         public static async Task<string> ReadLocalFile(string path)
@@ -18,12 +19,12 @@ namespace Proline.ServerCore.IO
             return x.Data;
         }
 
-        public static async Task<string> WriteLocalFile(string path)
+        public static async Task<string> WriteLocalFile(string path, string data)
         {
-            var x = new ReadFileAction();
-            x.Invoke(path);
+            var x = new WriteFileAction();
+            x.Invoke(path, data);
             await x.WaitForCallback();
-            return x.Data;
+            return null;
         }
 #endif
     }

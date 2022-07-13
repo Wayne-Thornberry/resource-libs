@@ -1,10 +1,9 @@
 ﻿using CitizenFX.Core;
-using Proline.Modularization.Core;
 using Proline.Resource;
 using Proline.Resource.Configuration;
 using Proline.Resource.Framework;
 using Proline.Resource.Logging;
-using Proline.ServerCore.IO.Actions;
+using Proline.ServerAccess.IO.Actions;
 using ProlineCore.Events;
 using ProlineCore.Events.Special;
 using ProlineCore.Internal;

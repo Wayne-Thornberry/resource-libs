@@ -13,6 +13,11 @@ namespace Proline.Resource.Globals
         public StateBag NetworkedProperties { get; set; }
         public Dictionary<string, object> GlobalProperties { get; set; }
 
+        public GlobalsManager()
+        {
+            GlobalProperties = new Dictionary<string, object>();
+        }
+
         public static GlobalsManager GetInstance()
         {
             if (_instance == null)

@@ -46,7 +46,7 @@ namespace Proline.Resource.Eventing
             {
                 item.OnEventTriggered(player, eventTriggered);
             }
-            if(eventTriggered.EventType == 0)
+            if(eventTriggered.EventType == 1)
                 BaseScript.TriggerClientEvent(Key, json);
         }
 #endif

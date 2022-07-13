@@ -1,13 +1,15 @@
 ﻿using CitizenFX.Core;
 using Newtonsoft.Json;
 using Proline.ClassicOnline.MData.Entity;
-using Proline.ClassicOnline.MData.Events;
 using Proline.ClassicOnline.MDebug;
+using Proline.ServerAccess.IO; 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MData
 {
@@ -22,6 +24,9 @@ namespace Proline.ClassicOnline.MData
                 var fm = DataFileManager.GetInstance();
                 MDebugAPI.LogDebug($"Saving save file...");
                 fm.IsSaveInProgress = true;
+                var identifier = "acf48492b3aa7739725e33fc30aed8129b901d1f";
+                var path = $"Saves/{identifier}/";
+                var manifest = new List<string>();
                 foreach (var item in fm.GetSave(Game.Player).GetSaveFiles())
                 {
                     try
@@ -30,18 +35,17 @@ namespace Proline.ClassicOnline.MData
                         {
                             throw new Exception($"Cannot save file, current save file is null");
                         };
-                        var json = JsonConvert.SerializeObject(item);
-                        MDebugAPI.LogDebug($"Saving file... {json}");
-                        using (var sfEvent = WriteFileAction.TriggerEvent(json))
-                        {
-                            await sfEvent.WaitForCallback();
-                        }
+                        var json = JsonConvert.SerializeObject(item.Properties);
+                        MDebugAPI.LogDebug($"Saving file... {json}"); 
+                        await ServerFile.WriteLocalFile(Path.Combine(path, item.Identifier + ".json"), json);
+                        manifest.Add(item.Identifier);
                     }
                     catch (Exception e)
                     {
                         MDebugAPI.LogDebug(e.ToString());
                     }
                 }
+                await ServerFile.WriteLocalFile(Path.Combine(path, "Manifest.json"), JsonConvert.SerializeObject(manifest));
                 fm.IsSaveInProgress = false;
             }
             catch (Exception e)
@@ -82,29 +86,32 @@ namespace Proline.ClassicOnline.MData
             return null;
         }
 
-        public static async Task PullSaveFromCloud(long id)
+        public static async Task PullSaveFromCloud()
         {
             try
             {
                 MDebugAPI.LogDebug("Load Request put in");
                 var fm = DataFileManager.GetInstance();
                 MDebugAPI.LogInfo("Waiting for callback to be completed...");
-                var result = ReadFileAction.ReadLocalFile("Saves/acf48492b3aa7739725e33fc30aed8129b901d1f").Result;
-
-
+                var identifier = "acf48492b3aa7739725e33fc30aed8129b901d1f";
+                var data = await ServerFile.ReadLocalFile($"Saves/{identifier}/Manifest.json");
+                var manifest = JsonConvert.DeserializeObject<List<string>>(data);
                 var instance = DataFileManager.GetInstance();
-                if (result == null) return; 
-                List<SaveFile> saveFiles = JsonConvert.DeserializeObject<List<SaveFile>>(result);
-                Console.WriteLine("data got " + result);
-                foreach (var item in saveFiles)
-                {
-                    instance.GetSave(Game.Player).InsertSaveFile(item);
-                }
+                var save = instance.GetSave(Game.Player);
+                foreach (var item in manifest)
+                { 
+                    var result1 = await ServerFile.ReadLocalFile($"Saves/{identifier}/{item}.json");
+                    Console.WriteLine(item);
+                    var properties =  JsonConvert.DeserializeObject<Dictionary<string,object>>(result1);
+                    var saveFile = new SaveFile()
+                    {
+                        Identifier = item,
+                        Properties = properties,
+                    };
+                    save.InsertSaveFile(saveFile);
+                } 
+                  
                 instance.HasLoadedFromNet = true;
-                //if (result == 0)
-                //    MDebugAPI.LogInfo("Callback has completed");
-                //else if (result == 1)
-                //    throw new Exception("Callback has timed out");
                 fm.HasLoadedFromNet = true;
             }
             catch (Exception e)
@@ -127,25 +134,6 @@ namespace Proline.ClassicOnline.MData
             return false;
         }
 
-
-        public static async Task PullSaveFromCloud(string username)
-        {
-            try
-            {
-                MDebugAPI.LogDebug("Load Request put in");
-                var lfEvent = ReadFileAction.TriggerEvent(username);
-                MDebugAPI.LogInfo("Waiting for callback to be completed...");
-                var result = await lfEvent.WaitForCallback();
-                if (result == 0)
-                    MDebugAPI.LogInfo("Callback has completed");
-                else if (result == 1)
-                    throw new Exception("Callback has timed out");
-            }
-            catch (Exception e)
-            {
-                MDebugAPI.LogDebug(e.ToString());
-            }
-        }
          
     }
 }

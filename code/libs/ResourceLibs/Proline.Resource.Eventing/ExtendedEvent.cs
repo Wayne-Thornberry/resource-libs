@@ -89,7 +89,7 @@ namespace Proline.Resource.Eventing
                 var callbackEventRequest = new EventTriggered() { EventName = EventName,Args = args, IsCallback = true, CallbackEventName = callbackName };
                 var json = JsonConvert.SerializeObject(callbackEventRequest);
                 Console.WriteLine("Sending Data... " + json);
-                BaseScript.TriggerServerEvent(EventDictionaryManager.Key, json);
+                BaseScript.TriggerServerEvent(EventManager.Key, json);
             }
         }
 
@@ -105,7 +105,7 @@ namespace Proline.Resource.Eventing
                 Subscribe();
             }
             var json = JsonConvert.SerializeObject(callbackEventRequest);
-            BaseScript.TriggerServerEvent(EventDictionaryManager.Key, json); 
+            BaseScript.TriggerServerEvent(EventManager.Key, json); 
         }
         protected void ExternalInvokeCallback(params object[] args)
         {

@@ -47,15 +47,17 @@ namespace ProlineCore.Internal
             Console.WriteLine(playerPath);
             if (Directory.Exists(playerPath))
             {
-                foreach (var item in Directory.GetFiles(playerPath, "*.json"))
-                {
-                    var name = Path.GetFileName(item).Split('.')[0];
-                    var json = File.ReadAllText(item);
-                    Console.WriteLine(item);
+                var manifestPath = Directory.GetFiles(playerPath, "Manifest.json")[0];
+                var manifestjson = File.ReadAllText(manifestPath);
+                var manifestFileNames = JsonConvert.DeserializeObject<List<string>>(manifestjson);
+                foreach (var fileName in manifestFileNames)
+                { 
+                    manifestjson = File.ReadAllText(Path.Combine(playerPath, fileName+".json"));
+                    Console.WriteLine(fileName);
                     var saveFile = new SaveFile
                     {
-                        Properties = JsonConvert.DeserializeObject<Dictionary<string, object>>(json),
-                        Identifier = name
+                        Properties = JsonConvert.DeserializeObject<Dictionary<string, object>>(manifestjson),
+                        Identifier = fileName
                     };
                     save.InsertSaveFile(saveFile);
                 }

@@ -22,9 +22,9 @@ namespace Proline.Resource.Eventing
 #if CLIENT
         public override void Invoke(params object[] args)
         {
-            var callbackEventRequest = new EventTriggered() { EventName = EventName, Args = args }; 
+            var callbackEventRequest = new EventTriggered() { EventType = 1, EventName = EventName, Args = args }; 
             var json = JsonConvert.SerializeObject(callbackEventRequest);
-            BaseScript.TriggerServerEvent(EventDictionaryManager.Key, json);
+            BaseScript.TriggerServerEvent(EventManager.Key, json);
         }
         
         internal override void OnEventTriggered(EventTriggered data)
@@ -37,7 +37,7 @@ namespace Proline.Resource.Eventing
 #elif SERVER
         public override void Invoke(Player player, params object[] args)
         {
-            var callbackEventRequest = new EventTriggered() { EventName = EventName, Args = args }; 
+            var callbackEventRequest = new EventTriggered() { EventType = 1, EventName = EventName, Args = args }; 
             var json = JsonConvert.SerializeObject(callbackEventRequest);
             BaseScript.TriggerEvent(EventManager.Key, json); 
         } 

@@ -5,13 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MData.Entity
 {
     public class DataFile
     {
-        public string Identifier { get; set; }
-        public Dictionary<string, object> Properties { get; set; } 
+        public string Identifier { get; set; } 
+        public Dictionary<string, object> Properties { get; set; }
+
+        internal string GetRawData()
+        {
+            return JsonConvert.SerializeObject(Properties);
+        }
     }
 
     public class SaveFile : DataFile
@@ -43,6 +49,7 @@ namespace Proline.ClassicOnline.MData.Entity
                     if (saveFile == null) continue;
                     if (string.IsNullOrEmpty(saveFile.Identifier)) continue;
                     if (saveFile.Identifier.Equals(file.Identifier)) _saveFiles[i] = file;
+                    Console.WriteLine("Overwrote save file");
                 }
             }
             else
@@ -53,6 +60,7 @@ namespace Proline.ClassicOnline.MData.Entity
                     {
                         _saveFiles[i] = file;
                         LastSaveFile = file;
+                        Console.WriteLine("Inserted save file");
                         return;
                     }
                 }
