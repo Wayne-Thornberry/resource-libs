@@ -6,14 +6,12 @@ using Proline.Resource.Framework;
 using Proline.Resource.Logging;
 using System.Reflection;
 using System.Threading.Tasks;
+using Console = Proline.Resource.Console;
 
 namespace ProlineServer
 {
     public class ResourceMainScript : ResourceScript
-    {
-        private static Log _log = new Log(); 
-         
-
+    { 
         public override async Task OnLoad()
         { 
             LoadResources();
