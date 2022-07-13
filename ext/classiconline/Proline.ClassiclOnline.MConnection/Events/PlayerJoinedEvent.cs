@@ -9,10 +9,6 @@ namespace Proline.ClassicOnline.MConnection
 {
     internal partial class PlayerJoinedEvent : LoudEvent
     {
-        public PlayerJoinedEvent() : base(PLAYERJOINEDHANDLER)
-        {
-        }
-
         private static PlayerJoinedEvent _event;
         public const string PLAYERJOINEDHANDLER = "PlayerJoinedHandler";
 
@@ -32,6 +28,20 @@ namespace Proline.ClassicOnline.MConnection
                 _event.Unsubscribe();
                 _event = null;
             }
+        }
+
+        public PlayerJoinedEvent() : base(PLAYERJOINEDHANDLER)
+        {
+        }
+
+        public static void InvokeEvent(string username)
+        {
+            _event.Invoke(username);
+        }
+
+        protected override object OnEventTriggered(params object[] args)
+        {
+            return null;
         }
     }
 }

@@ -13,12 +13,6 @@
     <ProjectReference Include="..\Proline.ClassicComponents.Data\Proline.ClassicOnline.MData.csproj" />
   </ItemGroup>
 
-	<ItemGroup Condition="'Client|$(Platform)'=='Server|AnyCPU'">
-		<Compile Remove="Client\**" />
-		<EmbeddedResource Remove="Client\**" />
-		<None Remove="Client\**" />
-	</ItemGroup>
-
 	<ItemGroup Condition="'Client|$(Platform)'=='Client|AnyCPU'">
 		<Compile Remove="Server\**" />
 		<EmbeddedResource Remove="Server\**" />

@@ -54,9 +54,4 @@
     <ProjectReference Include="..\Proline.ClassicOnline.F8Console\Proline.ClassicOnline.MDebug.csproj" />
   </ItemGroup>
 
-
-	<ItemGroup>
-	  <Folder Include="Scripts\" />
-	</ItemGroup>
-
 </Project>

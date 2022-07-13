@@ -66,6 +66,7 @@ namespace Proline.ClassicOnline.LevelScripts
             //}
 
             await MData.API.SendSaveToCloud();
+            await BaseScript.Delay(1000);
             Screen.LoadingPrompt.Hide();  
         }
     }

@@ -11,48 +11,88 @@ namespace Proline.ClassicOnline.MDebug
 
         public static void LogDebug(object data, bool broadcast = false)
         {
-            // Log in memory
-            var line = _log.Debug(data.ToString());
-            // Output to console
-            Console.WriteLine(line);
-            // Duplciate to server
+            try
+            { 
+                // Log in memory
+                var line = _log.Debug(data.ToString());
+                // Output to console
+                Console.WriteLine(line);
+                // Duplciate to server
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public static void LogDebug(string data, bool broadcast = false)
         {
-            // Log in memory
-            var line = _log.Debug(data);
-            // Output to console
-            Console.WriteLine(line);
-            // Duplciate to server
+            try
+            { 
+                // Log in memory
+                var line = _log.Debug(data);
+                // Output to console
+                Console.WriteLine(line);
+                // Duplciate to server
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
         }
 
         public static void LogWarn(string data, bool broadcast = false)
         {
-            // Log in memory
-            var line = _log.Warn(data.ToString());
-            // Output to console
-            Console.WriteLine(line);
-            // Duplciate to server
+            try
+            { 
+                // Log in memory
+                var line = _log.Warn(data.ToString());
+                // Output to console
+                Console.WriteLine(line);
+                // Duplciate to server
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public static void LogInfo(string data, bool broadcast = false)
         {
-            // Log in memory
-            var line = _log.Info(data.ToString());
-            // Output to console
-            Console.WriteLine(line);
-            // Duplciate to server
+            try
+            { 
+                // Log in memory
+                var line = _log.Info(data.ToString());
+                // Output to console
+                Console.WriteLine(line);
+                // Duplciate to server
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public static void LogError(string data, bool broadcast = false)
         {
-            // Log in memory
-            var line = _log.Error(data.ToString());
-            // Output to console
-            Console.WriteLine(line);
-            // Duplciate to server
+            try
+            { 
+                // Log in memory
+                var line = _log.Error(data.ToString());
+                // Output to console
+                Console.WriteLine(line);
+                // Duplciate to server
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
         }
 
     }
