@@ -51,7 +51,7 @@
 	</ItemGroup> 
 
 	<ItemGroup>
-	  <Folder Include="Client\Events\" />
+	  <Folder Include="Events\" />
 	</ItemGroup>
 
 </Project>
