@@ -49,7 +49,7 @@ namespace Proline.ClassicOnline.MData.Internal
                     if (saveFile == null) continue;
                     if (string.IsNullOrEmpty(saveFile.Identifier)) continue;
                     if (saveFile.Identifier.Equals(file.Identifier)) _saveFiles[i] = file;
-                    Console.WriteLine("Overwrote save file");
+                    //Console.WriteLine("Overwrote save file");
                 }
             }
             else
@@ -60,7 +60,7 @@ namespace Proline.ClassicOnline.MData.Internal
                     {
                         _saveFiles[i] = file;
                         LastSaveFile = file;
-                        Console.WriteLine("Inserted save file");
+                        //Console.WriteLine("Inserted save file");
                         return;
                     }
                 }
