@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Proline.ClassicOnline.MScripting.Internal
 {
 
-    internal class ScriptTaskManager : Dictionary<object, Task>
+    internal class ScriptTaskManager 
     {
         private static ScriptTaskManager _instance;
 
@@ -16,6 +16,12 @@ namespace Proline.ClassicOnline.MScripting.Internal
             if (_instance == null)
                 _instance = new ScriptTaskManager();
             return _instance;
+        }
+
+        internal IEnumerable<Task> GetAllScriptInstanceTasks()
+        {
+            var sm = ListOfLiveScripts.GetInstance();
+            return sm.Select(e => e.ExecutionTask);
         }
     }
 }

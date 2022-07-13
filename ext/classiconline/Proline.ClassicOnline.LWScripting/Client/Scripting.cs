@@ -19,14 +19,11 @@ namespace Proline.ClassicOnline.MScripting
         {
             try
             { 
-                var sm = ScriptManager.GetInstance();
+                var sm = ListOfLiveScripts.GetInstance();
                 var stl = ScriptTypeLibrary.GetInstance();
 
                 if (!stl.DoesScriptTypeExist(scriptName))
                     return -1;
-                var stm = ScriptTaskManager.GetInstance();
-                var sim = ScriptInstanceManager.GetInstance();
-                var sttm = ScriptTaskTokenManager.GetInstance();
 
                 var type = stl.GetScriptType(scriptName);
                 if (type == null)
@@ -41,15 +38,11 @@ namespace Proline.ClassicOnline.MScripting
                     Console.WriteLine(String.Format("Unable to create script instance of {0}, instance came back null", scriptName));
                     return -1;
                 }
-
-                var instanceId = Guid.NewGuid().ToString();
-                var scriptCancelationToken = new CancellationTokenSource();
-                var script = new LiveScript(instanceId);
-                var scriptTask = script.Execute(scriptCancelationToken, instance, args);
-                sim.Add(instanceId, instance);
-                sttm.Add(scriptTask, scriptCancelationToken);
-                stm.Add(instance, scriptTask); 
-                sm.Add(script);  
+                 
+                var script = new LiveScript(instance);
+                sm.Add(script);
+                script.Execute(args);
+                var scriptTask = script.ExecutionTask;
                 Console.WriteLine(String.Format("Task Id {0}, Is Complete {1}, Status {2} ", scriptTask.Id, scriptTask.IsCompleted, scriptTask.Status));
                 return script.Id;
             }
@@ -66,7 +59,7 @@ namespace Proline.ClassicOnline.MScripting
         {
             try
             { 
-                var sm = ScriptManager.GetInstance();
+                var sm = ListOfLiveScripts.GetInstance();
                 var count =  sm.Where(e => e.Name.Equals(scriptName)).Count();
               //  Console.WriteLine(String.Format("Getting the instance count of script {0} count: {1}", scriptName, count));
                 return count;
@@ -83,7 +76,7 @@ namespace Proline.ClassicOnline.MScripting
             try
             {
 
-                var sm = ScriptManager.GetInstance();   
+                var sm = ListOfLiveScripts.GetInstance();   
                 var script = sm.FirstOrDefault(e => e.Instance == callingClass);
                 Console.WriteLine(String.Format("Requesting that script instances by the name of {0} be marked as no longer needed", script.Name));
                 script.IsMarkedForNolongerNeeded = true;
@@ -98,7 +91,7 @@ namespace Proline.ClassicOnline.MScripting
         {
             try
             {
-                var sm = ScriptManager.GetInstance(); 
+                var sm = ListOfLiveScripts.GetInstance(); 
                 var cls = scriptName;
                 Console.WriteLine(String.Format("Requesting that all script instances by the name of {0} be marked as no longer needed", scriptName)); 
                 var scripts = sm.Where(e=>e.Name.Equals(scriptName));
@@ -121,7 +114,7 @@ namespace Proline.ClassicOnline.MScripting
         {
             try
             {
-                var sm = ScriptManager.GetInstance(); 
+                var sm = ListOfLiveScripts.GetInstance(); 
                 var scripts = sm.Where(e=>e.Name.Equals(scriptName));
                 Console.WriteLine(String.Format("Requesting that all script instances by the name of {0} be terminated", scriptName));
                 foreach (var script in scripts)
@@ -143,7 +136,7 @@ namespace Proline.ClassicOnline.MScripting
         {
             try
             {
-                var sm = ScriptManager.GetInstance();  
+                var sm = ListOfLiveScripts.GetInstance();  
                 var script = sm.FirstOrDefault(e=>e.Instance==scriptInstance);
                 if (script == null)
                     return;
@@ -164,7 +157,7 @@ namespace Proline.ClassicOnline.MScripting
         {
             try
             {
-                var sm = ScriptManager.GetInstance(); 
+                var sm = ListOfLiveScripts.GetInstance(); 
                 var script = sm.FirstOrDefault(e => e.ExecutionTask.Id == taskId);
                 if (script == null)
                     return;

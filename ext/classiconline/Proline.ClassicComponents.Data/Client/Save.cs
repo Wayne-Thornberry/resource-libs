@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MData
 {
-    public partial class API
+    public static partial class API
     {
         // SendSaveToCloud - Sends a request to the server to upload current Save (Save consists of multiple data files)
         // PullSaveFromCloud - Sends a request to download the file to the client

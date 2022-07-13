@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MScripting.Internal
 {
-    internal class ScriptTaskTokenManager : Dictionary<Task, CancellationTokenSource>
+    internal class ScriptTaskTokenManager 
     {
         private static ScriptTaskTokenManager _instance;
 

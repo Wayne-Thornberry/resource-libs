@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MScripting.Internal
 {
-    internal class ScriptInstanceManager : Dictionary<string, object>
+    internal class ScriptInstanceManager
     {
         private static ScriptInstanceManager _instance;
 
@@ -12,6 +12,15 @@ namespace Proline.ClassicOnline.MScripting.Internal
             if (_instance == null)
                 _instance = new ScriptInstanceManager();
             return _instance;
+        }
+
+        internal void StopAllInstances()
+        {
+            var sm = ListOfLiveScripts.GetInstance();
+            foreach (var item in sm)
+            {
+                item.Terminate();
+            }
         }
     }
 }

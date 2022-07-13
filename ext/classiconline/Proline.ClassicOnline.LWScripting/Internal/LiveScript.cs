@@ -15,24 +15,29 @@ using Console = Proline.Resource.Console;
 namespace Proline.ClassicOnline.MScripting
 {
     internal class LiveScript
-    { 
-        public string Name => Instance.GetType().Name; 
-        public CancellationTokenSource CancelToken => ScriptTaskTokenManager.GetInstance()[ExecutionTask]; 
+    {
+        public Type InstanceType => Instance.GetType();
+        public string Name => InstanceType.Name; 
+        public CancellationTokenSource CancelToken => _tokenSource; 
         public bool IsCompleted => ExecutionTask != null ? ExecutionTask.IsCompleted : false;
-        public Task ExecutionTask => ScriptTaskManager.GetInstance()[Instance]; 
+        public Task ExecutionTask => _executionTask; 
         public int Id => ExecutionTask == null ? -1 : ExecutionTask.Id;
         public bool IsMarkedForNolongerNeeded { get; internal set; }
-        public object Instance => ScriptInstanceManager.GetInstance()[_instanceId];
+        public object Instance => _instance;
         public string InstanceId => _instanceId;
-         
+
+        private Task _executionTask;
+        private CancellationTokenSource _tokenSource;
+        private object _instance;
         private string _instanceId;
 
-        public LiveScript(string instanceId)
+        public LiveScript(object instance)
         {
-            _instanceId = instanceId;  
+            _instance = instance;
+            _instanceId = Guid.NewGuid().ToString();  
         } 
 
-        public void Terminate()
+        internal void Terminate()
         {
             if (!IsCompleted)
             { 
@@ -40,42 +45,13 @@ namespace Proline.ClassicOnline.MScripting
             }
         }
 
-        internal async Task Execute(CancellationTokenSource source, object instance, params object[] args)
-        { 
-            var terminationCode = 0;
-            var type = instance.GetType();
-            var name = type.Name; 
-            try
-            {
-                var method = type.GetMethod("Execute");
-                Console.WriteLine(string.Format("{0} Script Started", name, terminationCode));
-                var invokationTask = (Task)method.Invoke(instance, new object[] { args, source.Token });
-                while (!invokationTask.IsCompleted && !source.IsCancellationRequested)
-                {
-                    await BaseScript.Delay(1000);
-                }
-                Console.WriteLine(string.Format("{0} Completed", name));
-
-                if (invokationTask.Exception != null)
-                {
-                    throw invokationTask.Exception;
-                }
-                terminationCode = 0;
-            }
-            catch (AggregateException e)
-            {
-                terminationCode = 2;
-                Console.WriteLine(e.ToString());
-            }
-            catch (Exception e)
-            {
-                terminationCode = 1;
-                Console.WriteLine(e.ToString());
-            }
-            finally
-            {
-                Console.WriteLine(string.Format("{0} Script Finished, Termination Code: {1}", name, terminationCode));
-            }
+        internal void Execute(params object[] args)
+        {  
+            _tokenSource = new CancellationTokenSource();
+            var method = InstanceType.GetMethod("Execute");
+            Console.WriteLine(string.Format("{0} Script Started", Name));
+            _executionTask = (Task)method.Invoke(_instance, new object[] { args, _tokenSource.Token });
+            Console.WriteLine(string.Format("{0} Completed", Name)); 
         }
     }
 }

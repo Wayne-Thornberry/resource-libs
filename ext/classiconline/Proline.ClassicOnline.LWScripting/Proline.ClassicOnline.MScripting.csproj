@@ -7,6 +7,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Server\**" />
+	  <EmbeddedResource Remove="Server\**" />
+	  <None Remove="Server\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CitizenFX.Core.Client" Version="1.0.5179" />
 	</ItemGroup>
 
@@ -51,7 +57,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Scripts\" />
-	  <Folder Include="Server\Events\" />
 	</ItemGroup>
 
 </Project>

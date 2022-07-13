@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MData
 {
-    public partial class API
+    public static partial class API
     {
         // CreateDataFile - Creates an temp data file to write too, if save is not called, this data file can be overriden
         // SaveDataFile - Saves the current active data file to local memory

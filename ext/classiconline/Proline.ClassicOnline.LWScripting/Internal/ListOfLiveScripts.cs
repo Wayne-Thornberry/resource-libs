@@ -11,13 +11,13 @@ using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MScripting
 {
-    internal class ScriptManager : List<LiveScript>
+    internal class ListOfLiveScripts : List<LiveScript>
     {
-        private static ScriptManager _instance;
-        internal static ScriptManager GetInstance()
+        private static ListOfLiveScripts _instance;
+        internal static ListOfLiveScripts GetInstance()
         {
             if (_instance == null)
-                _instance = new ScriptManager();
+                _instance = new ListOfLiveScripts();
             return _instance;
         } 
          

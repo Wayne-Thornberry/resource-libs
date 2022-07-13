@@ -27,7 +27,7 @@ namespace Proline.ClassicOnline.MScripting
         {
             try
             {
-                var sm = ScriptManager.GetInstance();
+                var sm = ListOfLiveScripts.GetInstance();
 
                 var instances = sm.Where(e => e.IsMarkedForNolongerNeeded).ToArray();
                 if (instances.Count() > 0)
@@ -45,15 +45,9 @@ namespace Proline.ClassicOnline.MScripting
                 instances = sm.Where(e => e.IsCompleted).ToArray();
                 if (instances.Count() > 0)
                     Console.WriteLine(String.Format("Removing {0} script instances that have been completed", instances.Count()));
-                int count = 0;
-                var sttm = ScriptTaskTokenManager.GetInstance();
-                var stm = ScriptTaskManager.GetInstance();
-                var sim = ScriptInstanceManager.GetInstance();
+                int count = 0; 
                 foreach (var instance in instances)
-                {
-                    sttm.Remove(instance.ExecutionTask);
-                    stm.Remove(instance.Instance);
-                    sim.Remove(instance.InstanceId);
+                { 
                     var instanceCount = sm.Remove(instance);
                     count++;
                     Console.WriteLine(String.Format("{0} Removed {1} instances", instance.Name, 1));

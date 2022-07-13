@@ -17,7 +17,7 @@ namespace Proline.ClassicOnline.MScripting.Commands
 
         protected override void OnCommandExecute(params object[] args)
         {
-            var sm = ScriptManager.GetInstance();
+            var sm = ListOfLiveScripts.GetInstance();
             if (args.Count() == 0)
             {
                 foreach (var script in sm)
