@@ -49,23 +49,36 @@ namespace Proline.ServerAccess.IO.Actions
 
         protected override object OnEventTriggered(Player player, params object[] args)
         {
-            // old way via getting id
-            if (args.Length > 0)
-            {
+            try
+            { 
+                // old way via getting id
+                if (args.Length > 0)
+                { 
+                    var argPath = args[0].ToString();
+                    var LocalPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                    var DEFAULT_PATH = Path.Combine(LocalPath, "ProjectOnline");
+                    var newPath = Path.Combine(DEFAULT_PATH, argPath);
 
+                    string fileAndPath = newPath;
+                    string currentDirectory = Path.GetDirectoryName(fileAndPath);
+                    string fullPathOnly = Path.GetFullPath(currentDirectory);
 
-                var LocalPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                var DEFAULT_PATH = Path.Combine(LocalPath, "ProjectOnline");
+                    if (!Directory.Exists(fullPathOnly))
+                        return null;
 
-                var argPath = args[0].ToString();
-                var data = File.ReadAllText(Path.Combine(DEFAULT_PATH, argPath));
-                return data;
+                    var data = File.ReadAllText(newPath);
+                    return data;
+                }
+                else
+                {
+                    Console.WriteLine("Argument count does not match expected count"); 
+                }
             }
-            else
+            catch (Exception e)
             {
-                Console.WriteLine("Argument count does not match expected count");
-                return null;
+                Console.WriteLine(e.ToString());
             }
+            return null;
         }
 #endif
     }

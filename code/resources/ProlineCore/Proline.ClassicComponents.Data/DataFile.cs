@@ -27,8 +27,10 @@ namespace Proline.ClassicOnline.MData
             {
                 var fm = DataFileManager.GetInstance(); 
                 var saveFile = new SaveFile();
-                saveFile.Identifier = "Tempname";
+                saveFile.Name = "Tempname";
                 saveFile.Properties = new Dictionary<string, object>();
+                saveFile.LastChanged = DateTime.UtcNow;
+                saveFile.HasUpdated = true;
                 fm.TempFile = saveFile; 
                 fm.ActiveFile = saveFile;
             }
@@ -36,7 +38,23 @@ namespace Proline.ClassicOnline.MData
             {
                 MDebugAPI.LogError(e.ToString());
             }
-        } 
+        }
+
+        public static bool DoesDataFileExist(string id)
+        {
+            try
+            {
+                var fm = DataFileManager.GetInstance();
+                var save = fm.GetSave(Game.Player);
+                return save.GetSaveFile(id) != null;
+            }
+            catch (Exception e)
+            {
+                MDebugAPI.LogError(e.ToString());
+            }
+            return false;
+        }
+
         public static void SaveDataFile(string identifier)
         {
             try
@@ -50,7 +68,7 @@ namespace Proline.ClassicOnline.MData
                 var fm = DataFileManager.GetInstance();  
                 var id = identifier;//string.IsNullOrEmpty(identifier) ? "SaveFile" + index : identifier;
                 var tempFile = fm.TempFile;
-                tempFile.Identifier = id; 
+                tempFile.Name = id; 
                 if(fm.TempFile != null)
                 { 
                     fm.GetSave(Game.Player).InsertSaveFile(fm.TempFile);
@@ -107,7 +125,8 @@ namespace Proline.ClassicOnline.MData
                 if (dictionary == null)
                     return;
                 if (!dictionary.ContainsKey(key))
-                    dictionary.Add(key, value); 
+                    dictionary.Add(key, value);
+                saveFile.HasUpdated = true;
             }
             catch (Exception e)
             {
@@ -126,7 +145,8 @@ namespace Proline.ClassicOnline.MData
                 if (dictionary == null)
                     throw new Exception("Save file does not have any property dictionary");
                 if (dictionary.ContainsKey(key))
-                    dictionary[key] = value; 
+                    dictionary[key] = value;
+                saveFile.HasUpdated = true;
             }
             catch (Exception e)
             {

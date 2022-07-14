@@ -11,8 +11,10 @@ namespace Proline.ClassicOnline.MData.Internal
 {
     public class DataFile
     {
-        public string Identifier { get; set; }
+        public string Name { get; set; }
         public Dictionary<string, object> Properties { get; set; }
+        public DateTime LastChanged { get; internal set; }
+        public bool HasUpdated { get; internal set; }
 
         internal string GetRawData()
         {
@@ -22,7 +24,6 @@ namespace Proline.ClassicOnline.MData.Internal
 
     public class SaveFile : DataFile
     {
-
     }
 
     public class Save
@@ -30,6 +31,7 @@ namespace Proline.ClassicOnline.MData.Internal
         private const int MAXSAVEFILES = 16;
         public Player Owner { get; private set; }
         public DataFile LastSaveFile { get; private set; }
+        public bool HasChanged { get; internal set; }
 
         internal Save(Player player)
         {
@@ -41,14 +43,16 @@ namespace Proline.ClassicOnline.MData.Internal
 
         public void InsertSaveFile(DataFile file)
         {
-            if (DoesSaveFileExist(file.Identifier))
+            if (DoesSaveFileExist(file.Name))
             {
                 for (int i = 0; i < _saveFiles.Length; i++)
                 {
                     var saveFile = _saveFiles[i];
                     if (saveFile == null) continue;
-                    if (string.IsNullOrEmpty(saveFile.Identifier)) continue;
-                    if (saveFile.Identifier.Equals(file.Identifier)) _saveFiles[i] = file;
+                    if (string.IsNullOrEmpty(saveFile.Name)) continue;
+                    if (saveFile.Name.Equals(file.Name)) _saveFiles[i] = file;
+                    saveFile.HasUpdated = true;
+                    HasChanged = true;
                     //Console.WriteLine("Overwrote save file");
                 }
             }
@@ -61,6 +65,8 @@ namespace Proline.ClassicOnline.MData.Internal
                         _saveFiles[i] = file;
                         LastSaveFile = file;
                         //Console.WriteLine("Inserted save file");
+                        file.HasUpdated = true;
+                        HasChanged = true;
                         return;
                     }
                 }
@@ -74,8 +80,8 @@ namespace Proline.ClassicOnline.MData.Internal
             {
                 var saveFile = _saveFiles[i];
                 if (saveFile == null) continue;
-                if (string.IsNullOrEmpty(saveFile.Identifier)) continue;
-                if (saveFile.Identifier.Equals(identifier)) _saveFiles[i] = null;
+                if (string.IsNullOrEmpty(saveFile.Name)) continue;
+                if (saveFile.Name.Equals(identifier)) _saveFiles[i] = null;
             }
         }
 
@@ -99,8 +105,8 @@ namespace Proline.ClassicOnline.MData.Internal
             {
                 var saveFile = _saveFiles[i];
                 if (saveFile == null) continue;
-                if (string.IsNullOrEmpty(saveFile.Identifier)) continue;
-                if (saveFile.Identifier.Equals(identifier)) return true;
+                if (string.IsNullOrEmpty(saveFile.Name)) continue;
+                if (saveFile.Name.Equals(identifier)) return true;
             }
             return false;
         }
@@ -116,8 +122,8 @@ namespace Proline.ClassicOnline.MData.Internal
             {
                 var saveFile = _saveFiles[i];
                 if (saveFile == null) continue;
-                if (string.IsNullOrEmpty(saveFile.Identifier)) continue;
-                if (saveFile.Identifier.Equals(identifier)) return _saveFiles[i];
+                if (string.IsNullOrEmpty(saveFile.Name)) continue;
+                if (saveFile.Name.Equals(identifier)) return _saveFiles[i];
             }
             return null;
         }

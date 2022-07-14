@@ -22,7 +22,7 @@ namespace Proline.ClassicOnline.MData.Commands
             var save = sm.GetSave(Game.Player);
             foreach (var saveFile in save.GetSaveFiles())
             {
-                Console.WriteLine(saveFile.Identifier);
+                Console.WriteLine(String.Format("{0},{1},{2}", saveFile.Name, saveFile.LastChanged, saveFile.HasUpdated));
             }
         } 
     }

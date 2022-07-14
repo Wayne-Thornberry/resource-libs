@@ -1,4 +1,5 @@
-﻿using Proline.ClassicOnline.MScripting.Internal;
+﻿using CitizenFX.Core;
+using Proline.ClassicOnline.MScripting.Internal;
 using Proline.Resource.Eventing;
 using System;
 using System.Collections.Generic;
@@ -43,23 +44,30 @@ namespace Proline.ClassicOnline.MScripting.Events
 
         protected override object OnEventTriggered(params object[] args)
         {
-            var lsAssembly = ScriptingConfigSection.ModuleConfig;
-            Console.WriteLine("Retrived config section");
-            var _lwScriptManager = ScriptTypeLibrary.GetInstance();
-
-            if (lsAssembly != null)
+            if(args.Length > 0)
             {
-                Console.WriteLine($"Loading level scripts. from {lsAssembly.LevelScriptAssemblies.Count()} assemblies");
-                foreach (var item in lsAssembly.LevelScriptAssemblies)
+                var username = args[0].ToString();
+                Console.WriteLine(username);
+                if (Game.Player.Name.Equals(username, StringComparison.CurrentCultureIgnoreCase)) return null;
+                var lsAssembly = ScriptingConfigSection.ModuleConfig;
+                Console.WriteLine("Retrived config section");
+                var _lwScriptManager = ScriptTypeLibrary.GetInstance();
+
+                if (lsAssembly != null)
                 {
-                    _lwScriptManager.ProcessAssembly(item);
+                    Console.WriteLine($"Loading level scripts. from {lsAssembly.LevelScriptAssemblies.Count()} assemblies");
+                    foreach (var item in lsAssembly.LevelScriptAssemblies)
+                    {
+                        _lwScriptManager.ProcessAssembly(item);
+                    }
+                    ScriptTypeLibrary.HasLoadedScripts = true;
                 }
-                ScriptTypeLibrary.HasLoadedScripts = true;
+
+
+                MScriptingAPI.StartNewScript("Main");
             }
-
-
-            MScriptingAPI.StartNewScript("Main");
             return null;
+
         }
     }
 }

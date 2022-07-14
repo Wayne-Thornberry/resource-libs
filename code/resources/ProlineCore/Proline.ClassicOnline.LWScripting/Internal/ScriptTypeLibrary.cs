@@ -42,7 +42,10 @@ namespace Proline.ClassicOnline.MScripting.Internal
             Console.WriteLine($"Found {types.Count()} scripts that have an execute method");
             foreach (var item in types)
             {
-                this.Add(item.Name, item);
+                if(!this.ContainsKey(item.Name))
+                    this.Add(item.Name, item);
+                Console.WriteLine($"{item.Name} DUPLICATE?????");
+
             }
             Console.WriteLine($"Loading complete");
         }

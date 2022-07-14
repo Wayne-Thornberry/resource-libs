@@ -1,4 +1,5 @@
-﻿using Proline.Resource.Eventing;
+﻿using CitizenFX.Core;
+using Proline.Resource.Eventing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,13 @@ namespace Proline.ClassicOnline.MConnection.Events
 
         protected override object OnEventTriggered(params object[] args)
         {
-            PlayerReadyEvent.InvokeEvent();
+            if (args.Length > 0)
+            {
+                var username = args[0].ToString();
+                Console.WriteLine(username);
+                if (Game.Player.Name.Equals(username, StringComparison.CurrentCultureIgnoreCase)) return null;
+                PlayerReadyEvent.InvokeEvent();
+            }
             return null;
         }
     }

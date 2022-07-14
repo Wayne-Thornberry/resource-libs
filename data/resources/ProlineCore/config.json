@@ -14,8 +14,8 @@
         "Proline.Resource.Framework.Client",
         "Proline.Resource.Logging.Client",
         "Proline.Resource.Globals.Client",
-        "Proline.Modularization.Core.Client",
-        "Proline.CFXExtended.Core.Client",
+        "Proline.Modularization.Core",
+        "Proline.CFXExtended.Core",
         "Proline.ClassicOnline.GScripting",
         "Proline.ClassicOnline.MBrain",
         "Proline.ClassicOnline.MData",
@@ -35,11 +35,11 @@
 
     "moduleConfigSection" : {
         "moduleCollection" :[
-			{"Name" : 'MScripting', "Assembly" : 'Proline.ClassicOnline.MScripting'},
-			{"Name" : 'MBrain', "Assembly" : 'Proline.ClassicOnline.MBrain'},
-			{"Name" : 'MData', "Assembly" : 'Proline.ClassicOnline.MData'},
-			{"Name" : 'MConnection', "Assembly" : 'Proline.ClassicOnline.MConnection'},
-			{"Name" : 'MWorld', "Assembly" : 'Proline.ClassicOnline.MWorld'}
+			{"Name" : "MScripting", "Assembly" : "Proline.ClassicOnline.MScripting"},
+			{"Name" : "MBrain", "Assembly" : "Proline.ClassicOnline.MBrain"},
+			{"Name" : "MData", "Assembly" : "Proline.ClassicOnline.MData"},
+			{"Name" : "MConnection", "Assembly" : "Proline.ClassicOnline.MConnection"},
+			{"Name" : "MWorld", "Assembly" : "Proline.ClassicOnline.MWorld"}
         ]
     },
 	

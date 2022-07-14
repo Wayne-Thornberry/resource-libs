@@ -1,4 +1,5 @@
-﻿using Proline.Resource.Eventing;
+﻿using CitizenFX.Core;
+using Proline.Resource.Eventing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace Proline.ClassicOnline.MConnection.Events
         internal static void InvokeEvent()
         {
             var playerEvent = new PlayerReadyEvent();
-            playerEvent.Invoke();
+            playerEvent.Invoke(Game.Player.Name);
         }
     }
 }

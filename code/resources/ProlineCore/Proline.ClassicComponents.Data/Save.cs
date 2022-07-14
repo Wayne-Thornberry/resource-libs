@@ -22,30 +22,43 @@ namespace Proline.ClassicOnline.MData
             try
             {
                 var fm = DataFileManager.GetInstance();
-                MDebugAPI.LogDebug($"Saving save file...");
+                var save = fm.GetSave(Game.Player);
+                if (save == null || fm.IsSaveInProgress)
+                    return;
                 fm.IsSaveInProgress = true;
-                var identifier = "acf48492b3aa7739725e33fc30aed8129b901d1f";
+                var identifier = Game.Player.Name;
                 var path = $"Saves/{identifier}/";
-                var manifest = new List<string>();
-                foreach (var item in fm.GetSave(Game.Player).GetSaveFiles())
+                var files = save.GetSaveFiles().Where(e => e.HasUpdated);
+                if(files.Count() > 0)
                 {
-                    try
-                    { 
-                        if (item == null)
-                        {
-                            throw new Exception($"Cannot save file, current save file is null");
-                        };
-                        var json = JsonConvert.SerializeObject(item.Properties);
-                        MDebugAPI.LogDebug($"Saving file... {json}"); 
-                        await ServerFile.WriteLocalFile(Path.Combine(path, item.Identifier + ".json"), json);
-                        manifest.Add(item.Identifier);
-                    }
-                    catch (Exception e)
+                    MDebugAPI.LogDebug($"Saving...");
+                    foreach (var file in files)
                     {
-                        MDebugAPI.LogDebug(e.ToString());
+                        try
+                        {
+                            if (file == null)
+                            {
+                                throw new Exception($"Cannot save file, current save file is null");
+                            };
+                            var json = JsonConvert.SerializeObject(file.Properties);
+                            MDebugAPI.LogDebug($"Saving file... {json}");
+                            await ServerFile.WriteLocalFile(Path.Combine(path, file.Name + ".json"), json);
+                            file.HasUpdated = false;
+                        }
+                        catch (Exception e)
+                        {
+                            MDebugAPI.LogDebug(e.ToString());
+                        }
                     }
                 }
-                await ServerFile.WriteLocalFile(Path.Combine(path, "Manifest.json"), JsonConvert.SerializeObject(manifest));
+               
+                if (save.HasChanged)
+                {
+                    MDebugAPI.LogDebug($"Saving manifest...");
+                    var saveFiles = save.GetSaveFiles().Select(e => e.Name);
+                    await ServerFile.WriteLocalFile(Path.Combine(path, "Manifest.json"), JsonConvert.SerializeObject(saveFiles));
+                    save.HasChanged = false;
+                }
                 fm.IsSaveInProgress = false;
             }
             catch (Exception e)
@@ -93,7 +106,7 @@ namespace Proline.ClassicOnline.MData
                 MDebugAPI.LogDebug("Load Request put in");
                 var fm = DataFileManager.GetInstance();
                 MDebugAPI.LogInfo("Waiting for callback to be completed...");
-                var identifier = "acf48492b3aa7739725e33fc30aed8129b901d1f";
+                var identifier = Game.Player.Name;
                 var data = await ServerFile.ReadLocalFile($"Saves/{identifier}/Manifest.json");
                 var manifest = JsonConvert.DeserializeObject<List<string>>(data);
                 var instance = DataFileManager.GetInstance();
@@ -105,7 +118,7 @@ namespace Proline.ClassicOnline.MData
                     var properties =  JsonConvert.DeserializeObject<Dictionary<string,object>>(result1);
                     var saveFile = new SaveFile()
                     {
-                        Identifier = item,
+                        Name = item,
                         Properties = properties,
                     };
                     save.InsertSaveFile(saveFile);

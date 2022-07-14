@@ -35,17 +35,24 @@ namespace Proline.ServerAccess.IO.Actions
 
         protected override object OnEventTriggered(Player player, params object[] args)
         {
-            if (args.Length > 0)
-            { 
-                var data = args[0].ToString();
-                Console.Write(data);
-                return null;
-            }
-            else
+            try
             {
-                Console.WriteLine("Argument count does not match expected count");
-                return null;
+                if (args.Length > 0)
+                {
+                    var data = args[0].ToString();
+                    Console.Write(data);
+                    return null;
+                }
+                else
+                {
+                    Console.WriteLine("Argument count does not match expected count"); 
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return null;
         }
 #endif
     }
