@@ -1,0 +1,5 @@
+﻿Remove-Item ".\*" 
+Copy-Item -Path "E:\OneDrive\Repo\Project Online\data\resources\ProlineCore\*" -Destination ".\"
+Copy-Item -Path "E:\OneDrive\Repo\Project Online\artifacts\ProlineCore\*" -Destination ".\"
+Remove-Item ".\CitizenFX.Core.*.dll"
+Remove-Item ".\*.pdb"

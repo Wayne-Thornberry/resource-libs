@@ -1,0 +1,61 @@
+{
+    "Sections" : [
+        "Resources",
+        "moduleConfigSection",
+        "scriptingConfigSection",
+        "moduleBrainSection",
+        "moduleWorldSection"
+    ],
+
+    "Resources":[
+        "Proline.Resource.Client",
+        "Proline.Resource.Configuration.Client",
+        "Proline.Resource.IO.Client",
+        "Proline.Resource.Framework.Client",
+        "Proline.Resource.Logging.Client",
+        "Proline.Resource.Globals.Client",
+        "Proline.Modularization.Core.Client",
+        "Proline.CFXExtended.Core.Client",
+        "Proline.ClassicOnline.GScripting",
+        "Proline.ClassicOnline.MBrain",
+        "Proline.ClassicOnline.MData",
+        "Proline.ClassicOnline.MDebug",
+        "Proline.ClassicOnline.MGame",
+        "Proline.ClassicOnline.MRendering",
+        "Proline.ClassicOnline.MConnection",
+        "Proline.ClassicOnline.MScreen",
+        "Proline.ClassicOnline.MScripting",
+        "Proline.ClassicOnline.MWorld",
+        "Proline.ClassicOnline.SClassic"
+    ], 
+
+    "LoggingConfiguration": {
+
+    },
+
+    "moduleConfigSection" : {
+        "moduleCollection" :[
+			{"Name" : 'MScripting', "Assembly" : 'Proline.ClassicOnline.MScripting'},
+			{"Name" : 'MBrain', "Assembly" : 'Proline.ClassicOnline.MBrain'},
+			{"Name" : 'MData', "Assembly" : 'Proline.ClassicOnline.MData'},
+			{"Name" : 'MConnection', "Assembly" : 'Proline.ClassicOnline.MConnection'},
+			{"Name" : 'MWorld', "Assembly" : 'Proline.ClassicOnline.MWorld'}
+        ]
+    },
+	
+	"scriptingConfigSection" :{ 
+        "levelScriptAssemblies" : [
+			"Proline.ClassicOnline.SClassic" 
+		]
+    },
+	"moduleBrainSection" :{ 
+		"Data" : {
+                
+		}
+    },
+    "moduleWorldSection" : { 
+		"Data" : {
+                
+		}
+    } 
+}

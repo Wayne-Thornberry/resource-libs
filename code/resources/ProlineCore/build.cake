@@ -40,7 +40,7 @@ Setup(ctx =>
 
     packageVersion = $"{version}{prerelease}"; 
     var dir = Context.Environment.WorkingDirectory; 
-    outputDir = $"{artificatsOutputDir}/{dir.GetDirectoryName()}/"+$"{configuration}";
+    outputDir = $"{artificatsOutputDir}/{dir.GetDirectoryName()}/";
 
     resource = new ProjectInformation
     { 
