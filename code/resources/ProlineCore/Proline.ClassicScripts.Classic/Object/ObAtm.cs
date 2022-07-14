@@ -287,12 +287,12 @@ namespace Proline.ClassicOnline.SClassic.Object
             if (IsDepositing)
             {
                 _bankStat.SetValue(_bankStat.GetValue() + selectedAmount);
-                _walletStat.SetValue(0);
+                _walletStat.SetValue(_walletStat.GetValue() - selectedAmount);
             }
             else
             {
-                _walletStat.SetValue(_bankStat.GetValue() + selectedAmount);
-                _bankStat.SetValue(0);
+                _walletStat.SetValue(_walletStat.GetValue() + selectedAmount);
+                _bankStat.SetValue(_bankStat.GetValue() - selectedAmount);
             }
             io.DisplayMessage();
         }

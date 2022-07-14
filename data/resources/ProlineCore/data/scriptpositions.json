@@ -1,11 +1,6 @@
 {
 	"scriptPositionPairs" : [
 		{
-			"ScriptName" : "ReArmouredTruck",
-			"X"  : 0,
-			"Y"  : 0,
-			"Z"  : 70
-		} ,{
 			"ScriptName" : "HePacStandard",
 			"X"  : 237.9632, 
 			"Y"  : 218.0577,
