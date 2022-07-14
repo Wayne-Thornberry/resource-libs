@@ -1,7 +1,8 @@
 
 var target = Argument("target", "Deploy");
-var platform = "bin"; 
-var configuration = Argument("configuration", "release");
+var platform = "bin";
+var deployment = "Release"; 
+var configuration = Argument("configuration", $"{deployment}");
 var version = Argument("packageVersion", "0.0.1");
 var prerelease = Argument("prerelease", "");
 
@@ -26,7 +27,6 @@ class ProjectInformation
 }
 
 string packageVersion;
-string outputDir;
 ProjectInformation resource;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -39,11 +39,11 @@ Setup(ctx =>
 	Information("Running tasks...");
 
     packageVersion = $"{version}{prerelease}"; 
-    var dir = Context.Environment.WorkingDirectory; 
-    outputDir = $"{artificatsOutputDir}/{dir.GetDirectoryName()}/"+$"{configuration}";
+    var dir = Context.Environment.WorkingDirectory;
 
     resource = new ProjectInformation
-    { 
+    {
+        OutputDir = $"{artificatsOutputDir}/"+dir.GetDirectoryName(),
         Name = dir.GetDirectoryName(),
         FullPath = dir.FullPath,
         ProjectType = 2,
@@ -70,15 +70,15 @@ Task("Clean")
     //.WithCriteria(c => HasArgument("rebuild"))
     .Does(() =>
 {
-	    Information("Cleaning " + outputDir);
-        CleanDirectory(outputDir);
+	    Information("Cleaning " + resource.OutputDir);
+        CleanDirectory(resource.OutputDir);
 });
 
 Task("Restore") 
     .IsDependentOn("Clean")
     .Does(() =>
 {
-       //DotNetRestore(resource.FullPath);
+        DotNetRestore(resource.FullPath);
 });
 
 Task("Build")
@@ -89,7 +89,8 @@ Task("Build")
         DotNetBuild(resource.FullPath, new DotNetBuildSettings
         {
             Configuration = configuration,  
-            OutputDirectory = outputDir
+            OutputDirectory = resource.OutputDir,
+            NoRestore = true
         });
 })
 .DeferOnError();

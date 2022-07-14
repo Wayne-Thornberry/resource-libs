@@ -16,8 +16,8 @@
 		<Reference Include="Proline.CFXExtended.Core.Client">
 		  <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.Client.dll</HintPath>
 		</Reference>
-		<Reference Include="Proline.Modularization.Core.Client">
-			<HintPath>..\..\..\..\artifacts\ModuleFramework\Client\Proline.Modularization.Core.Client.dll</HintPath>
+		<Reference Include="Proline.Modularization.Core">
+			<HintPath>..\..\..\..\artifacts\ModuleFramework\Proline.Modularization.Core.dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.Client">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Client.dll</HintPath>

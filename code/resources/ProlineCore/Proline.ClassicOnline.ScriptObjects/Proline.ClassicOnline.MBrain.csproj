@@ -26,8 +26,8 @@
 		<Reference Include="Proline.CFXExtended.Core.Client" Condition="'Client|$(Platform)'=='Client|AnyCPU'">
 		  <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.Client.dll</HintPath>
 		</Reference>
-		<Reference Include="Proline.Modularization.Core.Client">
-			<HintPath>..\..\..\..\artifacts\ModuleFramework\Client\Proline.Modularization.Core.Client.dll</HintPath>
+		<Reference Include="Proline.Modularization.Core">
+			<HintPath>..\..\..\..\artifacts\ModuleFramework\Proline.Modularization.Core.dll</HintPath>
 		</Reference>
 		<PackageReference Include="CitizenFX.Core.Client" Version="1.0.5179" />
 		<Reference Include="Proline.Resource.Client">

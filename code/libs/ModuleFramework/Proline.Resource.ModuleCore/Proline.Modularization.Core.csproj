@@ -4,34 +4,30 @@
 	<PropertyGroup>
 		<TargetFramework>net452</TargetFramework>
 		<Platforms>AnyCPU</Platforms>
-		<Configurations>Debug;Release;Client;Server</Configurations>
-		<AssemblyName>$(MSBuildProjectName).$(Configuration)</AssemblyName>
-		<DefineConstants Condition="'$(Configuration)|$(Platform)'=='Server|AnyCPU'">TRACE;SERVER;DEBUG;RELEASE;NET452</DefineConstants>
-		<DefineConstants Condition="'$(Configuration)|$(Platform)'=='Client|AnyCPU'">TRACE;CLIENT;DEBUG;RELEASE;NET452</DefineConstants>
 	</PropertyGroup>
  
 	<ItemGroup>
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
 		</Reference>
-		<PackageReference Include="CitizenFX.Core.$(Configuration)" Version="1.0.5179" />
-		<Reference Include="Proline.Resource.$(Configuration)">
-			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.$(Configuration).dll</HintPath>
+		<PackageReference Include="CitizenFX.Core.Client" Version="1.0.5179" />
+		<Reference Include="Proline.Resource.Client">
+			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Client.dll</HintPath>
 		</Reference>
-		<Reference Include="Proline.Resource.Configuration.$(Configuration)">
-			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Configuration.$(Configuration).dll</HintPath>
+		<Reference Include="Proline.Resource.Configuration.Client">
+			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Configuration.Client.dll</HintPath>
 		</Reference>
-		<Reference Include="Proline.Resource.Framework.$(Configuration)">
-			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Framework.$(Configuration).dll</HintPath>
+		<Reference Include="Proline.Resource.Framework.Client">
+			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Framework.Client.dll</HintPath>
 		</Reference>
-		<Reference Include="Proline.Resource.IO.$(Configuration)">
-			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.IO.$(Configuration).dll</HintPath>
+		<Reference Include="Proline.Resource.IO.Client">
+			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.IO.Client.dll</HintPath>
 		</Reference>
-		<Reference Include="Proline.Resource.Logging.$(Configuration)">
-			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Logging.$(Configuration).dll</HintPath>
+		<Reference Include="Proline.Resource.Logging.Client">
+			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Logging.Client.dll</HintPath>
 		</Reference>
-		<Reference Include="Proline.Resource.Scripting.$(Configuration)">
-			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Scripting.$(Configuration).dll</HintPath>
+		<Reference Include="Proline.Resource.Scripting.Client">
+			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Scripting.Client.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 

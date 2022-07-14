@@ -1,5 +1,4 @@
-﻿using Proline.Resource;
-using Proline.Resource.Logging;
+﻿using Proline.Resource.Logging;
 using Proline.ServerAccess.IO;
 using System;
 using Console = Proline.Resource.Console;
@@ -13,7 +12,7 @@ namespace Proline.ClassicOnline.MDebug
         public static void LogDebug(object data)
         {
             try
-            { 
+            {
                 // Log in memory
                 var line = _log.Debug(data.ToString());
                 // Output to console
@@ -31,7 +30,7 @@ namespace Proline.ClassicOnline.MDebug
         public static void LogDebug(string data)
         {
             try
-            { 
+            {
                 // Log in memory
                 var line = _log.Debug(data);
                 // Output to console
@@ -50,7 +49,7 @@ namespace Proline.ClassicOnline.MDebug
         public static void LogWarn(string data)
         {
             try
-            { 
+            {
                 // Log in memory
                 var line = _log.Warn(data.ToString());
                 // Output to console
@@ -68,7 +67,7 @@ namespace Proline.ClassicOnline.MDebug
         public static void LogInfo(string data)
         {
             try
-            { 
+            {
                 // Log in memory
                 var line = _log.Info(data.ToString());
                 // Output to console
@@ -86,7 +85,7 @@ namespace Proline.ClassicOnline.MDebug
         public static void LogError(string data)
         {
             try
-            { 
+            {
                 // Log in memory
                 var line = _log.Error(data.ToString());
                 // Output to console
