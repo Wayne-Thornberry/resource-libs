@@ -23,8 +23,8 @@
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
 		</Reference>
-		<Reference Include="Proline.CFXExtended.Core.Client" Condition="'Client|$(Platform)'=='Client|AnyCPU'">
-		  <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.Client.dll</HintPath>
+		<Reference Include="Proline.CFXExtended.Core" Condition="'Client|$(Platform)'=='Client|AnyCPU'">
+		  <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Modularization.Core">
 			<HintPath>..\..\..\..\artifacts\ModuleFramework\Proline.Modularization.Core.dll</HintPath>

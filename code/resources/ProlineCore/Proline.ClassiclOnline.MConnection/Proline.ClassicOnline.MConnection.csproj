@@ -13,8 +13,8 @@
 		</Reference>
 		<PackageReference Include="CitizenFX.Core.Client" Version="1.0.5179" />
 		<ProjectReference Include="..\Proline.ClassicComponents.Data\Proline.ClassicOnline.MData.csproj" />
-		<Reference Include="Proline.CFXExtended.Core.Client">
-		  <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.Client.dll</HintPath>
+		<Reference Include="Proline.CFXExtended.Core">
+		  <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Modularization.Core">
 			<HintPath>..\..\..\..\artifacts\ModuleFramework\Proline.Modularization.Core.dll</HintPath>

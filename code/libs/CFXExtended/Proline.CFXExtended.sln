@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31424.327
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proline.CFXExtended.Core.Client", "Proline.CFXExtended.Client\Proline.CFXExtended.Core.Client.csproj", "{948A39CB-0063-4EDA-ADC2-B7900E761CE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.CFXExtended.Core", "Proline.CFXExtended.Client\Proline.CFXExtended.Core.csproj", "{948A39CB-0063-4EDA-ADC2-B7900E761CE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
