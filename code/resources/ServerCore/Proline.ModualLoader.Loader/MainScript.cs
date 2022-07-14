@@ -19,10 +19,8 @@ namespace ProlineCore
         {
             ReadFileAction.SubscribeEvent();
             WriteFileAction.SubscribeEvent();
-            //SpecialPlayerConnectingEvent.SubscribeEvent();
-            //SpecialPlayerDroppedEvent.SubscribeEvent();
-            //PlayerJoinedEvent.SubscribeEvent();
-            //PlayerConnectedEvent.SubscribeEvent();
+            ConsoleWriteLineAction.SubscribeEvent();
+            ConsoleWriteAction.SubscribeEvent();
             LoadResources();
         }
 

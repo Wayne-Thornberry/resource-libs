@@ -38,6 +38,9 @@
 		<Reference Include="Proline.Resource.Scripting.Client">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Scripting.Client.dll</HintPath>
 		</Reference>
+		<Reference Include="Proline.ServerAccess.IO.Client">
+		  <HintPath>..\..\..\..\artifacts\ServerAccess\client\Proline.ServerAccess.IO.Client.dll</HintPath>
+		</Reference>
 	</ItemGroup>
 
 

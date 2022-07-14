@@ -1,4 +1,5 @@
-﻿using Proline.Resource.Eventing;
+﻿using CitizenFX.Core;
+using Proline.Resource.Eventing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace ProlineCore.Events
 {
-    internal partial class PlayerDroppedEvent : LoudEvent
+
+    internal class PlayerDroppedEvent : LoudEvent
     {
         public PlayerDroppedEvent() : base(PLAYERDROPPEDHANDLER)
         {
@@ -16,28 +18,10 @@ namespace ProlineCore.Events
         private static PlayerDroppedEvent _event;
         public const string PLAYERDROPPEDHANDLER = "PlayerDroppedHandler";
 
-        public static void SubscribeEvent()
+        internal static void InvokeEvent(string playerName)
         {
-            if (_event == null)
-            {
-                _event = new PlayerDroppedEvent();
-                _event.Subscribe();
-            }
-        }
-
-
-        public static void UnsubscribeEvent()
-        {
-            if (_event != null)
-            {
-                _event.Unsubscribe();
-                _event = null;
-            }
-        }
-        public static void InvokeEvent(string username)
-        {
-            var events = new PlayerDroppedEvent();
-            events.Invoke(null, username);
+            var event2 = new PlayerConnectingEvent();
+            event2.Invoke(null, playerName);
         }
 
     }

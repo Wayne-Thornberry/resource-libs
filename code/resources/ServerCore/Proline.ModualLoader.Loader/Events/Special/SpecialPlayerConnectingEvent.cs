@@ -40,17 +40,18 @@ namespace ProlineCore.Events.Special
 
         public void OnNativeEventCalled([FromSource] Player player, string playerName, object setKickReason, dynamic deferrals)
         {
-            deferrals.defer();
-            var instance = ConnectionQueue.GetInstance();
-            var connecting = new PlayerConnection
-            {
-                Player = player,
-                PlayerName = playerName,
-                KickReason = setKickReason,
-                Defferal = deferrals
-            };
-            instance.Enqueue(connecting);
             PlayerConnectingEvent.InvokeEvent(player.Name);
+            //deferrals.defer();
+            //var instance = ConnectionQueue.GetInstance();
+            //var connecting = new PlayerConnection
+            //{
+            //    Player = player,
+            //    PlayerName = playerName,
+            //    KickReason = setKickReason,
+            //    Defferal = deferrals
+            //};
+            //instance.Enqueue(connecting);
+            PlayerConnectedEvent.InvokeEvent(player.Name);
         }
     }
 }

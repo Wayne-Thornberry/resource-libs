@@ -1,5 +1,6 @@
 ﻿using Proline.Resource;
 using Proline.Resource.Logging;
+using Proline.ServerAccess.IO;
 using System;
 using Console = Proline.Resource.Console;
 
@@ -9,7 +10,7 @@ namespace Proline.ClassicOnline.MDebug
     {
         private static Log _log => new Log();
 
-        public static void LogDebug(object data, bool broadcast = false)
+        public static void LogDebug(object data)
         {
             try
             { 
@@ -17,6 +18,7 @@ namespace Proline.ClassicOnline.MDebug
                 var line = _log.Debug(data.ToString());
                 // Output to console
                 Console.WriteLine(line);
+                ServerConsole.WriteLine(line);
                 // Duplciate to server
             }
             catch (Exception)
@@ -26,7 +28,7 @@ namespace Proline.ClassicOnline.MDebug
             }
         }
 
-        public static void LogDebug(string data, bool broadcast = false)
+        public static void LogDebug(string data)
         {
             try
             { 
@@ -34,6 +36,7 @@ namespace Proline.ClassicOnline.MDebug
                 var line = _log.Debug(data);
                 // Output to console
                 Console.WriteLine(line);
+                ServerConsole.WriteLine(line);
                 // Duplciate to server
             }
             catch (Exception)
@@ -44,7 +47,7 @@ namespace Proline.ClassicOnline.MDebug
 
         }
 
-        public static void LogWarn(string data, bool broadcast = false)
+        public static void LogWarn(string data)
         {
             try
             { 
@@ -52,6 +55,7 @@ namespace Proline.ClassicOnline.MDebug
                 var line = _log.Warn(data.ToString());
                 // Output to console
                 Console.WriteLine(line);
+                ServerConsole.WriteLine(line);
                 // Duplciate to server
             }
             catch (Exception)
@@ -61,7 +65,7 @@ namespace Proline.ClassicOnline.MDebug
             }
         }
 
-        public static void LogInfo(string data, bool broadcast = false)
+        public static void LogInfo(string data)
         {
             try
             { 
@@ -69,6 +73,7 @@ namespace Proline.ClassicOnline.MDebug
                 var line = _log.Info(data.ToString());
                 // Output to console
                 Console.WriteLine(line);
+                ServerConsole.WriteLine(line);
                 // Duplciate to server
             }
             catch (Exception)
@@ -78,7 +83,7 @@ namespace Proline.ClassicOnline.MDebug
             }
         }
 
-        public static void LogError(string data, bool broadcast = false)
+        public static void LogError(string data)
         {
             try
             { 
@@ -86,6 +91,7 @@ namespace Proline.ClassicOnline.MDebug
                 var line = _log.Error(data.ToString());
                 // Output to console
                 Console.WriteLine(line);
+                ServerConsole.WriteLine(line);
                 // Duplciate to server
             }
             catch (Exception e)

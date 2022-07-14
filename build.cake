@@ -11,8 +11,10 @@ var libDir = "./code/libs";
 var componentDir = "./code/components";
 var toolsDir = "./code/tools";
 var resourcePath = "./code/resources"; 
+
 var modulesPath = "./ext/modules";
 var levelscriptDir = "./ext/levelscripts";
+var globalsDir = "./ext/globals";
 
 var resourceDataDir = "./data/resources"; 
 var moduleDataDir = "./data/modules"; 

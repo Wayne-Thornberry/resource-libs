@@ -7,7 +7,9 @@ using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Proline.ClassicOnline.MDebug;
+using Proline.ClassicOnline.MScreen;
 using Proline.ClassicOnline.MScripting;
+using Proline.Resource;
 
 namespace Proline.ClassicOnline.SClassic
 {
@@ -84,20 +86,28 @@ namespace Proline.ClassicOnline.SClassic
                         new Vector3(0, 0, 0), new Vector3(1, 1, 1), Color.FromArgb(150, 255, 255, 255));
                 }
 
-                _garbage = _garbage.Where(e => e.Exists()).ToList();
-                foreach (var item in _garbage)
-                {
-                    var x =
-                       $"{item.Handle}\n" +
-                       $"{item.Model.Hash}\n" +
-                       $"{item.Health}\n" +
-                       $"{item.Position.ToString()}";
-                    var d = item.Position + new Vector3(0, 0, item.Model.GetDimensions().Z * 0.8f);
-                    World.DrawMarker(MarkerType.DebugSphere, item.Position, new Vector3(0, 0, 0),
-                        new Vector3(0, 0, 0), new Vector3(0.2f, 0.2f, 0.2f), Color.FromArgb(150, 255, 0, 0));
-                    //ComponentAPI.DrawEntityBoundingBox(item.Handle, 125, 0, 0, 100);
-                    //ComponentAPI.DrawDebugText3D(x, d, 3f, 0);
+                ScreenAPI.ScreenRelToWorld(_cam.Position, _cam.Rotation, new Vector2(_cx, _cy), out var dir);
+                _raycastResult = World.Raycast(_cam.Position, dir, 1000f, IntersectOptions.Everything);
+                if (_raycastResult.DitHit)
+                { 
+                    World.DrawMarker(MarkerType.DebugSphere, _raycastResult.HitPosition, new Vector3(0, 0, 0),
+                        new Vector3(0, 0, 0), new Vector3(1, 1, 1), Color.FromArgb(150, 255, 255, 255));
                 }
+
+                //_garbage = _garbage.Where(e => e.Exists()).ToList();
+                //foreach (var item in _garbage)
+                //{
+                //    var x =
+                //       $"{item.Handle}\n" +
+                //       $"{item.Model.Hash}\n" +
+                //       $"{item.Health}\n" +
+                //       $"{item.Position.ToString()}";
+                //    var d = item.Position + new Vector3(0, 0, item.Model.GetDimensions().Z * 0.8f);
+                //    World.DrawMarker(MarkerType.DebugSphere, item.Position, new Vector3(0, 0, 0),
+                //        new Vector3(0, 0, 0), new Vector3(0.2f, 0.2f, 0.2f), Color.FromArgb(150, 255, 0, 0));
+                //    //ComponentAPI.DrawEntityBoundingBox(item.Handle, 125, 0, 0, 100);
+                //    //ComponentAPI.DrawDebugText3D(x, d, 3f, 0);
+                //}
 
                 //if (_startPos != Vector3.Zero && _endPos != Vector3.Zero)
                 //{
@@ -132,111 +142,129 @@ namespace Proline.ClassicOnline.SClassic
             Game.DisableControlThisFrame(0, Control.Attack);
             if (Game.IsControlJustPressed(0, Control.Attack))
             {
-                _multiSelectEnabled = false;
-                _buttonHeld2 = 0;
-                foreach (var item in _garbage)
-                {
-                    item.Opacity = 255;
-                }
-                _st = new PointF(_cx, _cy);
+                //_multiSelectEnabled = false;
+                //_buttonHeld2 = 0;
+                //foreach (var item in _garbage)
+                //{
+                //    item.Opacity = 255;
+                //}
+                //_st = new PointF(_cx, _cy);
             }
             else if (Game.IsControlJustReleased(0, Control.Attack))
             {
-
-                var han = new List<int>();
-                //ExampleAPI.GetNearbyEntities(out var handles);
-                han.AddRange(null);
-
-
-                if (!Game.IsControlPressed(0, Control.VehicleFlyThrottleUp))
-                    Reset();
-                if (!_multiSelectEnabled)
+                _cx = Game.GetControlNormal(0, Control.CursorX);
+                _cy = Game.GetControlNormal(0, Control.CursorY);
+                ScreenAPI.ScreenRelToWorld(_cam.Position, _cam.Rotation, new Vector2(_cx, _cy), out var dir);
+                _raycastResult = World.Raycast(_cam.Position, dir, 1000f, IntersectOptions.Everything);
+                if (_raycastResult.DitHit)
                 {
-                    Vector3 d = Vector3.Right;//ComponentAPI.ScreenRelToWorld(_cam.Position, _cam.Rotation, new Vector2(_cx, _cy), out var dir);
-                    Vector3 dir = Vector3.Right;//ComponentAPI.ScreenRelToWorld(_cam.Position, _cam.Rotation, new Vector2(_cx, _cy), out var dir);
-                    _raycastResult = World.Raycast(d, dir, 1000f, IntersectOptions.Everything);
-                    if (_raycastResult.DitHit)
+                    if (_raycastResult.DitHitEntity)
                     {
-                        if (_raycastResult.DitHitEntity)
-                        {
-                            if (!Exists(_raycastResult.HitEntity))
-                                _garbage.Add(_raycastResult.HitEntity);
-                        }
-                        else
-                        {
-                            //Reset();
-                            var entityes = han.Select(e => Entity.FromHandle(e)).Where(e => e != null).ToArray();
-                            var closest = World.GetClosest(_raycastResult.HitPosition, entityes);
-                            if (closest != null)
-                            {
-                                if (World.GetDistance(_raycastResult.HitPosition, closest.Position) < 1f)
-                                {
-                                    if (!Exists(_raycastResult.HitEntity))
-                                    {
-                                        _garbage.Add(_raycastResult.HitEntity);
-                                    }
-                                }
-                            }
-                        }
+                        var entity = _raycastResult.HitEntity;
+                        Screen.ShowSubtitle(string.Format("{0}\n{1}\n{2}", entity.Handle, entity.Position, entity.Rotation));
+                        Console.WriteLine(string.Format("{0}\n{1}\n{2}", entity.Handle, entity.Position, entity.Rotation));
                     }
-                }
-                else
-                {
-                    var st = new Vector2(_st.X, _st.Y);
-                    var et = new Vector2(_cx, _cy);
-
-                    _points = new Vector2[]
+                    else
                     {
-                        st,
-                        new Vector2(et.X, st.Y ),
-                        new Vector2(st.X, et.Y ),
-                        et,
-                    };
-
-                    _worldPos = new Vector3[_points.Length];
-                    _p = new Vector2[_points.Length];
-
-                    //for (int i = 0; i < _points.Length; i++)
-                    //{
-                    //    var raycast = World.Raycast(ComponentAPI.ScreenRelToWorld(_cam.Position, _cam.Rotation, _points[i], out var dir), dir, 1000f, IntersectOptions.Everything);
-                    //    _worldPos[i] = raycast.HitPosition;
-                    //    _p[i] = new Vector2(raycast.HitPosition.X, raycast.HitPosition.Y);
-                    //}
-
-                    foreach (var item in han)
-                    {
-                        var entity = Entity.FromHandle(item);
-                        if (entity == null) continue;
-                        var position = entity.Position;
-                        //if (position.X > min.X && position.Y > min.Y && position.Z > min.Z && position.X < max.X && position.Y < max.Y && position.Z < max.Z)
-                        if (PointInRectangle(_p[0], _p[1], _p[2], _p[3], new Vector2(position.X, position.Y)) && entity != Game.PlayerPed && !Exists(entity))
-                        {
-                            _garbage.Add(entity);
-                            MDebugAPI.LogDebug(position);
-                            MDebugAPI.LogDebug(item);
-                        }
+                        Screen.ShowSubtitle(string.Format("{0}", _raycastResult.HitPosition));
+                        Console.WriteLine(string.Format("{0}", _raycastResult.HitPosition));
                     }
                 }
 
 
-                _buttonHeld2 = 0;
+                //var han = new List<int>();
+                ////ExampleAPI.GetNearbyEntities(out var handles);
+
+
+                //if (!Game.IsControlPressed(0, Control.VehicleFlyThrottleUp))
+                //    Reset();
+                //if (!_multiSelectEnabled)
+                //{
+                //    Vector3 d = Vector3.Right;//ComponentAPI.ScreenRelToWorld(_cam.Position, _cam.Rotation, new Vector2(_cx, _cy), out var dir);
+                //    Vector3 dir = Vector3.Right;//ComponentAPI.ScreenRelToWorld(_cam.Position, _cam.Rotation, new Vector2(_cx, _cy), out var dir);
+                //    _raycastResult = World.Raycast(d, dir, 1000f, IntersectOptions.Everything);
+                //    if (_raycastResult.DitHit)
+                //    {
+                //        if (_raycastResult.DitHitEntity)
+                //        {
+                //            if (!Exists(_raycastResult.HitEntity))
+                //                _garbage.Add(_raycastResult.HitEntity);
+                //        }
+                //        else
+                //        {
+                //            //Reset();
+                //            var entityes = han.Select(e => Entity.FromHandle(e)).Where(e => e != null).ToArray();
+                //            var closest = World.GetClosest(_raycastResult.HitPosition, entityes);
+                //            if (closest != null)
+                //            {
+                //                if (World.GetDistance(_raycastResult.HitPosition, closest.Position) < 1f)
+                //                {
+                //                    if (!Exists(_raycastResult.HitEntity))
+                //                    {
+                //                        _garbage.Add(_raycastResult.HitEntity);
+                //                    }
+                //                }
+                //            }
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //    //var st = new Vector2(_st.X, _st.Y);
+                //    //var et = new Vector2(_cx, _cy);
+
+                //    //_points = new Vector2[]
+                //    //{
+                //    //    st,
+                //    //    new Vector2(et.X, st.Y ),
+                //    //    new Vector2(st.X, et.Y ),
+                //    //    et,
+                //    //};
+
+                //    //_worldPos = new Vector3[_points.Length];
+                //    //_p = new Vector2[_points.Length];
+
+                //    ////for (int i = 0; i < _points.Length; i++)
+                //    ////{
+                //    ////    var raycast = World.Raycast(ComponentAPI.ScreenRelToWorld(_cam.Position, _cam.Rotation, _points[i], out var dir), dir, 1000f, IntersectOptions.Everything);
+                //    ////    _worldPos[i] = raycast.HitPosition;
+                //    ////    _p[i] = new Vector2(raycast.HitPosition.X, raycast.HitPosition.Y);
+                //    ////}
+
+                //    //foreach (var item in han)
+                //    //{
+                //    //    var entity = Entity.FromHandle(item);
+                //    //    if (entity == null) continue;
+                //    //    var position = entity.Position;
+                //    //    //if (position.X > min.X && position.Y > min.Y && position.Z > min.Z && position.X < max.X && position.Y < max.Y && position.Z < max.Z)
+                //    //    if (PointInRectangle(_p[0], _p[1], _p[2], _p[3], new Vector2(position.X, position.Y)) && entity != Game.PlayerPed && !Exists(entity))
+                //    //    {
+                //    //        _garbage.Add(entity);
+                //    //        MDebugAPI.LogDebug(position);
+                //    //        MDebugAPI.LogDebug(item);
+                //    //    }
+                //    //}
+                //}
+
+
+                //_buttonHeld2 = 0;
             }
             else if (Game.IsControlPressed(0, Control.Attack))
             {
-                _buttonHeld2++;
-                if (_buttonHeld2 > 10)
-                {
-                    //ComponentAPI.DrawDebug2DBox(_st, new PointF(_cx, _cy), Color.FromArgb(100, 100, 100, 100));
-                    _multiSelectEnabled = true;
-                }
+                //_buttonHeld2++;
+                //if (_buttonHeld2 > 10)
+                //{
+                //    //ComponentAPI.DrawDebug2DBox(_st, new PointF(_cx, _cy), Color.FromArgb(100, 100, 100, 100));
+                //    _multiSelectEnabled = true;
+                //}
             }
 
             if (Game.IsControlJustPressed(0, Control.Context))
             {
-                foreach (var item in _garbage)
-                {
-                    //EngineAPI.Script.StartNewScript("BlowUp", item.Handle);
-                }
+                //foreach (var item in _garbage)
+                //{
+                //    //EngineAPI.Script.StartNewScript("BlowUp", item.Handle);
+                //}
             }
 
             if (Game.IsControlJustPressed(0, Control.FrontendPause))
