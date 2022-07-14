@@ -41,6 +41,7 @@ namespace Proline.ClassicOnline.MConnection.Events
 
         protected override object OnEventTriggered(params object[] args)
         {
+            PlayerReadyEvent.InvokeEvent();
             return null;
         }
     }

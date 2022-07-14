@@ -43,4 +43,13 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="update.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="update.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

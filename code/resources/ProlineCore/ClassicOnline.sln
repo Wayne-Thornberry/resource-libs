@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ClassicOnline.Game", "Proline.ModualLoader.Loader\Proline.ClassicOnline.Game.csproj", "{20969A78-20F4-43F7-BD7D-E8575062F49E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ClassicOnline.Resource", "Proline.ModualLoader.Loader\Proline.ClassicOnline.Resource.csproj", "{20969A78-20F4-43F7-BD7D-E8575062F49E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ClassicOnline.MBrain", "Proline.ClassicOnline.ScriptObjects\Proline.ClassicOnline.MBrain.csproj", "{62783FDA-FDC0-4397-8D31-CD9710E46551}"
 EndProject

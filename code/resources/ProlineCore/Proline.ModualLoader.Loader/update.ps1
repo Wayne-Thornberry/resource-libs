@@ -1,5 +1,5 @@
-﻿Remove-Item ".\*" 
-Copy-Item -Path "E:\OneDrive\Repo\Project Online\data\resources\ProlineCore\*" -Destination ".\"
-Copy-Item -Path "E:\OneDrive\Repo\Project Online\artifacts\ProlineCore\*" -Destination ".\"
-Remove-Item ".\CitizenFX.Core.*.dll"
-Remove-Item ".\*.pdb"
+﻿Remove-Item "%~dp0\*"  -Recurse
+Copy-Item -Path "E:\OneDrive\Repo\Project Online\data\resources\ProlineCore\*" -Destination "%~dp0\" -Recurse
+Copy-Item -Path "E:\OneDrive\Repo\Project Online\artifacts\ProlineCore\*" -Destination "%~dp0\" -Recurse
+Remove-Item "%~dp0\CitizenFX.Core.*.dll" -Recurse
+Remove-Item "%~dp0\*.pdb" -Recurse

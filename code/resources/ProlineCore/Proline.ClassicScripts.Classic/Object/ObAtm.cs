@@ -20,7 +20,7 @@ namespace Proline.ClassicOnline.SClassic.Object
         public static Entity NearestEntity { get; set; }
         public string[] ValidModels { get; set; }
 
-        private MPStat<long> _stat;
+        private MPStat<long> _walletStat;
 
         public Atm Display { get; set; }
         public int SelectedAmount { get; set; }
@@ -30,7 +30,7 @@ namespace Proline.ClassicOnline.SClassic.Object
         public int CashMultiplier { get; set; }
         public int SelectedOption { get; private set; }
 
-        private MPStat<long> _stat2;
+        private MPStat<long> _bankStat;
         private int selectedAmount;
         private const int MAX_LIMIT = 10000;
 
@@ -41,8 +41,8 @@ namespace Proline.ClassicOnline.SClassic.Object
             var entityHandle = (int)args[0];
             var entity = Entity.FromHandle(entityHandle);
             ValidModels = new[] { "prop_atm_01", "prop_atm_02", "prop_atm_03", "prop_fleeca_atm" };
-            _stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
-            _stat2 = MPStat.GetStat<long>("BANK_BALANCE");
+            _walletStat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
+            _bankStat = MPStat.GetStat<long>("BANK_BALANCE");
             CashAmounts = new[] { 100, 200, 500, 1000, 5000, MAX_LIMIT };
             DisplayedView = 0;
             ScriptStage = 9;
@@ -69,7 +69,7 @@ namespace Proline.ClassicOnline.SClassic.Object
                             {
                                 io.DisplayBalance(Game.Player.Name,
                                     "Account Balance: ",
-                                   (int)_stat2.GetValue());
+                                   (int)_bankStat.GetValue());
                                 RenderMainPage();
                             }
 
@@ -208,7 +208,7 @@ namespace Proline.ClassicOnline.SClassic.Object
                                     io.SetInputSelect();
                                     io.DisplayBalance(Game.Player.Name,
                                         "Account Balance: ",
-                                         (int)_stat2.GetValue());
+                                         (int)_bankStat.GetValue());
                                     getSelectionTask = io.GetCurrentSelection();
                                 }
                                 else if (Game.IsControlJustPressed(0, Control.FrontendCancel))
@@ -286,13 +286,13 @@ namespace Proline.ClassicOnline.SClassic.Object
             io.SetDataSlot(0, "Processing Amount");
             if (IsDepositing)
             {
-                _stat2.SetValue(_stat2.GetValue() + selectedAmount);
-                _stat.SetValue(0);
+                _bankStat.SetValue(_bankStat.GetValue() + selectedAmount);
+                _walletStat.SetValue(0);
             }
             else
             {
-                _stat.SetValue(_stat2.GetValue() + selectedAmount);
-                _stat2.SetValue(0);
+                _walletStat.SetValue(_bankStat.GetValue() + selectedAmount);
+                _bankStat.SetValue(0);
             }
             io.DisplayMessage();
         }
@@ -336,10 +336,10 @@ namespace Proline.ClassicOnline.SClassic.Object
         private void RenderCashPage(string title, int[] cashAmounts)
         {
             DisplayedView = 1;
-            var max = IsDepositing ? _stat.GetValue() : MAX_LIMIT;
-            cashAmounts[5] = (int)(max > MAX_LIMIT ? MAX_LIMIT : max);
+            var max = IsDepositing ? _walletStat.GetValue() : _bankStat.GetValue();
+            cashAmounts[5] = (int)max;//(max > MAX_LIMIT ? MAX_LIMIT : max);
             io.DisplayBalance(Game.Player.Name, "Account Balance:",
-                0);
+                (int) _bankStat.GetValue());
             io.SetDataSlotEmpty();
             io.SetDataSlot(0, title);
             io.SetDataSlot(1, cashAmounts[0]);
