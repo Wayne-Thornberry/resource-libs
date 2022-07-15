@@ -9,11 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Console = Proline.Resource.Console;
 
-namespace Proline.ClassicOnline.MConnection.Commands
+namespace Proline.ClassicOnline.MGame.Commands
 {
-    public class SetWalletBalanceCommand : ModuleCommnad
+    public class SetBankBalanceCommand : ModuleCommand
     {
-        public SetWalletBalanceCommand() : base("SetWalletBalance")
+        public SetBankBalanceCommand() : base("SetBankBalance")
         {
         }
 
@@ -22,7 +22,7 @@ namespace Proline.ClassicOnline.MConnection.Commands
             if (args.Length > 0)
             {
                 long.TryParse(args[0].ToString(), out var value);
-                MGame.MGameAPI.SetCharacterWalletBalance(value);
+                MGame.MGameAPI.SetCharacterBankBalance(value);
             }
 
         }

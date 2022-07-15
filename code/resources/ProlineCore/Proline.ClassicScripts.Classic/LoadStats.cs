@@ -28,8 +28,8 @@ namespace Proline.ClassicOnline.SClassic
                     MDebug.MDebugAPI.LogDebug(walletBalance);
                     MDebug.MDebugAPI.LogDebug(bankBalance);
 
-                    walletBalanceStat.SetValue(Convert.ToInt64(walletBalance));
-                    bankBalanceStat.SetValue(Convert.ToInt64(bankBalance));
+                    walletBalanceStat.SetValue(Convert.ToInt64(CharacterGlobals.Character.WalletBalance));
+                    bankBalanceStat.SetValue(Convert.ToInt64(CharacterGlobals.Character.BankBalance));
                 }
             }
         }

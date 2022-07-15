@@ -89,6 +89,7 @@ namespace Proline.ClassicOnline.SClassic
                             MScriptingAPI.StartNewScript("VehicleFuel");
                             MScriptingAPI.StartNewScript("PassiveSaving");
                             MScriptingAPI.StartNewScript("UIFreemodeHUD");
+                            MScriptingAPI.StartNewScript("BlipController");
 
 
                         }

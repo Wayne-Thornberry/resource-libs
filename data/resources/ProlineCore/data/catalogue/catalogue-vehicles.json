@@ -3,7 +3,7 @@
     "Vehicles" : [
         {
             "Name" : "Adder",
-            "Model" : "Adder2",
+            "Model" : "Adder",
             "Price" : 200000 
         }
     ]

@@ -50,7 +50,7 @@ namespace Proline.ClassicOnline.MConnection.Commands
 
                         var id = "PlayerVehicle";
                         MData.API.CreateDataFile();
-                        MData.API.AddDataFileValue("VehicleHash", vehicle.Model.NativeValue);
+                        MData.API.AddDataFileValue("VehicleHash", vehicle.Model.Hash);
                         MData.API.AddDataFileValue("VehiclePosition", JsonConvert.SerializeObject(vehicle.Position));
                         vehicle.IsPersistent = true;
                         if (vehicle.AttachedBlips.Length == 0)

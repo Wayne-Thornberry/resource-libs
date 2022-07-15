@@ -24,7 +24,7 @@ namespace Proline.ClassicOnline.MData
                 var fm = DataFileManager.GetInstance();
                 var save = fm.GetSave(Game.Player);
                 if (save == null || fm.IsSaveInProgress)
-                    return;
+                    throw new Exception("Cannot send save to cloud, save in progress or save is null");
                 fm.IsSaveInProgress = true;
                 var identifier = Game.Player.Name;
                 var path = $"Saves/{identifier}/";
@@ -50,6 +50,10 @@ namespace Proline.ClassicOnline.MData
                             MDebugAPI.LogDebug(e.ToString());
                         }
                     }
+                }
+                else
+                {
+                    MDebugAPI.LogDebug("Cannot send save to cloud, No save files to save");
                 }
                
                 if (save.HasChanged)

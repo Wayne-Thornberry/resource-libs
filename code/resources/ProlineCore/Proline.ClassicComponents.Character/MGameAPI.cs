@@ -34,6 +34,15 @@ namespace Proline.ClassicOnline.MGame
                 character.BankBalance = value;
                 var bankBalanceStat = MPStat.GetStat<long>("BANK_BALANCE");
                 bankBalanceStat.SetValue(value);
+                var id = "PlayerInfo";
+                if (MData.API.DoesDataFileExist(id))
+                {
+                    MData.API.SelectDataFile(id);
+                    if(API.DoesDataFileValueExist("BankBalance"))
+                        MData.API.SetDataFileValue("BankBalance", character.BankBalance);
+                    else
+                        MData.API.AddDataFileValue("BankBalance", character.BankBalance);
+                }
             }
             catch (Exception e)
             {
@@ -49,6 +58,15 @@ namespace Proline.ClassicOnline.MGame
                 character.WalletBalance = value;
                 var walletBalanceStat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
                 walletBalanceStat.SetValue(value);
+                var id = "PlayerInfo";
+                if (MData.API.DoesDataFileExist(id))
+                {
+                    MData.API.SelectDataFile(id);
+                    if (API.DoesDataFileValueExist("WalletBalance"))
+                        MData.API.SetDataFileValue("WalletBalance", character.WalletBalance);
+                    else
+                        MData.API.AddDataFileValue("WalletBalance", character.WalletBalance); 
+                }
             }
             catch (Exception e)
             {

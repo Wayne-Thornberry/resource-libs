@@ -41,6 +41,7 @@
 			{"Name" : "MData", "Assembly" : "Proline.ClassicOnline.MData"},
 			{"Name" : "MConnection", "Assembly" : "Proline.ClassicOnline.MConnection"},
 			{"Name" : "MShop", "Assembly" : "Proline.ClassicOnline.MShop"},
+			{"Name" : "MGame", "Assembly" : "Proline.ClassicOnline.MGame"},
 			{"Name" : "MWorld", "Assembly" : "Proline.ClassicOnline.MWorld"}
         ]
     },

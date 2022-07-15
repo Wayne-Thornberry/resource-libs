@@ -35,6 +35,8 @@ namespace Proline.ClassicOnline.SClassic
                 MData.API.CreateDataFile();
                 MData.API.AddDataFileValue("PlayerHealth", Game.PlayerPed.Health);
                 MData.API.AddDataFileValue("PlayerPosition", JsonConvert.SerializeObject(Game.PlayerPed.Position));
+                MData.API.AddDataFileValue("BankBalance", 0);
+                MData.API.AddDataFileValue("WalletBalance", 0);
                 MData.API.SaveDataFile(id);
                 MDebug.MDebugAPI.LogDebug(id + " Created and saved");
             }

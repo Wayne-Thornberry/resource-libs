@@ -1,6 +1,8 @@
 ﻿using CitizenFX.Core;
+using CitizenFX.Core.Native;
 using Newtonsoft.Json;
 using Proline.ClassicOnline.GCharacter;
+using Proline.ClassicOnline.MGame;
 using Proline.ClassicOnline.MShop.Internal;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MShop
 {
-    internal static partial class API
+    internal static partial class MShopAPI
     {
         public static void BuyVehicle(string vehicleName)
         {
@@ -26,10 +28,10 @@ namespace Proline.ClassicOnline.MShop
 
                     if (vci == null)
                         throw new Exception("Catalouge Item not found");
-
-                    if (CharacterGlobals.Character.BankBalance > vci.Price)
+                    var character = CharacterGlobals.Character;
+                    if (character.BankBalance > vci.Price)
                     {
-                        var currentVehicle = CharacterGlobals.Character.PersonalVehicle;
+                        var currentVehicle = character.PersonalVehicle;
                         if (currentVehicle != null)
                         {
                             foreach (var item in currentVehicle.AttachedBlips)
@@ -41,30 +43,30 @@ namespace Proline.ClassicOnline.MShop
                         }
 
 
-                        CharacterGlobals.Character.BankBalance -= vci.Price;  
+                        character.BankBalance -= vci.Price;  
                         var task = World.CreateVehicle(new Model(vci.Model), World.GetNextPositionOnStreet(Game.PlayerPed.Position));
                         task.ContinueWith(e =>
                         {
                             var createdVehicle = e.Result;
-                            CharacterGlobals.Character.PersonalVehicle = new GCharacter.Data.PlayerPersonalVehicle(createdVehicle.Handle);
+                            character.PersonalVehicle = new GCharacter.Data.PlayerPersonalVehicle(createdVehicle.Handle);
 
                             var id = "PlayerVehicle";
                             MData.API.CreateDataFile();
-                            MData.API.AddDataFileValue("VehicleHash", currentVehicle.Model.NativeValue);
+                            MData.API.AddDataFileValue("VehicleHash", createdVehicle.Model.Hash);
                             MData.API.AddDataFileValue("VehiclePosition", JsonConvert.SerializeObject(createdVehicle.Position));
                             createdVehicle.IsPersistent = true;
                             if (createdVehicle.AttachedBlips.Length == 0)
                                 createdVehicle.AttachBlip();
                             MData.API.SaveDataFile(id);
-
+                            MGameAPI.SetCharacterBankBalance(character.BankBalance);
                         });
+
                     }
                 }
                
             }
             catch (Exception e)
-            {
-
+            { 
                 MDebug.MDebugAPI.LogError(e);
             }
         }

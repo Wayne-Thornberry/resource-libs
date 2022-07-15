@@ -23,7 +23,7 @@ namespace Proline.ClassicOnline.MConnection.Commands
             if (args.Length > 0)
             {
                 var vehicle = args[0].ToString();
-                API.BuyVehicle(vehicle);
+                MShopAPI.BuyVehicle(vehicle);
             }
 
         }

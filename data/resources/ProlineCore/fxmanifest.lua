@@ -9,9 +9,9 @@ client_script 'Proline.ClassicOnline.Resource.net.dll'
 files {
 '*.json',
 '*.dll',
-'data/*',
-'html/*',
-'sounds/*',
+'data/**',
+'html/**',
+'sounds/**',
 'sounds/demo.ogg',
 'html/index.html',
 'html/sounds/demo.ogg',

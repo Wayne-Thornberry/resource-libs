@@ -7,6 +7,7 @@
 
 
 	<ItemGroup>
+    <ProjectReference Include="..\Proline.ClassicComponents.Character\Proline.ClassicOnline.MGame.csproj" />
     <ProjectReference Include="..\Proline.ClassicComponents.Data\Proline.ClassicOnline.MData.csproj" />
     <ProjectReference Include="..\Proline.ClassicOnline.GCharacter\Proline.ClassicOnline.GCharacter.csproj" />
   </ItemGroup>
