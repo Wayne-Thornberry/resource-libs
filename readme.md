@@ -1,29 +1,42 @@
 # Project Online
-Project online is an attempt to bring GTA:Online's features and scripts to FiveM. Recreating R* code in a way that is understood, documented and works compared to some API counterparts. Project online aims to port a lot of R* levelscripts over in an attempt to create GTA:Online 1to1 as it was in 2013. 
+Project Online (PO) is two pronged solution to develop and attempt to bring GTA:Online's features and scripts to FiveM. Recreating R* code in a way that is understood, documented and works more effectivly than directly calling native APIs. 
 
-As part of project online. There are several included libraries programmers can use to help develop their resources in the FiveM framework. These tools and libraries where used to create PO as it is today. 
+## The solution
+The project is broken down into three parts. The resource itself (This is Classic Online) which includes Moduals (Part of the resource that loads in Moduals in the resource folder) and LevelScripts (Part of the resource but loaded in via the Scripting Modual)
 
-PO uses MSSQl for its Database solution.
-WebAPI components to comunicate with the database
-Server resources to communicate with the WebAPIs
-Client resources to communicate with the server
+You can develop for each one of these parts. If you want to develop your own FiveM resource using the libraries provided, you can do that. Want to develop addional APIs, Commands, PermaScripts and logic, you can do that with Moduals. Want to make some fun missions or objectives without having to worry about heavy logic, you can do that using Levelscripts.
 
-The client is broken down into 3 layers
-Resource
-Modules
-LevelScripts
+# Classic Online
+PO Baseline mode included is called "Classic Online". Classic Online includes an attempted recreation of GTA:Online as it was in 2013, this includes many of the original features from 2013 with some tweeks and addions. The aim with Classic Online was to preserve what GTA:Online looked like in 2013 with the added ability of fixing some issues and deviating when R* code does not work in the FiveM env. 
 
-If you just want to develop a mission script. You can easily spin up a class file with an execute method and start writing a levelscript that is light weight, created when needed, disposed when finished and performs API actions on the modules or game itself.
+Included with Classic Online and as a base modual that can be lifted out is a light weight script modual that allows you to develop mission scripts that utlize the APIs you write. These scripts are ment to be
+created, run, do stuff then tided up by the system itself. If you dont want to create something heavy, this is right way to create something light.
 
-If you want to make something a bit meaty with logic that will stay throughout the game. You can develop a module for the client. These come with their own set of script levels, apis to access from other modules or levelscripts and a way to communicate with the server, perform logging or write the console.
+## Components
+The way i've tackled this issue is by treating the client as the defacto area to develop in. The server serves only 1 purpose, action and callbacks. Inside the included server access libaries are methods you would
+find as basic read write file, console write and http calls. This is because the client cant do all that stuff since its sandboxed, so the server needs to do it and return a result back.
 
-If you want to create something more, you can opt to create your own resource using the resource framework. By default the base resource loads modules into the game and setups the enviroment. But you can choose to not go down the path and develope your own resource all together. Resources are broken down into the core components of a resource, events, scripts, exports and commands.
+for http calls, to avoid the server being overloaded and slowing things down. Calls to a dabase should be done via a web api using .net core. Included in the code folder is the components i've made that are needed to make Classic Online work. You may build and run these to get your version up and running.
 
-This repo is broken into several sections
+## Development Ontop of Classic Online
+You can develop ontop of classic online without needing to touch the original resource code. The solution was built with that in mind. Developing new moduals, levelscripts or global libraries is easy. You can use
+the libraries such as: 
+
+Modualization (to create new client moduals, drop these into the base client resource)
+Access (if you want to create APIs for the server, drop these into the base server resource)
+ResourceLibs (to develop new Resources, drop these into the resources folder and load them like normal FiveM Resources) 
+CoreExtended (if you wish to use addional objects layered ontop of GTA:V, levelscripts using this will be dropped into the base client resource) 
+
+You can develop your new resources, moduals, levelscripts or global libraries into the ext folder to keep them out of the way.
+
+# Resource Tools
+Dont want to build ontop of GTA:Online 2013? Thats fine PO also includes a wide range of libaries to help you develop your own resources within the framework that Online Classic was developed in.
+
+Just reference ResourceLibs and load the resource in as normal.
+
+# Repo
 Code - resource, libs, tools and components are based in here. Everything to make the 'base' level function
 Data - Data that refers to resource data files, database scripts and component data
 Ext - Ext is for non resource code bases, levelscripts and modules go here
 Vendor - dlls and 3rd party libraries used by code or ext.
-
-If you are going to develop your own version of PO, please fork the repo and develop inside the ext folder. That way you keep everthing self contained. If you want to go down the creating your own resource route. Then feel free to develop inside code.
 
