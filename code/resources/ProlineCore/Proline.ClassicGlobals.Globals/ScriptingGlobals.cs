@@ -9,15 +9,18 @@ namespace Proline.ClassicOnline.GScripting
 {
     public static class ScriptingGlobals
     {
-        public static float Testing { 
-            get {
+        public static float Testing
+        {
+            get
+            {
                 var instance = GlobalsManager.GetInstance();
                 return instance.GetGlobal<float>("Testing", false);
-            } 
-            set { 
+            }
+            set
+            {
                 var instance = GlobalsManager.GetInstance();
                 instance.SetGlobal("Testing", value, false);
-            } 
+            }
         }
     }
 }

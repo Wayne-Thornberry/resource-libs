@@ -9,6 +9,8 @@ using Proline.ClassicOnline.MGame.Data;
 using Proline.Resource;
 using Proline.CFXExtended.Core;
 using Proline.ClassicOnline.GScripting;
+using Proline.ClassicOnline.GCharacter;
+using Proline.ClassicOnline.GCharacter.Data;
 
 namespace Proline.ClassicOnline.SClassic
 {
@@ -25,17 +27,18 @@ namespace Proline.ClassicOnline.SClassic
                 await MData.API.PullSaveFromCloud(); // Sends a load request to the server
                 if (MData.API.HasSaveLoaded())
                 {
+                    PlayerCharacter character = CreateNewCharacter();
+                    CharacterGlobals.Character = character;
+
                     MData.API.SelectDataFile("PlayerInfo");
-                    Game.PlayerPed.Health = MData.API.GetDataFileValue<int>("PlayerHealth");
-                    Game.PlayerPed.Position = MData.API.GetDataFileValue<Vector3>("PlayerPosition");
+                    character.Health = MData.API.GetDataFileValue<int>("PlayerHealth");
+                    character.Position = MData.API.GetDataFileValue<Vector3>("PlayerPosition");
 
                     MData.API.SelectDataFile("PlayerStats");
                     var x = MData.API.GetDataFileValue<int>("MP0_WALLET_BALANCE");
                     var y = MData.API.GetDataFileValue<int>("BANK_BALANCE");
-                    var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
-                    var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
-                    stat.SetValue(x);
-                    stat2.SetValue(y);
+                    character.Stats.SetStat("WALLET_BALANCE", x);
+                    character.Stats.SetStat("BANK_BALANCE", y);
 
                     MData.API.SelectDataFile("PlayerOutfit");
                     var outfit = MData.API.GetDataFileValue<PedOutfit>("CharacterOutfit");
@@ -57,7 +60,7 @@ namespace Proline.ClassicOnline.SClassic
                         vehicle.IsPersistent = true;
                         if (vehicle.AttachedBlips.Length == 0)
                             vehicle.AttachBlip();
-                        //blip.IsFlashing = true;
+                        CharacterGlobals.Character.PersonalVehicle = new PlayerPersonalVehicle(vehicle.Handle);
                     }
 
                     MData.API.SelectDataFile("PlayerWeapon");
@@ -67,6 +70,8 @@ namespace Proline.ClassicOnline.SClassic
                         var ammo = MData.API.GetDataFileValue<int>("WeaponAmmo");
                         Game.PlayerPed.Weapons.Give(hash, ammo, true, true);
                     }
+
+                    MScripting.MScriptingAPI.StartNewScript("LoadStats");
 
                     Console.WriteLine(ScriptingGlobals.Testing);
                 }
@@ -78,19 +83,22 @@ namespace Proline.ClassicOnline.SClassic
             }
 
         }
+
+        private static PlayerCharacter CreateNewCharacter()
+        {
+            var character = new PlayerCharacter(Game.PlayerPed.Handle);
+            character.Stats = new PlayerStats();
+            return character;
+        }
+
         private static async Task LoadDefaultOnlinePlayer()
         {
             await Game.Player.ChangeModel(new Model(1885233650));
             PedOutfit _characterPedOutfitM = CreateDefaultOutfit();
             if (!MData.API.HasSaveLoaded())
             {
-                var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
-                var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
-                stat.SetValue(0);
-                stat2.SetValue(0);
-                MData.API.AddDataFileValue("MP0_WALLET_BALANCE", stat.GetValue());
-                MData.API.AddDataFileValue("BANK_BALANCE", stat.GetValue());
-
+                PlayerCharacter character = CreateNewCharacter();
+                MScripting.MScriptingAPI.StartNewScript("LoadDefaultStats");  
             }
 
 

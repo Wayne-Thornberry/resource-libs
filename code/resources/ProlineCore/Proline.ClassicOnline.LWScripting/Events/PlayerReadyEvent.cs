@@ -49,22 +49,7 @@ namespace Proline.ClassicOnline.MScripting.Events
                 var username = args[0].ToString();
                 Console.WriteLine(username);
                 if (Game.Player.Name.Equals(username, StringComparison.CurrentCultureIgnoreCase)) return null;
-                var lsAssembly = ScriptingConfigSection.ModuleConfig;
-                Console.WriteLine("Retrived config section");
-                var _lwScriptManager = ScriptTypeLibrary.GetInstance();
-
-                if (lsAssembly != null)
-                {
-                    Console.WriteLine($"Loading level scripts. from {lsAssembly.LevelScriptAssemblies.Count()} assemblies");
-                    foreach (var item in lsAssembly.LevelScriptAssemblies)
-                    {
-                        _lwScriptManager.ProcessAssembly(item);
-                    }
-                    ScriptTypeLibrary.HasLoadedScripts = true;
-                }
-
-
-                MScriptingAPI.StartNewScript("Main");
+               
             }
             return null;
 

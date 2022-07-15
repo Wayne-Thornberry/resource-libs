@@ -1,32 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<TargetFramework>net452</TargetFramework>
 		<Platforms>AnyCPU</Platforms>
-		<Configurations>Debug;Release;</Configurations> 
+		<Configurations>Debug;Release</Configurations>
 	</PropertyGroup>
-  
+
+
+	<ItemGroup>
+    <ProjectReference Include="..\Proline.ClassicComponents.Data\Proline.ClassicOnline.MData.csproj" />
+    <ProjectReference Include="..\Proline.ClassicOnline.GCharacter\Proline.ClassicOnline.GCharacter.csproj" />
+  </ItemGroup>
+
+
 	<ItemGroup>
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
 		</Reference>
-		<ProjectReference Include="..\Proline.ClassicComponents.Data\Proline.ClassicOnline.MData.csproj" />
-		<ProjectReference Include="..\Proline.ClassicOnline.GCharacter\Proline.ClassicOnline.GCharacter.csproj" />
-		<Reference Include="Proline.CFXExtended.Core">
-		  <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.dll</HintPath>
+		<Reference Include="Proline.Resource.Client">
+			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Client.dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Modularization.Core">
 			<HintPath>..\..\..\..\artifacts\ModuleFramework\Proline.Modularization.Core.dll</HintPath>
 		</Reference>
-		<Reference Include="Proline.Resource.Client">
-			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Client.dll</HintPath>
-		</Reference>
 		<Reference Include="Proline.Resource.Configuration.Client">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Configuration.Client.dll</HintPath>
-		</Reference>
-		<Reference Include="Proline.Resource.Eventing.Client">
-		  <HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Eventing.Client.dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.Framework.Client">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Framework.Client.dll</HintPath>
@@ -41,4 +39,7 @@
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Scripting.Client.dll</HintPath>
 		</Reference>
 	</ItemGroup>
+
+
+
 </Project>

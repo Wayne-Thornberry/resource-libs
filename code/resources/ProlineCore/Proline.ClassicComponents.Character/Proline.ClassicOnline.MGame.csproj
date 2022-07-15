@@ -6,25 +6,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CitizenFX.Core.Client" Version="1.0.5179" />
-	</ItemGroup>
-
-	<ItemGroup>
     <ProjectReference Include="..\Proline.ClassicComponents.Data\Proline.ClassicOnline.MData.csproj" />
+    <ProjectReference Include="..\Proline.ClassicOnline.GCharacter\Proline.ClassicOnline.GCharacter.csproj" />
   </ItemGroup>
-
-	<ItemGroup Condition="'Client|$(Platform)'=='Client|AnyCPU'">
-		<Compile Remove="Server\**" />
-		<EmbeddedResource Remove="Server\**" />
-		<None Remove="Server\**" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
 		</Reference>
-		<PackageReference Include="CitizenFX.Core.Client" Version="1.0.5179" />
+		<Reference Include="Proline.CFXExtended.Core">
+		  <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.dll</HintPath>
+		</Reference>
 		<Reference Include="Proline.Resource.Client">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Client.dll</HintPath>
 		</Reference>

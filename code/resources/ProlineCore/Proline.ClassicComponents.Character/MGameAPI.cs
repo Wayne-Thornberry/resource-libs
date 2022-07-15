@@ -1,4 +1,6 @@
 ﻿using CitizenFX.Core;
+using Proline.CFXExtended.Core;
+using Proline.ClassicOnline.GCharacter;
 using Proline.ClassicOnline.MData;
 using System;
 using System.Collections.Generic;
@@ -21,6 +23,36 @@ namespace Proline.ClassicOnline.MGame
                 API.AddDataFileValue("VehicleHeading", vehicle.Heading);
                 API.AddDataFileValue("VehicleHealth", vehicle.Health);
 
+            }
+        }
+
+        public static void SetCharacterBankBalance(long value)
+        {
+            try
+            {
+                var character = CharacterGlobals.Character;
+                character.BankBalance = value;
+                var bankBalanceStat = MPStat.GetStat<long>("BANK_BALANCE");
+                bankBalanceStat.SetValue(value);
+            }
+            catch (Exception e)
+            {
+                MDebug.MDebugAPI.LogError(e);
+            }
+        }
+
+        public static void SetCharacterWalletBalance(long value)
+        {
+            try
+            {
+                var character = CharacterGlobals.Character;
+                character.WalletBalance = value;
+                var walletBalanceStat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
+                walletBalanceStat.SetValue(value);
+            }
+            catch (Exception e)
+            {
+                MDebug.MDebugAPI.LogError(e);
             }
         }
     }

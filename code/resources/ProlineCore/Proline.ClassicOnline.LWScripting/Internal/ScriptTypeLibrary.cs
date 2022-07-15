@@ -44,7 +44,8 @@ namespace Proline.ClassicOnline.MScripting.Internal
             {
                 if(!this.ContainsKey(item.Name))
                     this.Add(item.Name, item);
-                Console.WriteLine($"{item.Name} DUPLICATE?????");
+                else
+                    Console.WriteLine($"{item.Name} DUPLICATE?????");
 
             }
             Console.WriteLine($"Loading complete");

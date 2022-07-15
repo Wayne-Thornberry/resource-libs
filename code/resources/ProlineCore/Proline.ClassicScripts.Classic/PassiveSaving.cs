@@ -22,6 +22,12 @@ namespace Proline.ClassicOnline.SClassic
             {
                 if (DateTime.UtcNow > nextSaveTime)
                 {
+                    var id = "PlayerInfo";
+                    if (!MData.API.DoesDataFileExist(id))
+                    {
+                        MData.API.SelectDataFile(id);
+                        MData.API.SetDataFileValue("PlayerPosition", JsonConvert.SerializeObject(Game.PlayerPed.Position));
+                    }
                     MScriptingAPI.StartNewScript("SaveNow");
                     nextSaveTime = DateTime.UtcNow.AddMinutes(1);
                 }

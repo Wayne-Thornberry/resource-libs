@@ -27,6 +27,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ClassicOnline.GScri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ClassicOnline.MScripting", "Proline.ClassicOnline.LWScripting\Proline.ClassicOnline.MScripting.csproj", "{73B46093-DDBB-4CB7-9AAF-3F32FE7823B9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ClassicOnline.GCharacter", "Proline.ClassicOnline.GCharacter\Proline.ClassicOnline.GCharacter.csproj", "{8896BA8B-FBC7-48E6-AF50-5FA10F85EFB2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ClassicOnline.MShop", "Proline.ClassicOnline.MShop\Proline.ClassicOnline.MShop.csproj", "{6010408E-DE86-4C20-AB68-69719821EE71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +85,14 @@ Global
 		{73B46093-DDBB-4CB7-9AAF-3F32FE7823B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73B46093-DDBB-4CB7-9AAF-3F32FE7823B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73B46093-DDBB-4CB7-9AAF-3F32FE7823B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8896BA8B-FBC7-48E6-AF50-5FA10F85EFB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8896BA8B-FBC7-48E6-AF50-5FA10F85EFB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8896BA8B-FBC7-48E6-AF50-5FA10F85EFB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8896BA8B-FBC7-48E6-AF50-5FA10F85EFB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6010408E-DE86-4C20-AB68-69719821EE71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6010408E-DE86-4C20-AB68-69719821EE71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6010408E-DE86-4C20-AB68-69719821EE71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6010408E-DE86-4C20-AB68-69719821EE71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,9 +8,6 @@ namespace Proline.ClassicOnline.MGame
 {
     public class MGameContext : ModuleScript
     {
-        public MGameContext()
-        {
-        }
-         
+
     }
 }

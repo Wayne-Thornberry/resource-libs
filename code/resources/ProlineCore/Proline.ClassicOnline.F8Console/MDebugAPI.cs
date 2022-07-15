@@ -9,15 +9,35 @@ namespace Proline.ClassicOnline.MDebug
     {
         private static Log _log => new Log();
 
-        public static void LogDebug(object data)
+        public static void LogDebug(object obj, bool outputToServer = false)
         {
             try
             {
                 // Log in memory
-                var line = _log.Debug(data.ToString());
+                var line = _log.Debug(obj.ToString());
                 // Output to console
                 Console.WriteLine(line);
-                ServerConsole.WriteLine(line);
+                if(outputToServer)
+                    ServerConsole.WriteLine(line);
+                // Duplciate to server
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        } 
+
+        public static void LogWarn(object obj, bool outputToServer = false)
+        {
+            try
+            {
+                // Log in memory
+                var line = _log.Warn(obj.ToString());
+                // Output to console
+                Console.WriteLine(line);
+                if (outputToServer)
+                    ServerConsole.WriteLine(line);
                 // Duplciate to server
             }
             catch (Exception)
@@ -27,34 +47,16 @@ namespace Proline.ClassicOnline.MDebug
             }
         }
 
-        public static void LogDebug(string data)
+        public static void LogInfo(object obj, bool outputToServer = false)
         {
             try
             {
                 // Log in memory
-                var line = _log.Debug(data);
+                var line = _log.Info(obj.ToString());
                 // Output to console
                 Console.WriteLine(line);
-                ServerConsole.WriteLine(line);
-                // Duplciate to server
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-        }
-
-        public static void LogWarn(string data)
-        {
-            try
-            {
-                // Log in memory
-                var line = _log.Warn(data.ToString());
-                // Output to console
-                Console.WriteLine(line);
-                ServerConsole.WriteLine(line);
+                if (outputToServer)
+                    ServerConsole.WriteLine(line);
                 // Duplciate to server
             }
             catch (Exception)
@@ -64,33 +66,16 @@ namespace Proline.ClassicOnline.MDebug
             }
         }
 
-        public static void LogInfo(string data)
+        public static void LogError(object obj, bool outputToServer = false)
         {
             try
             {
                 // Log in memory
-                var line = _log.Info(data.ToString());
+                var line = _log.Error(obj.ToString());
                 // Output to console
                 Console.WriteLine(line);
-                ServerConsole.WriteLine(line);
-                // Duplciate to server
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public static void LogError(string data)
-        {
-            try
-            {
-                // Log in memory
-                var line = _log.Error(data.ToString());
-                // Output to console
-                Console.WriteLine(line);
-                ServerConsole.WriteLine(line);
+                if (outputToServer)
+                    ServerConsole.WriteLine(line);
                 // Duplciate to server
             }
             catch (Exception e)
