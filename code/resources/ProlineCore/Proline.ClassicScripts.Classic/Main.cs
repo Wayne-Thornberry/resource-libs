@@ -96,7 +96,17 @@ namespace Proline.ClassicOnline.SClassic
                         state = 3;
                         break;
                     case 3:
-                        
+
+                        if(API.GetInteriorFromEntity(Game.PlayerPed.Handle) > 0)
+                        {
+                            if (Game.PlayerPed.IsInVehicle())
+                            {
+                                if(Game.IsControlJustPressed(0, Control.MoveUpDown))
+                                {
+                                    Game.PlayerPed.CurrentVehicle.Position = new Vector3(0, 0, 70);
+                                }
+                            }
+                        } 
                         break;
                 }
                 // var json = JsonConvert.SerializeObject(new

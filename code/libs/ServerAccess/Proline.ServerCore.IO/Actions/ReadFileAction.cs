@@ -43,7 +43,15 @@ namespace Proline.ServerAccess.IO.Actions
 #if CLIENT
         protected override void OnEventCallback(params object[] args)
         {
-            Data = args[0].ToString();
+            if(args != null)
+            {
+                // old way via getting id
+                if (args.Length > 0)
+                { 
+                    if(args[0] != null)
+                        Data = args[0].ToString();
+                }
+            }
         }
 #elif SERVER
 

@@ -19,9 +19,7 @@ namespace Proline.ClassicOnline.SClassic.Object
 
         public static Entity NearestEntity { get; set; }
         public string[] ValidModels { get; set; }
-
-        private MPStat<long> _walletStat;
-
+         
         public Atm Display { get; set; }
         public int SelectedAmount { get; set; }
         public int DisplayedView { get; set; }
@@ -29,8 +27,7 @@ namespace Proline.ClassicOnline.SClassic.Object
         public int ScriptStage { get; set; }
         public int CashMultiplier { get; set; }
         public int SelectedOption { get; private set; }
-
-        private MPStat<long> _bankStat;
+         
         private int selectedAmount;
         private const int MAX_LIMIT = 10000;
 
@@ -40,9 +37,7 @@ namespace Proline.ClassicOnline.SClassic.Object
         {
             var entityHandle = (int)args[0];
             var entity = Entity.FromHandle(entityHandle);
-            ValidModels = new[] { "prop_atm_01", "prop_atm_02", "prop_atm_03", "prop_fleeca_atm" };
-            _walletStat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
-            _bankStat = MPStat.GetStat<long>("BANK_BALANCE");
+            ValidModels = new[] { "prop_atm_01", "prop_atm_02", "prop_atm_03", "prop_fleeca_atm" }; 
             CashAmounts = new[] { 100, 200, 500, 1000, 5000, MAX_LIMIT };
             DisplayedView = 0;
             ScriptStage = 9;
@@ -69,7 +64,7 @@ namespace Proline.ClassicOnline.SClassic.Object
                             {
                                 io.DisplayBalance(Game.Player.Name,
                                     "Account Balance: ",
-                                   (int)_bankStat.GetValue());
+                                   (int)MGame.MGameAPI.GetCharacterBankBalance());
                                 RenderMainPage();
                             }
 
@@ -208,7 +203,7 @@ namespace Proline.ClassicOnline.SClassic.Object
                                     io.SetInputSelect();
                                     io.DisplayBalance(Game.Player.Name,
                                         "Account Balance: ",
-                                         (int)_bankStat.GetValue());
+                                         (int)MGame.MGameAPI.GetCharacterBankBalance());
                                     getSelectionTask = io.GetCurrentSelection();
                                 }
                                 else if (Game.IsControlJustPressed(0, Control.FrontendCancel))
@@ -285,14 +280,14 @@ namespace Proline.ClassicOnline.SClassic.Object
             io.SetDataSlotEmpty();
             io.SetDataSlot(0, "Processing Amount");
             if (IsDepositing)
-            {
-                _bankStat.SetValue(_bankStat.GetValue() + selectedAmount);
-                _walletStat.SetValue(_walletStat.GetValue() - selectedAmount);
+            { 
+                MGame.MGameAPI.SetCharacterBankBalance(MGame.MGameAPI.GetCharacterBankBalance() + selectedAmount);
+                MGame.MGameAPI.SetCharacterWalletBalance(MGame.MGameAPI.GetCharacterWalletBalance() - selectedAmount);
             }
             else
             {
-                _walletStat.SetValue(_walletStat.GetValue() + selectedAmount);
-                _bankStat.SetValue(_bankStat.GetValue() - selectedAmount);
+                MGame.MGameAPI.SetCharacterWalletBalance(MGame.MGameAPI.GetCharacterWalletBalance() + selectedAmount);
+                MGame.MGameAPI.SetCharacterBankBalance(MGame.MGameAPI.GetCharacterBankBalance() - selectedAmount); 
             }
             io.DisplayMessage();
         }
@@ -336,10 +331,10 @@ namespace Proline.ClassicOnline.SClassic.Object
         private void RenderCashPage(string title, int[] cashAmounts)
         {
             DisplayedView = 1;
-            var max = IsDepositing ? _walletStat.GetValue() : _bankStat.GetValue();
+            var max = IsDepositing ? MGame.MGameAPI.GetCharacterWalletBalance() : MGame.MGameAPI.GetCharacterBankBalance();
             cashAmounts[5] = (int)max;//(max > MAX_LIMIT ? MAX_LIMIT : max);
             io.DisplayBalance(Game.Player.Name, "Account Balance:",
-                (int) _bankStat.GetValue());
+                (int)MGame.MGameAPI.GetCharacterBankBalance());
             io.SetDataSlotEmpty();
             io.SetDataSlot(0, title);
             io.SetDataSlot(1, cashAmounts[0]);

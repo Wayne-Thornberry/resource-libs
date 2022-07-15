@@ -112,6 +112,8 @@ namespace Proline.ClassicOnline.MData
                 MDebugAPI.LogInfo("Waiting for callback to be completed...");
                 var identifier = Game.Player.Name;
                 var data = await ServerFile.ReadLocalFile($"Saves/{identifier}/Manifest.json");
+                if (data == null) 
+                    throw new Exception("No manifest data for player save has been found");
                 var manifest = JsonConvert.DeserializeObject<List<string>>(data);
                 var instance = DataFileManager.GetInstance();
                 var save = instance.GetSave(Game.Player);

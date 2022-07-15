@@ -28,11 +28,11 @@ namespace Proline.ClassicOnline.SClassic
                 if (MData.API.HasSaveLoaded())
                 {
                     PlayerCharacter character = CreateNewCharacter();
-                    CharacterGlobals.Character = character;
+                    CharacterGlobals.Character = character; 
 
-                    MData.API.SelectDataFile("PlayerInfo");
                     if (MData.API.DoesDataFileExist("PlayerInfo"))
                     {
+                        MData.API.SelectDataFile("PlayerInfo");
                         character.Health = MData.API.GetDataFileValue<int>("PlayerHealth");
                         character.Position = MData.API.GetDataFileValue<Vector3>("PlayerPosition");
                         character.BankBalance = MData.API.GetDataFileValue<long>("BankBalance");
@@ -94,7 +94,22 @@ namespace Proline.ClassicOnline.SClassic
                 }
                 else
                 {
-                    MDebugAPI.LogDebug("No save file to load from");
+                    MDebugAPI.LogDebug("No save file to load from, attempting to create a save...");
+                    /// If the player doesnt have basic info, that means the player does not have a save
+                    if (!MData.API.DoesDataFileExist("PlayerInfo"))
+                    {
+                        MScripting.MScriptingAPI.StartNewScript("PlayerSetup");
+                        while (MScripting.MScriptingAPI.GetInstanceCountOfScript("PlayerSetup") > 0)
+                        {
+                            await BaseScript.Delay(1);
+                        }
+                        MScripting.MScriptingAPI.StartNewScript("SaveNow");
+                        while (MScripting.MScriptingAPI.GetInstanceCountOfScript("SaveNow") > 0)
+                        {
+                            await BaseScript.Delay(1);
+                        }
+                    }
+                    MScripting.MScriptingAPI.StartNewScript("PlayerLoading");
                 }
 
             }
@@ -115,7 +130,11 @@ namespace Proline.ClassicOnline.SClassic
             if (!MData.API.HasSaveLoaded())
             {
                 PlayerCharacter character = CreateNewCharacter();
-                MScripting.MScriptingAPI.StartNewScript("LoadDefaultStats");  
+                MScripting.MScriptingAPI.StartNewScript("LoadDefaultStats"); 
+                while (MScripting.MScriptingAPI.GetInstanceCountOfScript("LoadDefaultStats") > 0)
+                {
+                    await BaseScript.Delay(1);
+                }
             }
 
 

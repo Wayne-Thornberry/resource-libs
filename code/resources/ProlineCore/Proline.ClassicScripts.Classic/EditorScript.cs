@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
+using Newtonsoft.Json;
 using Proline.ClassicOnline.MDebug;
 using Proline.ClassicOnline.MScreen;
 using Proline.ClassicOnline.MScripting;
@@ -167,7 +168,7 @@ namespace Proline.ClassicOnline.SClassic
                     else
                     {
                         Screen.ShowSubtitle(string.Format("{0}", _raycastResult.HitPosition));
-                        Console.WriteLine(string.Format("{0}", _raycastResult.HitPosition));
+                        Console.WriteLine(string.Format("{0}, {1}, {2}", _raycastResult.HitPosition, $"new Vector3({_raycastResult.HitPosition.X}f, {_raycastResult.HitPosition.Y}f, {_raycastResult.HitPosition.Z}f)", JsonConvert.SerializeObject(_raycastResult.HitPosition)));
                     }
                 }
 

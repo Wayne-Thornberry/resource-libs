@@ -73,5 +73,34 @@ namespace Proline.ClassicOnline.MGame
                 MDebug.MDebugAPI.LogError(e);
             }
         }
+
+        public static long GetCharacterWalletBalance()
+        {
+            try
+            {
+                var character = CharacterGlobals.Character;
+                return character.WalletBalance; 
+            }
+            catch (Exception e)
+            {
+                MDebug.MDebugAPI.LogError(e);
+            }
+            return 0;
+        }
+
+        public static long GetCharacterBankBalance()
+        {
+            try
+            {
+                var character = CharacterGlobals.Character;
+                return character.BankBalance;
+
+            }
+            catch (Exception e)
+            {
+                MDebug.MDebugAPI.LogError(e);
+            }
+            return 0;
+        }
     }
 }
