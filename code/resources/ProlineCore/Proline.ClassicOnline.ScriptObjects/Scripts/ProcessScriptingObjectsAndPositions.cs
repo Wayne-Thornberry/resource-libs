@@ -15,7 +15,6 @@ using Proline.Resource;
 using Proline.ClassicOnline.MDebug;
 using System.Reflection;
 using Proline.ClassicOnline.MScripting;
-using Proline.ClassicOnline.MGame.Data;
 using Proline.Resource.IO;
 
 namespace Proline.ClassicOnline.MBrain.Scripts

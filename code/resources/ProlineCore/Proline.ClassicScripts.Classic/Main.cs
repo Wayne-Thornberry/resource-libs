@@ -11,7 +11,7 @@ using Proline.CFXExtended.Core;
 using Proline.ClassicOnline.GScripting;
 using Proline.ClassicOnline.MDebug;
 using Proline.ClassicOnline.MGame;
-using Proline.ClassicOnline.MGame.Data;
+
 using Proline.ClassicOnline.MScripting;
 using Proline.Resource;
 

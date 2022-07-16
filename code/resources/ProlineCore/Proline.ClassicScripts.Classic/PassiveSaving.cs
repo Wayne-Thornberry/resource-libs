@@ -29,6 +29,10 @@ namespace Proline.ClassicOnline.SClassic
                         MData.API.SetDataFileValue("PlayerPosition", JsonConvert.SerializeObject(Game.PlayerPed.Position));
                     }
                     MScriptingAPI.StartNewScript("SaveNow");
+                    while (MScriptingAPI.GetInstanceCountOfScript("SaveNow") > 0)
+                    {
+                        await BaseScript.Delay(1);
+                    }
                     nextSaveTime = DateTime.UtcNow.AddMinutes(1);
                 }
                 await BaseScript.Delay(0);

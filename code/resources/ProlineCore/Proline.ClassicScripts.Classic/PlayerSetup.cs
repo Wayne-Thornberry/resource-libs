@@ -2,7 +2,7 @@
 using CitizenFX.Core.Native;
 using Newtonsoft.Json;
 using Proline.CFXExtended.Core;
-using Proline.ClassicOnline.MGame.Data;
+using Proline.ClassicOnline.GCharacter.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +60,7 @@ namespace Proline.ClassicOnline.SClassic
             if (!MData.API.DoesDataFileExist(id))
             {
                 MData.API.CreateDataFile();
-                var outfit = new PedOutfit();
+                var outfit = new CharacterOutfit();
                 outfit.Components = list;
                 var json = JsonConvert.SerializeObject(outfit);
                 MData.API.AddDataFileValue("CharacterOutfit", json);

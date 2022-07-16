@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MGame
 {
-    public static class MGameAPI
+    public static partial class MGameAPI
     {
         public static void SaveCurrentCar()
         {

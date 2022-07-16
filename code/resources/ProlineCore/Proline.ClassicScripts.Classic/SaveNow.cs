@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Proline.CFXExtended.Core;
 using CitizenFX.Core.Native;
-using Proline.ClassicOnline.MGame.Data;
+
 
 namespace Proline.ClassicOnline.SClassic
 {

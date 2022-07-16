@@ -10,14 +10,6 @@ namespace Proline.ClassicOnline.GCharacter
 {
     public static class CharacterGlobals
     {
-        public static PlayerCharacter Character
-        {
-            get;
-                //var instance = GlobalsManager.GetInstance();
-                //return instance.GetGlobal<PlayerCharacter>("PlayerCharacter", false);
-            set;
-                //var instance = GlobalsManager.GetInstance();
-                //instance.SetGlobal("PlayerCharacter", value, false);
-        }
+        public static PlayerCharacter Character { get; set; }
     }
 }

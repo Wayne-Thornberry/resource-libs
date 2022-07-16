@@ -46,7 +46,7 @@ namespace Proline.ClassicOnline.MConnection.Commands
                     task.ContinueWith(e =>
                     {
                         var vehicle = e.Result;
-                        CharacterGlobals.Character.PersonalVehicle = new GCharacter.Data.PlayerPersonalVehicle(vehicle.Handle);
+                        CharacterGlobals.Character.PersonalVehicle = new GCharacter.Data.CharacterPersonalVehicle(vehicle.Handle);
 
                         var id = "PlayerVehicle";
                         MData.API.CreateDataFile();

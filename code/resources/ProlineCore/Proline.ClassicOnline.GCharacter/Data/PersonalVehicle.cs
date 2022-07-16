@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proline.ClassicOnline.MGame.Data
+namespace Proline.ClassicOnline.GCharacter.Data
 {
     public class PersonalVehicle
     {

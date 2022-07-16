@@ -48,7 +48,7 @@ namespace Proline.ClassicOnline.MShop
                         task.ContinueWith(e =>
                         {
                             var createdVehicle = e.Result;
-                            character.PersonalVehicle = new GCharacter.Data.PlayerPersonalVehicle(createdVehicle.Handle);
+                            character.PersonalVehicle = new GCharacter.Data.CharacterPersonalVehicle(createdVehicle.Handle);
 
                             var id = "PlayerVehicle";
                             MData.API.CreateDataFile();

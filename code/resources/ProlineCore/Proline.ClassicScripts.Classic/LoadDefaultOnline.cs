@@ -1,7 +1,6 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using Proline.ClassicOnline.GCharacter.Data;
-using Proline.ClassicOnline.MGame.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +15,7 @@ namespace Proline.ClassicOnline.SClassic
         public async Task Execute(object[] args, CancellationToken token)
         {
             await Game.Player.ChangeModel(new Model(1885233650));
-            PedOutfit _characterPedOutfitM = CreateDefaultOutfit();
+            CharacterOutfit _characterPedOutfitM = CreateDefaultOutfit();
             if (!MData.API.HasSaveLoaded())
             {
                 PlayerCharacter character = CreateNewCharacter();
@@ -39,13 +38,13 @@ namespace Proline.ClassicOnline.SClassic
         private static PlayerCharacter CreateNewCharacter()
         {
             var character = new PlayerCharacter(Game.PlayerPed.Handle);
-            character.Stats = new PlayerStats();
+            character.Stats = new CharacterStats();
             return character;
         }
 
-        private static PedOutfit CreateDefaultOutfitF()
+        private static CharacterOutfit CreateDefaultOutfitF()
         {
-            var _characterPedOutfitF = new PedOutfit
+            var _characterPedOutfitF = new CharacterOutfit
             {
                 OutfitName = "",
                 Components = new[]
@@ -129,9 +128,9 @@ namespace Proline.ClassicOnline.SClassic
 
         }
 
-        private static PedOutfit CreateDefaultOutfit()
+        private static CharacterOutfit CreateDefaultOutfit()
         {
-            return new PedOutfit
+            return new CharacterOutfit
             {
                 OutfitName = "",
                 Components = new[]

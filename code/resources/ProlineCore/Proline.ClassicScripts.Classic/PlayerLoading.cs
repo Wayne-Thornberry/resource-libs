@@ -5,12 +5,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Proline.ClassicOnline.MDebug;
 using CitizenFX.Core.Native;
-using Proline.ClassicOnline.MGame.Data;
+
 using Proline.Resource;
 using Proline.CFXExtended.Core;
 using Proline.ClassicOnline.GScripting;
 using Proline.ClassicOnline.GCharacter;
 using Proline.ClassicOnline.GCharacter.Data;
+using Proline.ClassicOnline.MGame;
 
 namespace Proline.ClassicOnline.SClassic
 {
@@ -51,11 +52,28 @@ namespace Proline.ClassicOnline.SClassic
                         character.Stats.SetStat("WALLET_BALANCE", x);
                         character.Stats.SetStat("BANK_BALANCE", y);
                     }
+                     
+                    if (!MData.API.DoesDataFileExist("CharacterLooks"))
+                    {
+                        MData.API.SelectDataFile("CharacterLooks");
+                        var mother = MData.API.GetDataFileValue<int>("Mother");
+                        var father = MData.API.GetDataFileValue<int>("Father");
+                        var resemblence = MData.API.GetDataFileValue<float>("Resemblance");
+                        var skintone = MData.API.GetDataFileValue<float>("SkinTone");
+
+                        MGameAPI.SetPedLooks(Game.PlayerPed.Handle, new CharacterLooks()
+                        {
+                            Mother = mother,
+                            Father = father,
+                            Resemblence = resemblence * 0.1f,
+                            SkinTone = skintone * 0.1f,
+                        });
+                    }
 
                     if (MData.API.DoesDataFileExist("PlayerOutfit"))
                     {
                         MData.API.SelectDataFile("PlayerOutfit");
-                        var outfit = MData.API.GetDataFileValue<PedOutfit>("CharacterOutfit");
+                        var outfit = MData.API.GetDataFileValue<CharacterOutfit>("CharacterOutfit");
                         var components = outfit.Components;
                         for (int i = 0; i < components.Length; i++)
                         {
@@ -77,7 +95,7 @@ namespace Proline.ClassicOnline.SClassic
                             vehicle.IsPersistent = true;
                             if (vehicle.AttachedBlips.Length == 0)
                                 vehicle.AttachBlip();
-                            CharacterGlobals.Character.PersonalVehicle = new PlayerPersonalVehicle(vehicle.Handle);
+                            CharacterGlobals.Character.PersonalVehicle = new CharacterPersonalVehicle(vehicle.Handle);
                         }
                     }
 
@@ -123,7 +141,7 @@ namespace Proline.ClassicOnline.SClassic
         private static PlayerCharacter CreateNewCharacter()
         {
             var character = new PlayerCharacter(Game.PlayerPed.Handle);
-            character.Stats = new PlayerStats();
+            character.Stats = new CharacterStats();
             return character;
         }
          
