@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using CitizenFX.Core.UI;
 using Proline.CFXExtended.Core.Scaleforms;
 using Proline.ClassicOnline.MScripting;
 
@@ -50,7 +51,7 @@ namespace Proline.ClassicOnline.SClassic.UI
             Scaleform = new CustomWarningScreen();
             await Scaleform.Load();
             Show();
-            while (Stage != -1)
+            while (!token.IsCancellationRequested && Stage != -1)
             {
                 API.DrawRect(0, 0, 2, 2, 0, 0, 0, 100);
 
@@ -82,6 +83,22 @@ namespace Proline.ClassicOnline.SClassic.UI
                                 MScriptingAPI.StartNewScript("PlayerLoading");
                                 Stage = -1;
                                 Hide();
+                            }
+                            break;
+                       case 2:
+                            {
+                                API.DoScreenFadeOut(100);
+                                Screen.LoadingPrompt.Show("Loading Character Creator...");
+                                API.SwitchInPlayer(Game.PlayerPed.Handle);
+                                while (API.IsPlayerSwitchInProgress())
+                                {
+                                    await BaseScript.Delay(0);
+                                }
+                                MScriptingAPI.StartNewScript("CharacterCreator");
+                                Stage = -1;
+                                Hide();
+                                Screen.LoadingPrompt.Hide();
+                                API.DoScreenFadeIn(500);
                             }
                             break;
                     }

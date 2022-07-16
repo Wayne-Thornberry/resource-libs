@@ -64,9 +64,21 @@ namespace Proline.ClassicOnline.SClassic
                             {
                                 await BaseScript.Delay(1);
                             }
-                            while (MScriptingAPI.GetInstanceCountOfScript("PlayerLoading") > 0)
-                            {
-                                await BaseScript.Delay(1);
+
+                            if(MScriptingAPI.GetInstanceCountOfScript("CharacterCreator") > 0)
+                            { 
+                                while (MScriptingAPI.GetInstanceCountOfScript("CharacterCreator") > 0)
+                                {
+                                    await BaseScript.Delay(1);
+                                }
+                            }
+                            
+                            if (MScriptingAPI.GetInstanceCountOfScript("PlayerLoading") > 0)
+                            { 
+                                while (MScriptingAPI.GetInstanceCountOfScript("PlayerLoading") > 0)
+                                {
+                                    await BaseScript.Delay(1);
+                                }
                             }
                             API.FreezeEntityPosition(Game.PlayerPed.Handle, false);
                             API.SwitchInPlayer(Game.PlayerPed.Handle);

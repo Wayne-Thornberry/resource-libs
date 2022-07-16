@@ -13,6 +13,13 @@ namespace Proline.ClassicOnline.SClassic
         public async Task Execute(object[] args, CancellationToken token)
         {
 
+
+            MScripting.MScriptingAPI.StartNewScript("LoadDefaultOnline");
+            while (MScripting.MScriptingAPI.GetInstanceCountOfScript("LoadDefaultOnline") > 0)
+            {
+                await BaseScript.Delay(1);
+            }
+
             CharacterPed = new CharacterPed();
             CharacterStats = new CharacterStats();
             SpawnLocation = new Vector3(405.83f, -997.13f, -99.004f);

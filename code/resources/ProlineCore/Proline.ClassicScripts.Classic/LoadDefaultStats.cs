@@ -1,4 +1,5 @@
-﻿using Proline.CFXExtended.Core;
+﻿using CitizenFX.Core;
+using Proline.CFXExtended.Core;
 using Proline.ClassicOnline.GCharacter;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace Proline.ClassicOnline.SClassic
 
             stat.SetValue(default);
             stat2.SetValue(default);
+
+          
         }
     }
 }
