@@ -53,7 +53,7 @@ namespace Proline.ClassicOnline.SClassic
                         character.Stats.SetStat("BANK_BALANCE", y);
                     }
                      
-                    if (!MData.API.DoesDataFileExist("CharacterLooks"))
+                    if (MData.API.DoesDataFileExist("CharacterLooks"))
                     {
                         MData.API.SelectDataFile("CharacterLooks");
                         var mother = MData.API.GetDataFileValue<int>("Mother");

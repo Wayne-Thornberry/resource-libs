@@ -7,6 +7,7 @@ using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Proline.CFXExtended.Core.Scaleforms;
 using Proline.ClassicOnline.MDebug;
+using Proline.ClassicOnline.MScripting;
 
 namespace Proline.ClassicOnline.SClassic.UI
 {
@@ -82,8 +83,8 @@ namespace Proline.ClassicOnline.SClassic.UI
                         case 2:
                             await Game.Player.ChangeModel(new Model(-1692214353));
                             break;
-                        case 3:
-                            await Game.Player.ChangeModel(new Model(1885233650));
+                        case 3: 
+                            MScriptingAPI.StartNewScript("PlayerLoading");
                             break;
                     }
                     await BaseScript.Delay(3000);

@@ -1,4 +1,5 @@
 ﻿using CitizenFX.Core.Native;
+using Proline.ClassicOnline.GScripting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MBrain.Entity
 {
-    internal static class HandleManager
+    internal static partial class HandleManager
     {
         internal static int[] EntityHandles => GetEntityHandlesByTypes(EntityType.PED, EntityType.VEHICLE, EntityType.PROP);
         internal static int[] PedHandles => GetEntityHandlesByTypes(EntityType.PED);
@@ -61,14 +62,6 @@ namespace Proline.ClassicOnline.MBrain.Entity
                 }
             }
             return array.ToArray();
-        }
-
-        internal enum EntityType
-        {
-            PED,
-            PROP,
-            VEHICLE,
-            PICKUP,
         }
     }
 }

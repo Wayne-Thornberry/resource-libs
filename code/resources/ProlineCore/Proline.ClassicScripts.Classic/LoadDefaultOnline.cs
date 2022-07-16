@@ -1,5 +1,6 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using Proline.ClassicOnline.GCharacter;
 using Proline.ClassicOnline.GCharacter.Data;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,7 @@ namespace Proline.ClassicOnline.SClassic
     {
         public async Task Execute(object[] args, CancellationToken token)
         {
-            await Game.Player.ChangeModel(new Model(1885233650));
-            CharacterOutfit _characterPedOutfitM = CreateDefaultOutfit();
+            await Game.Player.ChangeModel(new Model(1885233650)); 
             if (!MData.API.HasSaveLoaded())
             {
                 PlayerCharacter character = CreateNewCharacter();
@@ -24,15 +24,10 @@ namespace Proline.ClassicOnline.SClassic
                 {
                     await BaseScript.Delay(1);
                 }
+                CharacterGlobals.Character = character;
             }
 
-
-            var components = _characterPedOutfitM.Components;
-            for (int i = 0; i < components.Length; i++)
-            {
-                var component = components[i];
-                API.SetPedComponentVariation(Game.PlayerPed.Handle, i, component.ComponentIndex, component.ComponentTexture, component.ComponentPallet);
-            } 
+            MGame.MGameAPI.SetPedOutfit("mp_m_defaultoutfit", Game.PlayerPed.Handle);
         }
 
         private static PlayerCharacter CreateNewCharacter()
@@ -41,174 +36,6 @@ namespace Proline.ClassicOnline.SClassic
             character.Stats = new CharacterStats();
             return character;
         }
-
-        private static CharacterOutfit CreateDefaultOutfitF()
-        {
-            var _characterPedOutfitF = new CharacterOutfit
-            {
-                OutfitName = "",
-                Components = new[]
-                {
-                new OutfitComponent
-                {
-                    ComponentIndex = 21,
-                    ComponentPallet = 0,
-                    ComponentTexture = 0
-                },
-                new OutfitComponent
-                {
-                    ComponentIndex = 0,
-                    ComponentPallet = 0,
-                    ComponentTexture = 0
-                },
-                new OutfitComponent
-                {
-                    ComponentIndex = 6,
-                    ComponentPallet = 0,
-                    ComponentTexture = 1
-                },
-                new OutfitComponent
-                {
-                    ComponentIndex = 0,
-                    ComponentPallet = 0,
-                    ComponentTexture = 0
-                },
-                new OutfitComponent
-                {
-                    ComponentIndex = 0,
-                    ComponentPallet = 0,
-                    ComponentTexture = 0
-                },
-                new OutfitComponent
-                {
-                    ComponentIndex = 0,
-                    ComponentPallet = 0,
-                    ComponentTexture = 0
-                },
-                new OutfitComponent
-                {
-                    ComponentIndex = 0,
-                    ComponentPallet = 0,
-                    ComponentTexture = 0
-                },
-                new OutfitComponent
-                {
-                    ComponentIndex = 0,
-                    ComponentPallet = 0,
-                    ComponentTexture = 0
-                },
-                new OutfitComponent
-                {
-                    ComponentIndex = 2,
-                    ComponentPallet = 0,
-                    ComponentTexture = 0
-                },
-                new OutfitComponent
-                {
-                    ComponentIndex = 0,
-                    ComponentPallet = 0,
-                    ComponentTexture = 0
-                },
-                new OutfitComponent
-                {
-                    ComponentIndex = 0,
-                    ComponentPallet = 0,
-                    ComponentTexture = 0
-                },
-                new OutfitComponent
-                {
-                    ComponentIndex = 0,
-                    ComponentPallet = 0,
-                    ComponentTexture = 1
-                }
-            }
-            };
-
-            return _characterPedOutfitF;
-
-        }
-
-        private static CharacterOutfit CreateDefaultOutfit()
-        {
-            return new CharacterOutfit
-            {
-                OutfitName = "",
-                Components = new[]
-   {
-                    new OutfitComponent
-                    {
-                        ComponentIndex = 0,
-                        ComponentPallet = 0,
-                        ComponentTexture = 0
-                    },
-                    new OutfitComponent
-                    {
-                        ComponentIndex = 0,
-                        ComponentPallet = 0,
-                        ComponentTexture = 0
-                    },
-                    new OutfitComponent
-                    {
-                        ComponentIndex = 1,
-                        ComponentPallet = 0,
-                        ComponentTexture = 1
-                    },
-                    new OutfitComponent
-                    {
-                        ComponentIndex = 0,
-                        ComponentPallet = 0,
-                        ComponentTexture = 0
-                    },
-                    new OutfitComponent
-                    {
-                        ComponentIndex = 0,
-                        ComponentPallet = 0,
-                        ComponentTexture = 0
-                    },
-                    new OutfitComponent
-                    {
-                        ComponentIndex = 0,
-                        ComponentPallet = 0,
-                        ComponentTexture = 0
-                    },
-                    new OutfitComponent
-                    {
-                        ComponentIndex = 1,
-                        ComponentPallet = 0,
-                        ComponentTexture = 0
-                    },
-                    new OutfitComponent
-                    {
-                        ComponentIndex = 0,
-                        ComponentPallet = 0,
-                        ComponentTexture = 0
-                    },
-                    new OutfitComponent
-                    {
-                        ComponentIndex = 0,
-                        ComponentPallet = 0,
-                        ComponentTexture = 0
-                    },
-                    new OutfitComponent
-                    {
-                        ComponentIndex = 0,
-                        ComponentPallet = 0,
-                        ComponentTexture = 0
-                    },
-                    new OutfitComponent
-                    {
-                        ComponentIndex = 0,
-                        ComponentPallet = 0,
-                        ComponentTexture = 0
-                    },
-                    new OutfitComponent
-                    {
-                        ComponentIndex = 0,
-                        ComponentPallet = 0,
-                        ComponentTexture = 1
-                    }
-                }
-            };
-        }
+    
     }
 }

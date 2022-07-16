@@ -191,6 +191,7 @@ namespace Proline.ClassicOnline.SClassic
             set
             {
                 _scriptStage = value;
+                UpdateHeritage();
                 OnScriptStageChanged();
             }
         }

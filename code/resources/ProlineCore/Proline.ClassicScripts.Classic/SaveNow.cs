@@ -17,6 +17,9 @@ namespace Proline.ClassicOnline.SClassic
 
         public async Task Execute(object[] args, CancellationToken token)
         {
+            // Dupe protection
+            if (MScripting.MScriptingAPI.GetInstanceCountOfScript("SaveNow") > 1)
+                return;
             Screen.LoadingPrompt.Show("Saving...", LoadingSpinnerType.SocialClubSaving); 
             await MData.API.SendSaveToCloud();
             await BaseScript.Delay(1000);

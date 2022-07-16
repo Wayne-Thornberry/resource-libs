@@ -16,7 +16,7 @@ namespace Proline.ClassicOnline.SClassic.UI
             MaxItems = 6;
             Title = "Proline";
             Subtitle = "A better online";
-            Items = new[] { "Play", "Something", "Character Select", "Options", "Credits", "Quit" };
+            Items = new[] { "Play", "Character Creator", "Character Select", "Options", "Credits", "Quit" };
         }
 
         public string Title { get; set; }

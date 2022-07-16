@@ -1,7 +1,7 @@
 {
     "OutfitName" : "",
     "Components" : 
-    {
+    [
         
         {
             "ComponentIndex" : 21,
@@ -74,5 +74,5 @@
             "ComponentPallet" : 0,
             "ComponentTexture" : 1
         }
-    }
-};
+    ]
+}

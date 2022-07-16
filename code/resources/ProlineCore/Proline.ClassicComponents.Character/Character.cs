@@ -1,5 +1,8 @@
 ﻿using CitizenFX.Core.Native;
+using Newtonsoft.Json;
+using Proline.ClassicOnline.GCharacter;
 using Proline.ClassicOnline.GCharacter.Data;
+using Proline.Resource.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +19,8 @@ namespace Proline.ClassicOnline.MGame
         {
             try
             {
+                if (CharacterGlobals.Character != null)
+                    CharacterGlobals.Character.Looks = looks;
                 API.SetPedHeadBlendData(pedHandle, looks.Father, looks.Mother, 0, looks.Father, looks.Mother, 0, looks.Resemblence, looks.SkinTone, 0, true);
 
                 if(looks.Hair != null)
@@ -45,20 +50,36 @@ namespace Proline.ClassicOnline.MGame
             }
         }
 
+        public static void SetPedOutfit(string outfitName, int handle)
+        {
+            try
+            {
+                var outfitJson = ResourceFile.Load($"data/character/outfits/{outfitName}.json");
+                var characterPedOutfitM = JsonConvert.DeserializeObject<CharacterOutfit>(outfitJson.GetData());
+                var components = characterPedOutfitM.Components;
+                for (int i = 0; i < components.Length; i++)
+                {
+                    var component = components[i];
+                    API.SetPedComponentVariation(handle, i, component.ComponentIndex, component.ComponentTexture, component.ComponentPallet);
+                }
+            }
+            catch (Exception e)
+            {
+                MDebug.MDebugAPI.LogError(e);
+            } 
+        }
+
         public static CharacterLooks GetPedLooks(int pedHandle)
         {
             try
             {
-                int x = 0;
-                API.GetPedHeadBlendData(pedHandle,ref x);
-                MDebug.MDebugAPI.LogDebug(x);
-                return new CharacterLooks()
-                {
-                    Mother = 0,
-                    Father = 0,
-                    Resemblence = 0.5f,
-                    SkinTone = 0.5f,
-                };
+                //int x = 0;
+                //API.GetPedHeadBlendData(pedHandle,ref x);
+                //MDebug.MDebugAPI.LogDebug(x);
+                if (CharacterGlobals.Character != null)
+                    return CharacterGlobals.Character.Looks;
+                else
+                    return null;
             }
             catch (Exception e)
             {
