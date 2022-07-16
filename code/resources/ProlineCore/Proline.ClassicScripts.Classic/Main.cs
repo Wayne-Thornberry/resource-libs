@@ -19,6 +19,8 @@ namespace Proline.ClassicOnline.SClassic
 {
     public class Main
     {
+        private Vector3 _missionTruckingLocationStart;
+        private Blip _missionTruckingBlip;
 
         public async Task Execute(object[] args, CancellationToken token)
         {
@@ -102,6 +104,11 @@ namespace Proline.ClassicOnline.SClassic
                             MScriptingAPI.StartNewScript("BlipController");
 
 
+                            _missionTruckingLocationStart = new Vector3(798.6685f, -2977.404f, 5.020939f);
+                            _missionTruckingBlip = World.CreateBlip(_missionTruckingLocationStart);
+                            _missionTruckingBlip.Sprite = BlipSprite.TowTruck;
+
+
                         }
                         state = 3;
                         break;
@@ -133,23 +140,59 @@ namespace Proline.ClassicOnline.SClassic
 
                         break;
                 }
-                // var json = JsonConvert.SerializeObject(new
-                // {
-                // transactionType = "playSound",
-                // transactionFile = "demo",
+
+                if (Game.PlayerPed.CurrentVehicle != null)
+                {
+                    var currentVehicle = Game.PlayerPed.CurrentVehicle;
+                    if(currentVehicle.Model == VehicleHash.Phantom || currentVehicle.Model == VehicleHash.Hauler)
+                    { 
+                        Screen.DisplayHelpTextThisFrame("Honk to start TruckingOnDemand");
+                        if (Game.IsControlJustPressed(0, Control.VehicleHorn) &&
+                            MScriptingAPI.GetInstanceCountOfScript("TruckingOnDemand") == 0)
+                        {
+                            MScriptingAPI.StartNewScript("TruckingOnDemand", currentVehicle.Handle);
+                        }
+                    }else if(currentVehicle.Model == VehicleHash.Police || currentVehicle.Model == VehicleHash.Police2)
+                    {
+                        Screen.DisplayHelpTextThisFrame("Honk to start VigilanteOnDemand");
+                        if (Game.IsControlJustPressed(0, Control.VehicleHorn) &&
+                            MScriptingAPI.GetInstanceCountOfScript("VigilanteOnDemand") == 0)
+                        {
+                            MScriptingAPI.StartNewScript("VigilanteOnDemand", currentVehicle.Handle);
+                        }
+                    }
+                }
 
 
-                // transactionVolume = 0.2f
-                // });
-                // Game.PlayerPed.Weapons.Give(WeaponHash.Parachute, 0, true, true);
-                // Game.PlayerPed.Position = new Vector3(0, 0, 1800);
-                // Game.PlayerPed.HasGravity = true;
-                // API.SetGravityLevel(2);
-                // Console.WriteLine(json);
-                // API.SendNuiMessage(json);
+                if(_missionTruckingBlip != null)
+                { 
+                    World.DrawMarker(MarkerType.VerticalCylinder, _missionTruckingLocationStart, new Vector3(0, 0, 0),
+                        new Vector3(0, 0, 0), new Vector3(1, 1, 1), System.Drawing.Color.FromArgb(150, 145, 0, 0));
+
+                    if(World.GetDistance(Game.PlayerPed.Position, _missionTruckingLocationStart) <= 2f && MScriptingAPI.GetInstanceCountOfScript("Trucking") == 0)
+                    { 
+                        MScriptingAPI.StartNewScript("Trucking");
+                    }
+                }
 
                 await BaseScript.Delay(0);
             }
         }
     }
 }
+
+
+// var json = JsonConvert.SerializeObject(new
+// {
+// transactionType = "playSound",
+// transactionFile = "demo",
+
+
+// transactionVolume = 0.2f
+// });
+// Game.PlayerPed.Weapons.Give(WeaponHash.Parachute, 0, true, true);
+// Game.PlayerPed.Position = new Vector3(0, 0, 1800);
+// Game.PlayerPed.HasGravity = true;
+// API.SetGravityLevel(2);
+// Console.WriteLine(json);
+// API.SendNuiMessage(json);

@@ -69,6 +69,11 @@ namespace Proline.ClassicOnline.MGame
             } 
         }
 
+        public static void AddValueToBankBalance(object payout)
+        {
+            throw new NotImplementedException();
+        }
+
         public static CharacterLooks GetPedLooks(int pedHandle)
         {
             try

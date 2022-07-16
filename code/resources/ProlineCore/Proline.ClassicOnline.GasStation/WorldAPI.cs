@@ -34,5 +34,11 @@ namespace Proline.ClassicOnline.MWorld
                 MDebugAPI.LogError(e);
             }
         }
+
+
+        public static void DrawMarker()
+        {
+
+        }
     }
 }
