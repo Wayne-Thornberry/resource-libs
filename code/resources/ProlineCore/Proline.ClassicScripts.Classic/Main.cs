@@ -147,7 +147,7 @@ namespace Proline.ClassicOnline.SClassic
                     if(currentVehicle.Model == VehicleHash.Phantom || currentVehicle.Model == VehicleHash.Hauler)
                     { 
                         Screen.DisplayHelpTextThisFrame("Honk to start TruckingOnDemand");
-                        if (Game.IsControlJustPressed(0, Control.VehicleHorn) &&
+                        if (Game.IsControlJustPressed(0, Control.Context) &&
                             MScriptingAPI.GetInstanceCountOfScript("TruckingOnDemand") == 0)
                         {
                             MScriptingAPI.StartNewScript("TruckingOnDemand", currentVehicle.Handle);
@@ -155,7 +155,7 @@ namespace Proline.ClassicOnline.SClassic
                     }else if(currentVehicle.Model == VehicleHash.Police || currentVehicle.Model == VehicleHash.Police2)
                     {
                         Screen.DisplayHelpTextThisFrame("Honk to start VigilanteOnDemand");
-                        if (Game.IsControlJustPressed(0, Control.VehicleHorn) &&
+                        if (Game.IsControlJustPressed(0, Control.Context) &&
                             MScriptingAPI.GetInstanceCountOfScript("VigilanteOnDemand") == 0)
                         {
                             MScriptingAPI.StartNewScript("VigilanteOnDemand", currentVehicle.Handle);

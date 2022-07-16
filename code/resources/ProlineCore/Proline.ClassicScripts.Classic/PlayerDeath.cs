@@ -111,6 +111,7 @@ namespace Proline.ClassicOnline.SClassic
                         _deathStage++;
                         break;
                     case 6:
+                        Game.Player.WantedLevel = 0;
                         Game.PlayerPed.IsInvincible = false;
                         _deathStage = 0;
                         break;
