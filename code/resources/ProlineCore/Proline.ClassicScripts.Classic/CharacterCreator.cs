@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
+using Newtonsoft.Json;
 using Proline.ClassicOnline.GCharacter.Data;
 using Proline.ClassicOnline.MGame;
 using Proline.ClassicOnline.MScripting;
@@ -29,6 +30,7 @@ namespace Proline.ClassicOnline.SClassic
             {
                 await BaseScript.Delay(1);
             }
+
             Screen.Fading.FadeOut(500);
             while (!token.IsCancellationRequested && ScriptStage != -1)
             {
@@ -54,8 +56,6 @@ namespace Proline.ClassicOnline.SClassic
                     case 3:
                         if (Game.IsControlJustPressed(0, Control.FrontendCancel))
                             ScriptStage = 2;
-                        if (Game.IsControlJustPressed(0, Control.Context))
-                            Finish();
                         break;
                     case 4:
                         if (Game.IsControlJustPressed(0, Control.FrontendCancel))
@@ -64,11 +64,33 @@ namespace Proline.ClassicOnline.SClassic
                     case 5:
                         if (Game.IsControlJustPressed(0, Control.FrontendCancel))
                             ScriptStage = 2;
+                        if (Game.IsControlJustPressed(0, Control.Context))
+                            Finish();
                         break;
                 }
                 await BaseScript.Delay(0);
             }
 
+            World.RenderingCamera = null;
+            Game.PlayerPed.Task.ClearAll();
+
+            Screen.Fading.FadeOut(500);
+            Screen.LoadingPrompt.Show("Loading Classic Online...");
+            //API.SwitchOutPlayer(Game.PlayerPed.Handle, 1, 1); 
+
+            MScriptingAPI.StartNewScript("PlayerSetup");
+            while (MScriptingAPI.GetInstanceCountOfScript("PlayerSetup") > 0)
+            {
+                await BaseScript.Delay(1);
+            }
+
+            Game.PlayerPed.Position = new Vector3(0, 0, 70);
+            var id = "PlayerInfo";
+            if (MData.API.DoesDataFileExist(id))
+            {
+                MData.API.SelectDataFile(id);
+                MData.API.SetDataFileValue("PlayerPosition", JsonConvert.SerializeObject(Game.PlayerPed.Position));
+            }
 
             MScriptingAPI.StartNewScript("SaveNow");
             while (MScriptingAPI.GetInstanceCountOfScript("SaveNow") > 0)
@@ -76,6 +98,13 @@ namespace Proline.ClassicOnline.SClassic
                 await BaseScript.Delay(1);
             }
 
+            MScriptingAPI.StartNewScript("PlayerLoading");
+            while (MScriptingAPI.GetInstanceCountOfScript("PlayerLoading") > 0)
+            {
+                await BaseScript.Delay(1);
+            }
+            Screen.LoadingPrompt.Hide(); 
+            MScriptingAPI.StartNewScript("StartIntro");
 
         }
 

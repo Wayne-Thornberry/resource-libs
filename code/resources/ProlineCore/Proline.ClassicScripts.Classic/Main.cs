@@ -66,27 +66,25 @@ namespace Proline.ClassicOnline.SClassic
                             }
 
                             if(MScriptingAPI.GetInstanceCountOfScript("CharacterCreator") > 0)
-                            { 
-                                while (MScriptingAPI.GetInstanceCountOfScript("CharacterCreator") > 0)
-                                {
-                                    await BaseScript.Delay(1);
-                                }
+                            {
+                                state = 999;
+                                break;
                             }
-                            
-                            if (MScriptingAPI.GetInstanceCountOfScript("PlayerLoading") > 0)
-                            { 
+                            else if (MScriptingAPI.GetInstanceCountOfScript("PlayerLoading") > 0)
+                            {
                                 while (MScriptingAPI.GetInstanceCountOfScript("PlayerLoading") > 0)
                                 {
                                     await BaseScript.Delay(1);
                                 }
+                                API.FreezeEntityPosition(Game.PlayerPed.Handle, false);
+                                API.SwitchInPlayer(Game.PlayerPed.Handle);
+                                while (API.IsPlayerSwitchInProgress())
+                                {
+                                    await BaseScript.Delay(0);
+                                }
+                                state = 2;
                             }
-                            API.FreezeEntityPosition(Game.PlayerPed.Handle, false);
-                            API.SwitchInPlayer(Game.PlayerPed.Handle);
-                            while (API.IsPlayerSwitchInProgress())
-                            {
-                                await BaseScript.Delay(0);
-                            }
-                            state = 2;
+
                         }
                         break;
                     case 2:
@@ -118,7 +116,21 @@ namespace Proline.ClassicOnline.SClassic
                                     Game.PlayerPed.CurrentVehicle.Position = new Vector3(0, 0, 70);
                                 }
                             }
-                        } 
+                        }
+                        break;
+                    case 999: 
+                        while (MScriptingAPI.GetInstanceCountOfScript("CharacterCreator") > 0)
+                        {
+                            await BaseScript.Delay(1);
+                        }
+
+
+                        while (MScriptingAPI.GetInstanceCountOfScript("StartIntro") > 0)
+                        {
+                            await BaseScript.Delay(1);
+                        }
+                        state = 2;
+
                         break;
                 }
                 // var json = JsonConvert.SerializeObject(new

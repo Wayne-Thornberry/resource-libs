@@ -1,5 +1,6 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using CitizenFX.Core.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -195,6 +196,19 @@ namespace Proline.ClassicOnline.SClassic
 
         public async Task Execute(object[] args, CancellationToken token)
         {
+            while (Screen.Fading.IsFadingOut)
+            {
+                await BaseScript.Delay(0);
+            }
+
+            if (Screen.Fading.IsFadedOut)
+                Screen.Fading.FadeIn(500);
+
+            while (Screen.Fading.IsFadingIn)
+            {
+                await BaseScript.Delay(0);
+            }
+
             API.PrepareMusicEvent("FM_INTRO_START");//FM_INTRO_START
             API.TriggerMusicEvent("FM_INTRO_START");//FM_INTRO_START
             var plyrId = API.PlayerPedId();// PLAYER ID
