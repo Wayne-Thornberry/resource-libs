@@ -40,8 +40,9 @@ namespace Proline.ClassicOnline.SClassic
             {
                 var entity = (Vehicle) Entity.FromHandle(item);
                 var distance = World.GetDistance(entity.Position, Game.PlayerPed.Position);
-                if (distance < _closestDistance &&  IsValidModel(entity.Model) && entity != _policeVehicle)
+                if (distance < _closestDistance &&  IsValidModel(entity.Model) && entity != _policeVehicle && entity.Driver != null)
                 {
+                    if (entity.Driver.IsDead) continue;
                     MDebug.MDebugAPI.LogDebug("Found a vehicle");
                     _target = (Vehicle) entity;
                     _closestDistance = distance;
@@ -50,15 +51,13 @@ namespace Proline.ClassicOnline.SClassic
 
             if (_target == null)
                 return;
-
-            //_trailer = await World.CreateVehicle(VehicleHash.Trailers2, _trailerSpawnLoc, 270);
-            //_deliveryLoc = new Vector3(-430.9589f, -2713.246f, 5.000218f);
+             
             _policeVehicle.AttachBlip();
             _target.AttachBlip();
             var targets = new List<Ped>(_target.Passengers);
             targets.Add(_target.Driver);
             _targetPeds = targets.ToArray(); 
-            _payout = 1000 * _targetPeds.Length;//(int)(10.0f * World.GetDistance(_target.Position, _deliveryLoc));
+            _payout = 1000 * _targetPeds.Length; 
 
 
             Screen.ShowNotification("Vigilante Started");
