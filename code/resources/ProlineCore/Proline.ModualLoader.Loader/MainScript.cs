@@ -20,6 +20,14 @@ namespace ProlineServer
 
         public override async Task OnStart()
         { 
+            // Init_Core
+            // - Finds all scripts that are marked InitializeCore
+            // - Execute Core Initializations
+            // Init_Session
+            // - Find all scripts that are marked InitializeSession
+            // - Execute Session Intializations
+
+
             ModuleManager.StartAllModules();
             while (!ModuleManager.HasAllModulesStarted())
             {

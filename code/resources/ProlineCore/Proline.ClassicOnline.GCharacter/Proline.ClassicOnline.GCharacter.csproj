@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="CitizenFX.Sdk.Client/0.2.3">
 
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
+    
   </PropertyGroup>
 
   <ItemGroup>

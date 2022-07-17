@@ -1,14 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>net452</TargetFramework>
+﻿<Project Sdk="CitizenFX.Sdk.Client/0.2.3">
+	<PropertyGroup> 
 		<Platforms>AnyCPU</Platforms>
 		<AssemblyName>$(MSBuildProjectName).net</AssemblyName>
 
 	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="CitizenFX.Core.Client" Version="1.0.5179" />
-	</ItemGroup>
+ 
+ 
 
   <ItemGroup> 
     <Reference Include="Microsoft.CSharp" />

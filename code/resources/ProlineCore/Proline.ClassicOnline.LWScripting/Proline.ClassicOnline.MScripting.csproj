@@ -1,21 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="CitizenFX.Sdk.Client/0.2.3">
 
-	<PropertyGroup>
-		<TargetFramework>net452</TargetFramework>
+	<PropertyGroup> 
 		<Platforms>AnyCPU</Platforms>
 		<Configurations>Debug;Release</Configurations>
 	</PropertyGroup>
-
-	<ItemGroup>
-	  <Compile Remove="Server\**" />
-	  <EmbeddedResource Remove="Server\**" />
-	  <None Remove="Server\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="CitizenFX.Core.Client" Version="1.0.5179" />
-	</ItemGroup>
-
+ 
+ 
 
 	<ItemGroup>
 		<Reference Include="Microsoft.CSharp" />
@@ -25,7 +15,7 @@
 		<Reference Include="Proline.Modularization.Core">
 			<HintPath>..\..\..\..\artifacts\ModuleFramework\Proline.Modularization.Core.dll</HintPath>
 		</Reference>
-		<PackageReference Include="CitizenFX.Core.Client" Version="1.0.5179" />
+		
 		<Reference Include="Proline.Resource.Client">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Client.dll</HintPath>
 		</Reference>
