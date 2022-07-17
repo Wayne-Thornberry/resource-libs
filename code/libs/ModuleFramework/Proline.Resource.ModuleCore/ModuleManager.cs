@@ -1,6 +1,7 @@
 ﻿using CitizenFX.Core;
 using Newtonsoft.Json;
 using Proline.Modularization.Core.Config;
+using Proline.Resource.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -131,10 +132,10 @@ namespace Proline.Modularization.Core
             var assembly = Assembly.Load(assemblyString);
             OutputToConsole($"Succesfully Loaded {assembly.FullName}");
             var scriptTypes = assembly.GetTypes().Where(e => e.BaseType == typeof(ModuleScript)).ToArray();
-            var commandTypes = assembly.GetTypes().Where(e => e.BaseType == typeof(ModuleCommand)).ToArray();
+            var commandTypes = assembly.GetTypes().Where(e => e.BaseType == typeof(ResourceCommand)).ToArray();
             OutputToConsole($"Getting object from assembly {assembly.FullName}");
             var scripts = new List<ModuleScript>();
-            var commands = new List<ModuleCommand>();
+            var commands = new List<ResourceCommand>();
             foreach (var item in scriptTypes)
             {
                 scripts.Add((ModuleScript)Activator.CreateInstance(item)); 
@@ -142,7 +143,7 @@ namespace Proline.Modularization.Core
 
             foreach (var item in commandTypes)
             {
-                commands.Add((ModuleCommand)Activator.CreateInstance(item));
+                commands.Add((ResourceCommand)Activator.CreateInstance(item));
             }
             OutputToConsole($"Inserted {assembly.GetName().Name} into memory");
 

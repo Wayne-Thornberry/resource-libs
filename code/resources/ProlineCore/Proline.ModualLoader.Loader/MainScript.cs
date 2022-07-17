@@ -14,7 +14,7 @@ namespace ProlineServer
     { 
         public override async Task OnLoad()
         { 
-            LoadResources();
+            LoadResourceDepencies();
             ModuleManager.LoadModules();
         }
 
@@ -40,7 +40,7 @@ namespace ProlineServer
             ModuleManager.ProcessModules();  
         }
 
-        private void LoadResources()
+        private void LoadResourceDepencies()
         {
             Console.WriteLine("Loading Resources...");
             foreach (var item in Configuration.GetSection<string[]>("Resources"))

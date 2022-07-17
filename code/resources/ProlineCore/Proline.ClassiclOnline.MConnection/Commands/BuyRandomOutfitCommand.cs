@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Proline.CFXExtended.Core;
 using Proline.Modularization.Core;
+using Proline.Resource.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MConnection.Commands
 {
-    public class BuyRandomOutfitCommand : ModuleCommand
+    public class BuyRandomOutfitCommand : ResourceCommand
     {
         public BuyRandomOutfitCommand() : base("BuyRandomOutfit")
         {

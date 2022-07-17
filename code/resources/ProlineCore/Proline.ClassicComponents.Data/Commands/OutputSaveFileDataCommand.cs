@@ -1,6 +1,7 @@
 ﻿using CitizenFX.Core;
 using Proline.ClassicOnline.MData.Internal;
 using Proline.Modularization.Core;
+using Proline.Resource.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MData.Commands
 {
-    public class OutputSaveFileDataCommand : ModuleCommand
+    public class OutputSaveFileDataCommand : ResourceCommand
     {
         public OutputSaveFileDataCommand() : base("OutputSaveFileData")
         {

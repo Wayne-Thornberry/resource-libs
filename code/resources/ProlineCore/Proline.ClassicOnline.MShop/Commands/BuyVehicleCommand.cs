@@ -7,12 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Proline.Resource.Framework;
 using System.Threading.Tasks;
 using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MConnection.Commands
 {
-    public class BuyVehicleCommand : ModuleCommand
+    public class BuyVehicleCommand : ResourceCommand
     {
         public BuyVehicleCommand() : base("BuyVehicle")
         {

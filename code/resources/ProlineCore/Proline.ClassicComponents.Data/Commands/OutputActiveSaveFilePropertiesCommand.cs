@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Proline.ClassicOnline.MData.Internal;
 using Proline.Modularization.Core;
+using Proline.Resource.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MData.Commands
 {
-    public class OutputActiveSaveFilePropertiesCommand : ModuleCommand
+    public class OutputActiveSaveFilePropertiesCommand : ResourceCommand
     {
         public OutputActiveSaveFilePropertiesCommand() : base("OutputActiveSaveFileProperties")
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proline.Resource.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,7 +17,7 @@ namespace Proline.Modularization.Core
 
         public bool HasStarted { get; internal set; }
         public bool IsStarted => !IsStartingUp && HasStarted;
-        public List<ModuleCommand> Commands { get; set; }
+        public List<ResourceCommand> Commands { get; set; }
         public List<ModuleScript> Scripts { get; internal set; }
         public AssemblyName Name { get; internal set; }
         public Assembly Assembly { get; internal set; }

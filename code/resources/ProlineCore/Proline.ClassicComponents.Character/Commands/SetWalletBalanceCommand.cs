@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Proline.Resource.Framework;
 using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MGame.Commands
 {
-    public class SetWalletBalanceCommand : ModuleCommand
+    public class SetWalletBalanceCommand : ResourceCommand
     {
         public SetWalletBalanceCommand() : base("SetWalletBalance")
         {

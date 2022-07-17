@@ -4,12 +4,13 @@ using Proline.Modularization.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Proline.Resource.Framework;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MScripting.Commands
 {
-    public class StartNewScriptCommand : ModuleCommand
+    public class StartNewScriptCommand : ResourceCommand
     {
         public StartNewScriptCommand() : base("StartNewScript")
         {

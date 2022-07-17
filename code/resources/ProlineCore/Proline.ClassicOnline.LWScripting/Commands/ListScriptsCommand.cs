@@ -5,13 +5,14 @@ using Proline.Modularization.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Proline.Resource.Framework;
 using System.Text;
 using System.Threading.Tasks;
 using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MScripting.Commands
 {
-    public class ListScriptsCommand : ModuleCommand
+    public class ListScriptsCommand : ResourceCommand
     {
         public ListScriptsCommand() : base("ListScripts")
         {

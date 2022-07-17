@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Proline.Resource.Framework;
 using System.Threading.Tasks;
 using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MScripting.Client.Commands
 {
-    public class ListAllScriptTasksCommand : ModuleCommand
+    public class ListAllScriptTasksCommand : ResourceCommand
     {
         public ListAllScriptTasksCommand() : base("ListAllScriptTasks")
         {

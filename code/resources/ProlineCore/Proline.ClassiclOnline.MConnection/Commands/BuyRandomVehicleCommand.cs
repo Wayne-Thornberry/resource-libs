@@ -6,13 +6,14 @@ using Proline.Modularization.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Proline.Resource.Framework;
 using System.Text;
 using System.Threading.Tasks;
 using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MConnection.Commands
 {
-    public class BuyRandomVehicleCommand : ModuleCommand
+    public class BuyRandomVehicleCommand : ResourceCommand
     {
         public BuyRandomVehicleCommand() : base("BuyRandomVehicle")
         {
