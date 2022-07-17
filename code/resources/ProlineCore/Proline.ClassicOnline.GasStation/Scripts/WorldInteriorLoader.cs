@@ -11,11 +11,11 @@ using Proline.Resource.IO;
 
 namespace Proline.ClassicOnline.MWorld.Client.Scripts
 {
-    public class WorldInteriorLoader : ModuleScript
+    public class WorldInteriorLoader 
     {
 
 
-        public override async Task OnExecute()
+        public async Task Execute()
         {
             var twocarjson = ResourceFile.Load("data/world/garages/2cargarage.json");
             var sixcarjson = ResourceFile.Load("data/world/garages/6cargarage.json");

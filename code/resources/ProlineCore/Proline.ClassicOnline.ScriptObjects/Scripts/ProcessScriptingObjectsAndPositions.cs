@@ -19,11 +19,11 @@ using Proline.Resource.IO;
 
 namespace Proline.ClassicOnline.MBrain.Scripts
 {
-    public class ProcessScriptingObjectsAndPositions : ModuleScript
+    public class ProcessScriptingObjectsAndPositions 
     {
         private static Log _log = new Log();
 
-        public ProcessScriptingObjectsAndPositions() : base(true)
+        public ProcessScriptingObjectsAndPositions()
         {
             _trackedHandles = new HashSet<int>();
             _ht = HandleTracker.GetInstance();
@@ -41,7 +41,7 @@ namespace Proline.ClassicOnline.MBrain.Scripts
 
         public bool HasLoaded { get; private set; }
 
-        public override async Task OnExecute()
+        public async Task Execute()
         {
 
             if (!HasLoaded)

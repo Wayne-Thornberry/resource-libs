@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MRendering
 {
-    public class StartupScript : ModuleScript
+    public class StartupScript 
     {
 
-        public override async Task OnExecute()
+        public async Task Execute()
         { 
 
         }

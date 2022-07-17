@@ -14,15 +14,14 @@ using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MScripting
 {
-    public class ScriptGarbageCleaner : ModuleScript
-    {
-
-        public ScriptGarbageCleaner() : base(true)
+    public class ScriptGarbageCleaner 
+    { 
+        public ScriptGarbageCleaner()
         {
 
         }
 
-        public override async Task OnExecute()
+        public async Task Execute()
         {
             try
             {

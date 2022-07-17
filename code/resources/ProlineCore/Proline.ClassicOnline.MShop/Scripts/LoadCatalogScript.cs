@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MShop.Scripts
 {
-    internal class LoadCatalogScript : ModuleScript
+    internal class LoadCatalogScript 
     {
-        public override async Task OnExecute()
+        public async Task Execute()
         {
             var data = ResourceFile.Load("data/catalogue/catalogue-vehicles.json");
             MDebugAPI.LogDebug(data);

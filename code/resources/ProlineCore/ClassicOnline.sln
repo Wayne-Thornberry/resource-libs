@@ -37,8 +37,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LevelScripts", "LevelScript
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Globals", "Globals", "{C83D4781-C763-4D9A-8C12-3BED7B405CE6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.Modularization.Core", "..\..\libs\ModuleFramework\Proline.Resource.ModuleCore\Proline.Modularization.Core.csproj", "{9BD10D1D-86FA-4C77-A165-4776F4FFF7E9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,10 +99,6 @@ Global
 		{6010408E-DE86-4C20-AB68-69719821EE71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6010408E-DE86-4C20-AB68-69719821EE71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6010408E-DE86-4C20-AB68-69719821EE71}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9BD10D1D-86FA-4C77-A165-4776F4FFF7E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BD10D1D-86FA-4C77-A165-4776F4FFF7E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9BD10D1D-86FA-4C77-A165-4776F4FFF7E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9BD10D1D-86FA-4C77-A165-4776F4FFF7E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

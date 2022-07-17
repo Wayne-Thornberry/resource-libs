@@ -9,14 +9,14 @@ using Proline.Modularization.Core;
 
 namespace Proline.ClassicOnline.MConnection.Scripts
 {
-    public partial class EventSetupScript : ModuleScript
+    public partial class EventSetupScript 
     {
         public EventSetupScript()
         {
 
         }
 
-        public override async Task OnExecute()
+        public async Task Execute()
         {
             PlayerJoinedEvent.SubscribeEvent();
         }

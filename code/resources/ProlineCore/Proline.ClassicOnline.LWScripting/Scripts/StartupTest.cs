@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MScripting.Client.Scripts
 {
-    public class StartupTest : ModuleScript
+    public class StartupTest 
     {
-        public override async Task OnExecute()
+        public async Task Execute()
         { 
             //PlayerJoinedEvent.SubscribeEvent();
             PlayerReadyEvent.SubscribeEvent();

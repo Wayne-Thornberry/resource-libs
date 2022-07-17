@@ -9,10 +9,10 @@ using Proline.Modularization.Core;
 
 namespace Proline.ClassicOnline.MConnection.Scripts
 {
-    public partial class PlayerStartupScript : ModuleScript
+    public partial class PlayerStartupScript 
     {
 
-        public override async Task OnExecute()
+        public async Task Execute()
         {
             PlayerJoinedEvent.InvokeEvent(Game.Player.Name);
         }
