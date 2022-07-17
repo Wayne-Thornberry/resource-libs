@@ -65,6 +65,14 @@ namespace Proline.ClassicOnline.Resource
             }
         }
 
+        internal void Start()
+        {
+            if (!_hasLoaded && !HasStarted)
+                throw new Exception("Component cannot run, component has not loaded or has already started"); 
+            ExecuteScript(ComponentContainer.INITSESSIONSCRIPTNAME);
+            HasStarted = true;
+        }
+
         internal void RegisterCommands()
         { 
             foreach (var item in Commands)

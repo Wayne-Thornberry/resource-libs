@@ -1,6 +1,6 @@
 ﻿using CitizenFX.Core;
 using Proline.CFXExtended.Core;
-using Proline.Modularization.Core;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

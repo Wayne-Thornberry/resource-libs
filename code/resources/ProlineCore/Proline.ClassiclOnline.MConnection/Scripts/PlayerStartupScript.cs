@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using Proline.ClassicOnline.MConnection.Events;
-using Proline.Modularization.Core;
+
 
 namespace Proline.ClassicOnline.MConnection.Scripts
 {

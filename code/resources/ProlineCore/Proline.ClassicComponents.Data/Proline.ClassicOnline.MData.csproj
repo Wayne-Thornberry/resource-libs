@@ -4,22 +4,15 @@
 		<Platforms>AnyCPU</Platforms>
 		<Configurations>Debug;Release</Configurations>
 	</PropertyGroup>
-
-	<ItemGroup>
-		
-	</ItemGroup>
+ 
 
 
 	<ItemGroup>
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
-		</Reference>
-		
-		<ProjectReference Include="..\Proline.ClassicOnline.F8Console\Proline.ClassicOnline.MDebug.csproj" />
-		<Reference Include="Proline.Modularization.Core">
-		  <HintPath>..\..\..\..\artifacts\ModuleFramework\Proline.Modularization.Core.dll</HintPath>
-		</Reference>
+		</Reference> 
+		<ProjectReference Include="..\Proline.ClassicOnline.F8Console\Proline.ClassicOnline.MDebug.csproj" /> 
 		<Reference Include="Proline.Resource.Client">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Client.dll</HintPath>
 		</Reference>

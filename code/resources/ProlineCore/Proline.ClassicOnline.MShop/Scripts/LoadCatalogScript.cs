@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Proline.ClassicOnline.MDebug;
 using Proline.ClassicOnline.MShop.Internal;
-using Proline.Modularization.Core;
+
 using Proline.Resource.IO;
 using System;
 using System.Collections.Generic;

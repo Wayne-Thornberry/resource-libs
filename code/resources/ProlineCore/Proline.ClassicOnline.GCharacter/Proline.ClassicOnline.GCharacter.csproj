@@ -1,12 +1,5 @@
 ﻿<Project Sdk="CitizenFX.Sdk.Client/0.2.3">
-
-  <PropertyGroup>
-    
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CitizenFX.Core.Client" Version="1.0.5318" />
-  </ItemGroup>
+ 
  
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -15,10 +8,7 @@
     </Reference>
     <Reference Include="Proline.CFXExtended.Core">
       <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Proline.Modularization.Core">
-      <HintPath>..\..\..\..\artifacts\ModuleFramework\Proline.Modularization.Core.dll</HintPath>
-    </Reference>
+    </Reference> 
     <Reference Include="Proline.Resource.Client">
       <HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Client.dll</HintPath>
     </Reference>

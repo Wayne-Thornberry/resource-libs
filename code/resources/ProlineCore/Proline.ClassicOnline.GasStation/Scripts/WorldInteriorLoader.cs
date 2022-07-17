@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using Proline.ClassicOnline.MWorld.Internal;
 using Proline.ClassicOnline.MWord;
 using Proline.ClassicOnline.MWorld.Client.Data;
-using Proline.Modularization.Core;
+
 using Proline.Resource.IO;
 
 namespace Proline.ClassicOnline.MWorld.Client.Scripts

@@ -20,10 +20,7 @@
 		</Reference>
 		<Reference Include="Proline.Resource.Client">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Client.dll</HintPath>
-		</Reference>
-		<Reference Include="Proline.Modularization.Core">
-			<HintPath>..\..\..\..\artifacts\ModuleFramework\Proline.Modularization.Core.dll</HintPath>
-		</Reference>
+		</Reference> 
 		<Reference Include="Proline.Resource.Configuration.Client">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Configuration.Client.dll</HintPath>
 		</Reference>

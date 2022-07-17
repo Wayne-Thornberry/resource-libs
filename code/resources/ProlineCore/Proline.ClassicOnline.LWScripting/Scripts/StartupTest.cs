@@ -1,6 +1,6 @@
 ﻿using Proline.ClassicOnline.MScripting.Events;
 using Proline.ClassicOnline.MScripting.Internal;
-using Proline.Modularization.Core;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

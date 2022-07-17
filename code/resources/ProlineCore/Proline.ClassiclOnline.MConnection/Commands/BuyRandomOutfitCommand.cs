@@ -1,7 +1,7 @@
 ﻿using CitizenFX.Core;
 using Newtonsoft.Json;
 using Proline.CFXExtended.Core;
-using Proline.Modularization.Core;
+
 using Proline.Resource.Framework;
 using System;
 using System.Collections.Generic;

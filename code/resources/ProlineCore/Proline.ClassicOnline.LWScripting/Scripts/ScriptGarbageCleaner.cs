@@ -1,7 +1,7 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using Proline.ClassicOnline.MScripting.Internal;
-using Proline.Modularization.Core;
+
 using Proline.Resource.Configuration;
 using Proline.Resource.Logging;
 using System;

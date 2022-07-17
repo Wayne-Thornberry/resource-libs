@@ -1,5 +1,5 @@
 ﻿using CitizenFX.Core;
-using Proline.Modularization.Core;
+
 using System;
 using System.Reflection;
 using System.Threading.Tasks;

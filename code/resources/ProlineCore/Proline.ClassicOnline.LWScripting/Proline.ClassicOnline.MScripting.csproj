@@ -11,11 +11,7 @@
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
-		</Reference>
-		<Reference Include="Proline.Modularization.Core">
-			<HintPath>..\..\..\..\artifacts\ModuleFramework\Proline.Modularization.Core.dll</HintPath>
-		</Reference>
-		
+		</Reference>  
 		<Reference Include="Proline.Resource.Client">
 			<HintPath>..\..\..\..\artifacts\ResourceLibs\Client\Proline.Resource.Client.dll</HintPath>
 		</Reference>

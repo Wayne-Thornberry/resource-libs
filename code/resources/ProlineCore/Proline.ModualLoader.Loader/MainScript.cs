@@ -54,8 +54,7 @@ namespace Proline.ClassicOnline.Resource
                 if (_modules.ContainsKey(moduleName))
                 {
                     var module = _modules[moduleName];
-                    module.ExecuteScript(ComponentContainer.INITSESSIONSCRIPTNAME); 
-                    module.HasStarted = true;
+                    module.Start();
                 }
             }
         }
