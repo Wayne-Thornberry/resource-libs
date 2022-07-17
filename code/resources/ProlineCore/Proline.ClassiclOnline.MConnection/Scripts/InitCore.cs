@@ -9,16 +9,13 @@ using Proline.ClassicOnline.MConnection.Events;
 
 namespace Proline.ClassicOnline.MConnection.Scripts
 {
-    public partial class EventSetupScript 
+    public partial class InitCore 
     {
-        public EventSetupScript()
-        {
-
-        }
 
         public async Task Execute()
         {
             PlayerJoinedEvent.SubscribeEvent();
+            PlayerJoinedEvent.InvokeEvent(Game.Player.Name);
         }
     }
 }

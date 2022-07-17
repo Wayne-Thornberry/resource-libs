@@ -13,21 +13,20 @@
         "Proline.Resource.IO.Client",
         "Proline.Resource.Framework.Client",
         "Proline.Resource.Logging.Client",
-        "Proline.Resource.Globals.Client",
-        "Proline.Modularization.Core",
+        "Proline.Resource.Globals.Client", 
         "Proline.CFXExtended.Core",
-        "Proline.ClassicOnline.GScripting",
-        "Proline.ClassicOnline.MBrain",
-        "Proline.ClassicOnline.MData",
-        "Proline.ClassicOnline.MDebug",
-        "Proline.ClassicOnline.MGame",
-        "Proline.ClassicOnline.MRendering",
-        "Proline.ClassicOnline.MConnection",
-        "Proline.ClassicOnline.MScreen",
-        "Proline.ClassicOnline.MScripting",
-        "Proline.ClassicOnline.MWorld",
-        "Proline.ClassicOnline.MShop",
-        "Proline.ClassicOnline.SClassic"
+        "Proline.ClassicOnline.GScripting.net",
+        "Proline.ClassicOnline.MBrain.net",
+        "Proline.ClassicOnline.MData.net",
+        "Proline.ClassicOnline.MDebug.net",
+        "Proline.ClassicOnline.MGame.net",
+        "Proline.ClassicOnline.MRendering.net",
+        "Proline.ClassicOnline.MConnection.net",
+        "Proline.ClassicOnline.MScreen.net",
+        "Proline.ClassicOnline.MScripting.net",
+        "Proline.ClassicOnline.MWorld.net",
+        "Proline.ClassicOnline.MShop.net",
+        "Proline.ClassicOnline.SClassic.net"
     ], 
 
     "LoggingConfiguration": {
@@ -36,13 +35,13 @@
 
     "moduleConfigSection" : {
         "moduleCollection" :[
-			{"Name" : "MScripting", "Assembly" : "Proline.ClassicOnline.MScripting"},
-			{"Name" : "MBrain", "Assembly" : "Proline.ClassicOnline.MBrain"},
-			{"Name" : "MData", "Assembly" : "Proline.ClassicOnline.MData"},
-			{"Name" : "MConnection", "Assembly" : "Proline.ClassicOnline.MConnection"},
-			{"Name" : "MShop", "Assembly" : "Proline.ClassicOnline.MShop"},
-			{"Name" : "MGame", "Assembly" : "Proline.ClassicOnline.MGame"},
-			{"Name" : "MWorld", "Assembly" : "Proline.ClassicOnline.MWorld"}
+			{"Name" : "MScripting", "Assembly" : "Proline.ClassicOnline.MScripting.net"},
+			{"Name" : "MBrain", "Assembly" : "Proline.ClassicOnline.MBrain.net"},
+			{"Name" : "MData", "Assembly" : "Proline.ClassicOnline.MData.net"},
+			{"Name" : "MConnection", "Assembly" : "Proline.ClassicOnline.MConnection.net"},
+			{"Name" : "MShop", "Assembly" : "Proline.ClassicOnline.MShop.net"},
+			{"Name" : "MGame", "Assembly" : "Proline.ClassicOnline.MGame.net"},
+			{"Name" : "MWorld", "Assembly" : "Proline.ClassicOnline.MWorld.net"}
         ]
     },
 	

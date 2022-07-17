@@ -1,9 +1,8 @@
 ﻿<Project Sdk="CitizenFX.Sdk.Client/0.2.3">
 
 	<PropertyGroup>
-		
 		<Platforms>AnyCPU</Platforms>
-		<Configurations>Debug;Release</Configurations> 
+		<Configurations>Debug;Release</Configurations>
 	</PropertyGroup>
 
 
@@ -19,7 +18,7 @@
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
 		</Reference>
-		<Reference Include="Proline.CFXExtended.Core" Condition="'Client|$(Platform)'=='Client|AnyCPU'">
+		<Reference Include="Proline.CFXExtended.Core">
 		  <HintPath>..\..\..\..\artifacts\CFXExtended\Proline.CFXExtended.Core.dll</HintPath>
 		</Reference> 
 		<Reference Include="Proline.Resource.Client">

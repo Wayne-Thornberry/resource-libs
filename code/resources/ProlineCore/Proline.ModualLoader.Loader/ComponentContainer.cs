@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.Resource
 {
@@ -56,20 +57,35 @@ namespace Proline.ClassicOnline.Resource
 
         internal void Run()
         {
-            if (!_hasLoaded)
-                throw new Exception("Component cannot run, component has not loaded");
-            foreach (var script in Scripts.Values)
+            try
             {
-                if (script.Name.Equals(INITCORESCRIPTNAME) || script.Name.Equals(INITSESSIONSCRIPTNAME)) continue;
-                script.Execute();
+                if (!_hasLoaded)
+                    throw new Exception("Component cannot run, component has not loaded");
+                foreach (var script in Scripts.Values)
+                {
+                    if (script.Name.Equals(INITCORESCRIPTNAME) || script.Name.Equals(INITSESSIONSCRIPTNAME)) continue;
+                    script.Execute();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
 
         internal void Start()
         {
-            if (!_hasLoaded && !HasStarted)
-                throw new Exception("Component cannot run, component has not loaded or has already started"); 
-            ExecuteScript(ComponentContainer.INITSESSIONSCRIPTNAME);
+            try
+            {
+
+                if (!_hasLoaded && !HasStarted)
+                    throw new Exception("Component cannot run, component has not loaded or has already started");
+                ExecuteScript(ComponentContainer.INITSESSIONSCRIPTNAME);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
             HasStarted = true;
         }
 
@@ -83,10 +99,17 @@ namespace Proline.ClassicOnline.Resource
 
         internal void ExecuteScript(string scriptName)
         {
-            var script = Scripts[scriptName];
-            if (script == null)
-                throw new Exception($"{scriptName} does not exist, cannot execute");
-            script.Execute();
+            try
+            {
+                if (!Scripts.ContainsKey(scriptName))
+                    throw new Exception($"{scriptName} does not exist, cannot execute");
+                var script = Scripts[scriptName];
+                script.Execute();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         } 
 
         private void OutputToConsole(string data)

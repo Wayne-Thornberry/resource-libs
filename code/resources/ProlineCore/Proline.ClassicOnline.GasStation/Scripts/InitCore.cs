@@ -11,7 +11,7 @@ using Proline.Resource.IO;
 
 namespace Proline.ClassicOnline.MWorld.Client.Scripts
 {
-    public class WorldInteriorLoader 
+    public class InitCore 
     {
 
 

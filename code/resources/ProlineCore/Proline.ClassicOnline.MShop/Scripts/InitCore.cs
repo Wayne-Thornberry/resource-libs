@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MShop.Scripts
 {
-    internal class LoadCatalogScript 
+    internal class InitCore 
     {
         public async Task Execute()
         {

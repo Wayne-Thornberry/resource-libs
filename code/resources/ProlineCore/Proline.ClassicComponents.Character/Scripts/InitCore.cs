@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MGame
 {
-    public class MGameContext 
+    public class InitCore 
     {
 
     }

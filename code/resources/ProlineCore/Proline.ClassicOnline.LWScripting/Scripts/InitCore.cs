@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MScripting.Client.Scripts
 {
-    public class StartupTest 
+    public class InitCore 
     {
         public async Task Execute()
         { 
