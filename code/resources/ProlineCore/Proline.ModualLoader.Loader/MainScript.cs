@@ -15,32 +15,55 @@ namespace Proline.ClassicOnline.Resource
 {
     public class ResourceMainScript : ResourceScript
     {
+        private List<Task> _modualTasks;
         private Dictionary<string, ComponentContainer> _modules;
         public ResourceMainScript()
         { 
             _modules = new Dictionary<string, ComponentContainer>();
+            _modualTasks = new List<Task>();
         }
 
         public override async Task OnLoad()
         {
-            LoadResourceDepencies();
-            var config = ModuleConfigSection.ModuleConfig;
-            OutputToConsole($"Loading modules from assemblies...");
-            if (config == null)
-                throw new Exception("Modules failed to load, configuration failed");
-            if (config != null)
+            try
             {
+                Console.WriteLine("Loading Resources...");
+                foreach (var item in Configuration.GetSection<string[]>("Resources"))
+                {
+                    Assembly.Load(item);
+                }
+                Console.WriteLine("Loaded Resources");
+                var config = ModuleConfigSection.ModuleConfig;
+                Console.WriteLine($"Loading modules from assemblies...");
+                if (config == null)
+                    throw new Exception("Modules failed to load, configuration failed");
                 foreach (ModuleInstanceElement item in config.Modules)
                 {
-                    var container = LoadModule(item.Name);
-                    _modules.Add(container.Name, container);
+                    var container = CreateComponent(item.Name);
                     container.RegisterCommands();
+                    _modules.Add(container.Name, container);
+
+                    Console.WriteLine(string.Format("Invoking {0} {1}", container.Name, ComponentContainer.INITCORESCRIPTNAME));
 
                     // Init_Core
                     // - Finds all scripts that are marked InitializeCore
                     // - Execute Core Initializations
-                    container.ExecuteScript(ComponentContainer.INITCORESCRIPTNAME);
+                    try
+                    {
+                        container.ExecuteScript(ComponentContainer.INITCORESCRIPTNAME);
+                    }
+                    catch (ScriptDoesNotExistException e)
+                    {
+
+                    }catch(Exception e)
+                    {
+                        throw;
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
 
@@ -48,65 +71,59 @@ namespace Proline.ClassicOnline.Resource
         {
             // Init_Session
             // - Find all scripts that are marked InitializeSession
-            // - Execute Session Intializations 
-            foreach (var moduleName in _modules.Keys)
-            {
-                if (_modules.ContainsKey(moduleName))
+            // - Execute Session Intializations
+            try
+            { 
+                foreach (var container in _modules.Values)
                 {
-                    var module = _modules[moduleName];
-                    module.Start();
+                    if (container.HasStarted) continue;
+                    Console.WriteLine(string.Format("Invoking {0} {1}", container.Name, ComponentContainer.INITSESSIONSCRIPTNAME));
+                    container.Start();
+                    var task = container.Run();
+                    _modualTasks.Add(task);
+                    container.Enable();
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
 
         public override async Task OnUpdate()
         {
-            foreach (var module in _modules.Values)
+            try
             {
-                module.Run();
             }
-        }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        } 
 
-        private void LoadResourceDepencies()
+        public ComponentContainer CreateComponent(string moduleName)
         {
-            Console.WriteLine("Loading Resources...");
-            foreach (var item in Configuration.GetSection<string[]>("Resources"))
-            {
-                Assembly.Load(item);
-            }
-            Console.WriteLine("Loaded Resources");
-        }
-
-
-        public ComponentContainer LoadModule(string moduleName)
-        {
-            var config = ModuleConfigSection.ModuleConfig;
-            ModuleInstanceElement id = null;
-            foreach (ModuleInstanceElement item in config.Modules)
-            {
-                if (item.Name.Equals(moduleName))
-                {
-                    id = item;
-                    break;
-                }
-            }
-
+            ModuleInstanceElement id = GetModualInstanceElement(moduleName); 
             if (id == null)
                 return null;
             var assemblyString = id.Assembly;
-            OutputToConsole($"Loading {assemblyString}");
-            var assembly = Assembly.Load(assemblyString);  
-            var container = new ComponentContainer(assembly);
-            container.Load();
-            OutputToConsole($"Succesfully Loaded {container.Name}"); 
+            Console.WriteLine($"Loading {assemblyString}");
+            var container = ComponentContainer.Load(assemblyString);
+            Console.WriteLine($"Succesfully Loaded {container.Name}");
             return container;
         }
 
-         
-        private void OutputToConsole(string data)
+        private ModuleInstanceElement GetModualInstanceElement(string moduleName)
         {
-            Console.WriteLine(data);
+            var config = ModuleConfigSection.ModuleConfig; 
+            foreach (ModuleInstanceElement item in config.Modules)
+            {
+                if (item.Name.Equals(moduleName))
+                { 
+                    return item;
+                }
+            } 
+            return null;
         }
-
     }
 }

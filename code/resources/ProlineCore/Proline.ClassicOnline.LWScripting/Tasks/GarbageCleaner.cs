@@ -14,9 +14,9 @@ using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MScripting
 {
-    public class ScriptGarbageCleaner 
+    public class GarbageCleaner 
     { 
-        public ScriptGarbageCleaner()
+        public GarbageCleaner()
         {
 
         }

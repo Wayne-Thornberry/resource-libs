@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MConnection
 {
-    public partial class API
+    public partial class MConnection
     {
     }
 }

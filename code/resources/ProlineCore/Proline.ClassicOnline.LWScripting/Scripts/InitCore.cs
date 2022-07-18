@@ -29,9 +29,6 @@ namespace Proline.ClassicOnline.MScripting.Client.Scripts
                 }
                 ScriptTypeLibrary.HasLoadedScripts = true;
             }
-
-
-            MScriptingAPI.StartNewScript("Main"); 
         }
     }
 }
