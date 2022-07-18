@@ -1,9 +1,14 @@
-﻿<Project Sdk="CitizenFX.Sdk.Client/0.2.3">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup> 
+	<PropertyGroup>
+		<TargetFramework>net452</TargetFramework>
 		<Platforms>AnyCPU</Platforms>
 		<Configurations>Debug;Release</Configurations>
-	</PropertyGroup> 
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="CitizenFX.Core.Client" Version="1.0.5738" />
+	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Proline.ClassicOnline.F8Console\Proline.ClassicOnline.MDebug.csproj" />
