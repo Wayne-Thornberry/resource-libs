@@ -1,5 +1,7 @@
 ﻿using CitizenFX.Core;
+using CitizenFX.Core.Native;
 using Proline.ClassicOnline.MBrain;
+using Proline.ClassicOnline.MissionManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +27,7 @@ namespace Proline.ClassicOnline.SClassic
             // Dupe protection
             if (MScripting.MScriptingAPI.GetInstanceCountOfScript("TruckingOnDemand") > 1)
                 return;
+            MissionAPIs.SetMissionFlag(true);
 
             _closestDistance = 99999f;
 
@@ -82,6 +85,7 @@ namespace Proline.ClassicOnline.SClassic
 
                 await BaseScript.Delay(0);
             }
+            MissionAPIs.SetMissionFlag(false);
         }
 
         private bool IsValidModel(Model model)

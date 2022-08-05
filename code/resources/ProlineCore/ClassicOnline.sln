@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LevelScripts", "LevelScript
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Globals", "Globals", "{C83D4781-C763-4D9A-8C12-3BED7B405CE6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proline.ClassicOnline.MissionManager", "Proline.ClassicOnline.MissionManager\Proline.ClassicOnline.MissionManager.csproj", "{A55142E8-5737-46CD-B3A0-D928F8D398EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{6010408E-DE86-4C20-AB68-69719821EE71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6010408E-DE86-4C20-AB68-69719821EE71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6010408E-DE86-4C20-AB68-69719821EE71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A55142E8-5737-46CD-B3A0-D928F8D398EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A55142E8-5737-46CD-B3A0-D928F8D398EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A55142E8-5737-46CD-B3A0-D928F8D398EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A55142E8-5737-46CD-B3A0-D928F8D398EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +123,7 @@ Global
 		{73B46093-DDBB-4CB7-9AAF-3F32FE7823B9} = {0D229607-AAA4-4539-AEB4-CD018B8FF917}
 		{8896BA8B-FBC7-48E6-AF50-5FA10F85EFB2} = {C83D4781-C763-4D9A-8C12-3BED7B405CE6}
 		{6010408E-DE86-4C20-AB68-69719821EE71} = {0D229607-AAA4-4539-AEB4-CD018B8FF917}
+		{A55142E8-5737-46CD-B3A0-D928F8D398EF} = {0D229607-AAA4-4539-AEB4-CD018B8FF917}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C2EDC16-681D-40A9-9168-7C35B4D4F23C}

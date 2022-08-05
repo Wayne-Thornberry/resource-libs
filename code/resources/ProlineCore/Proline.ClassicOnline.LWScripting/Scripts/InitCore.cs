@@ -1,6 +1,6 @@
-﻿using Proline.ClassicOnline.MScripting.Events;
+﻿using CitizenFX.Core;
+using Proline.ClassicOnline.MScripting.Events;
 using Proline.ClassicOnline.MScripting.Internal;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +29,14 @@ namespace Proline.ClassicOnline.MScripting.Client.Scripts
                 }
                 ScriptTypeLibrary.HasLoadedScripts = true;
             }
+
+            var gc = new GarbageCleaner();
+            while (true)
+            {
+                var task = Task.Factory.StartNew(gc.Execute); 
+                await BaseScript.Delay(1000);
+            }
+
         }
     }
 }

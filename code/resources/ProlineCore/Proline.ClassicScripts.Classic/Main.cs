@@ -18,10 +18,7 @@ using Proline.Resource;
 namespace Proline.ClassicOnline.SClassic
 {
     public class Main
-    {
-        private Vector3 _missionTruckingLocationStart;
-        private Blip _missionTruckingBlip;
-
+    { 
         public async Task Execute(object[] args, CancellationToken token)
         {
 
@@ -102,28 +99,23 @@ namespace Proline.ClassicOnline.SClassic
                             MScriptingAPI.StartNewScript("PassiveSaving");
                             MScriptingAPI.StartNewScript("UIFreemodeHUD");
                             MScriptingAPI.StartNewScript("BlipController");
-
-
-                            _missionTruckingLocationStart = new Vector3(798.6685f, -2977.404f, 5.020939f);
-                            _missionTruckingBlip = World.CreateBlip(_missionTruckingLocationStart);
-                            _missionTruckingBlip.Sprite = BlipSprite.TowTruck;
-
-
+                            MScriptingAPI.StartNewScript("Freemode");
+                            MDebug.MDebugAPI.LogDebug($"Calling Task ID for API {Thread.CurrentThread.ManagedThreadId}");
                         }
                         state = 3;
                         break;
                     case 3:
 
-                        if(API.GetInteriorFromEntity(Game.PlayerPed.Handle) > 0)
-                        {
-                            if (Game.PlayerPed.IsInVehicle())
-                            {
-                                if(Game.IsControlJustPressed(0, Control.MoveUpDown))
-                                {
-                                    Game.PlayerPed.CurrentVehicle.Position = new Vector3(0, 0, 70);
-                                }
-                            }
-                        }
+                        //if(API.GetInteriorFromEntity(Game.PlayerPed.Handle) > 0)
+                        //{
+                        //    if (Game.PlayerPed.IsInVehicle())
+                        //    {
+                        //        if(Game.IsControlJustPressed(0, Control.MoveUpDown))
+                        //        {
+                        //            Game.PlayerPed.CurrentVehicle.Position = new Vector3(0, 0, 70);
+                        //        }
+                        //    }
+                        //}
                         break;
                     case 999: 
                         while (MScriptingAPI.GetInstanceCountOfScript("CharacterCreator") > 0)
@@ -140,41 +132,8 @@ namespace Proline.ClassicOnline.SClassic
 
                         break;
                 }
-
-                if (Game.PlayerPed.CurrentVehicle != null)
-                {
-                    var currentVehicle = Game.PlayerPed.CurrentVehicle;
-                    if(currentVehicle.Model == VehicleHash.Phantom || currentVehicle.Model == VehicleHash.Hauler)
-                    { 
-                        Screen.DisplayHelpTextThisFrame("Honk to start TruckingOnDemand");
-                        if (Game.IsControlJustPressed(0, Control.Context) &&
-                            MScriptingAPI.GetInstanceCountOfScript("TruckingOnDemand") == 0)
-                        {
-                            MScriptingAPI.StartNewScript("TruckingOnDemand", currentVehicle.Handle);
-                        }
-                    }else if(currentVehicle.Model == VehicleHash.Police || currentVehicle.Model == VehicleHash.Police2)
-                    {
-                        Screen.DisplayHelpTextThisFrame("Honk to start VigilanteOnDemand");
-                        if (Game.IsControlJustPressed(0, Control.Context) &&
-                            MScriptingAPI.GetInstanceCountOfScript("VigilanteOnDemand") == 0)
-                        {
-                            MScriptingAPI.StartNewScript("VigilanteOnDemand", currentVehicle.Handle);
-                        }
-                    }
-                }
-
-
-                if(_missionTruckingBlip != null)
-                { 
-                    World.DrawMarker(MarkerType.VerticalCylinder, _missionTruckingLocationStart, new Vector3(0, 0, 0),
-                        new Vector3(0, 0, 0), new Vector3(1, 1, 1), System.Drawing.Color.FromArgb(150, 145, 0, 0));
-
-                    if(World.GetDistance(Game.PlayerPed.Position, _missionTruckingLocationStart) <= 2f && MScriptingAPI.GetInstanceCountOfScript("Trucking") == 0)
-                    { 
-                        MScriptingAPI.StartNewScript("Trucking");
-                    }
-                }
-
+                if (state == 3)
+                    break;
                 await BaseScript.Delay(0);
             }
         }

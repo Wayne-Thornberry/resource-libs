@@ -1,6 +1,8 @@
 ﻿using CitizenFX.Core;
+using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Proline.ClassicOnline.MBrain;
+using Proline.ClassicOnline.MissionManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +30,7 @@ namespace Proline.ClassicOnline.SClassic
             // Dupe protection
             if (MScripting.MScriptingAPI.GetInstanceCountOfScript("VigilanteOnDemand") > 1)
                 return;
+            MissionAPIs.SetMissionFlag(true);
             _blips = new List<Blip>();
             _closestDistance = 99999f;
 
@@ -65,6 +68,7 @@ namespace Proline.ClassicOnline.SClassic
             }
 
             Teardown();
+            MissionAPIs.SetMissionFlag(false);
 
         }
 

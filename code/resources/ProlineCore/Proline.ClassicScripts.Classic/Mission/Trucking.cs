@@ -1,4 +1,6 @@
 ﻿using CitizenFX.Core;
+using CitizenFX.Core.Native;
+using Proline.ClassicOnline.MissionManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,8 @@ namespace Proline.ClassicOnline.SClassic
             // Dupe protection
             if (MScripting.MScriptingAPI.GetInstanceCountOfScript("Trucking") > 1)
                 return;
+
+            MissionAPIs.SetMissionFlag(true);
 
             _truckSpawnLoc = new Vector3(829.9249f, -2950.439f, 4.902536f);
             _trailerSpawnLoc = new Vector3(865.3315f, -2986.426f, 4.900764f);
@@ -61,6 +65,7 @@ namespace Proline.ClassicOnline.SClassic
 
                 await BaseScript.Delay(0);
             }
+            MissionAPIs.SetMissionFlag(false);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Proline.ClassicOnline.MScripting
     {
         public static int StartNewScript(string scriptName, params object[] args)
         {
+            
             try
             { 
                 var sm = ListOfLiveScripts.GetInstance();
@@ -44,6 +45,7 @@ namespace Proline.ClassicOnline.MScripting
                 script.Execute(args);
                 var scriptTask = script.ExecutionTask;
                 Console.WriteLine(String.Format("Task Id {0}, Is Complete {1}, Status {2} ", scriptTask.Id, scriptTask.IsCompleted, scriptTask.Status));
+                MDebug.MDebugAPI.LogDebug($"Calling Task ID for API {Task.CurrentId}");
                 return script.Id;
             }
             catch (Exception e)
