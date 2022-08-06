@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Proline.ClassicOnline.MWorld
 {
-    public class WorldAPI
+    public static partial class WorldAPI
     {
         public static void PlaceVehicleInGarageSlot(string garage, int index, Entity vehicle)
         {
@@ -40,5 +40,6 @@ namespace Proline.ClassicOnline.MWorld
         {
 
         }
+
     }
 }

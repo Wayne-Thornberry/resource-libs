@@ -100,6 +100,7 @@ namespace Proline.ClassicOnline.SClassic
                             MScriptingAPI.StartNewScript("UIFreemodeHUD");
                             MScriptingAPI.StartNewScript("BlipController");
                             MScriptingAPI.StartNewScript("Freemode");
+                            MScriptingAPI.StartNewScript("CharacterApts");
                             MDebug.MDebugAPI.LogDebug($"Calling Task ID for API {Thread.CurrentThread.ManagedThreadId}");
                         }
                         state = 3;

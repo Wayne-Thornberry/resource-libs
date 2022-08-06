@@ -1,16 +1,8 @@
 {
     "Title": "10-Car Garage",
     "Type": 3,
-    "Entrance": {
-      "X" : 228.17,
-      "Y" : -1005.117,
-      "Z" : -99.99,
-    },
-    "Exit" : {
-      "X": 239.11,
-      "Y": -1004.80,
-      "Z": -98.99
-    },
+    "Id" : "gar_mp_high",
+	  "Interior" : "mp_high_garage",
     "VehicleSlots" : [
       {
         "Index" : 0,

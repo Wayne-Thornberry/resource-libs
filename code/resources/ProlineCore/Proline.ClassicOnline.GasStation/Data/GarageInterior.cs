@@ -6,15 +6,29 @@ using CitizenFX.Core;
 
 namespace Proline.ClassicOnline.MWord
 {
-    internal abstract class Interior
+
+    internal class Interior
+    {
+        public string Id { get; set; }
+        public List<Vector3> Entrances { get; set; }
+        public List<Vector3> Exits { get; set; }
+    }
+
+    internal abstract class PropertyInterior
+    {
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public int Type { get; set; }
+        public string Interior { get; set; }
+    }
+
+    internal class ApartmentInterior : PropertyInterior
     {
 
     }
 
-    internal class GarageInterior : Interior
+    internal class GarageInterior : PropertyInterior
     {
-        public string Title { get; set; }
-        public int Type { get; set; }
         public List<GarageSlot> VehicleSlots { get; set; }
     }
 }

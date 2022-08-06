@@ -8,6 +8,7 @@ using System.Text;
 using Proline.Resource.Framework;
 using System.Threading.Tasks;
 using Console = Proline.Resource.Console;
+using Proline.ClassicOnline.MGame;
 
 namespace Proline.ClassicOnline.MConnection.Commands
 {
@@ -18,14 +19,9 @@ namespace Proline.ClassicOnline.MConnection.Commands
         }
 
         protected override void OnCommandExecute(params object[] args)
-        {
-            var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
-            var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
-
-            if (stat2.GetValue() > 250)
-            {
-                stat2.SetValue(stat2.GetValue() - 250);
-
+        { 
+            if (MGameAPI.GetCharacterBankBalance() > 250)
+            { 
 
                 Array values = Enum.GetValues(typeof(WeaponHash));
                 Random random = new Random();
@@ -38,6 +34,8 @@ namespace Proline.ClassicOnline.MConnection.Commands
                 MData.API.AddDataFileValue("WeaponHash", randomBar);
                 MData.API.AddDataFileValue("WeaponAmmo", ammo);
                 MData.API.SaveDataFile(id);
+
+                MGameAPI.SubtractValueFromBankBalance(250);
             }
         }
     }

@@ -7,20 +7,20 @@ namespace Proline.ClassicOnline.MWorld.Internal
     internal class InteriorManager
     {
         private static InteriorManager _instance;
-        private Dictionary<string, Interior> _interiors;
+        private Dictionary<string, PropertyInterior> _interiors;
 
         public InteriorManager()
         {
-            _interiors = new Dictionary<string, Interior>();
+            _interiors = new Dictionary<string, PropertyInterior>();
         }
 
-        internal void Register(string interiorName, Interior catalouge)
+        internal void Register(string interiorName, PropertyInterior catalouge)
         {
             if (!_interiors.ContainsKey(interiorName))
                 _interiors.Add(interiorName, catalouge);
         }
 
-        internal Interior GetInterior(string interiorName)
+        internal PropertyInterior GetInterior(string interiorName)
         { 
             if (_interiors.ContainsKey(interiorName))
                 return _interiors[interiorName];

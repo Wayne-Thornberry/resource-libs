@@ -10,6 +10,7 @@ using Proline.Resource.Framework;
 using System.Text;
 using System.Threading.Tasks;
 using Console = Proline.Resource.Console;
+using Proline.ClassicOnline.MGame;
 
 namespace Proline.ClassicOnline.MConnection.Commands
 {
@@ -20,13 +21,11 @@ namespace Proline.ClassicOnline.MConnection.Commands
         }
 
         protected override void OnCommandExecute(params object[] args)
-        {
-            var stat = MPStat.GetStat<long>("MP0_WALLET_BALANCE");
-            var stat2 = MPStat.GetStat<long>("BANK_BALANCE");
+        { 
 
-            if (stat2.GetValue() > 250)
+            if (MGameAPI.GetCharacterBankBalance() > 250)
             {
-                if(CharacterGlobals.Character != null)
+                if (CharacterGlobals.Character != null)
                 {
                     if(CharacterGlobals.Character.PersonalVehicle != null)
                     {
@@ -39,7 +38,7 @@ namespace Proline.ClassicOnline.MConnection.Commands
                     }
 
 
-                    stat2.SetValue(stat2.GetValue() - 250);
+                    MGameAPI.SetCharacterBankBalance(250);
                     Array values = Enum.GetValues(typeof(VehicleHash));
                     Random random = new Random();
                     VehicleHash randomBar = (VehicleHash)values.GetValue(random.Next(values.Length));

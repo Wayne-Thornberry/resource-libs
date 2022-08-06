@@ -7,11 +7,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Data\GarageInterior.cs~RF7261113f.TMP" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <PackageReference Include="CitizenFX.Core.Client" Version="1.0.5738" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Proline.ClassicOnline.F8Console\Proline.ClassicOnline.MDebug.csproj" />
+	  <ProjectReference Include="..\Proline.ClassicOnline.GCharacter\Proline.ClassicOnline.GCharacter.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

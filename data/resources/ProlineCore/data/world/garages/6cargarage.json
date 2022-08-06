@@ -1,16 +1,8 @@
 {
     "Title": "6-Car Garage",
     "Type": 3,
-    "Entrance": {
-      "X" : 198.37,
-      "Y" : -1006.01,
-      "Z" : -98.99
-    },
-    "Exit" : {
-      "X": 207.68,
-      "Y": -999.05,
-      "Z": -98.99
-    },
+    "Id" : "gar_mp_med",
+	"Interior" : "mp_med_garage",
     "VehicleSlots" : [
       {
         "Index" : 0,
