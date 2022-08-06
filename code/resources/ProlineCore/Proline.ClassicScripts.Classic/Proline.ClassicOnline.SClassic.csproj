@@ -4,6 +4,7 @@
 		<TargetFramework>net452</TargetFramework>
 		<Platforms>AnyCPU</Platforms>
 		<Configurations>Debug;Release</Configurations>
+		<OutputType>Library</OutputType>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -25,7 +26,6 @@
     <ProjectReference Include="..\Proline.ClassicOnline.MissionManager\Proline.ClassicOnline.MissionManager.csproj" />
     <ProjectReference Include="..\Proline.ClassicOnline.MShop\Proline.ClassicOnline.MShop.csproj" />
     <ProjectReference Include="..\Proline.ClassicOnline.ScriptObjects\Proline.ClassicOnline.MBrain.csproj" />
-    <ProjectReference Include="..\Proline.ModualLoader.Loader\Proline.ClassicOnline.Resource.csproj" />
   </ItemGroup>
  
   <ItemGroup>

@@ -15,6 +15,11 @@
 			"X":-339.84,
 			 "Y":-136.81, 
 			 "Z":38.76
+		} ,{
+			"ScriptName" : "LSCustoms",
+			"X":732.05,
+			"Y":-1088.26, 
+			"Z":21.89
 		} ,
 		{
 			"ScriptName" : "PGasStation",

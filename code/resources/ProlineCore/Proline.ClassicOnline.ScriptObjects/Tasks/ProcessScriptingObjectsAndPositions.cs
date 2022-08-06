@@ -17,55 +17,27 @@ using System.Reflection;
 using Proline.ClassicOnline.MScripting;
 using Proline.Resource.IO;
 
-namespace Proline.ClassicOnline.MBrain.Scripts
+namespace Proline.ClassicOnline.MBrain.Tasks
 {
-    public class ProcessScriptingObjectsAndPositions 
+    public class ProcessScriptingObjectsAndPositions
     {
         private static Log _log = new Log();
 
         public ProcessScriptingObjectsAndPositions()
         {
             _trackedHandles = new HashSet<int>();
-            _ht = HandleTracker.GetInstance();
-            _sm = ScriptObjectManager.GetInstance();
-            _instance = ScriptPositionManager.GetInstance();
         }
 
 
-        private ScriptObjectManager _sm;
         private HashSet<int> _trackedHandles;
-        private HandleTracker _ht;
-        private ScriptPositions _scriptPosition;
-        private ScriptObjectData[] _objs;
-        private ScriptPositionManager _instance;
-
-        public bool HasLoaded { get; private set; }
+        private ScriptObjectManager _sm;
 
         public async Task Execute()
         {
 
-            if (!HasLoaded)
-            {
-                var data = ResourceFile.Load("data/scriptpositions.json");
-                MDebugAPI.LogDebug(data);
-                _scriptPosition = JsonConvert.DeserializeObject<ScriptPositions>(data.Load());
-                _instance.AddScriptPositionPairs(_scriptPosition.scriptPositionPairs);
-                PosBlacklist.Create();
-
-                var data2 = ResourceFile.Load("data/scriptobjects.json");
-                MDebugAPI.LogDebug(data2);
-                _objs = JsonConvert.DeserializeObject<ScriptObjectData[]>(data2.Load());
-                var sm = ScriptObjectManager.GetInstance();
-                HasLoaded = true;
-            }
-
-            foreach (var item in _objs)
-            {
-                var hash = string.IsNullOrEmpty(item.ModelHash) ? item.ModelName : CitizenFX.Core.Native.API.GetHashKey(item.ModelHash);
-                if (!_sm.ContainsKey(hash))
-                    _sm.Add(hash, new List<ScriptObjectData>());
-                _sm.Get(hash).Add(item);
-            }
+            _sm = ScriptObjectManager.GetInstance();
+            var _instance = ScriptPositionManager.GetInstance();
+            var _ht = HandleTracker.GetInstance();
 
             var entityHandles = new Queue<int>(HandleManager.EntityHandles);
             var addedHandles = new List<object>();

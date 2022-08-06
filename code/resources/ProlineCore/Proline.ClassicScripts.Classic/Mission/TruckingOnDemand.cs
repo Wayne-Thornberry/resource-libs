@@ -27,13 +27,15 @@ namespace Proline.ClassicOnline.SClassic
             // Dupe protection
             if (MScripting.MScriptingAPI.GetInstanceCountOfScript("TruckingOnDemand") > 1)
                 return;
-            MissionAPIs.SetMissionFlag(true);
+            if (!MissionAPIs.BeginMission())
+                return;
 
             _closestDistance = 99999f;
 
             _truckSpawnLoc = new Vector3(829.9249f, -2950.439f, 4.902536f);
             _trailerSpawnLoc = new Vector3(865.3315f, -2986.426f, 4.900764f);
             _truck = (Vehicle) Entity.FromHandle(int.Parse(args[0].ToString()));
+
 
             var handles = MBrainAPI.GetEntityHandlesByTypes(GScripting.EntityType.VEHICLE);
 
@@ -58,6 +60,11 @@ namespace Proline.ClassicOnline.SClassic
             _truck.AttachBlip();
             _trailer.AttachBlip();
             _deliveryBlip = World.CreateBlip(_deliveryLoc);
+
+
+            MissionAPIs.TrackPoolObjectForMission(_truck);
+            MissionAPIs.TrackPoolObjectForMission(_trailer);
+            MissionAPIs.TrackPoolObjectForMission(_deliveryBlip);
 
             while (!token.IsCancellationRequested)
             {
@@ -85,7 +92,7 @@ namespace Proline.ClassicOnline.SClassic
 
                 await BaseScript.Delay(0);
             }
-            MissionAPIs.SetMissionFlag(false);
+            MissionAPIs.EndMission();
         }
 
         private bool IsValidModel(Model model)

@@ -26,18 +26,24 @@ namespace Proline.ClassicOnline.SClassic
             if (MScripting.MScriptingAPI.GetInstanceCountOfScript("Trucking") > 1)
                 return;
 
-            MissionAPIs.SetMissionFlag(true);
+            if (!MissionAPIs.BeginMission())
+                return;
 
             _truckSpawnLoc = new Vector3(829.9249f, -2950.439f, 4.902536f);
             _trailerSpawnLoc = new Vector3(865.3315f, -2986.426f, 4.900764f);
             _truck = await World.CreateVehicle(VehicleHash.Phantom, _truckSpawnLoc, 180);
             _trailer = await World.CreateVehicle(VehicleHash.Trailers2, _trailerSpawnLoc, 270);
+
+            MissionAPIs.TrackPoolObjectForMission(_truck);
+            MissionAPIs.TrackPoolObjectForMission(_trailer);
+
             _deliveryLoc = new Vector3(-430.9589f, -2713.246f, 5.000218f);
             _payout = (int) (10.0f * World.GetDistance(_trailer.Position, _deliveryLoc));
 
             _truck.AttachBlip();
             _trailer.AttachBlip();
             _deliveryBlip = World.CreateBlip(_deliveryLoc);
+            MissionAPIs.TrackPoolObjectForMission(_deliveryBlip);
 
             while (!token.IsCancellationRequested)
             {
@@ -65,7 +71,7 @@ namespace Proline.ClassicOnline.SClassic
 
                 await BaseScript.Delay(0);
             }
-            MissionAPIs.SetMissionFlag(false);
+            MissionAPIs.EndMission();
         }
     }
 }

@@ -14,13 +14,9 @@ namespace Proline.ClassicOnline.SClassic
 {
     public class VigilanteOnDemand
     {
-        private Vector3 _truckSpawnLoc;
-        private Vector3 _trailerSpawnLoc;
         private Vehicle _policeVehicle;
         private Vehicle _target;
-        private Vector3 _deliveryLoc;
         private int _payout;
-        private Blip _deliveryBlip;
         private float _closestDistance;
         private Ped[] _targetPeds;
         private List<Blip> _blips;
@@ -30,13 +26,16 @@ namespace Proline.ClassicOnline.SClassic
             // Dupe protection
             if (MScripting.MScriptingAPI.GetInstanceCountOfScript("VigilanteOnDemand") > 1)
                 return;
-            MissionAPIs.SetMissionFlag(true);
+            if (!MissionAPIs.BeginMission())
+                return;
             _blips = new List<Blip>();
             _closestDistance = 99999f;
 
             //_truckSpawnLoc = new Vector3(829.9249f, -2950.439f, 4.902536f);
             //_trailerSpawnLoc = new Vector3(865.3315f, -2986.426f, 4.900764f);
             _policeVehicle = (Vehicle)Entity.FromHandle(int.Parse(args[0].ToString()));
+            MissionAPIs.TrackPoolObjectForMission(_policeVehicle);
+
 
             var handles = MBrainAPI.GetEntityHandlesByTypes(GScripting.EntityType.VEHICLE);
 
@@ -56,6 +55,9 @@ namespace Proline.ClassicOnline.SClassic
             if (_target == null)
                 return;
 
+
+            MissionAPIs.TrackPoolObjectForMission(_target);
+
             Setup();
 
             while (!token.IsCancellationRequested)
@@ -68,7 +70,7 @@ namespace Proline.ClassicOnline.SClassic
             }
 
             Teardown();
-            MissionAPIs.SetMissionFlag(false);
+            MissionAPIs.EndMission();
 
         }
 
@@ -105,6 +107,8 @@ namespace Proline.ClassicOnline.SClassic
             _payout = 1000 * _targetPeds.Length;
 
 
+
+
             Screen.ShowNotification("Vigilante Started");
             Game.PlayerPed.RelationshipGroup = new RelationshipGroup(1);
 
@@ -117,6 +121,7 @@ namespace Proline.ClassicOnline.SClassic
                 item.RelationshipGroup = new RelationshipGroup(0);
                 item.RelationshipGroup.SetRelationshipBetweenGroups(Game.PlayerPed.RelationshipGroup, Relationship.Hate, true);
                 item.Task.FightAgainstHatedTargets(15f);
+                MissionAPIs.TrackPoolObjectForMission(item);
             }
         }
 
