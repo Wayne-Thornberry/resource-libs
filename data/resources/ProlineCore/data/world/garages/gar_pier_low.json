@@ -1,0 +1,85 @@
+{
+    "Title": "Dell Perro Heights - Garage",
+    "Id": "gar_dpheights",
+    "Entrances": [
+        {
+            "Id": "gar_dpheights_veh_frt_ent_01",
+            "VehicleRestricted": true,
+            "DoorPosition": {
+                "X": -1455.73975,
+                "Y": -503.668427,
+                "Z": 30.6152668
+            }
+        }
+    ],
+    "ExitPoints": [
+        {
+            "Id": "gar_dpheights_ped_frt_ext_02",
+            "Heading": 180,
+            "Position": {
+                "X": -1457.34839,
+                "Y": -501.27655,
+                "Z": 31.0671711
+            }
+        },
+        {
+            "Id": "gar_dpheights_veh_frt_ext_01",
+            "Heading": 180,
+            "Position": {
+                "X": -1459.03564,
+                "Y": -491.312439,
+                "Z": 32.3185959
+            }
+        }
+    ],
+    "Properties": [
+        {
+            "Title": "Dell Perro Heights, Apt 4 - Garage",
+            "Type": 3,
+            "Id": "gar_dpheights_01",
+            "Interior": "mp_high_garage",
+            "Layout": "gar_mp_ten_layout",
+            "VehicleCap": 10,
+            "LinkedEntrances": {
+                "gar_dpheights_veh_frt_ent_01": "mp_high_garage_01_ent_ped_01"
+            },
+            "LinkedExits": {
+                "mp_high_garage_ext_ped_01": "gar_high_pier_01_ent_ped_01",
+                "mp_high_garage_ext_ped_02": "gar_dpheights_ped_frt_ext_02",
+                "mp_high_garage_ext_ped_03": "gar_dpheights_ped_frt_ext_02"
+            }
+        },
+        {
+            "Title": "Dell Perro Heights, Apt 6 - Garage",
+            "Type": 3,
+            "Id": "gar_dpheights_02",
+            "Interior": "mp_high_garage",
+            "Layout": "gar_mp_ten_layout",
+            "VehicleCap": 10,
+            "LinkedEntrances": {
+                "gar_dpheights_veh_frt_ent_01": "mp_high_garage_01_ent_ped_01"
+            },
+            "LinkedExits": {
+                "mp_high_garage_ext_ped_01": "gar_high_pier_02_ent_ped_01",
+                "mp_high_garage_ext_ped_02": "gar_dpheights_ped_frt_ext_02",
+                "mp_high_garage_ext_ped_03": "gar_dpheights_ped_frt_ext_02"
+            }
+        },
+        {
+            "Title": "Dell Perro Heights, Apt 7 - Garage",
+            "Type": 3,
+            "Id": "gar_dpheights_03",
+            "Interior": "mp_high_garage",
+            "Layout": "gar_mp_ten_layout",
+            "VehicleCap": 10,
+            "LinkedEntrances": {
+                "gar_dpheights_veh_frt_ent_01": "mp_high_garage_01_ent_ped_01"
+            },
+            "LinkedExits": {
+                "mp_high_garage_ext_ped_01": "gar_high_pier_03_ent_ped_01",
+                "mp_high_garage_ext_ped_02": "gar_dpheights_ped_frt_ext_02",
+                "mp_high_garage_ext_ped_03": "gar_dpheights_ped_frt_ext_02"
+            }
+        }
+    ]
+}

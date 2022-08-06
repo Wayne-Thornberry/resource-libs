@@ -1,8 +1,5 @@
-{
-    "Title": "6-Car Garage",
-    "Type": 3,
-    "Id" : "gar_mp_med",
-	"Interior" : "mp_med_garage",
+{ 
+    "Id" : "gar_mp_six_layout", 
     "VehicleSlots" : [
       {
         "Index" : 0,

@@ -13,18 +13,18 @@ using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MConnection.Commands
 {
-    public class BuyAptCommand : ResourceCommand
+    public class EnterApt : ResourceCommand
     {
-        public BuyAptCommand() : base("BuyApt")
+        public EnterApt() : base("EnterApt")
         {
         }
 
         protected override void OnCommandExecute(params object[] args)
         {
-            if (MGameAPI.GetCharacterBankBalance() > 1000 && args.Length > 0)
+            if (MGameAPI.GetCharacterBankBalance() > 1000 && args.Length == 3)
             {
                 MGameAPI.SubtractValueFromBankBalance(1000);
-                WorldAPI.TeleportToAptInterior(args[0].ToString());
+                WorldAPI.EnterApartmentProperty(args[0].ToString(), args[1].ToString(), int.Parse(args[2].ToString()));
             }
         }
     }

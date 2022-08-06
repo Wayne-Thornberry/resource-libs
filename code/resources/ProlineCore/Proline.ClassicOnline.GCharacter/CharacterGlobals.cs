@@ -11,6 +11,7 @@ namespace Proline.ClassicOnline.GCharacter
     public static class CharacterGlobals
     {
         public static PlayerCharacter Character { get; set; }
-        public static string ActiveInterior { get; set; }
+        public static string CurrentPropertyString { get; set; }
+        public static string CurrentProperty { get; set; }
     }
 }

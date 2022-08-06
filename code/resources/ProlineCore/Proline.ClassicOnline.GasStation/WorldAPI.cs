@@ -14,28 +14,28 @@ namespace Proline.ClassicOnline.MWorld
     {
         public static void PlaceVehicleInGarageSlot(string garage, int index, Entity vehicle)
         {
-            try
-            {
-                var manager = InteriorManager.GetInstance();
-                var interior = (GarageInterior) manager.GetInterior(garage);
-                if(interior != null)
-                {
-                    MDebugAPI.LogDebug(interior.VehicleSlots.Count());
-                    MDebugAPI.LogDebug(index);
-                    var slot = interior.VehicleSlots[index];
-                    if (slot == null)
-                        throw new Exception($"Slot not found {interior.Title} {interior.Type}");
-                    vehicle.Position = slot.Position;
-                    vehicle.Heading = slot.Heading;
-                }
-            }
-            catch (Exception e)
-            {
-                MDebugAPI.LogError(e);
-            }
+            //try
+            //{
+            //    var manager = InteriorManager.GetInstance();
+            //    var interior = (GarageProperty) manager.GetInterior(garage);
+            //    if(interior != null)
+            //    {
+            //        MDebugAPI.LogDebug(interior.VehicleSlots.Count());
+            //        MDebugAPI.LogDebug(index);
+            //        var slot = interior.VehicleSlots[index];
+            //        if (slot == null)
+            //            throw new Exception($"Slot not found {interior.Title} {interior.Type}");
+            //        vehicle.Position = slot.Position;
+            //        vehicle.Heading = slot.Heading;
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    MDebugAPI.LogError(e);
+            //}
         }
 
-
+     
         public static void DrawMarker()
         {
 

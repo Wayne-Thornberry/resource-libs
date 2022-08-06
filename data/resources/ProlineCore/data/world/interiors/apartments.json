@@ -1,53 +1,74 @@
 [
     {
         "Id": "apt_high_pier_01",
-        "Entrances": [
-            { 
-                "X" : -1443.171,
-                "Y" : -544.501,
-                "Z" : 33.74184
+        "EntrancePoints": [
+            {
+                "Id": "apt_high_pier_01_ent_ped_01",
+                "Heading": 90,
+                "Position": {
+                    "X": -1459.46265,
+                    "Y": -521.50824,
+                    "Z": 68.55664
+                }
             }
         ],
-        "Exits" : [
+        "Exits": [
             {
-                "X": -1456.74,
-                "Y": -519.63,
-                "Z": 56.92
+                "Id": "apt_high_pier_01_ext_ped_01",
+                "DoorPosition": {
+                    "X": -1457.28162,
+                    "Y": -520.0082,
+                    "Z": 68.55664
+                }
             }
         ]
     },
     {
         "Id": "apt_high_pier_02",
-        "Entrances": [
-            { 
-                "X" : -1443.171,
-                "Y" : -544.501,
-                "Z" : 33.74184
+        "EntrancePoints": [
+            {
+                "Id": "apt_high_pier_02_ent_ped_01",
+                "Heading": 90,
+                "Position": {
+                    "X": -1443.171,
+                    "Y": -544.501,
+                    "Z": 33.74184
+                }
             }
         ],
-        "Exits" : [
+        "Exits": [
             {
-                "X": -1457.262,
-                "Y": -519.9576,
-                "Z": 69.55664
+                "Id": "apt_high_pier_02_ext_ped_01",
+                "DoorPosition": {
+                    "X": -1457.262,
+                    "Y": -519.9576,
+                    "Z": 69.55664
+                }
             }
         ]
     },
     {
         "Id": "apt_high_pier_03",
-        "Entrances": [
-            { 
-                "X" : -1443.171,
-                "Y" : -544.501,
-                "Z" : 33.74184
+        "EntrancePoints": [
+            {
+                "Id": "apt_high_pier_03_ent_ped_01",
+                "Heading": 90,
+                "Position": {
+                    "X": -1443.171,
+                    "Y": -544.501,
+                    "Z": 33.74184
+                }
             }
         ],
-        "Exits" : [
-            { 
-                "X": -1456.34,
-                "Y": -534.99,
-                "Z": 74.04
+        "Exits": [
+            {
+                "Id": "apt_high_pier_03_ext_ped_01",
+                "DoorPosition": {
+                    "X": -1456.34,
+                    "Y": -534.99,
+                    "Z": 74.04
+                }
             }
         ]
     }
-  ]
+]

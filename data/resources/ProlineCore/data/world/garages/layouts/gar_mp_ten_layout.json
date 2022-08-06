@@ -1,8 +1,5 @@
-{
-    "Title": "10-Car Garage",
-    "Type": 3,
-    "Id" : "gar_mp_high",
-	  "Interior" : "mp_high_garage",
+{ 
+    "Id" : "gar_mp_ten_layout", 
     "VehicleSlots" : [
       {
         "Index" : 0,

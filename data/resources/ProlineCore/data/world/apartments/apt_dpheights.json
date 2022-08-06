@@ -1,20 +1,69 @@
-[
-  {
-    "Title": "Dell Perro Heights, Apt 4",
-    "Id": "apt_dpheights_01",
-    "Type": 3,
-    "Interior" : "apt_high_pier_01"
-  },
-  {
-    "Title": "Dell Perro Heights, Apt 6",
-    "Id": "apt_dpheights_02",
-    "Type": 3,
-    "Interior" : "apt_high_pier_02"
-  },
-  {
-    "Title": "Dell Perro Heights, Apt 7",
-    "Id": "apt_dpheights_03",
-    "Type": 3,
-    "Interior" : "apt_high_pier_03"
-  }
-]
+{
+  "Title": "Dell Perro Heights",
+  "Id": "apt_dpheights",
+  "Entrances": [
+    {
+      "Id": "apt_dpheights_ped_frt_ent_01",
+      "DoorPosition": {
+        "X": -1443.171,
+        "Y": -544.501,
+        "Z": 33.74184
+      }
+    }
+  ],
+  "ExitPoints": [
+    {
+      "Id": "apt_dpheights_ped_frt_ext_01",
+      "Heading": 180,
+      "Position": {
+        "X": -1441.15442,
+        "Y": -547.3523,
+        "Z": 33.7418365
+      }
+    }
+  ],
+  "Properties": [
+    {
+      "Title": "Dell Perro Heights, Apt 4",
+      "Id": "apt_dpheights_01",
+      "Type": 3,
+      "LinkedEntrances": {
+        "apt_dpheights_ped_frt_ent_01": "apt_high_pier_01_ent_ped_01"
+      },
+      "LinkedExits": {
+        "apt_high_pier_01_ext_ped_01": "apt_dpheights_ped_frt_ext_01"
+      },
+      "Interior": "apt_high_pier_01",
+      "HasGarage": true,
+      "Garage": "gar_dpheights_01"
+    },
+    {
+      "Title": "Dell Perro Heights, Apt 6",
+      "Id": "apt_dpheights_02",
+      "Type": 3,
+      "LinkedEntrances": {
+        "apt_dpheights_ped_frt_ent_01": "apt_high_pier_02_ent_ped_01"
+      },
+      "LinkedExits": {
+        "apt_high_pier_02_ext_ped_01": "apt_dpheights_ped_frt_ext_01"
+      },
+      "Interior": "apt_high_pier_02",
+      "HasGarage": true,
+      "Garage": "gar_dpheights_02"
+    },
+    {
+      "Title": "Dell Perro Heights, Apt 7",
+      "Id": "apt_dpheights_03",
+      "Type": 3,
+      "LinkedEntrances": {
+        "apt_dpheights_ped_frt_ent_01": "apt_high_pier_03_ent_ped_01"
+      },
+      "LinkedExits": {
+        "apt_high_pier_03_ext_ped_01": "apt_dpheights_ped_frt_ext_01"
+      },
+      "Interior": "apt_high_pier_03",
+      "HasGarage": true,
+      "Garage": "gar_dpheights_03"
+    }
+  ]
+}

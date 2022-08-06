@@ -1,52 +1,70 @@
 [
     {
         "Id" : "mp_low_garage",  
-        "Entrances": [
-            {
-                "X" : 173.00,
-                "Y" :-1006.89,
-                "Z" : -99.99
-            }
+        "EntrancePoints": [
+            { 
+            "Id" : "mp_low_garage_ent_ped_01",
+            "Heading" : 90,
+            "Position" : {"X":172.939758,"Y":-1006.34729,"Z":-99.99992}
+        }
         ],
         "Exits" :[ 
-            {
-                "X": 179.00,
-                "Y": -1004.5,
-                "Z": -98.99
+            { 
+            "Id" : "mp_low_garage_ext_ped_01", 
+            "Position" : {"X":179.126785,"Y":-1004.90045,"Z":-99.99992}
+            },
+            { 
+            "Id" : "mp_low_garage_ext_ped_01", 
+            "Position" : {"X":172.751434,"Y":-1008.46356,"Z":-99.99992}
             }
         ]
     },
     {
         "Id" : "mp_med_garage",
-        "Entrances" : [
-            {
-                "X" : 198.37,
-                "Y" : -1006.01,
-                "Z" : -98.99
-            }
+        "EntrancePoints" : [
+            { 
+            "Id" : "mp_med_garage_ent_ped_01",
+            "Heading" : 90,
+            "Position" : {"X":198.217545,"Y":-1007.17108,"Z":-99.99996}
+        }
         ],
         "Exits" : [
-            {
-                "X": 207.68,
-                "Y": -999.05,
-                "Z": -98.99
+            { 
+            "Id" : "mp_med_garage_ext_ped_01", 
+            "Position" : {"X":207.654953,"Y":-999.0167,"Z":-99.99996}
+            },
+            { 
+            "Id" : "mp_med_garage_ext_ped_02", 
+            "Position" : {"X":202.043152,"Y":-1007.91016,"Z":-99.99996}
+            },
+            { 
+            "Id" : "mp_med_garage_ext_ped_03", 
+            "Position" : {"X":194.597031,"Y":-1007.88416,"Z":-99.99996}
             }
         ]
     },
     {
         "Id": "mp_high_garage", 
-        "Entrances":[ 
-            {
-                "X" : 228.17,
-                "Y" : -1005.117,
-                "Z" : -99.99
-            }
+        "EntrancePoints":[ 
+            { 
+            "Id" : "mp_high_garage_ent_ped_01",
+            "Heading" : 90,
+            "Position" : {"X":228.054886,"Y":-1005.83997,"Z":-99.99992}
+        }
+            
         ],
         "Exits" : [
-            {
-                "X": 239.11,
-                "Y": -1004.80,
-                "Z": -98.99
+            { 
+            "Id" : "mp_high_garage_ext_ped_01", 
+            "Position" : {"X":238.97052,"Y":-1004.80865,"Z":-99.99992}
+            },
+            { 
+            "Id" : "mp_high_garage_ext_ped_02", 
+            "Position" : {"X":231.9121,"Y":-1006.89136,"Z":-99.99992}
+            },
+            { 
+            "Id" : "mp_high_garage_ext_ped_03", 
+            "Position" : {"X":224.464035,"Y":-1006.84528,"Z":-99.99992}
             }
         ]
     }

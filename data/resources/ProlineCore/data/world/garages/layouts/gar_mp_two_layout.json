@@ -1,9 +1,6 @@
 
-  {
-    "Title": "2-Car Garage",
-    "Type": 3,
-    "Id" : "gar_mp_low",
-	  "Interior" : "mp_low_garage",
+  { 
+    "Id" : "gar_mp_two_layout", 
     "VehicleSlots" : [
       {
         "Index" : 0,
