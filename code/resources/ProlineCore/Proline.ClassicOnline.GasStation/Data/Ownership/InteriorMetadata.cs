@@ -18,6 +18,7 @@ namespace Proline.ClassicOnline.MWord
     internal class InteriorMetadata
     {
         public string Id { get; set; }
+        public Vector3 WorldPos { get; set; }
         public List<InteriorEntryPoints> EntrancePoints { get; set; }
         public List<InteriorExit> Exits { get; set; }
     }

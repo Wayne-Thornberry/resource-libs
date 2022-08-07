@@ -1,5 +1,6 @@
 {
     "Id": "mp_high_garage",
+    "WorldPos" : {"X":228.62207,"Y":-988.4281},
     "EntrancePoints": [
         {
             "Id": "mp_high_garage_ent_ped_01",
@@ -14,7 +15,7 @@
     "Exits": [ 
         {
             "Id": "mp_high_garage_ext_ped_01",
-            "Position": {
+            "DoorPosition": {
                 "X": 231.9121,
                 "Y": -1006.89136,
                 "Z": -99.99992
@@ -22,7 +23,7 @@
         },
         {
             "Id": "mp_high_garage_ext_ped_02",
-            "Position": {
+            "DoorPosition": {
                 "X": 224.464035,
                 "Y": -1006.84528,
                 "Z": -99.99992

@@ -260,9 +260,9 @@ namespace Proline.ClassicOnline.MWorld
         {
             try
             {
-                ResourceFile resourceData3 = null;
-                resourceData3 = ResourceFile.Load($"data/world/interiors/{interiorId}.json");
-                var interiorMetadata = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData3.Load()); 
+                ResourceFile resourceData = null;
+                resourceData = ResourceFile.Load($"data/world/interiors/{interiorId}.json");
+                var interiorMetadata = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData.Load()); 
                 return interiorMetadata.Exits.Count;
             }
             catch (Exception e)

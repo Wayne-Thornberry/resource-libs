@@ -1,4 +1,5 @@
 ﻿using CitizenFX.Core;
+using Newtonsoft.Json;
 using Proline.ClassicOnline.MWorld;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,8 @@ namespace Proline.ClassicOnline.SClassic.Buildings
         private List<Vector3> _buildingEntrances;
         private List<Vector3> _interiorExits;
         private Blip _blip;
-        private Vector3 _lastPoint;
-        private Vector3 _lastEntrance;
+        private string _y;
+        private Vector3 _lastPoint; 
         private string _t;
 
         public async Task Execute(object[] args, CancellationToken token)
@@ -31,6 +32,8 @@ namespace Proline.ClassicOnline.SClassic.Buildings
             _blip = World.CreateBlip(new Vector3(-1443.171f, -544.501f, 34.74184f));
             _blip.Sprite = BlipSprite.GTAOPlayerSafehouse;
             var stage = 0;
+
+
 
             while (!token.IsCancellationRequested)
             {
@@ -55,9 +58,11 @@ namespace Proline.ClassicOnline.SClassic.Buildings
 
                                 _t = thing.Equals("Garage") ? "gar" : "apt";
                                 MDebug.MDebugAPI.LogDebug(_t);
-                                _lastPoint = MWorld.WorldAPI.EnterProperty("apt_dpheights_he_01", $"{_t}_dpheights_01", neariestEntrance);
+                                _y = $"{_t}_dpheights_01";
+                                _lastPoint = MWorld.WorldAPI.EnterProperty("apt_dpheights_he_01", _y, neariestEntrance);
                                 RefreshExitPoints();
                                 stage = 1;
+                                MDebug.MDebugAPI.LogDebug(stage);
                             }
                         } 
                         break;
@@ -66,6 +71,7 @@ namespace Proline.ClassicOnline.SClassic.Buildings
                             if (World.GetDistance(Game.PlayerPed.Position, _lastPoint) > 4f)
                             { 
                                 stage = 2;
+                                MDebug.MDebugAPI.LogDebug(stage);
                             }
                         }
                         break;
@@ -76,17 +82,22 @@ namespace Proline.ClassicOnline.SClassic.Buildings
                                 System.Drawing.Color.FromArgb(150, 0, 0, 0));
                             if (World.GetDistance(Game.PlayerPed.Position, exit) < 2f)
                             {
-                                _lastPoint = MWorld.WorldAPI.ExitProperty("apt_dpheights_he_01", "apt_dpheights_01", WorldAPI.GetInteriorExitString(WorldAPI.GetPropertyInterior("apt_dpheights_he_01",1)));
+                                var neariestInterior = WorldAPI.GetNearestInterior();
+                                var neariestExit = WorldAPI.GetNearestInteriorExit();
+
+                                _lastPoint = MWorld.WorldAPI.ExitProperty("apt_dpheights_he_01", _y, neariestExit);
                                 RefreshEntryPoints(); 
                                 stage = 3;
+                                MDebug.MDebugAPI.LogDebug(stage);
                             }
                         } 
                         break;
                     case 3:
                         {
-                            if (World.GetDistance(Game.PlayerPed.Position, _lastEntrance) > 4f)
+                            if (World.GetDistance(Game.PlayerPed.Position, _lastPoint) > 4f)
                             {
                                 stage = 0;
+                                MDebug.MDebugAPI.LogDebug(stage);
                             }
                         }
                         break;
@@ -109,9 +120,14 @@ namespace Proline.ClassicOnline.SClassic.Buildings
         {
             var id = _t.Equals("gar") ? 0 : 1;
             _interiorExits = new List<Vector3>();
-            for (int i = 0; i < MWorld.WorldAPI.GetNumOfInteriorExits(WorldAPI.GetPropertyInterior("apt_dpheights_he_01", id)); i++)
+            var inter = WorldAPI.GetPropertyInterior("apt_dpheights_he_01", id);
+            MDebug.MDebugAPI.LogDebug("ahhhhhh");
+            MDebug.MDebugAPI.LogDebug(inter);
+            for (int i = 0; i < MWorld.WorldAPI.GetNumOfInteriorExits(inter); i++)
             {
-                _interiorExits.Add(MWorld.WorldAPI.GetInteriorExit(WorldAPI.GetPropertyInterior("apt_dpheights_he_01", id), i));
+                var x = MWorld.WorldAPI.GetInteriorExit(inter, i);
+                _interiorExits.Add(x);
+                MDebug.MDebugAPI.LogDebug($"{i} {JsonConvert.SerializeObject(x)}");
             };
         }
     }

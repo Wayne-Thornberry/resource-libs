@@ -14,23 +14,23 @@ namespace Proline.ClassicOnline.MWorld
 {
     public static partial class WorldAPI
     {
-        public static string GetNearestBuilding()
+        public static string GetNearestInterior()
         {
             try
-            { 
-                var resourceData = ResourceFile.Load($"data/world/buildings.json");
+            {
+                var resourceData = ResourceFile.Load($"data/world/interiors.json");
                 var worldBuildings = JsonConvert.DeserializeObject<string[]>(resourceData.Load());
                 var distance = 99999f;
                 var entranceString = "";
                 var playPos = new Vector2(Game.PlayerPed.Position.X, Game.PlayerPed.Position.Y);
                 foreach (var item in worldBuildings)
-                { 
-                    var resourceData2 = ResourceFile.Load($"data/world/buildings/{item}.json");
-                    var buildingMetaData = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData2.Load());
+                {
+                    var resourceData2 = ResourceFile.Load($"data/world/interiors/{item}.json");
+                    var buildingMetaData = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData2.Load());
                     var d = API.GetDistanceBetweenCoords(buildingMetaData.WorldPos.X,
                         buildingMetaData.WorldPos.Y, 0, playPos.X, playPos.Y, 0, false);
                     if (d < distance)
-                    { 
+                    {
                         distance = d;
                         entranceString = buildingMetaData.Id;
                     }
@@ -44,12 +44,12 @@ namespace Proline.ClassicOnline.MWorld
             return null;
         }
 
-        internal static Vector3 GetBuildingPosition(string buildingId)
+        internal static Vector3 GetBuildingInterior(string buildingId)
         {
             try
-            { 
-                var resourceData2 = ResourceFile.Load($"data/world/buildings/{buildingId}.json");
-                var buildingMetaData = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData2.Load());
+            {
+                var resourceData2 = ResourceFile.Load($"data/world/interiors/{buildingId}.json");
+                var buildingMetaData = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData2.Load());
                 return new Vector3(buildingMetaData.WorldPos.X, buildingMetaData.WorldPos.Y, 0f);
             }
             catch (Exception e)
@@ -58,16 +58,16 @@ namespace Proline.ClassicOnline.MWorld
             }
             return Vector3.One;
         }
-        public static string GetNearestBuildingEntrance()
-        { 
+        public static string GetNearestInteriorExit()
+        {
             try
             {
-                var building = GetNearestBuilding(); 
-                var resourceData2 = ResourceFile.Load($"data/world/buildings/{building}.json");
-                var interiorMetadata = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData2.Load());
+                var building = GetNearestInterior();
+                var resourceData2 = ResourceFile.Load($"data/world/interiors/{building}.json");
+                var interiorMetadata = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData2.Load());
                 var distance = 99999f;
                 var entranceString = "";
-                foreach (var item in interiorMetadata.Entrances)
+                foreach (var item in interiorMetadata.Exits)
                 {
                     var newDistance = World.GetDistance(item.DoorPosition, Game.PlayerPed.Position);
                     if (World.GetDistance(item.DoorPosition, Game.PlayerPed.Position) < distance)
@@ -85,21 +85,5 @@ namespace Proline.ClassicOnline.MWorld
             return null;
         }
 
-        public static string EnterBuilding(string buildingId, string buildingEntrance)
-        { 
-            try
-            { 
-                var resourceData2 = ResourceFile.Load($"data/world/buildings/{buildingId}.json");
-                var buildingMetaData = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData2.Load());
-                var entrance = buildingMetaData.Entrances.FirstOrDefault(e => e.Id.Equals(buildingEntrance));
-                return entrance.Function;
-            }
-            catch (Exception e)
-            {
-                MDebugAPI.LogError(e);
-            }
-            return "";
-
-        }
     }
 }
