@@ -37,7 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LevelScripts", "LevelScript
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Globals", "Globals", "{C83D4781-C763-4D9A-8C12-3BED7B405CE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proline.ClassicOnline.MissionManager", "Proline.ClassicOnline.MissionManager\Proline.ClassicOnline.MissionManager.csproj", "{A55142E8-5737-46CD-B3A0-D928F8D398EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proline.ClassicOnline.CMissionManager", "Proline.ClassicOnline.MissionManager\Proline.ClassicOnline.CMissionManager.csproj", "{A55142E8-5737-46CD-B3A0-D928F8D398EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
