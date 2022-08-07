@@ -265,58 +265,7 @@ namespace Proline.ClassicOnline.MWorld
         }
 
 
-        public static Vector3 GetBuildingEntrance(string buildingId, int entranceId = 0)
-        {
-            try
-            {
-                ResourceFile resourceData3 = null;
-                resourceData3 = ResourceFile.Load($"data/world/buildings/{buildingId}.json");
-                var interiorMetadata = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData3.Load());
-                var targetEntryPoint = interiorMetadata.AccessPoints[entranceId];
-                return targetEntryPoint.DoorPosition;
-            }
-            catch (Exception e)
-            {
-                MDebugAPI.LogError(e);
-            }
-            return Vector3.One;
-        }
-
-        public static string GetBuildingEntranceString(string buildingId, int entranceId = 0)
-        {
-            try
-            {
-                ResourceFile resourceData3 = null;
-                resourceData3 = ResourceFile.Load($"data/world/buildings/{buildingId}.json");
-                var interiorMetadata = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData3.Load());
-                var targetEntryPoint = interiorMetadata.AccessPoints[entranceId];
-                return targetEntryPoint.Id;
-            }
-            catch (Exception e)
-            {
-                MDebugAPI.LogError(e);
-            }
-            return "";
-        }
-
          
-
-        public static int GetNumOfBuldingEntrances(string buildingId)
-        {
-            try
-            {
-                ResourceFile resourceData3 = null;
-                resourceData3 = ResourceFile.Load($"data/world/buildings/{buildingId}.json");
-                var interiorMetadata = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData3.Load()); 
-                return interiorMetadata.AccessPoints.Count;
-            }
-            catch (Exception e)
-            {
-                MDebugAPI.LogError(e);
-            }
-            return 0;
-        }
-
        
 
         public static int GetNumOfInteriorExits(string interiorId)
