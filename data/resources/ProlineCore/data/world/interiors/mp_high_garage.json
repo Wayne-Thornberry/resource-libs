@@ -1,0 +1,32 @@
+{
+    "Id": "mp_high_garage",
+    "EntrancePoints": [
+        {
+            "Id": "mp_high_garage_ent_ped_01",
+            "Heading": 90,
+            "Position": {
+                "X": 228.054886,
+                "Y": -1005.83997,
+                "Z": -99.99992
+            }
+        }
+    ],
+    "Exits": [ 
+        {
+            "Id": "mp_high_garage_ext_ped_01",
+            "Position": {
+                "X": 231.9121,
+                "Y": -1006.89136,
+                "Z": -99.99992
+            }
+        },
+        {
+            "Id": "mp_high_garage_ext_ped_02",
+            "Position": {
+                "X": 224.464035,
+                "Y": -1006.84528,
+                "Z": -99.99992
+            }
+        }
+    ]
+}

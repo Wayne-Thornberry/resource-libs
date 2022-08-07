@@ -1,6 +1,5 @@
-﻿using System;
+﻿using CitizenFX.Core;
 using System.Collections.Generic;
-using CitizenFX.Core;
 
 namespace Proline.ClassicOnline.MWord
 {
@@ -10,4 +9,9 @@ namespace Proline.ClassicOnline.MWord
         public Vector3 Position { get; set; }
         public float Heading { get; set; }
     }
+
+    internal class GarageLayout
+    { 
+        public List<GarageSlot> VehicleSlots { get; set; }
+    } 
 }

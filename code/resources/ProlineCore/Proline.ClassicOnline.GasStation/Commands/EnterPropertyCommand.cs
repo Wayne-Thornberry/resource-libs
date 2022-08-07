@@ -1,7 +1,5 @@
 ﻿using CitizenFX.Core;
 using Newtonsoft.Json;
-using Proline.CFXExtended.Core;
-using Proline.ClassicOnline.MGame;
 using Proline.ClassicOnline.MWorld;
 using Proline.Resource.Framework;
 using System;
@@ -13,18 +11,17 @@ using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.MConnection.Commands
 {
-    public class EnterApt : ResourceCommand
+    public class EnterProperty : ResourceCommand
     {
-        public EnterApt() : base("EnterApt")
+        public EnterProperty() : base("EnterProperty")
         {
         }
 
         protected override void OnCommandExecute(params object[] args)
         {
-            if (MGameAPI.GetCharacterBankBalance() > 1000 && args.Length == 3)
+            if (args.Length == 3)
             {
-                MGameAPI.SubtractValueFromBankBalance(1000);
-                WorldAPI.EnterApartmentProperty(args[0].ToString(), args[1].ToString(), int.Parse(args[2].ToString()));
+                WorldAPI.EnterProperty(args[0].ToString(), args[1].ToString(), args[2].ToString());
             }
         }
     }
