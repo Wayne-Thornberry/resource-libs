@@ -24,32 +24,31 @@ namespace Proline.ClassicOnline.MWorld
             {
                 if (string.IsNullOrEmpty(propertyId))
                     return Vector3.One;
-                var pm = PropertyManager.GetInstance();
-                var property = pm.GetProperty(propertyId);
-                var type = property.Type;
-                var garageString = property.Garage;
-                var aptString = property.Apartment; 
+                //var pm = PropertyManager.GetInstance();
+                //var property = pm.GetProperty(propertyId);
+                //var type = property.Type;
+                //var garageString = property.Garage;
+                //var aptString = property.Apartment; 
 
-                ResourceFile resourceData1 = null;
-                ResourceFile resourceData2 = null; 
+                //ResourceFile resourceData1 = null;
+                //ResourceFile resourceData2 = null; 
                  
-                var folderName = GetPropertyPartType(propertyPart);
-                MDebugAPI.LogDebug(folderName);
-                MDebugAPI.LogDebug(propertyPart);
+                //var folderName = GetPropertyPartType(propertyPart);
+                //MDebugAPI.LogDebug(folderName);
+                //MDebugAPI.LogDebug(propertyPart);
 
-                // Load the link file
-                resourceData1 = ResourceFile.Load($"data/world/{folderName}/{propertyPart}.json");
-                var buildingInteriorLink = JsonConvert.DeserializeObject<BuildingInteriorLink>(resourceData1.Load()); 
-                var targetEntryPointString = buildingInteriorLink.ExteriorEntrances[entranceId];
+                //// Load the link file
+                //resourceData1 = ResourceFile.Load($"data/world/{folderName}/{propertyPart}.json");
+                //var buildingInteriorLink = JsonConvert.DeserializeObject<BuildingInteriorLink>(resourceData1.Load()); 
+                //var targetEntryPointString = buildingInteriorLink.ExteriorEntrances[entranceId];
 
-                MDebugAPI.LogDebug(folderName);
-                MDebugAPI.LogDebug(buildingInteriorLink.Interior);
-                // Load interior file
-                resourceData2 = ResourceFile.Load($"data/world/interiors/{buildingInteriorLink.Interior}.json");
-                var interiorMetadata = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData2.Load()); 
-                var targetEntryPoint = interiorMetadata.EntrancePoints.FirstOrDefault(e => e.Id.Equals(targetEntryPointString));
-                Game.PlayerPed.Position = targetEntryPoint.Position;
-                return targetEntryPoint.Position;
+                //MDebugAPI.LogDebug(folderName);
+                //MDebugAPI.LogDebug(buildingInteriorLink.Interior);
+                //// Load interior file
+                //resourceData2 = ResourceFile.Load($"data/world/interiors/{buildingInteriorLink.Interior}.json");
+                //var interiorMetadata = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData2.Load()); 
+                //var targetEntryPoint = interiorMetadata.EntrancePoints.FirstOrDefault(e => e.Id.Equals(targetEntryPointString));
+                return Vector3.One;
 
             }
             catch (Exception e)
@@ -59,20 +58,84 @@ namespace Proline.ClassicOnline.MWorld
             return Vector3.One;
         }
 
-        public static string GetPropertyInterior(string propertyId, int propertyPart = 0)
+
+
+        public static string GetPropertyExit(string propertyPart, string functionType, string neariestExit)
+        {
+            try
+            { 
+                var resourceData1 = ResourceFile.Load($"data/world/{functionType}/{propertyPart}.json");
+                var buildingInteriorLink = JsonConvert.DeserializeObject<BuildingInteriorLink>(resourceData1.Load());
+                var targetEntryPointString = buildingInteriorLink.InteriorExits[neariestExit];
+                return targetEntryPointString;
+            }
+            catch (Exception e)
+            {
+                MDebugAPI.LogError(e);
+            }
+            return "";
+        }
+
+        public static string GetPropertyEntry(string propertyPart, string functionType, string entranceString)
+        {
+            try
+            {
+                var resourceData1 = ResourceFile.Load($"data/world/{functionType}/{propertyPart}.json");
+                var buildingInteriorLink = JsonConvert.DeserializeObject<BuildingInteriorLink>(resourceData1.Load());
+                var targetEntryPointString = buildingInteriorLink.ExteriorEntrances[entranceString];
+                return targetEntryPointString;
+            }
+            catch (Exception e)
+            {
+                MDebugAPI.LogError(e);
+            }
+            return "";
+
+        }
+
+        public static string GetPropertyApartment(string propertyId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(propertyId))
+                    return "";
+                var pm = PropertyManager.GetInstance();
+                var property = pm.GetProperty(propertyId); 
+                return property.Apartment;
+            }
+            catch (Exception e)
+            {
+                MDebugAPI.LogError(e);
+            }
+            return "";
+
+        }
+
+        public static string GetPropertyGarage(string propertyId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(propertyId))
+                    return "";
+                var pm = PropertyManager.GetInstance();
+                var property = pm.GetProperty(propertyId); 
+                return property.Garage;
+            }
+            catch (Exception e)
+            {
+                MDebugAPI.LogError(e);
+            }
+            return "";
+
+        }
+
+        public static string GetPropertyInterior(string propertyId, string propertyType)
         {
             try
             {
                 var pm = PropertyManager.GetInstance();
-                var property = pm.GetProperty(propertyId);
-                string x = "";
-                switch (propertyPart)
-                {
-                    case 0: x = property.Garage; break;
-                    case 1: x = property.Apartment; break;
-                }
-                var abc = GetPropertyPartType(x);
-                var resourceData1 = ResourceFile.Load($"data/world/{abc}/{x}.json");
+                var property = pm.GetProperty(propertyId);  
+                var resourceData1 = ResourceFile.Load($"data/world/{propertyType}/{propertyId}.json");
                 var buildingInteriorLink = JsonConvert.DeserializeObject<BuildingInteriorLink>(resourceData1.Load());
                 return buildingInteriorLink.Interior;
 
@@ -107,47 +170,47 @@ namespace Proline.ClassicOnline.MWorld
             return "";
         }
         //apt_high_pier_01_ext_ped_01
-        public static Vector3 ExitProperty(string propertyId, string propertyPart, string exitId)
+        public static string ExitProperty(string propertyId, string propertyPart, string exitId)
         {
             try
             {
-                if (string.IsNullOrEmpty(propertyId))
-                    return Vector3.One;
-                var pm = PropertyManager.GetInstance();
-                var property = pm.GetProperty(propertyId);
-                var type = property.Type;
-                var garageString = property.Garage;
-                var aptString = property.Apartment; 
+                //if (string.IsNullOrEmpty(propertyId))
+                //    return "";
+                //var pm = PropertyManager.GetInstance();
+                //var property = pm.GetProperty(propertyId);
+                //var type = property.Type;
+                //var garageString = property.Garage;
+                //var aptString = property.Apartment; 
 
-                ResourceFile resourceData1 = null;
-                ResourceFile resourceData2 = null; 
+                //ResourceFile resourceData1 = null;
+                //ResourceFile resourceData2 = null; 
 
-                var propertyType = propertyPart.Split('_')[0];
-                var abc = GetPropertyPartType(propertyPart);
+                //var propertyType = propertyPart.Split('_')[0];
+                //var abc = GetPropertyPartType(propertyPart);
                  
-                MDebugAPI.LogDebug("tes");
-                MDebugAPI.LogDebug(exitId);
+                //MDebugAPI.LogDebug("tes");
+                //MDebugAPI.LogDebug(exitId);
 
-                resourceData1 = ResourceFile.Load($"data/world/{abc}/{propertyPart}.json");
-                var buildingInteriorLink = JsonConvert.DeserializeObject<BuildingInteriorLink>(resourceData1.Load()); 
-                var targetEntryPointString = buildingInteriorLink.InteriorExits[exitId];
+                //resourceData1 = ResourceFile.Load($"data/world/{abc}/{propertyPart}.json");
+                //var buildingInteriorLink = JsonConvert.DeserializeObject<BuildingInteriorLink>(resourceData1.Load()); 
+                //var targetEntryPointString = buildingInteriorLink.InteriorExits[exitId];
 
 
-                resourceData2 = ResourceFile.Load($"data/world/buildings/{buildingInteriorLink.Building}.json");
-                var interiorMetadata = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData2.Load()); 
-                var targetEntryPoint = interiorMetadata.ExitPoints.FirstOrDefault(e => e.Id.Equals(targetEntryPointString));
+                //resourceData2 = ResourceFile.Load($"data/world/buildings/{buildingInteriorLink.Building}.json");
+                //var interiorMetadata = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData2.Load()); 
+                //var targetEntryPoint = interiorMetadata.ExitPoints.FirstOrDefault(e => e.Id.Equals(targetEntryPointString));
 
-                MDebugAPI.LogDebug("tes");
-                MDebugAPI.LogDebug(propertyPart);
+                //MDebugAPI.LogDebug("tes");
+                //MDebugAPI.LogDebug(propertyPart);
 
-                Game.PlayerPed.Position = targetEntryPoint.Position;
-                return targetEntryPoint.Position;
+                //Game.PlayerPed.Position = targetEntryPoint.Position;
+                //return targetEntryPoint.Id;
             }
             catch (Exception e)
             {
                 MDebugAPI.LogError(e);
             }
-            return Vector3.One;
+            return "";
         }
 
         public static string GetPropertyBuilding(string propertyId)
@@ -209,7 +272,7 @@ namespace Proline.ClassicOnline.MWorld
                 ResourceFile resourceData3 = null;
                 resourceData3 = ResourceFile.Load($"data/world/buildings/{buildingId}.json");
                 var interiorMetadata = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData3.Load());
-                var targetEntryPoint = interiorMetadata.Entrances[entranceId];
+                var targetEntryPoint = interiorMetadata.AccessPoints[entranceId];
                 return targetEntryPoint.DoorPosition;
             }
             catch (Exception e)
@@ -226,7 +289,7 @@ namespace Proline.ClassicOnline.MWorld
                 ResourceFile resourceData3 = null;
                 resourceData3 = ResourceFile.Load($"data/world/buildings/{buildingId}.json");
                 var interiorMetadata = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData3.Load());
-                var targetEntryPoint = interiorMetadata.Entrances[entranceId];
+                var targetEntryPoint = interiorMetadata.AccessPoints[entranceId];
                 return targetEntryPoint.Id;
             }
             catch (Exception e)
@@ -245,7 +308,7 @@ namespace Proline.ClassicOnline.MWorld
                 ResourceFile resourceData3 = null;
                 resourceData3 = ResourceFile.Load($"data/world/buildings/{buildingId}.json");
                 var interiorMetadata = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData3.Load()); 
-                return interiorMetadata.Entrances.Count;
+                return interiorMetadata.AccessPoints.Count;
             }
             catch (Exception e)
             {

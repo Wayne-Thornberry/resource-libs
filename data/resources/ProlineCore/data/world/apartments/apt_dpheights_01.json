@@ -6,6 +6,6 @@
     "apt_dpheights_ped_frt_ent_01": "apt_high_pier_01_ent_ped_01"
   },
   "InteriorExits": {
-    "apt_high_pier_01_ext_ped_01": "apt_dpheights_ped_frt_ext_01"
+    "apt_high_pier_01_ext_ped_01": "apt_dpheights_ped_frt_ent_01"
   }
 }

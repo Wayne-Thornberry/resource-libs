@@ -14,6 +14,7 @@ namespace Proline.ClassicOnline.MWord
     {
         public string Id { get; set; }
         public Vector3 DoorPosition { get; set; }
+        public string Tag { get; internal set; }
     }
     internal class InteriorMetadata
     {

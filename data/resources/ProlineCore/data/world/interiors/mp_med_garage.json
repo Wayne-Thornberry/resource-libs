@@ -1,5 +1,6 @@
 {
     "Id": "mp_med_garage",
+    "Tag" : "Garage",
     "EntrancePoints": [
         {
             "Id": "mp_med_garage_ent_ped_01",

@@ -6,7 +6,7 @@
         "gar_dpheights_veh_bck_ent_01": "mp_high_garage_ent_ped_01"
     },
     "InteriorExits": { 
-        "mp_high_garage_ext_ped_01": "apt_dpheights_ped_bck_ext_01",
-        "mp_high_garage_ext_ped_02": "apt_dpheights_ped_bck_ext_01"
+        "mp_high_garage_ext_ped_01": "gar_dpheights_veh_bck_ent_01",
+        "mp_high_garage_ext_ped_02": "gar_dpheights_veh_bck_ent_01"
     }
 }

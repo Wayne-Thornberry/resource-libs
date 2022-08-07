@@ -41,5 +41,9 @@ namespace Proline.ClassicOnline.MWorld
 
         }
 
+        public static Vector3 GetBuildingWorldPos(object neariestBulding)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

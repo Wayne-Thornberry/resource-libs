@@ -1,6 +1,7 @@
 
     {
         "Id": "apt_high_pier_02",
+        "Tag" : "Apartment",
         "EntrancePoints": [
             {
                 "Id": "apt_high_pier_02_ent_ped_01",

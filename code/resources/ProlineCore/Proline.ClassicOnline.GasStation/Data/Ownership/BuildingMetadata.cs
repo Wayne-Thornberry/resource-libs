@@ -4,17 +4,18 @@ using System.Collections.Generic;
 namespace Proline.ClassicOnline.MWord
 {
      
-    internal class BuildingEntrance
+    internal class BuildingAccessPoint
     {
         public string Id { get; set; }
         public string Function { get; set; }
         public bool VehicleRestricted { get; set; }
         public Vector3 DoorPosition { get; set; }
+        public BuildingExitPoint ExitOnFoot { get; set; }
+        public BuildingExitPoint ExitInVehicle { get; set; }
     }
 
     internal class BuildingExitPoint
-    {
-        public string Id { get; set; }
+    { 
         public float Heading { get; set; }
         public Vector3 Position { get; set; }
 
@@ -23,7 +24,6 @@ namespace Proline.ClassicOnline.MWord
     {
         public string Id { get; set; } 
         public Vector2 WorldPos { get; set; }
-        public List<BuildingEntrance> Entrances { get; set; }
-        public List<BuildingExitPoint> ExitPoints { get; set; } 
+        public List<BuildingAccessPoint> AccessPoints { get; set; }
     }
 }

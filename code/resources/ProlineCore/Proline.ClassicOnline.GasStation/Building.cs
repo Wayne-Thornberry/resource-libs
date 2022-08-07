@@ -67,7 +67,7 @@ namespace Proline.ClassicOnline.MWorld
                 var interiorMetadata = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData2.Load());
                 var distance = 99999f;
                 var entranceString = "";
-                foreach (var item in interiorMetadata.Entrances)
+                foreach (var item in interiorMetadata.AccessPoints)
                 {
                     var newDistance = World.GetDistance(item.DoorPosition, Game.PlayerPed.Position);
                     if (World.GetDistance(item.DoorPosition, Game.PlayerPed.Position) < distance)
@@ -84,6 +84,20 @@ namespace Proline.ClassicOnline.MWorld
             }
             return null;
         }
+        public static Vector3 GetBuildingWorldPos(string buildingId)
+        {
+            try
+            {
+                var resourceData2 = ResourceFile.Load($"data/world/buildings/{buildingId}.json");
+                var buildingMetaData = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData2.Load()); 
+                return new Vector3(buildingMetaData.WorldPos.X, buildingMetaData.WorldPos.Y, 0);
+            }
+            catch (Exception e)
+            {
+                MDebugAPI.LogError(e);
+            }
+            return Vector3.One;
+        }
 
         public static string EnterBuilding(string buildingId, string buildingEntrance)
         { 
@@ -91,15 +105,39 @@ namespace Proline.ClassicOnline.MWorld
             { 
                 var resourceData2 = ResourceFile.Load($"data/world/buildings/{buildingId}.json");
                 var buildingMetaData = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData2.Load());
-                var entrance = buildingMetaData.Entrances.FirstOrDefault(e => e.Id.Equals(buildingEntrance));
+                var entrance = buildingMetaData.AccessPoints.FirstOrDefault(e => e.Id.Equals(buildingEntrance));
+                if (string.IsNullOrEmpty(entrance.Function))
+                    return "Apartment";
                 return entrance.Function;
             }
             catch (Exception e)
             {
                 MDebugAPI.LogError(e);
             }
-            return "";
-
+            return ""; 
+        }
+        public static Vector3 ExitBuilding(string buildingId, string accessPoint, int type = 0)
+        {
+            try
+            {
+                var resourceData2 = ResourceFile.Load($"data/world/buildings/{buildingId}.json");
+                var buildingMetaData = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData2.Load());
+                var entrance = buildingMetaData.AccessPoints.FirstOrDefault(e => e.Id.Equals(accessPoint));
+                MDebugAPI.LogDebug(accessPoint);
+                MDebugAPI.LogDebug(entrance.Id);
+                Vector3 pos = Vector3.One;
+                switch (type)
+                {
+                    case 0: pos = entrance.ExitOnFoot.Position; break;
+                    case 1: pos =  entrance.ExitInVehicle.Position; break;
+                }
+                return pos;
+            }
+            catch (Exception e)
+            {
+                MDebugAPI.LogError(e);
+            }
+            return Vector3.One;
         }
     }
 }

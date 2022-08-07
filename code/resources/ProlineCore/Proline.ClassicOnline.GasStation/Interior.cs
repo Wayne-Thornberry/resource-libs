@@ -14,6 +14,31 @@ namespace Proline.ClassicOnline.MWorld
 {
     public static partial class WorldAPI
     {
+        public static Vector3 EnterInterior(string interiorId, string entranceId)
+        {
+            try
+            {
+                var resourceData2 = ResourceFile.Load($"data/world/interiors/{interiorId}.json");
+                var buildingMetaData = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData2.Load());
+                var entryPoint = buildingMetaData.EntrancePoints.FirstOrDefault(e=>e.Id.Equals(entranceId));
+                return entryPoint.Position;
+            }
+            catch (Exception e)
+            {
+                MDebugAPI.LogError(e);
+            }
+            return Vector3.One;
+        }
+
+        public static string ExitInterior(string interiorId, string exitId)
+        {
+            var resourceData2 = ResourceFile.Load($"data/world/interiors/{interiorId}.json");
+            var interiorMetadata = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData2.Load());
+            var targetEntryPoint = interiorMetadata.Exits.FirstOrDefault(e => e.Id.Equals(exitId)); 
+            return targetEntryPoint.Tag;
+        }
+
+
         public static string GetNearestInterior()
         {
             try
@@ -58,12 +83,13 @@ namespace Proline.ClassicOnline.MWorld
             }
             return Vector3.One;
         }
-        public static string GetNearestInteriorExit()
+        public static string GetNearestInteriorExit(string interiorId = null)
         {
             try
             {
-                var building = GetNearestInterior();
-                var resourceData2 = ResourceFile.Load($"data/world/interiors/{building}.json");
+                if(string.IsNullOrEmpty(interiorId))
+                    interiorId = GetNearestInterior();
+                var resourceData2 = ResourceFile.Load($"data/world/interiors/{interiorId}.json");
                 var interiorMetadata = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData2.Load());
                 var distance = 99999f;
                 var entranceString = "";
