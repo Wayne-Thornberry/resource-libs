@@ -20,8 +20,8 @@ namespace Proline.ClassicOnline.MWorld
             {
                 var resourceData2 = ResourceFile.Load($"data/world/interiors/{interiorId}.json");
                 var buildingMetaData = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData2.Load());
-                var entryPoint = buildingMetaData.EntrancePoints.FirstOrDefault(e=>e.Id.Equals(entranceId));
-                return entryPoint.Position;
+                var entryPoint = buildingMetaData.AccessPoints.FirstOrDefault(e=>e.Id.Equals(entranceId));
+                return entryPoint.OnFoot.Position;
             }
             catch (Exception e)
             {
@@ -34,7 +34,7 @@ namespace Proline.ClassicOnline.MWorld
         {
             var resourceData2 = ResourceFile.Load($"data/world/interiors/{interiorId}.json");
             var interiorMetadata = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData2.Load());
-            var targetEntryPoint = interiorMetadata.Exits.FirstOrDefault(e => e.Id.Equals(exitId)); 
+            var targetEntryPoint = interiorMetadata.AccessPoints.FirstOrDefault(e => e.Id.Equals(exitId)); 
             return targetEntryPoint.Tag;
         }
 
@@ -93,7 +93,7 @@ namespace Proline.ClassicOnline.MWorld
                 var interiorMetadata = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData2.Load());
                 var distance = 99999f;
                 var entranceString = "";
-                foreach (var item in interiorMetadata.Exits)
+                foreach (var item in interiorMetadata.AccessPoints)
                 {
                     var newDistance = World.GetDistance(item.DoorPosition, Game.PlayerPed.Position);
                     if (World.GetDistance(item.DoorPosition, Game.PlayerPed.Position) < distance)

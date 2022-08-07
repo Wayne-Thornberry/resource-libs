@@ -31,5 +31,16 @@
         "Apartment": "apt_dpheights_03",
         "VehicleCap": 10,
         "Type": 3
+    },
+    {
+        "Title": "Richards Majestic, Apartment 4",
+        "Id" : "apt_richmaj_he_01",
+        "Building" : "apt_richmaj",
+        "HasGarage": true,
+        "Price": 1000,
+        "Garage": "gar_richmaj_01",
+        "Apartment": "apt_richmaj_01",
+        "VehicleCap": 10,
+        "Type": 3
     }
 ]

@@ -1,25 +1,23 @@
 {
     "Id": "mp_high_garage",
     "Tag" : "Garage",
-    "WorldPos" : {"X":228.62207,"Y":-988.4281},
-    "EntrancePoints": [
-        {
-            "Id": "mp_high_garage_ent_ped_01",
-            "Heading": 90,
-            "Position": {
-                "X": 228.054886,
-                "Y": -1005.83997,
-                "Z": -99.99992
-            }
-        }
-    ],
-    "Exits": [ 
+    "WorldPos" : {"X":228.62207,"Y":-988.4281}, 
+    "AccessPoints": [ 
         {
             "Id": "mp_high_garage_ext_ped_01",
             "DoorPosition": {
                 "X": 231.9121,
                 "Y": -1006.89136,
                 "Z": -99.99992
+            },
+            "OnFoot" :
+            { 
+                "Heading": 90,
+                "Position": {
+                    "X": 228.054886,
+                    "Y": -1005.83997,
+                    "Z": -99.99992
+                }
             }
         },
         {
@@ -28,6 +26,15 @@
                 "X": 224.464035,
                 "Y": -1006.84528,
                 "Z": -99.99992
+            },
+            "OnFoot" :
+            { 
+                "Heading": 90,
+                "Position": {
+                    "X": 228.054886,
+                    "Y": -1005.83997,
+                    "Z": -99.99992
+                }
             }
         }
     ]

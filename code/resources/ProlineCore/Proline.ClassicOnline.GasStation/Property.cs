@@ -237,7 +237,7 @@ namespace Proline.ClassicOnline.MWorld
                 ResourceFile resourceData3 = null;
                 resourceData3 = ResourceFile.Load($"data/world/interiors/{interiorId}.json");
                 var interiorMetadata = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData3.Load());
-                var targetEntryPoint = interiorMetadata.Exits[exitId];
+                var targetEntryPoint = interiorMetadata.AccessPoints[exitId];
                 return targetEntryPoint.Id;
             }
             catch (Exception e)
@@ -254,7 +254,7 @@ namespace Proline.ClassicOnline.MWorld
                 ResourceFile resourceData3 = null;
                 resourceData3 = ResourceFile.Load($"data/world/interiors/{interiorId}.json");
                 var interiorMetadata = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData3.Load()); 
-                var targetEntryPoint = interiorMetadata.Exits[exitId]; 
+                var targetEntryPoint = interiorMetadata.AccessPoints[exitId]; 
                 return targetEntryPoint.DoorPosition;
             }
             catch (Exception e)
@@ -326,7 +326,7 @@ namespace Proline.ClassicOnline.MWorld
                 ResourceFile resourceData = null;
                 resourceData = ResourceFile.Load($"data/world/interiors/{interiorId}.json");
                 var interiorMetadata = JsonConvert.DeserializeObject<InteriorMetadata>(resourceData.Load()); 
-                return interiorMetadata.Exits.Count;
+                return interiorMetadata.AccessPoints.Count;
             }
             catch (Exception e)
             {

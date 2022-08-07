@@ -58,11 +58,12 @@ namespace Proline.ClassicOnline.MWorld
             }
             return Vector3.One;
         }
-        public static string GetNearestBuildingEntrance()
+        public static string GetNearestBuildingEntrance(string building)
         { 
             try
             {
-                var building = GetNearestBuilding(); 
+                if(string.IsNullOrEmpty(building))
+                 building = GetNearestBuilding(); 
                 var resourceData2 = ResourceFile.Load($"data/world/buildings/{building}.json");
                 var interiorMetadata = JsonConvert.DeserializeObject<BuildingMetadata>(resourceData2.Load());
                 var distance = 99999f;

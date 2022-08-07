@@ -12,7 +12,7 @@ namespace Proline.ClassicOnline.SClassic.Buildings
 {
     public class CharacterApts
     {
-        private const string PropertyId = "apt_dpheights_he_01";
+        private const string PropertyId = "apt_richmaj_he_01";
         private List<Vector3> _buildingEntrances;
         private List<Vector3> _interiorExits;
         private Blip _blip;
@@ -54,7 +54,7 @@ namespace Proline.ClassicOnline.SClassic.Buildings
                             if (World.GetDistance(Game.PlayerPed.Position, entrance) < 2f)
                             {
                                 _enteredBuilding = WorldAPI.GetNearestBuilding();
-                                _neariestEntrance = WorldAPI.GetNearestBuildingEntrance();
+                                _neariestEntrance = WorldAPI.GetNearestBuildingEntrance(_enteredBuilding);
                                 _buildingVector = WorldAPI.GetBuildingWorldPos(_enteredBuilding);  
                                 var whereAreYouEntering = WorldAPI.EnterBuilding(_enteredBuilding, _neariestEntrance); 
                                 switch (whereAreYouEntering)
@@ -65,8 +65,8 @@ namespace Proline.ClassicOnline.SClassic.Buildings
                                 _targetArea = whereAreYouEntering;
                                 //WorldAPI.EnterProperty(PropertyId, _targetProperty, _neariestEntrance);
                                 _interior = WorldAPI.GetPropertyInterior(_targetProperty, whereAreYouEntering + "s");
-                                var spawnPoint = WorldAPI.GetPropertyEntry(_targetProperty, whereAreYouEntering + "s", _neariestEntrance);
-                                _lastPoint = WorldAPI.EnterInterior(_interior, spawnPoint);
+                                var interiorEntry = WorldAPI.GetPropertyEntry(_targetProperty, whereAreYouEntering + "s", _neariestEntrance);
+                                _lastPoint = WorldAPI.EnterInterior(_interior, interiorEntry);
                                 Game.PlayerPed.Position = _lastPoint; 
                                 RefreshExitPoints();
                                 stage = 1;
