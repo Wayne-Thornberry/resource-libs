@@ -15,31 +15,31 @@
       <HintPath>..\..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Proline.DBAccess.Proxies">
-      <HintPath>..\..\..\..\artifacts\UserManagment\Proline.DBAccess.Proxies.dll</HintPath>
+      <HintPath>E:\artifacts\UserManagment\Proline.DBAccess.Proxies.dll</HintPath>
     </Reference>
     <Reference Include="Proline.Resource.Eventing.Server">
-      <HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.Eventing.Server.dll</HintPath>
+      <HintPath>E:\artifacts\ResourceLibs\Server\Proline.Resource.Eventing.Server.dll</HintPath>
     </Reference>
     <Reference Include="Proline.Resource.Server">
-      <HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.Server.dll</HintPath>
+      <HintPath>E:\artifacts\ResourceLibs\Server\Proline.Resource.Server.dll</HintPath>
     </Reference>
     <Reference Include="Proline.Resource.Configuration.Client">
-      <HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.Configuration.Server.dll</HintPath>
+      <HintPath>E:\artifacts\ResourceLibs\Server\Proline.Resource.Configuration.Server.dll</HintPath>
     </Reference>
     <Reference Include="Proline.Resource.Framework.Server">
-      <HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.Framework.Server.dll</HintPath>
+      <HintPath>E:\artifacts\ResourceLibs\Server\Proline.Resource.Framework.Server.dll</HintPath>
     </Reference>
     <Reference Include="Proline.Resource.IO.Server">
-      <HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.IO.Server.dll</HintPath>
+      <HintPath>E:\artifacts\ResourceLibs\Server\Proline.Resource.IO.Server.dll</HintPath>
     </Reference>
     <Reference Include="Proline.Resource.Logging.Server">
-      <HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.Logging.Server.dll</HintPath>
+      <HintPath>E:\artifacts\ResourceLibs\Server\Proline.Resource.Logging.Server.dll</HintPath>
     </Reference>
     <Reference Include="Proline.Resource.Scripting.Server">
-      <HintPath>..\..\..\..\artifacts\ResourceLibs\Server\Proline.Resource.Scripting.Server.dll</HintPath>
+      <HintPath>E:\artifacts\ResourceLibs\Server\Proline.Resource.Scripting.Server.dll</HintPath>
     </Reference>
     <Reference Include="Proline.ServerAccess.IO.Server">
-      <HintPath>..\..\..\..\artifacts\ServerAccess\server\Proline.ServerAccess.IO.Server.dll</HintPath>
+      <HintPath>E:\artifacts\ServerAccess\server\Proline.ServerAccess.IO.Server.dll</HintPath>
     </Reference>
   </ItemGroup>
 
