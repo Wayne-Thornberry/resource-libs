@@ -14,18 +14,17 @@
         "Proline.Resource.Framework.Client",
         "Proline.Resource.Logging.Client",
         "Proline.Resource.Globals.Client", 
-        "Proline.CFXExtended.Core",
-        "Proline.ClassicOnline.GScripting",
-        "Proline.ClassicOnline.MBrain",
-        "Proline.ClassicOnline.MData",
-        "Proline.ClassicOnline.MDebug",
-        "Proline.ClassicOnline.MGame",
-        "Proline.ClassicOnline.MRendering",
-        "Proline.ClassicOnline.MConnection",
-        "Proline.ClassicOnline.MScreen",
-        "Proline.ClassicOnline.MScripting",
-        "Proline.ClassicOnline.MWorld",
-        "Proline.ClassicOnline.MShop",
+        "Proline.CFXExtended.Core", 
+        "Proline.ClassicOnline.CScriptBrain",
+        "Proline.ClassicOnline.CDataStream",
+        "Proline.ClassicOnline.CDebugActions",
+        "Proline.ClassicOnline.CGameLogic",
+        "Proline.ClassicOnline.CGameRendering",
+        "Proline.ClassicOnline.CNetConnection",
+        "Proline.ClassicOnline.CScreenRendering",
+        "Proline.ClassicOnline.CCoreSystem",
+        "Proline.ClassicOnline.CShopCatalogue",
+        "Proline.ClassicOnline.CWorldObjects",
         "Proline.ClassicOnline.SClassic"
     ], 
 
@@ -35,13 +34,16 @@
 
     "moduleConfigSection" : {
         "moduleCollection" :[
-			{"Name" : "MScripting", "Assembly" : "Proline.ClassicOnline.MScripting"},
-			{"Name" : "MBrain", "Assembly" : "Proline.ClassicOnline.MBrain"},
-			{"Name" : "MData", "Assembly" : "Proline.ClassicOnline.MData"},
-			{"Name" : "MConnection", "Assembly" : "Proline.ClassicOnline.MConnection"},
-			{"Name" : "MShop", "Assembly" : "Proline.ClassicOnline.MShop"},
-			{"Name" : "MGame", "Assembly" : "Proline.ClassicOnline.MGame"},
-			{"Name" : "MWorld", "Assembly" : "Proline.ClassicOnline.MWorld"}
+			{"Name" : "CCoreSystem", "Assembly" : "Proline.ClassicOnline.CCoreSystem"},
+			{"Name" : "CScriptBrain", "Assembly" : "Proline.ClassicOnline.CScriptBrain"},
+			{"Name" : "CDataStream", "Assembly" : "Proline.ClassicOnline.CDataStream"},
+			{"Name" : "CNetConnection", "Assembly" : "Proline.ClassicOnline.CNetConnection"},
+			{"Name" : "CDebugActions", "Assembly" : "Proline.ClassicOnline.CDebugActions"},
+			{"Name" : "CGameRendering", "Assembly" : "Proline.ClassicOnline.CGameRendering"},
+			{"Name" : "CScreenRendering", "Assembly" : "Proline.ClassicOnline.CScreenRendering"},
+			{"Name" : "CShopCatalogue", "Assembly" : "Proline.ClassicOnline.CShopCatalogue"},
+			{"Name" : "CGameLogic", "Assembly" : "Proline.ClassicOnline.CGameLogic"},
+			{"Name" : "CWorldObjects", "Assembly" : "Proline.ClassicOnline.CWorldObjects"}
         ]
     },
 	
