@@ -14,28 +14,28 @@
 		</Reference>
 		<PackageReference Include="CitizenFX.Core.$(Configuration)" Version="1.0.5179" /> 
 		<Reference Include="Proline.Modularization.Core.$(Configuration)">
-			<HintPath>..\..\..\..\artifacts\ModuleFramework\$(Configuration)\Proline.Modularization.Core.$(Configuration).dll</HintPath>
+			<HintPath>E:\artifacts\ModuleFramework\$(Configuration)\Proline.Modularization.Core.$(Configuration).dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.$(Configuration)">
-			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.$(Configuration).dll</HintPath>
+			<HintPath>E:\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.$(Configuration).dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.Configuration.$(Configuration)">
-			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Configuration.$(Configuration).dll</HintPath>
+			<HintPath>E:\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Configuration.$(Configuration).dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.Eventing.$(Configuration)">
-			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Eventing.$(Configuration).dll</HintPath>
+			<HintPath>E:\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Eventing.$(Configuration).dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.Framework.$(Configuration)">
-			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Framework.$(Configuration).dll</HintPath>
+			<HintPath>E:\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Framework.$(Configuration).dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.IO.$(Configuration)">
-			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.IO.$(Configuration).dll</HintPath>
+			<HintPath>E:\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.IO.$(Configuration).dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.Logging.$(Configuration)">
-			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Logging.$(Configuration).dll</HintPath>
+			<HintPath>E:\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Logging.$(Configuration).dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.Scripting.$(Configuration)">
-			<HintPath>..\..\..\..\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Scripting.$(Configuration).dll</HintPath>
+			<HintPath>E:\artifacts\ResourceLibs\$(Configuration)\Proline.Resource.Scripting.$(Configuration).dll</HintPath>
 		</Reference>
 	</ItemGroup>
 </Project>

@@ -38,9 +38,10 @@ Setup(ctx =>
 	// Executed BEFORE the first task.
 	Information("Running tasks...");
 
+
     packageVersion = $"{version}{prerelease}"; 
     var dir = Context.Environment.WorkingDirectory; 
-    outputDir = $"{artificatsOutputDir}/{dir.GetDirectoryName()}/";
+    outputDir = $"{artificatsOutputDir}/{dir.GetDirectoryName()}/"+$"{configuration}";
 
     resource = new ProjectInformation
     { 
