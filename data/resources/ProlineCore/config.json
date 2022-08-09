@@ -14,18 +14,7 @@
         "Proline.Resource.Framework.Client",
         "Proline.Resource.Logging.Client",
         "Proline.Resource.Globals.Client", 
-        "Proline.CFXExtended.Core", 
-        "Proline.ClassicOnline.CScriptBrain",
-        "Proline.ClassicOnline.CDataStream",
-        "Proline.ClassicOnline.CDebugActions",
-        "Proline.ClassicOnline.CGameLogic",
-        "Proline.ClassicOnline.CGameRendering",
-        "Proline.ClassicOnline.CNetConnection",
-        "Proline.ClassicOnline.CScreenRendering",
-        "Proline.ClassicOnline.CCoreSystem",
-        "Proline.ClassicOnline.CShopCatalogue",
-        "Proline.ClassicOnline.CWorldObjects",
-        "Proline.ClassicOnline.SClassic"
+        "Proline.CFXExtended.Core"
     ], 
 
     "LoggingConfiguration": {
@@ -35,6 +24,8 @@
     "moduleConfigSection" : {
         "moduleCollection" :[
 			{"Name" : "CCoreSystem", "Assembly" : "Proline.ClassicOnline.CCoreSystem"},
+			{"Name" : "CNativeEvents", "Assembly" : "Proline.ClassicOnline.CNativeEvents"},
+			{"Name" : "CPoolObjects", "Assembly" : "Proline.ClassicOnline.CPoolObjects"},
 			{"Name" : "CScriptBrain", "Assembly" : "Proline.ClassicOnline.CScriptBrain"},
 			{"Name" : "CDataStream", "Assembly" : "Proline.ClassicOnline.CDataStream"},
 			{"Name" : "CNetConnection", "Assembly" : "Proline.ClassicOnline.CNetConnection"},

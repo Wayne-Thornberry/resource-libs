@@ -7,6 +7,7 @@ version '1.0.0.0'
 
 client_script 'Proline.ClassicOnline.Resource.net.dll'
 files {
+'*.txt',
 '*.json',
 '*.dll',
 'data/**',

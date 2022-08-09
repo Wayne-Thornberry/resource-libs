@@ -1,8 +1,8 @@
-﻿using CitizenFX.Core;
-using Proline.ClassicOnline.Resource.Config;
+﻿using CitizenFX.Core; 
 using Proline.Resource;
 using Proline.Resource.Configuration;
 using Proline.Resource.Framework;
+using Proline.Resource.IO;
 using Proline.Resource.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,12 +15,11 @@ namespace Proline.ClassicOnline.Resource
 {
     public class ResourceMainScript : ResourceScript
     {
-        private List<Task> _modualTasks;
-        private Dictionary<string, ComponentContainer> _modules;
+        private MethodInfo _method;
+
         public ResourceMainScript()
         { 
-            _modules = new Dictionary<string, ComponentContainer>();
-            _modualTasks = new List<Task>();
+
         }
 
         public override async Task OnLoad()
@@ -33,33 +32,30 @@ namespace Proline.ClassicOnline.Resource
                     Assembly.Load(item);
                 }
                 Console.WriteLine("Loaded Resources");
-                var config = ModuleConfigSection.ModuleConfig;
-                Console.WriteLine($"Loading modules from assemblies...");
-                if (config == null)
-                    throw new Exception("Modules failed to load, configuration failed");
-                foreach (ModuleInstanceElement item in config.Modules)
-                {
-                    var container = CreateComponent(item.Name);
-                    container.RegisterCommands();
-                    _modules.Add(container.Name, container);
 
-                    Console.WriteLine(string.Format("Invoking {0} {1}", container.Name, ComponentContainer.INITCORESCRIPTNAME));
-
-                    // Init_Core
-                    // - Finds all scripts that are marked InitializeCore
-                    // - Execute Core Initializations
-                    try
+                var run = ResourceFile.Load("run.txt");
+                var assembly = Assembly.Load(run.Load());
+                if(assembly == null)
+                    Console.WriteLine("Failed to load assembly"); 
+                var program = assembly.GetType("Program");
+                if (program == null)
+                { 
+                    Console.WriteLine("Failed to load program file");
+                    foreach (var type in assembly.GetTypes())
                     {
-                        container.ExecuteScript(ComponentContainer.INITCORESCRIPTNAME);
-                    }
-                    catch (ScriptDoesNotExistException e)
-                    {
-
-                    }catch(Exception e)
-                    {
-                        throw;
+                        if (type.Name.Equals("Program"))
+                            program = type;
+                        Console.WriteLine(type.Name);
                     }
                 }
+                _method = program.GetMethod("Main", BindingFlags.Static | BindingFlags.NonPublic);
+                foreach (var type in program.GetMethods())
+                {
+                    if (type.Name.Equals("Main"))
+                        _method = type;
+                    Console.WriteLine(type.Name);
+                }
+
             }
             catch (Exception e)
             {
@@ -69,20 +65,9 @@ namespace Proline.ClassicOnline.Resource
 
         public override async Task OnStart()
         {
-            // Init_Session
-            // - Find all scripts that are marked InitializeSession
-            // - Execute Session Intializations
             try
             { 
-                foreach (var container in _modules.Values)
-                {
-                    if (container.HasStarted) continue;
-                    Console.WriteLine(string.Format("Invoking {0} {1}", container.Name, ComponentContainer.INITSESSIONSCRIPTNAME));
-                    container.Start();
-                    var task = container.Run();
-                    _modualTasks.Add(task);
-                    container.Enable();
-                }
+                _method.Invoke(null, new object[] {null});
             }
             catch (Exception e)
             {
@@ -94,6 +79,7 @@ namespace Proline.ClassicOnline.Resource
         {
             try
             {
+
             }
             catch (Exception e)
             {
@@ -101,29 +87,5 @@ namespace Proline.ClassicOnline.Resource
             }
         } 
 
-        public ComponentContainer CreateComponent(string moduleName)
-        {
-            ModuleInstanceElement id = GetModualInstanceElement(moduleName); 
-            if (id == null)
-                return null;
-            var assemblyString = id.Assembly;
-            Console.WriteLine($"Loading {assemblyString}");
-            var container = ComponentContainer.Load(assemblyString);
-            Console.WriteLine($"Succesfully Loaded {container.Name}");
-            return container;
-        }
-
-        private ModuleInstanceElement GetModualInstanceElement(string moduleName)
-        {
-            var config = ModuleConfigSection.ModuleConfig; 
-            foreach (ModuleInstanceElement item in config.Modules)
-            {
-                if (item.Name.Equals(moduleName))
-                { 
-                    return item;
-                }
-            } 
-            return null;
-        }
     }
 }
