@@ -12,10 +12,7 @@ files {
 '*.dll',
 'data/**',
 'html/**',
-'sounds/**',
-'sounds/demo.ogg',
-'html/index.html',
-'html/sounds/demo.ogg',
+'sounds/**'
 }
 
 ui_page 'html/index.html'

@@ -67,8 +67,7 @@ namespace Proline.ClassicOnline.Resource
         public override async Task OnStart()
         {
             try
-            {
-                Component.InitializeComponents();
+            { 
                 _method.Invoke(null, new object[] {null});
             }
             catch (Exception e)
