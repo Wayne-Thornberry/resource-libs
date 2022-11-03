@@ -1,4 +1,5 @@
-﻿using CitizenFX.Core; 
+﻿using CitizenFX.Core;
+using Proline.ClassicOnline.EventQueue;
 using Proline.Resource;
 using Proline.Resource.Configuration;
 using Proline.Resource.Framework;
@@ -66,7 +67,8 @@ namespace Proline.ClassicOnline.Resource
         public override async Task OnStart()
         {
             try
-            { 
+            {
+                Component.InitializeComponents();
                 _method.Invoke(null, new object[] {null});
             }
             catch (Exception e)

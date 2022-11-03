@@ -14,7 +14,7 @@ var toolsDir = "./code/tools";
 
 // a full build would be to build the common first, libs second, resources third, components fourth, tools fifth
 
-var artificatsOutputDir = "./../../../artifacts";
+var artificatsOutputDir = "./../../artifacts";
 
 
 class ProjectInformation
