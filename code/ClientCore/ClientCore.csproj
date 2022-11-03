@@ -1,0 +1,50 @@
+﻿<Project Sdk="CitizenFX.Sdk.Client/0.2.3">
+	<PropertyGroup> 
+		<Platforms>AnyCPU</Platforms>
+		<AssemblyName>$(MSBuildProjectName).net</AssemblyName>
+
+	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="ModuleScript.cs" />
+	</ItemGroup>
+ 
+ 
+
+  <ItemGroup> 
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\vendor\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.ClassicOnline.EventQueue">
+      <HintPath>..\..\..\..\vendor\Components\Proline.ClassicOnline.EventQueue.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Client">
+      <HintPath>E:\artifacts\ResourceLibs\Client\Proline.Resource.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Configuration.Client">
+      <HintPath>E:\artifacts\ResourceLibs\Client\Proline.Resource.Configuration.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Framework.Client">
+      <HintPath>E:\artifacts\ResourceLibs\Client\Proline.Resource.Framework.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.IO.Client">
+      <HintPath>E:\artifacts\ResourceLibs\Client\Proline.Resource.IO.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Logging.Client">
+      <HintPath>E:\artifacts\ResourceLibs\Client\Proline.Resource.Logging.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Proline.Resource.Scripting.Client">
+      <HintPath>E:\artifacts\ResourceLibs\Client\Proline.Resource.Scripting.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="update.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="update.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
