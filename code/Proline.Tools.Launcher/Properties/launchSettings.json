@@ -2,7 +2,7 @@
   "profiles": {
     "Proline.Tools.Launcher": {
       "commandName": "Project",
-      "workingDirectory": "E:\\OneDrive\\Repo\\Project Online\\code\\tools\\ServerLauncher\\Proline.Tools.Launcher"
+      "workingDirectory": "D:\\ProjectOnline"
     }
   }
 }
