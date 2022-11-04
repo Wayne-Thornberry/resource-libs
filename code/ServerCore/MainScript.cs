@@ -2,8 +2,7 @@
 using Proline.Resource;
 using Proline.Resource.Configuration;
 using Proline.Resource.Framework;
-using Proline.Resource.Logging;
-using Proline.ServerAccess.IO.Actions;
+using Proline.Resource.Logging; 
 using ProlineCore.Events;
 using ProlineCore.Events.Special;
 using ProlineCore.Internal;
@@ -17,10 +16,10 @@ namespace ProlineCore
     {
         public override async Task OnLoad()
         {
-            ReadFileAction.SubscribeEvent();
-            WriteFileAction.SubscribeEvent();
-            ConsoleWriteLineAction.SubscribeEvent();
-            ConsoleWriteAction.SubscribeEvent();
+            //ReadFileAction.SubscribeEvent();
+            //WriteFileAction.SubscribeEvent();
+            //ConsoleWriteLineAction.SubscribeEvent();
+            //ConsoleWriteAction.SubscribeEvent();
             LoadResources();
         }
 

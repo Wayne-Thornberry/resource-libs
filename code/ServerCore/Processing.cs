@@ -1,5 +1,4 @@
-﻿using CitizenFX.Core;
-using Proline.DBAccess.Proxies;
+﻿using CitizenFX.Core; 
 using System;
 using System.Collections.Generic;
 using System.Linq;
