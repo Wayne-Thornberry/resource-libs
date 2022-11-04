@@ -1,7 +1,6 @@
 ﻿using CitizenFX.Core;
 using Proline.Resource.Eventing;
 using ProlineCore.Events;
-using ProlineCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;

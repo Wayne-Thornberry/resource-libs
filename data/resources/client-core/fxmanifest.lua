@@ -5,7 +5,7 @@ author 'Wayno717'
 description 'Project Online Freemode Game'
 version '1.0.0.0'
 
-client_script 'Proline.ClassicOnline.Resource.net.dll'
+client_script 'ClientCore.net.dll'
 files {
 '*.txt',
 '*.json',

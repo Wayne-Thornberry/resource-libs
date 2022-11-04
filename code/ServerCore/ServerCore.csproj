@@ -4,6 +4,11 @@
 		<Platforms>AnyCPU</Platforms> 
 		<AssemblyName>$(MSBuildProjectName).net</AssemblyName>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="Old\**" />
+	  <EmbeddedResource Remove="Old\**" />
+	  <None Remove="Old\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CitizenFX.Core.Server" Version="1.0.5179" />
