@@ -1,0 +1,24 @@
+
+  { 
+    "Id" : "gar_mp_two_layout", 
+    "VehicleSlots" : [
+      {
+        "Index" : 0,
+        "Position" : {
+          "X" : 175.5,
+          "Y" : -1003.65,
+          "Z" : -99.71
+        },
+        "Heading" : 360
+      },
+      {
+        "Index" : 1,
+        "Position" : {
+          "X" : 171.5,
+          "Y" : -1003.65,
+          "Z" : -99.71
+        },
+        "Heading" : 360
+      }
+    ]
+  }

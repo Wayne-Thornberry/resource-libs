@@ -1,0 +1,35 @@
+{
+    "Sections" : [
+        "Resources",
+        "moduleConfigSection",
+        "scriptingConfigSection",
+        "moduleBrainSection",
+        "moduleWorldSection"
+    ],
+
+    "Resources":[
+        
+    ], 
+
+    "LoggingConfiguration": {
+
+    },
+
+    "moduleConfigSection" : {
+        
+    },
+	
+	"scriptingConfigSection" :{ 
+        
+    },
+	"moduleBrainSection" :{ 
+		"Data" : {
+                
+		}
+    },
+    "moduleWorldSection" : { 
+		"Data" : {
+                
+		}
+    } 
+}

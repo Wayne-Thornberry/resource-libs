@@ -1,0 +1,15 @@
+[ 
+    "CCoreSystem",
+    "CNativeEvents",
+    "CPoolObjects",
+    "CDataStream",
+    "CDebugActions",
+    "CGameLogic",
+    "CGameRendering",
+    "CNetConnection",
+    "CScriptAreas",
+    "CScriptObjs",
+    "CScreenRendering",
+    "CShopCatalogue",
+    "CWorldObjects"
+]

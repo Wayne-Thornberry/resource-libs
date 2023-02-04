@@ -1,0 +1,62 @@
+[
+    {
+      "lockHash": "CU_GUNRUN_CLOTHES",
+      "cost": 0,
+      "textLabel": "CLO_GRM_U_9_7",
+      "uniqueNameHash": "DLC_MP_GR_M_JBIB_9_7",
+      "eShopEnum": "CLO_SHOP_LOW",
+      "locate": 204,
+      "scriptSaveData": "0",
+      "restrictionTags": {
+        "Item": [
+          {
+            "tagNameHash": "BIKER_DRAW_8"
+          },
+          {
+            "tagNameHash": "LONG_SLEEVE"
+          },
+          {
+            "tagNameHash": "JACKET"
+          },
+          {
+            "tagNameHash": "CLOSED_JACKET"
+          },
+          {
+            "tagNameHash": "JACKET_ONLY"
+          }
+        ]
+      },
+      "forcedComponents": {
+        "Item": [
+          {
+            "nameHash": "DLC_MP_H3_M_BERD_9_5",
+            "enumValue": 12,
+            "eCompType": "ANCHOR_HEAD"
+          }
+        ]
+      },
+      "variantComponents": "",
+      "variantProps": "",
+      "drawableIndex": 0,
+      "localDrawableIndex": 9,
+      "eCompType": "PV_COMP_JBIB",
+      "textureIndex": 7,
+      "isInOutfit": false
+    },
+    {
+      "lockHash": "CU_HEIST3_MASKS",
+      "cost": 0,
+      "textLabel": "CLO_H3M_B_9_5",
+      "uniqueNameHash": "DLC_MP_H3_M_BERD_9_5",
+      "eShopEnum": "CLO_SHOP_LOW",
+      "locate": 0,
+      "scriptSaveData": "0",
+      "variantComponents": "",
+      "variantProps": "",
+      "drawableIndex": 0,
+      "localDrawableIndex": 9,
+      "eCompType": "PV_COMP_BERD",
+      "textureIndex": 5,
+      "isInOutfit": false
+    }
+]

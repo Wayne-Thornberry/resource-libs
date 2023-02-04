@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net452</TargetFramework>
+		<Platforms>AnyCPU</Platforms>
+		<Configurations>Debug;Release;Client;Server</Configurations>
+		<AssemblyName>$(MSBuildProjectName).$(Configuration)</AssemblyName>
+		<DefineConstants Condition="'$(Configuration)|$(Platform)'=='Client|AnyCPU'">TRACE;CLIENT;DEBUG;RELEASE;NET452</DefineConstants>
+		<DefineConstants Condition="'$(Configuration)|$(Platform)'=='Server|AnyCPU'">TRACE;SERVER;DEBUG;RELEASE;NET452</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CitizenFX.Core.$(Configuration)" Version="1.0.5179" />
+	</ItemGroup>
+	
+	<ItemGroup> 
+		<Reference Include="Newtonsoft.Json">
+		  <HintPath>..\..\vendor\Newtonsoft\Newtonsoft.Json.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.$(Configuration)">
+		  <HintPath>..\..\vendor\ResourceLibs\$(Configuration)\Proline.Resource.$(Configuration).dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Configuration.$(Configuration)">
+		  <HintPath>..\..\vendor\ResourceLibs\$(Configuration)\Proline.Resource.Configuration.$(Configuration).dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Eventing.$(Configuration)">
+		  <HintPath>..\..\vendor\ResourceLibs\$(Configuration)\Proline.Resource.Eventing.$(Configuration).dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Framework.$(Configuration)">
+		  <HintPath>..\..\vendor\ResourceLibs\$(Configuration)\Proline.Resource.Framework.$(Configuration).dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Globals.$(Configuration)">
+		  <HintPath>..\..\vendor\ResourceLibs\Proline.Resource.Globals.$(Configuration).dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.IO.$(Configuration)">
+		  <HintPath>..\..\vendor\ResourceLibs\$(Configuration)\Proline.Resource.IO.$(Configuration).dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Logging.$(Configuration)">
+		  <HintPath>..\..\vendor\ResourceLibs\$(Configuration)\Proline.Resource.Logging.$(Configuration).dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Scripting.$(Configuration)">
+		  <HintPath>..\..\vendor\ResourceLibs\$(Configuration)\Proline.Resource.Scripting.$(Configuration).dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+</Project>

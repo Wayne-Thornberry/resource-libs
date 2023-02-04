@@ -1,0 +1,22 @@
+[
+	{
+		"ScriptName" : "ObAtm",
+		"ModelHash"  : "prop_atm_03",
+		"ActivationRange" : 30
+	},
+	{
+		"ScriptName" : "ObCashRegister",
+		"ModelHash"  : "prop_till_01",
+		"ActivationRange" : 30
+	},
+	{
+		"ScriptName" : "ObVaultDoor",
+		"ModelHash"  : "v_ilev_gb_vauldr",
+		"ActivationRange" : 30
+	},
+	{
+		"ScriptName" : "ObBankTruck",
+		"ModelName"  : 1747439474,
+		"ActivationRange" : 30
+	}
+]

@@ -1,0 +1,78 @@
+{
+    "OutfitName" : "",
+    "Components" : 
+   [
+        
+        {
+            "ComponentIndex" : 0,
+            "ComponentPallet" : 0,
+            "ComponentTexture" : 0
+        },
+        
+        {
+            "ComponentIndex" : 0,
+            "ComponentPallet" : 0,
+            "ComponentTexture" : 0
+        },
+        
+        {
+            "ComponentIndex" : 1,
+            "ComponentPallet" : 0,
+            "ComponentTexture" : 1
+        },
+        
+        {
+            "ComponentIndex" : 0,
+            "ComponentPallet" : 0,
+            "ComponentTexture" : 0
+        },
+        
+        {
+            "ComponentIndex" : 0,
+            "ComponentPallet" : 0,
+            "ComponentTexture" : 0
+        },
+        
+        {
+            "ComponentIndex" : 0,
+            "ComponentPallet" : 0,
+            "ComponentTexture" : 0
+        },
+        
+        {
+            "ComponentIndex" : 1,
+            "ComponentPallet" : 0,
+            "ComponentTexture" : 0
+        },
+        
+        {
+            "ComponentIndex" : 0,
+            "ComponentPallet" : 0,
+            "ComponentTexture" : 0
+        },
+        
+        {
+            "ComponentIndex" : 0,
+            "ComponentPallet" : 0,
+            "ComponentTexture" : 0
+        },
+        
+        {
+            "ComponentIndex" : 0,
+            "ComponentPallet" : 0,
+            "ComponentTexture" : 0
+        },
+        
+        {
+            "ComponentIndex" : 0,
+            "ComponentPallet" : 0,
+            "ComponentTexture" : 0
+        },
+        
+        {
+            "ComponentIndex" : 0,
+            "ComponentPallet" : 0,
+            "ComponentTexture" : 1
+        }
+     ]
+}

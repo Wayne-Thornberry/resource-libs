@@ -1,0 +1,13 @@
+{
+    "Id": "gar_dpheights_02",
+    "Interior": "mp_high_garage",
+    "Building": "apt_dpheights",
+    "ExteriorEntrances": {
+        "gar_dpheights_veh_frt_ent_01": "mp_high_garage_01_ent_ped_01"
+    },
+    "InteriorExits": {
+        "mp_high_garage_ext_ped_01": "gar_high_pier_02_ent_ped_01",
+        "mp_high_garage_ext_ped_02": "gar_dpheights_ped_frt_ext_02",
+        "mp_high_garage_ext_ped_03": "gar_dpheights_ped_frt_ext_02"
+    }
+}

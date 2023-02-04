@@ -1,0 +1,11 @@
+{
+  "Id": "apt_dpheights_02",
+  "Building": "apt_dpheights",
+  "Interior": "apt_high_pier_02",
+  "ExteriorEntrances": {
+    "apt_dpheights_ped_frt_ent_01": "apt_high_pier_02_ent_ped_01"
+  },
+  "InteriorExits": {
+    "apt_high_pier_02_ext_ped_01": "apt_dpheights_ped_frt_ext_01"
+  }
+}

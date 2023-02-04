@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net452</TargetFramework>
+		<Platforms>AnyCPU</Platforms>
+		<Configurations>Debug;Release;Client;Server</Configurations>
+		<AssemblyName>$(MSBuildProjectName).$(Configuration)</AssemblyName>
+		<DefineConstants Condition="'$(Configuration)|$(Platform)'=='Client|AnyCPU'">TRACE;CLIENT;DEBUG;RELEASE;NET452</DefineConstants>
+		<DefineConstants Condition="'$(Configuration)|$(Platform)'=='Server|AnyCPU'">TRACE;SERVER;DEBUG;RELEASE;NET452</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CitizenFX.Core.$(Configuration)" Version="1.0.5179" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Proline.Resource.Eventing\Proline.Resource.Eventing.csproj" />
+	  <ProjectReference Include="..\Proline.Resource.Globals\Proline.Resource.Globals.csproj" />
+	  <ProjectReference Include="..\Proline.Resource.Logging\Proline.Resource.Logging.csproj" />
+	</ItemGroup>
+</Project>

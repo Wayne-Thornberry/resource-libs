@@ -1,0 +1,55 @@
+{
+    "Sections" : [
+        "Resources",
+        "moduleConfigSection",
+        "scriptingConfigSection",
+        "moduleBrainSection",
+        "moduleWorldSection"
+    ],
+
+    "Resources":[
+        "Proline.Resource.Client",
+        "Proline.Resource.Configuration.Client",
+        "Proline.Resource.IO.Client",
+        "Proline.Resource.Framework.Client",
+        "Proline.Resource.Logging.Client",
+        "Proline.Resource.Globals.Client", 
+    ], 
+
+    "LoggingConfiguration": {
+
+    },
+
+    "moduleConfigSection" : {
+        "moduleCollection" :[
+			{"Name" : "CCoreSystem", "Assembly" : "CCoreSystem"},
+			{"Name" : "CNativeEvents", "Assembly" : "CNativeEvents"},
+			{"Name" : "CPoolObjects", "Assembly" : "CPoolObjects"},
+			{"Name" : "CScriptBrain", "Assembly" : "CScriptBrain"},
+			{"Name" : "CDataStream", "Assembly" : "CDataStream"},
+			{"Name" : "CNetConnection", "Assembly" : "CNetConnection"},
+			{"Name" : "CDebugActions", "Assembly" : "CDebugActions"},
+			{"Name" : "CGameRendering", "Assembly" : "CGameRendering"},
+			{"Name" : "CScreenRendering", "Assembly" : "CScreenRendering"},
+			{"Name" : "CShopCatalogue", "Assembly" : "CShopCatalogue"},
+			{"Name" : "CGameLogic", "Assembly" : "CGameLogic"},
+			{"Name" : "CWorldObjects", "Assembly" : "CWorldObjects"}
+        ]
+    },
+	
+	"scriptingConfigSection" :{ 
+        "levelScriptAssemblies" : [
+			"Assembly-CSharp" 
+		]
+    },
+	"moduleBrainSection" :{ 
+		"Data" : {
+                
+		}
+    },
+    "moduleWorldSection" : { 
+		"Data" : {
+                
+		}
+    } 
+}

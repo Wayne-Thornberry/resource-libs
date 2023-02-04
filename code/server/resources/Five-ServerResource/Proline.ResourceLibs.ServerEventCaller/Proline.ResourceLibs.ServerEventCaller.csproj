@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework> 
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Proline.Resource.Eventing.Client">
+      <HintPath>..\vendor\ProjectOnlineClient\Proline.Resource.Eventing.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,22 @@
+{
+    "Id": "apt_high_pier_01",
+    "Tag" : "Apartment", 
+    "AccessPoints": [
+        {
+            "Id": "apt_high_pier_01_ext_ped_01",
+            "DoorPosition": {
+                "X": -1457.28162,
+                "Y": -520.0082,
+                "Z": 68.55664
+            },
+            "OnFoot" :{ 
+                "Heading": 90,
+                "Position": {
+                    "X": -1459.46265,
+                    "Y": -521.50824,
+                    "Z": 68.55664
+                }
+            }
+        }
+    ]
+}

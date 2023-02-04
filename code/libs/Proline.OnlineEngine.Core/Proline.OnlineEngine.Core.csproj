@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net452</TargetFramework>
+		<Platforms>AnyCPU</Platforms>
+		<Configurations>Debug;Release</Configurations>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="CitizenFX.Core.Client" Version="1.0.5738" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\components\CAddionalEvents\CAddionalEvents.csproj" />
+	  <ProjectReference Include="..\..\components\CCoreSystem\CCoreSystem.csproj" />
+	  <ProjectReference Include="..\..\components\CDataStream\CDataStream.csproj" />
+	  <ProjectReference Include="..\..\components\CDebugActions\CDebugActions.csproj" />
+	  <ProjectReference Include="..\..\components\CGameLogic\CGameLogic.csproj" />
+	  <ProjectReference Include="..\..\components\CGameRendering\CGameRendering.csproj" />
+	  <ProjectReference Include="..\..\components\CMissionManager\CMissionManager.csproj" />
+	  <ProjectReference Include="..\..\components\CNativeEvents\CNativeEvents.csproj" />
+	  <ProjectReference Include="..\..\components\CNetConnection\CNetConnection.csproj" />
+	  <ProjectReference Include="..\..\components\CPoolObjects\CPoolObjects.csproj" />
+	  <ProjectReference Include="..\..\components\CScreenRendering\CScreenRendering.csproj" />
+	  <ProjectReference Include="..\..\components\CScriptAreas\CScriptAreas.csproj" />
+	  <ProjectReference Include="..\..\components\CScriptObjs\CScriptObjs.csproj" />
+	  <ProjectReference Include="..\..\components\CShopCatalogue\CShopCatalogue.csproj" />
+	  <ProjectReference Include="..\..\components\CWorldObjects\CWorldObjects.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="CitizenFX.Core.Client">
+		  <HintPath>..\..\..\vendor\OnlineEngine\CitizenFX.Core.Client.dll</HintPath>
+		</Reference>
+		<Reference Include="Newtonsoft.Json">
+		  <HintPath>..\..\..\vendor\Newtonsoft.Json.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.ClassicOnline.EventQueue">
+		  <HintPath>..\..\..\vendor\Components\Proline.ClassicOnline.EventQueue.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Configuration.Client">
+			<HintPath>..\..\..\vendor\ProjectOnline\Proline.Resource.Configuration.Client.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Framework.Client">
+			<HintPath>..\..\..\vendor\ProjectOnline\Proline.Resource.Framework.Client.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.IO.Client">
+			<HintPath>..\..\..\vendor\ProjectOnline\Proline.Resource.IO.Client.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Logging.Client">
+			<HintPath>..\..\..\vendor\ProjectOnline\Proline.Resource.Logging.Client.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Scripting.Client">
+			<HintPath>..\..\..\vendor\ProjectOnline\Proline.Resource.Scripting.Client.dll</HintPath>
+		</Reference> 
+	</ItemGroup>
+
+</Project>

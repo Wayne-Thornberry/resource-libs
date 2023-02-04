@@ -1,0 +1,10 @@
+{
+    "Version" : "1.0",
+    "Vehicles" : [
+        {
+            "Name" : "Adder",
+            "Model" : "Adder",
+            "Price" : 200000 
+        }
+    ]
+}

@@ -1,0 +1,50 @@
+{
+  "Id": "apt_dpheights",
+  "WorldPos": {
+    "X": -1454.78064,
+    "Y": -536.2031
+  },
+  "AccessPoints": [
+    {
+      "Id": "apt_dpheights_ped_frt_ent_01",
+      "DoorPosition": {
+        "X": -1443.171,
+        "Y": -544.501,
+        "Z": 33.74184
+      },
+      "ExitOnFoot": { 
+        "Heading": 180,
+        "Position": {
+          "X": -1441.15442,
+          "Y": -547.3523,
+          "Z": 33.7418365
+        }
+      }
+    },
+    {
+      "Id": "gar_dpheights_veh_bck_ent_01",
+      "Function": "Garage",
+      "DoorPosition": {
+        "X": -1455.79871,
+        "Y": -503.839539,
+        "Z": 30.6246872
+      },
+      "ExitOnFoot": { 
+        "Heading": 180,
+        "Position": {
+          "X": -1456.84265,
+          "Y": -501.7008,
+          "Z": 30.9505157
+        }
+      },
+      "ExitInVehicle": { 
+        "Heading": 180,
+        "Position": {
+          "X": -1461.88745,
+          "Y": -493.3208,
+          "Z": 31.9736271
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+    "Id": "apt_high_rich_01",
+    "Tag" : "Apartment", 
+    "AccessPoints": [
+        {
+            "Id": "apt_high_rich_01_ext_ped_01",
+            "DoorPosition": {"X":-913.5852,"Y":-365.744171,"Z":108.440323},
+            "OnFoot" :{
+                "Heading": 90,
+                "Position": {"X":-915.8223,"Y":-366.935059,"Z":108.440323} 
+            }
+        }
+    ]
+}
