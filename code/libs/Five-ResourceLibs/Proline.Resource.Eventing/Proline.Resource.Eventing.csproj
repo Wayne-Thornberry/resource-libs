@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net452</TargetFramework>
 		<Platforms>AnyCPU</Platforms>
@@ -14,9 +14,12 @@
 	  <ProjectReference Include="..\Proline.Resource.Console\Proline.Resource.csproj" />
 	</ItemGroup>
 
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="xcopy /Y /I /E &quot;$(TargetDir)\*.*&quot; &quot;$(SolutionDir)\..\..\..\artifacts\$(ProjectName)\$(ConfigurationName)\&quot;" />
+	</Target>
 	<ItemGroup>
 	  <Reference Include="Newtonsoft.Json">
-		  <HintPath>..\..\vendor\Newtonsoft.Json.dll</HintPath>
+		  <HintPath>..\..\..\..\vendor\NewtonsoftJson\V10.0-Portable\Newtonsoft.Json.dll</HintPath>
 	  </Reference>
 	</ItemGroup> 
 

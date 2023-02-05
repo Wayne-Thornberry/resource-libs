@@ -17,9 +17,12 @@
 		<ProjectReference Include="..\Proline.Resource.File\Proline.Resource.IO.csproj" />
 	</ItemGroup>
 
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="xcopy /Y /I /E &quot;$(TargetDir)\*.*&quot; &quot;$(SolutionDir)\..\..\..\artifacts\$(ProjectName)\$(ConfigurationName)\&quot;" />
+	</Target>
 	<ItemGroup>
 		<Reference Include="Newtonsoft.Json">
-			<HintPath>..\..\vendor\Newtonsoft.Json.dll</HintPath>
+		  <HintPath>..\..\..\..\vendor\NewtonsoftJson\V10.0-Portable\Newtonsoft.Json.dll</HintPath>
 		</Reference>
 		<Reference Include="System" />
 		<Reference Include="System.Core" />

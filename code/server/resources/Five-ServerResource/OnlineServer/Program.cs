@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System; 
 using System.Collections.Generic;
 using Proline.Resource.Eventing; 
 using System.Threading;

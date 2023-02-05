@@ -8,37 +8,38 @@
     <PackageReference Include="Confluent.Kafka" Version="1.4.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Proline.Server.TradingAPI\CTrading.csproj" />
-    <ProjectReference Include="..\Proline.ServerAccess.IO\CInputOutput.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-	  <Reference Include="Proline.ClassicOnline.EventQueue.Server">
-	    <HintPath>..\..\vendor\Component\server\Proline.ClassicOnline.EventQueue.Server.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Proline.Resource.Server">
-		  <HintPath>..\..\vendor\ResourceLibs\server\Proline.Resource.Server.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Proline.Resource.Configuration.Server">
-		  <HintPath>..\..\vendor\ResourceLibs\server\Proline.Resource.Configuration.Server.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Proline.Resource.Eventing.Server">
-		  <HintPath>..\..\vendor\ResourceLibs\server\Proline.Resource.Eventing.Server.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Proline.Resource.Framework.Server">
-		  <HintPath>..\..\vendor\ResourceLibs\server\Proline.Resource.Framework.Server.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Proline.Resource.IO.Server">
-		  <HintPath>..\..\vendor\ResourceLibs\server\Proline.Resource.IO.Server.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Proline.Resource.Logging.Server">
-		  <HintPath>..\..\vendor\ResourceLibs\server\Proline.Resource.Logging.Server.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Proline.Resource.Scripting.Server">
-		  <HintPath>..\..\vendor\ResourceLibs\server\Proline.Resource.Scripting.Server.dll</HintPath>
-	  </Reference>
-	  <Reference Include="System.Net.Http" />
-  </ItemGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="xcopy /Y /I /E &quot;$(TargetDir)\*.*&quot; &quot;$(SolutionDir)\..\..\..\..\artifacts\$(SolutionName)\$(ProjectName)\$(ConfigurationName)\&quot;" />
+	</Target>
+	<ItemGroup>
+		<Reference Include="Microsoft.CSharp" />
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>..\..\..\..\..\vendor\NewtonsoftJson\V10.0-Portable\Newtonsoft.Json.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.ClassicOnline.EventQueue.Server">
+			<HintPath>..\..\..\..\..\artifacts\Proline.ClassicOnline.EventQueue\Server\Proline.ClassicOnline.EventQueue.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Server">
+			<HintPath>..\..\..\..\..\artifacts\Proline.Resource\Server\Proline.Resource.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Configuration.Server">
+			<HintPath>..\..\..\..\..\artifacts\Proline.Resource.Configuration\Server\Proline.Resource.Configuration.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Eventing.Server">
+			<HintPath>..\..\..\..\..\artifacts\Proline.Resource.Eventing\Server\Proline.Resource.Eventing.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Framework.Server">
+			<HintPath>..\..\..\..\..\artifacts\Proline.Resource.Framework\Server\Proline.Resource.Framework.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.IO.Server">
+			<HintPath>..\..\..\..\..\artifacts\Proline.Resource.IO\Server\Proline.Resource.IO.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Logging.Server">
+			<HintPath>..\..\..\..\..\artifacts\Proline.Resource.Logging\Server\Proline.Resource.Logging.Server.dll</HintPath>
+		</Reference>
+		<Reference Include="Proline.Resource.Scripting.Server">
+			<HintPath>..\..\..\..\..\artifacts\Proline.Resource.Scripting\Server\Proline.Resource.Scripting.Server.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
 </Project>

@@ -11,6 +11,9 @@
 	<ItemGroup>
 		<PackageReference Include="CitizenFX.Core.$(Configuration)" Version="1.0.5179" />
 	</ItemGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="xcopy /Y /I /E &quot;$(TargetDir)\*.*&quot; &quot;$(SolutionDir)\..\..\..\artifacts\$(ProjectName)\$(ConfigurationName)\&quot;" />
+	</Target>
 	<ItemGroup>
 	  <ProjectReference Include="..\Proline.Resource.Eventing\Proline.Resource.Eventing.csproj" />
 	  <ProjectReference Include="..\Proline.Resource.Globals\Proline.Resource.Globals.csproj" />

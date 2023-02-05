@@ -2,38 +2,44 @@
 
   <PropertyGroup>
     <TargetFramework>net452</TargetFramework>
-	  <AssemblyName>$(MSBuildProjectName)</AssemblyName>
-	  <DefineConstants Condition="'$(Configuration)|$(Platform)'=='Client|AnyCPU'">TRACE;DEBUG;RELEASE;NET452</DefineConstants>
-	  <DefineConstants Condition="'$(Configuration)|$(Platform)'=='Server|AnyCPU'">TRACE;DEBUG;RELEASE;NET452</DefineConstants>
+	  <AssemblyName>$(MSBuildProjectName)</AssemblyName> 
 	  <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="xcopy /Y /I /E &quot;$(TargetDir)\*.*&quot; &quot;$(SolutionDir)\..\..\..\..\artifacts\$(SolutionName)\$(ProjectName)\$(ConfigurationName)\&quot;" />
+	</Target>
+	<ItemGroup>
+		<PackageReference Include="CitizenFX.Core.Server" Version="1.0.5738" />
+	</ItemGroup>
 	<ItemGroup>
 		<Reference Include="Microsoft.CSharp" />
+
 		<Reference Include="Newtonsoft.Json">
-			<HintPath>..\..\vendor\Newtonsoft.Json.dll</HintPath>
+			<HintPath>..\..\..\..\..\vendor\NewtonsoftJson\V10.0-Portable\Newtonsoft.Json.dll</HintPath>
 		</Reference>
-		<PackageReference Include="CitizenFX.Core.Server" Version="1.0.5179" />
+		<Reference Include="Proline.ClassicOnline.EventQueue.Server">
+			<HintPath>..\..\..\..\..\artifacts\Proline.ClassicOnline.EventQueue\Server\Proline.ClassicOnline.EventQueue.Server.dll</HintPath>
+		</Reference>
 		<Reference Include="Proline.Resource.Server">
-			<HintPath>..\..\vendor\ResourceLibs\server\Proline.Resource.Server.dll</HintPath>
+			<HintPath>..\..\..\..\..\artifacts\Proline.Resource\Server\Proline.Resource.Server.dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.Configuration.Server">
-			<HintPath>..\..\vendor\ResourceLibs\server\Proline.Resource.Configuration.Server.dll</HintPath>
+			<HintPath>..\..\..\..\..\artifacts\Proline.Resource.Configuration\Server\Proline.Resource.Configuration.Server.dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.Eventing.Server">
-			<HintPath>..\..\vendor\ResourceLibs\server\Proline.Resource.Eventing.Server.dll</HintPath>
+			<HintPath>..\..\..\..\..\artifacts\Proline.Resource.Eventing\Server\Proline.Resource.Eventing.Server.dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.Framework.Server">
-			<HintPath>..\..\vendor\ResourceLibs\server\Proline.Resource.Framework.Server.dll</HintPath>
+			<HintPath>..\..\..\..\..\artifacts\Proline.Resource.Framework\Server\Proline.Resource.Framework.Server.dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.IO.Server">
-			<HintPath>..\..\vendor\ResourceLibs\server\Proline.Resource.IO.Server.dll</HintPath>
+			<HintPath>..\..\..\..\..\artifacts\Proline.Resource.IO\Server\Proline.Resource.IO.Server.dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.Logging.Server">
-			<HintPath>..\..\vendor\ResourceLibs\server\Proline.Resource.Logging.Server.dll</HintPath>
+			<HintPath>..\..\..\..\..\artifacts\Proline.Resource.Logging\Server\Proline.Resource.Logging.Server.dll</HintPath>
 		</Reference>
 		<Reference Include="Proline.Resource.Scripting.Server">
-			<HintPath>..\..\vendor\ResourceLibs\server\Proline.Resource.Scripting.Server.dll</HintPath>
+			<HintPath>..\..\..\..\..\artifacts\Proline.Resource.Scripting\Server\Proline.Resource.Scripting.Server.dll</HintPath>
 		</Reference>
-		<Reference Include="System.Net.Http" />
 	</ItemGroup>
 </Project>

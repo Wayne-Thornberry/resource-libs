@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Proline.Resource.Eventing;
-using Proline.ResourceLibs.ServerEventCaller;
 
 namespace CShopCatalogue
 {

@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net452</TargetFramework>
+		<Platforms>AnyCPU</Platforms>
+		<Configurations>Debug;Release</Configurations>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="CitizenFX.Core.Client" Version="1.0.5738" />
+	</ItemGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="xcopy /Y /I /E &quot;$(TargetDir)\*.*&quot; &quot;$(SolutionDir)\..\..\..\..\artifacts\$(ProjectName)\$(ConfigurationName)\&quot;" />
+	</Target>
+	<ItemGroup>
+		<Reference Include="CAddionalEvents">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CAddionalEvents\Debug\CAddionalEvents.dll</HintPath>
+		</Reference>
+		<Reference Include="CCoreSystem">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CCoreSystem\Debug\CCoreSystem.dll</HintPath>
+		</Reference>
+		<Reference Include="CDataStream">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CDataStream\Debug\CDataStream.dll</HintPath>
+		</Reference>
+		<Reference Include="CDebugActions">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CDebugActions\Debug\CDebugActions.dll</HintPath>
+		</Reference>
+		<Reference Include="CGameLogic">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CGameLogic\Debug\CGameLogic.dll</HintPath>
+		</Reference>
+		<Reference Include="CGameRendering">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CGameRendering\Debug\CGameRendering.dll</HintPath>
+		</Reference>
+		<Reference Include="CMissionManager">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CMissionManager\Debug\CMissionManager.dll</HintPath>
+		</Reference>
+		<Reference Include="CNativeEvents">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CNativeEvents\Debug\CNativeEvents.dll</HintPath>
+		</Reference>
+		<Reference Include="CNetConnection">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CNetConnection\Debug\CNetConnection.dll</HintPath>
+		</Reference>
+		<Reference Include="CPoolObjects">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CPoolObjects\Debug\CPoolObjects.dll</HintPath>
+		</Reference>
+		<Reference Include="CScreenRendering">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CScreenRendering\Debug\CScreenRendering.dll</HintPath>
+		</Reference>
+		<Reference Include="CScriptAreas">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CScriptAreas\Debug\CScriptAreas.dll</HintPath>
+		</Reference>
+		<Reference Include="CScriptObjs">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CScriptObjs\Debug\CScriptObjs.dll</HintPath>
+		</Reference>
+		<Reference Include="CShopCatalogue">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CShopCatalogue\Debug\CShopCatalogue.dll</HintPath>
+		</Reference>
+		<Reference Include="CWorldObjects">
+		  <HintPath>..\..\..\..\..\artifacts\RPClientComponents\CWorldObjects\Debug\CWorldObjects.dll</HintPath>
+		</Reference>
+		<Reference Include="Newtonsoft.Json">
+		  <HintPath>..\..\..\..\..\vendor\NewtonsoftJson\V10.0-Portable\Newtonsoft.Json.dll</HintPath>
+		</Reference> 
+	</ItemGroup>
+
+</Project>
