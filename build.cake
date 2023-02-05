@@ -40,12 +40,12 @@ Setup(ctx =>
 
     packageVersion = $"{version}{prerelease}"; 
     var dir = Context.Environment.WorkingDirectory; 
-    outputDir = $"{artificatsOutputDir}/{configuration}";///{dir.GetDirectoryName()}/";
+    outputDir = $"{artificatsOutputDir}/{configuration}/";
 
     resource = new ProjectInformation
     { 
         Name = dir.GetDirectoryName(),
-        FullPath = dir.FullPath,
+        FullPath = dir.FullPath + "/code",
         ProjectType = 2,
         //IsTestProject = p.GetFilenameWithoutExtension().ToString().EndsWith("Tests")
     };
@@ -109,8 +109,7 @@ Task("Deploy")
     .IsDependentOn("Build")
     .Does(() =>
 { 
-  
-  
+   
 });
 
 //////////////////////////////////////////////////////////////////////

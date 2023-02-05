@@ -24,9 +24,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
  
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-<Exec Command="xcopy /Y /I /E &quot;$(TargetDir)\*.*&quot; &quot;.\..\..\artifacts\$(ConfigurationName)\&quot;" />
-  </Target>
+  
+
+  
 
 </Project>
   

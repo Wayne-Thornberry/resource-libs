@@ -8,6 +8,7 @@
 		<DefineConstants Condition="'$(Configuration)|$(Platform)'=='Server|AnyCPU'">TRACE;SERVER;DEBUG;RELEASE;NET452</DefineConstants>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="MainScript.cs" />
 	  <Compile Remove="ModuleScript.cs" />
 	</ItemGroup>
 
@@ -21,9 +22,9 @@
 		<ProjectReference Include="..\Proline.Resource.Scripting\Proline.Resource.Scripting.csproj" />
 	</ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-<Exec Command="xcopy /Y /I /E &quot;$(TargetDir)\*.*&quot; &quot;.\..\..\artifacts\$(ConfigurationName)\&quot;" />
-	</Target>
+	
+
+	
 	<ItemGroup>
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>..\..\vendor\NewtonsoftJson\V10.0-Portable\Newtonsoft.Json.dll</HintPath>

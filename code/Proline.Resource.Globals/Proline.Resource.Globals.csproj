@@ -13,9 +13,9 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Proline.Resource.Console\Proline.Resource.csproj" />
 	</ItemGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="xcopy /Y /I /E &quot;$(TargetDir)\*.*&quot; &quot;.\..\..\artifacts\$(ConfigurationName)\&quot;" />
-	</Target>
+	
+		
+	
 
 	<ItemGroup>
 	  <Reference Include="Microsoft.CSharp" />
