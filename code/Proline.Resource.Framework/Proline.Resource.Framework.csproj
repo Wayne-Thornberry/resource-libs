@@ -7,8 +7,7 @@
 		<DefineConstants Condition="'$(Configuration)|$(Platform)'=='Client|AnyCPU'">TRACE;CLIENT;DEBUG;RELEASE;NET452</DefineConstants>
 		<DefineConstants Condition="'$(Configuration)|$(Platform)'=='Server|AnyCPU'">TRACE;SERVER;DEBUG;RELEASE;NET452</DefineConstants>
 	</PropertyGroup>
-	<ItemGroup>
-	  <Compile Remove="MainScript.cs" />
+	<ItemGroup> 
 	  <Compile Remove="ModuleScript.cs" />
 	</ItemGroup>
 

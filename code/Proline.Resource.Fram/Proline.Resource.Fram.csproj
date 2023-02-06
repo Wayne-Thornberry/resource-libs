@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net452</TargetFramework>
+		<Platforms>AnyCPU</Platforms>
+		<Configurations>Debug;Release;Client;Server</Configurations>
+		<AssemblyName>$(MSBuildProjectName).$(Configuration)</AssemblyName>
+		<DefineConstants Condition="'$(Configuration)|$(Platform)'=='Client|AnyCPU'">TRACE;CLIENT;DEBUG;RELEASE;NET452</DefineConstants>
+		<DefineConstants Condition="'$(Configuration)|$(Platform)'=='Server|AnyCPU'">TRACE;SERVER;DEBUG;RELEASE;NET452</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CitizenFX.Core.$(Configuration)" Version="1.0.5179" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Proline.Resource.Component\Proline.Resource.Component.csproj" />
+	  <ProjectReference Include="..\Proline.Resource.Configuration\Proline.Resource.Configuration.csproj" />
+	  <ProjectReference Include="..\Proline.Resource.Console\Proline.Resource.csproj" />
+	  <ProjectReference Include="..\Proline.Resource.Eventing\Proline.Resource.Eventing.csproj" />
+	  <ProjectReference Include="..\Proline.Resource.File\Proline.Resource.IO.csproj" />
+	  <ProjectReference Include="..\Proline.Resource.Framework\Proline.Resource.Framework.csproj" />
+	  <ProjectReference Include="..\Proline.Resource.Globals\Proline.Resource.Globals.csproj" />
+	  <ProjectReference Include="..\Proline.Resource.Logging\Proline.Resource.Logging.csproj" />
+	  <ProjectReference Include="..\Proline.Resource.Scripting\Proline.Resource.Scripting.csproj" />
+	</ItemGroup>
+ 
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+ 
+  
+
+  
+
+</Project>
+  

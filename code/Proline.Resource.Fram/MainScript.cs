@@ -1,4 +1,5 @@
-﻿using CitizenFX.Core; 
+﻿using CitizenFX.Core;
+using Proline.ClassicOnline.EventQueue;
 using Proline.Resource;
 using Proline.Resource.Configuration;
 using Proline.Resource.Framework;
@@ -13,7 +14,7 @@ using Console = Proline.Resource.Console;
 
 namespace Proline.ClassicOnline.Resource
 {
-    public class ResourceMainScript : ResourceScript
+    public abstract class ResourceMainScript : ResourceScript
     {
         private MethodInfo _method;
 
@@ -33,28 +34,39 @@ namespace Proline.ClassicOnline.Resource
                 }
                 Console.WriteLine("Loaded Resources");
 
-                var run = ResourceFile.Load("run.txt");
-                var assembly = Assembly.Load(run.Load());
-                if(assembly == null)
-                    Console.WriteLine("Failed to load assembly"); 
-                var program = assembly.GetType("Program");
-                if (program == null)
-                { 
-                    Console.WriteLine("Failed to load program file");
-                    foreach (var type in assembly.GetTypes())
-                    {
-                        if (type.Name.Equals("Program"))
-                            program = type;
-                        Console.WriteLine(type.Name);
-                    }
-                }
-                _method = program.GetMethod("Main", BindingFlags.Static | BindingFlags.NonPublic);
-                foreach (var type in program.GetMethods())
+                //var run = ResourceFile.Load("run.txt");
+                //var assembly = Assembly.Load(run.Load());
+                //if(assembly == null)
+                //    Console.WriteLine("Failed to load assembly"); 
+                //var program = assembly.GetType("Program");
+                //if (program == null)
+                //{ 
+                //    Console.WriteLine("Failed to load program file");
+                //    foreach (var type in assembly.GetTypes())
+                //    {
+                //        if (type.Name.Equals("Program"))
+                //            program = type;
+                //        Console.WriteLine(type.Name);
+                //    }
+                //}
+
+                Console.WriteLine($"Started Engine");
+                try
                 {
-                    if (type.Name.Equals("Main"))
-                        _method = type;
-                    Console.WriteLine(type.Name);
+                    Component.InitializeComponents();
                 }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+
+                //_method = program.GetMethod("Main", BindingFlags.Static | BindingFlags.NonPublic);
+                //foreach (var type in program.GetMethods())
+                //{
+                //    if (type.Name.Equals("Main"))
+                //        _method = type;
+                //    Console.WriteLine(type.Name);
+                //}
 
             }
             catch (Exception e)
