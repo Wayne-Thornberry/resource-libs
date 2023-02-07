@@ -16,12 +16,9 @@ namespace Proline.ClassicOnline.Resource
 {
     public abstract class ResourceMainScript : ResourceScript
     {
-        private MethodInfo _method;
-
-        public ResourceMainScript()
-        { 
-
-        }
+        
+        private List<ResourceCommand> _commands;
+        private Dictionary<string, ComponentContainer> _components;
 
         public override async Task OnLoad()
         {
@@ -34,40 +31,26 @@ namespace Proline.ClassicOnline.Resource
                 }
                 Console.WriteLine("Loaded Resources");
 
-                //var run = ResourceFile.Load("run.txt");
-                //var assembly = Assembly.Load(run.Load());
-                //if(assembly == null)
-                //    Console.WriteLine("Failed to load assembly"); 
-                //var program = assembly.GetType("Program");
-                //if (program == null)
-                //{ 
-                //    Console.WriteLine("Failed to load program file");
-                //    foreach (var type in assembly.GetTypes())
-                //    {
-                //        if (type.Name.Equals("Program"))
-                //            program = type;
-                //        Console.WriteLine(type.Name);
-                //    }
-                //}
-
                 Console.WriteLine($"Started Engine");
                 try
                 {
-                    Component.InitializeComponents();
+                    _components = Component.InitializeComponents();
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
                 }
 
-                //_method = program.GetMethod("Main", BindingFlags.Static | BindingFlags.NonPublic);
-                //foreach (var type in program.GetMethods())
-                //{
-                //    if (type.Name.Equals("Main"))
-                //        _method = type;
-                //    Console.WriteLine(type.Name);
-                //}
+                var assembly = Assembly.GetCallingAssembly();
+                var types = assembly.GetTypes();
+                var commandTypes = types.Where(e => (object)e.BaseType == typeof(ResourceCommand)).ToArray();
 
+                foreach (var item in commandTypes)
+                {
+                    var command = (ResourceCommand)Activator.CreateInstance(item);
+                    command.RegisterCommand();
+                    _commands.Add(command);
+                } 
             }
             catch (Exception e)
             {
@@ -78,8 +61,8 @@ namespace Proline.ClassicOnline.Resource
         public override async Task OnStart()
         {
             try
-            { 
-                _method.Invoke(null, new object[] {null});
+            {
+                Component.StartComponents(_components);
             }
             catch (Exception e)
             {
